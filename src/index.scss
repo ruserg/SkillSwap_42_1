@@ -1,0 +1,6 @@
+@use "./styles/variables.scss" as *;
+@use "./styles/mixins.scss" as *;
+@use "./styles/themes/dark.scss" as *;
+@use "./styles/themes/light.scss" as *;
+
+// все импорты стилей в одном файле
