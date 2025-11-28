@@ -12,7 +12,6 @@
         "name": "Промпт-инжиниринг",
         "description": "Научу асап писать промпты в квен и дипсик"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 0,
@@ -196,7 +195,6 @@
         "name": "Тайм‑менеджмент",
         "description": "Помогу выстроить эффективный график и научиться управлять временем"
       },
-      "image": ["https://example.com/photos/user1_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 8,
@@ -224,7 +222,6 @@
         "name": "Проектное управление",
         "description": "Обучу методологии Agile и управлению командами"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 7,
@@ -252,10 +249,6 @@
         "name": "Рисование и иллюстрация",
         "description": "Уроки цифровой иллюстрации и скетчинга"
       },
-      "image": [
-        "https://example.com/photos/user3_1.jpg",
-        "https://example.com/photos/user3_2.jpg"
-      ],
       "skillsWantToLearn": [
         {
           "id": 9,
@@ -283,7 +276,6 @@
         "name": "Приготовление еды",
         "description": "Мастер‑классы по европейской кухне и здоровому питанию"
       },
-      "image": ["https://example.com/photos/user4_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 18,
@@ -311,7 +303,6 @@
         "name": "Видеомонтаж",
         "description": "Обучение работе в Adobe Premiere Pro и DaVinci Resolve"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 0,
@@ -339,7 +330,6 @@
         "name": "Предпринимательство",
         "description": "Запуск стартапа: от идеи до первых продаж"
       },
-      "image": ["https://example.com/photos/user6_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 1,
@@ -367,10 +357,6 @@
         "name": "Йога и медитация",
         "description": "Практика хатха‑йоги и техники осознанности"
       },
-      "image": [
-        "https://example.com/photos/user7_1.jpg",
-        "https://example.com/photos/user7_2.jpg"
-      ],
       "skillsWantToLearn": [
         {
           "id": 2,
@@ -398,7 +384,6 @@
         "name": "Ремонт",
         "description": "Ремонт квартир: электрика, сантехника, отделка"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 3,
@@ -426,7 +411,6 @@
         "name": "Английский",
         "description": "Разговорный английский для путешествий и работы"
       },
-      "image": ["https://example.com/photos/user9_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 4,
@@ -454,7 +438,6 @@
         "name": "Музыка и звук",
         "description": "Основы звукозаписи и работы в Ableton Live"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 5,
@@ -482,7 +465,6 @@
         "name": "Креативное письмо",
         "description": "Как писать захватывающие истории и тексты"
       },
-      "image": ["https://example.com/photos/user11_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 6,
@@ -510,7 +492,6 @@
         "name": "Навыки преподавания",
         "description": "Методики эффективного обучения взрослых"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 0,
@@ -538,10 +519,6 @@
         "name": "Фотография",
         "description": "Основы композиции и обработки фото в Lightroom"
       },
-      "image": [
-        "https://example.com/photos/user13_1.jpg",
-        "https://example.com/photos/user13_2.jpg"
-      ],
       "skillsWantToLearn": [
         {
           "id": 7,
@@ -569,7 +546,6 @@
         "name": "Маркетинг и реклама",
         "description": "Digital‑маркетинг: таргетированная реклама и SMM"
       },
-      "image": ["https://example.com/photos/user14_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 8,
@@ -597,7 +573,6 @@
         "name": "Ментальное здоровье",
         "description": "Техники борьбы со стрессом и тревожностью"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 2,
@@ -625,7 +600,6 @@
         "name": "Домашние финансы",
         "description": "Бюджетирование и инвестирование для начинающих"
       },
-      "image": ["https://example.com/photos/user16_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 3,
@@ -653,10 +627,6 @@
         "name": "Арт‑терапия",
         "description": "Творчество как способ психологической разгрузки"
       },
-      "image": [
-        "https://example.com/photos/user17_1.jpg",
-        "https://example.com/photos/user17_2.jpg"
-      ],
       "skillsWantToLearn": [
         {
           "id": 5,
@@ -684,7 +654,6 @@
         "name": "Резюме и собеседование",
         "description": "Как составить идеальное резюме и пройти интервью"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 7,
@@ -712,7 +681,6 @@
         "name": "Декор и DIY",
         "description": "Создание предметов интерьера своими руками"
       },
-      "image": ["https://example.com/photos/user19_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 1,
@@ -740,7 +708,6 @@
         "name": "Осознанность",
         "description": "Практика mindfulness в повседневной жизни"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 0,
@@ -768,7 +735,6 @@
         "name": "Испанский",
         "description": "Разговорный испанский для путешествий и работы"
       },
-      "image": ["https://example.com/photos/user21_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 2,
@@ -796,7 +762,6 @@
         "name": "Ремонт",
         "description": "Ремонт бытовой техники: диагностика и устранение неисправностей"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 5,
@@ -824,10 +789,6 @@
         "name": "Личностное развитие",
         "description": "Техники самомотивации и постановки целей"
       },
-      "image": [
-        "https://example.com/photos/user23_1.jpg",
-        "https://example.com/photos/user23_2.jpg"
-      ],
       "skillsWantToLearn": [
         {
           "id": 7,
@@ -855,7 +816,6 @@
         "name": "Личный бренд",
         "description": "Создание и продвижение личного бренда в соцсетях"
       },
-      "image": ["https://example.com/photos/user24_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 1,
@@ -883,7 +843,6 @@
         "name": "Приготовление еды",
         "description": "Вегетарианская кухня: простые и вкусные рецепты"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 0,
@@ -911,7 +870,6 @@
         "name": "Проектное управление",
         "description": "Управление IT‑проектами: от идеи до релиза"
       },
-      "image": ["https://example.com/photos/user26_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 4,
@@ -939,10 +897,6 @@
         "name": "Ментальное здоровье",
         "description": "Профилактика выгорания и стресс‑менеджмент"
       },
-      "image": [
-        "https://example.com/photos/user27_1.jpg",
-        "https://example.com/photos/user27_2.jpg"
-      ],
       "skillsWantToLearn": [
         {
           "id": 2,
@@ -970,7 +924,6 @@
         "name": "Домашние финансы",
         "description": "Финансовое планирование для семьи"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 5,
@@ -998,7 +951,6 @@
         "name": "Рисование и иллюстрация",
         "description": "Основы скетчинга и цифрового рисунка"
       },
-      "image": ["https://example.com/photos/user29_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 7,
@@ -1026,7 +978,6 @@
         "name": "Резюме и собеседование",
         "description": "Как пройти собеседование в международную компанию"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 1,
@@ -1054,7 +1005,6 @@
         "name": "Актёрское мастерство",
         "description": "Основы сценической речи и актёрской импровизации"
       },
-      "image": ["https://example.com/photos/user31_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 0,
@@ -1082,7 +1032,6 @@
         "name": "Немецкий",
         "description": "Грамматика и разговорная практика немецкого языка"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 6,
@@ -1110,10 +1059,6 @@
         "name": "Навыки обучения",
         "description": "Методы эффективного запоминания и организации учебного процесса"
       },
-      "image": [
-        "https://example.com/photos/user33_1.jpg",
-        "https://example.com/photos/user33_2.jpg"
-      ],
       "skillsWantToLearn": [
         {
           "id": 2,
@@ -1141,7 +1086,6 @@
         "name": "Тайм‑менеджмент",
         "description": "Планирование дня и борьба с прокрастинацией"
       },
-      "image": ["https://example.com/photos/user34_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 7,
@@ -1169,7 +1113,6 @@
         "name": "Хранение вещей",
         "description": "Системы организации пространства в квартире"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 1,
@@ -1197,7 +1140,6 @@
         "name": "Навыки преподавания",
         "description": "Как доносить сложные темы простым языком"
       },
-      "image": ["https://example.com/photos/user36_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 4,
@@ -1225,10 +1167,6 @@
         "name": "Арт‑терапия",
         "description": "Творчество как способ снятия стресса"
       },
-      "image": [
-        "https://example.com/photos/user37_1.jpg",
-        "https://example.com/photos/user37_2.jpg"
-      ],
       "skillsWantToLearn": [
         {
           "id": 3,
@@ -1256,7 +1194,6 @@
         "name": "Уборка и организация",
         "description": "Минимализм и системы хранения вещей"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 5,
@@ -1284,7 +1221,6 @@
         "name": "Фотография",
         "description": "Съёмка на смартфон: композиция и обработка"
       },
-      "image": ["https://example.com/photos/user39_1.jpg"],
       "skillsWantToLearn": [
         {
           "id": 7,
@@ -1312,7 +1248,6 @@
         "name": "Ментальное здоровье",
         "description": "Техники самопомощи при тревоге и выгорании"
       },
-      "image": [],
       "skillsWantToLearn": [
         {
           "id": 0,
