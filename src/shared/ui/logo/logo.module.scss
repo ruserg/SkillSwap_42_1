@@ -1,0 +1,17 @@
+@use "../../../styles/mixins" as *;
+
+.logoLinkContainer {
+  width: 159px;
+  height: 40px;
+
+  @include flex($direction: row, $justify: center, $align: center, $gap: 12px);
+
+  .logoTitle {
+    font-family: Jost, sans-serif;
+    font-weight: 600; // без нужного шрифта, из-за этого свойста текст кажется больше
+    font-style: normal;
+    font-size: 24px;
+    line-height: 32px;
+    width: 107px;
+  }
+}
