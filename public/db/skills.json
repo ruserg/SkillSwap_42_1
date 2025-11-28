@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "subcategoryId": 1,
+    "userId": 1,
+    "name": "Игра на гитаре",
+    "description": "Базовые аккорды, переборы, ритмика",
+    "type_of_proposal": "обучение",
+    "images": [],
+    "modified_datetime": "2025-11-28T22:00:00Z"
+  },
+  {
+    "id": 2,
+    "subcategoryId": 3,
+    "userId": 2,
+    "name": "Английский для начинающих",
+    "description": "Базовая грамматика и разговорные фразы",
+    "type_of_proposal": "обучение",
+    "images": [],
+    "modified_datetime": "2025-11-28T22:10:00Z"
+  }
+]
