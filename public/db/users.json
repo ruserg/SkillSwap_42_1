@@ -5,7 +5,7 @@
       "avatarUrl": "url",
       "name": "Евгений Симонов",
       "cityIdId": 1,
-      "dateOfBirth": "1196179200",
+      "dateOfBirth": "433555200",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 0,
@@ -189,7 +189,7 @@
       "avatarUrl": "https://example.com/avatars/user1.jpg",
       "name": "Анна Кузнецова",
       "cityId": 2,
-      "dateOfBirth": "28",
+      "dateOfBirth": "1092528000",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 5,
@@ -217,7 +217,7 @@
       "avatarUrl": "https://example.com/avatars/user2.jpg",
       "name": "Дмитрий Орлов",
       "cityId": 3,
-      "dateOfBirth": "34",
+      "dateOfBirth": "761443200",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 6,
@@ -245,7 +245,7 @@
       "avatarUrl": "https://example.com/avatars/user3.jpg",
       "name": "Ольга Иванова",
       "cityId": 4,
-      "dateOfBirth": "25",
+      "dateOfBirth": "892598400",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 21,
@@ -276,7 +276,7 @@
       "avatarUrl": "https://example.com/avatars/user4.jpg",
       "name": "Алексей Смирнов",
       "cityId": 5,
-      "dateOfBirth": "41",
+      "dateOfBirth": "474422400",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 17,
@@ -304,7 +304,7 @@
       "avatarUrl": "https://example.com/avatars/user5.jpg",
       "name": "Мария Волкова",
       "cityId": 6,
-      "dateOfBirth": "22",
+      "dateOfBirth": "783907200",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 23,
@@ -332,7 +332,7 @@
       "avatarUrl": "https://example.com/avatars/user6.jpg",
       "name": "Игорь Петров",
       "cityId": 7,
-      "dateOfBirth": "39",
+      "dateOfBirth": "1163462400",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 7,
@@ -360,7 +360,7 @@
       "avatarUrl": "https://example.com/avatars/user7.jpg",
       "name": "Елена Морозова",
       "cityId": 8,
-      "dateOfBirth": "31",
+      "dateOfBirth": "697766400",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 35,
@@ -391,7 +391,7 @@
       "avatarUrl": "https://example.com/avatars/user8.jpg",
       "name": "Сергей Зайцев",
       "cityId": 9,
-      "dateOfBirth": "45",
+      "dateOfBirth": "438480000",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 19,
@@ -419,7 +419,7 @@
       "avatarUrl": "https://example.com/avatars/user9.jpg",
       "name": "Наталья Соколова",
       "cityId": 10,
-      "dateOfBirth": "27",
+      "dateOfBirth": "1002499200",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 8,
@@ -447,7 +447,7 @@
       "avatarUrl": "https://example.com/avatars/user10.jpg",
       "name": "Андрей Васильев",
       "cityId": 11,
-      "dateOfBirth": "36",
+      "dateOfBirth": "818294400",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 24,
@@ -475,7 +475,7 @@
       "avatarUrl": "https://example.com/avatars/user11.jpg",
       "name": "Татьяна Лебедева",
       "cityId": 12,
-      "dateOfBirth": "29",
+      "dateOfBirth": "412819200",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 26,
@@ -484,9 +484,18 @@
       },
       "image": ["https://example.com/photos/user11_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 6, "name": "Проектное управление" },
-        { "id": 15, "name": "Уборка и организация" },
-        { "id": 34, "name": "Коучинг" }
+        {
+          "id": 6,
+          "name": "Проектное управление"
+        },
+        {
+          "id": 15,
+          "name": "Уборка и организация"
+        },
+        {
+          "id": 34,
+          "name": "Коучинг"
+        }
       ]
     },
     {
@@ -494,7 +503,7 @@
       "avatarUrl": "https://example.com/avatars/user12.jpg",
       "name": "Виктор Новиков",
       "cityId": 13,
-      "dateOfBirth": "42",
+      "dateOfBirth": "1026604800",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 33,
@@ -503,9 +512,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 0, "name": "Управление командой" },
-        { "id": 9, "name": "Французский" },
-        { "id": 41, "name": "Баланс жизни и работы" }
+        {
+          "id": 0,
+          "name": "Управление командой"
+        },
+        {
+          "id": 9,
+          "name": "Французский"
+        },
+        {
+          "id": 41,
+          "name": "Баланс жизни и работы"
+        }
       ]
     },
     {
@@ -513,7 +531,7 @@
       "avatarUrl": "https://example.com/avatars/user13.jpg",
       "name": "Светлана Громова",
       "cityId": 14,
-      "dateOfBirth": "24",
+      "dateOfBirth": "594518400",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 22,
@@ -525,9 +543,18 @@
         "https://example.com/photos/user13_2.jpg"
       ],
       "skillsWantToLearn": [
-        { "id": 7, "name": "Предпринимательство" },
-        { "id": 18, "name": "Домашние растения" },
-        { "id": 29, "name": "Личностное развитие" }
+        {
+          "id": 7,
+          "name": "Предпринимательство"
+        },
+        {
+          "id": 18,
+          "name": "Домашние растения"
+        },
+        {
+          "id": 29,
+          "name": "Личностное развитие"
+        }
       ]
     },
     {
@@ -535,7 +562,7 @@
       "avatarUrl": "https://example.com/avatars/user14.jpg",
       "name": "Роман Фёдоров",
       "cityId": 28,
-      "dateOfBirth": "37",
+      "dateOfBirth": "1050624000",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 1,
@@ -544,9 +571,18 @@
       },
       "image": ["https://example.com/photos/user14_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 8, "name": "Английский" },
-        { "id": 21, "name": "Рисование и иллюстрация" },
-        { "id": 36, "name": "Питание и ЗОЖ" }
+        {
+          "id": 8,
+          "name": "Английский"
+        },
+        {
+          "id": 21,
+          "name": "Рисование и иллюстрация"
+        },
+        {
+          "id": 36,
+          "name": "Питание и ЗОЖ"
+        }
       ]
     },
     {
@@ -554,7 +590,7 @@
       "avatarUrl": "https://example.com/avatars/user15.jpg",
       "name": "Юлия Харитонова",
       "cityId": 29,
-      "dateOfBirth": "30",
+      "dateOfBirth": "1064793600",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 37,
@@ -563,9 +599,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 2, "name": "Продажи и переговоры" },
-        { "id": 10, "name": "Испанский" },
-        { "id": 31, "name": "Когнитивные техники" }
+        {
+          "id": 2,
+          "name": "Продажи и переговоры"
+        },
+        {
+          "id": 10,
+          "name": "Испанский"
+        },
+        {
+          "id": 31,
+          "name": "Когнитивные техники"
+        }
       ]
     },
     {
@@ -573,7 +618,7 @@
       "avatarUrl": "https://example.com/avatars/user16.jpg",
       "name": "Павел Морозов",
       "cityId": 30,
-      "dateOfBirth": "44",
+      "dateOfBirth": "490147200",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 16,
@@ -582,9 +627,18 @@
       },
       "image": ["https://example.com/photos/user16_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 3, "name": "Личный бренд" },
-        { "id": 19, "name": "Ремонт" },
-        { "id": 40, "name": "Сон и восстановление" }
+        {
+          "id": 3,
+          "name": "Личный бренд"
+        },
+        {
+          "id": 19,
+          "name": "Ремонт"
+        },
+        {
+          "id": 40,
+          "name": "Сон и восстановление"
+        }
       ]
     },
     {
@@ -592,7 +646,7 @@
       "avatarUrl": "https://example.com/avatars/user17.jpg",
       "name": "Ирина Соколова",
       "cityId": 15,
-      "dateOfBirth": "26",
+      "dateOfBirth": "1125705600",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 27,
@@ -604,9 +658,18 @@
         "https://example.com/photos/user17_2.jpg"
       ],
       "skillsWantToLearn": [
-        { "id": 5, "name": "Тайм‑менеджмент" },
-        { "id": 12, "name": "Китайский" },
-        { "id": 35, "name": "Йога и медитация" }
+        {
+          "id": 5,
+          "name": "Тайм‑менеджмент"
+        },
+        {
+          "id": 12,
+          "name": "Китайский"
+        },
+        {
+          "id": 35,
+          "name": "Йога и медитация"
+        }
       ]
     },
     {
@@ -614,7 +677,7 @@
       "avatarUrl": "https://example.com/avatars/user18.jpg",
       "name": "Дмитрий Калинин",
       "cityId": 16,
-      "dateOfBirth": "33",
+      "dateOfBirth": "635731200",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 4,
@@ -623,9 +686,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 7, "name": "Предпринимательство" },
-        { "id": 17, "name": "Приготовление еды" },
-        { "id": 39, "name": "Физические тренировки" }
+        {
+          "id": 7,
+          "name": "Предпринимательство"
+        },
+        {
+          "id": 17,
+          "name": "Приготовление еды"
+        },
+        {
+          "id": 39,
+          "name": "Физические тренировки"
+        }
       ]
     },
     {
@@ -633,7 +705,7 @@
       "avatarUrl": "https://example.com/avatars/user19.jpg",
       "name": "Ольга Никитина",
       "cityId": 17,
-      "dateOfBirth": "23",
+      "dateOfBirth": "986083200",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 28,
@@ -642,9 +714,18 @@
       },
       "image": ["https://example.com/photos/user19_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 1, "name": "Маркетинг и реклама" },
-        { "id": 11, "name": "Немецкий" },
-        { "id": 30, "name": "Навыки обучения" }
+        {
+          "id": 1,
+          "name": "Маркетинг и реклама"
+        },
+        {
+          "id": 11,
+          "name": "Немецкий"
+        },
+        {
+          "id": 30,
+          "name": "Навыки обучения"
+        }
       ]
     },
     {
@@ -652,7 +733,7 @@
       "avatarUrl": "https://example.com/avatars/user20.jpg",
       "name": "Алексей Воронов",
       "cityId": 18,
-      "dateOfBirth": "40",
+      "dateOfBirth": "698025600",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 38,
@@ -661,9 +742,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 0, "name": "Управление командой" },
-        { "id": 14, "name": "Подготовка к экзаменам (IELTS, TOEFL)" },
-        { "id": 32, "name": "Скорочтение" }
+        {
+          "id": 0,
+          "name": "Управление командой"
+        },
+        {
+          "id": 14,
+          "name": "Подготовка к экзаменам (IELTS, TOEFL)"
+        },
+        {
+          "id": 32,
+          "name": "Скорочтение"
+        }
       ]
     },
     {
@@ -671,7 +761,7 @@
       "avatarUrl": "https://example.com/avatars/user21.jpg",
       "name": "Екатерина Волкова",
       "cityId": 19,
-      "dateOfBirth": "32",
+      "dateOfBirth": "765936000",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 10,
@@ -680,9 +770,18 @@
       },
       "image": ["https://example.com/photos/user21_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 2, "name": "Продажи и переговоры" },
-        { "id": 13, "name": "Японский" },
-        { "id": 33, "name": "Навыки преподавания" }
+        {
+          "id": 2,
+          "name": "Продажи и переговоры"
+        },
+        {
+          "id": 13,
+          "name": "Японский"
+        },
+        {
+          "id": 33,
+          "name": "Навыки преподавания"
+        }
       ]
     },
     {
@@ -690,7 +789,7 @@
       "avatarUrl": "https://example.com/avatars/user22.jpg",
       "name": "Михаил Иванов",
       "cityId": 9,
-      "dateOfBirth": "43",
+      "dateOfBirth": "717811200",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 19,
@@ -699,9 +798,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 5, "name": "Тайм‑менеджмент" },
-        { "id": 8, "name": "Английский" },
-        { "id": 41, "name": "Баланс жизни и работы" }
+        {
+          "id": 5,
+          "name": "Тайм‑менеджмент"
+        },
+        {
+          "id": 8,
+          "name": "Английский"
+        },
+        {
+          "id": 41,
+          "name": "Баланс жизни и работы"
+        }
       ]
     },
     {
@@ -709,7 +817,7 @@
       "avatarUrl": "https://example.com/avatars/user23.jpg",
       "name": "Анастасия Крылова",
       "cityId": 20,
-      "dateOfBirth": "27",
+      "dateOfBirth": "1033603200",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 29,
@@ -721,9 +829,18 @@
         "https://example.com/photos/user23_2.jpg"
       ],
       "skillsWantToLearn": [
-        { "id": 7, "name": "Предпринимательство" },
-        { "id": 15, "name": "Уборка и организация" },
-        { "id": 36, "name": "Питание и ЗОЖ" }
+        {
+          "id": 7,
+          "name": "Предпринимательство"
+        },
+        {
+          "id": 15,
+          "name": "Уборка и организация"
+        },
+        {
+          "id": 36,
+          "name": "Питание и ЗОЖ"
+        }
       ]
     },
     {
@@ -731,7 +848,7 @@
       "avatarUrl": "https://example.com/avatars/user24.jpg",
       "name": "Артём Соколов",
       "cityId": 21,
-      "dateOfBirth": "35",
+      "dateOfBirth": "584841600",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 3,
@@ -740,9 +857,18 @@
       },
       "image": ["https://example.com/photos/user24_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 1, "name": "Маркетинг и реклама" },
-        { "id": 9, "name": "Французский" },
-        { "id": 39, "name": "Физические тренировки" }
+        {
+          "id": 1,
+          "name": "Маркетинг и реклама"
+        },
+        {
+          "id": 9,
+          "name": "Французский"
+        },
+        {
+          "id": 39,
+          "name": "Физические тренировки"
+        }
       ]
     },
     {
@@ -750,7 +876,7 @@
       "avatarUrl": "https://example.com/avatars/user25.jpg",
       "name": "Виктория Зайцева",
       "cityId": 22,
-      "dateOfBirth": "26",
+      "dateOfBirth": "445132800",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 17,
@@ -759,9 +885,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 0, "name": "Управление командой" },
-        { "id": 12, "name": "Китайский" },
-        { "id": 30, "name": "Навыки обучения" }
+        {
+          "id": 0,
+          "name": "Управление командой"
+        },
+        {
+          "id": 12,
+          "name": "Китайский"
+        },
+        {
+          "id": 30,
+          "name": "Навыки обучения"
+        }
       ]
     },
     {
@@ -769,7 +904,7 @@
       "avatarUrl": "https://example.com/avatars/user26.jpg",
       "name": "Денис Морозов",
       "cityId": 23,
-      "dateOfBirth": "40",
+      "dateOfBirth": "1186358400",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 6,
@@ -778,9 +913,18 @@
       },
       "image": ["https://example.com/photos/user26_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 4, "name": "Резюме и собеседование" },
-        { "id": 18, "name": "Домашние растения" },
-        { "id": 38, "name": "Осознанность" }
+        {
+          "id": 4,
+          "name": "Резюме и собеседование"
+        },
+        {
+          "id": 18,
+          "name": "Домашние растения"
+        },
+        {
+          "id": 38,
+          "name": "Осознанность"
+        }
       ]
     },
     {
@@ -788,7 +932,7 @@
       "avatarUrl": "https://example.com/avatars/user27.jpg",
       "name": "Марина Никитина",
       "cityId": 24,
-      "dateOfBirth": "31",
+      "dateOfBirth": "563241600",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 37,
@@ -800,9 +944,18 @@
         "https://example.com/photos/user27_2.jpg"
       ],
       "skillsWantToLearn": [
-        { "id": 2, "name": "Продажи и переговоры" },
-        { "id": 11, "name": "Немецкий" },
-        { "id": 34, "name": "Коучинг" }
+        {
+          "id": 2,
+          "name": "Продажи и переговоры"
+        },
+        {
+          "id": 11,
+          "name": "Немецкий"
+        },
+        {
+          "id": 34,
+          "name": "Коучинг"
+        }
       ]
     },
     {
@@ -810,7 +963,7 @@
       "avatarUrl": "https://example.com/avatars/user28.jpg",
       "name": "Сергей Лебедев",
       "cityId": 25,
-      "dateOfBirth": "38",
+      "dateOfBirth": "382665600",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 16,
@@ -819,9 +972,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 5, "name": "Тайм‑менеджмент" },
-        { "id": 14, "name": "Подготовка к экзаменам (IELTS, TOEFL)" },
-        { "id": 40, "name": "Сон и восстановление" }
+        {
+          "id": 5,
+          "name": "Тайм‑менеджмент"
+        },
+        {
+          "id": 14,
+          "name": "Подготовка к экзаменам (IELTS, TOEFL)"
+        },
+        {
+          "id": 40,
+          "name": "Сон и восстановление"
+        }
       ]
     },
     {
@@ -829,7 +991,7 @@
       "avatarUrl": "https://example.com/avatars/user29.jpg",
       "name": "Алина Романова",
       "cityId": 26,
-      "dateOfBirth": "24",
+      "dateOfBirth": "927331200",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 21,
@@ -838,9 +1000,18 @@
       },
       "image": ["https://example.com/photos/user29_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 7, "name": "Предпринимательство" },
-        { "id": 20, "name": "Хранение вещей" },
-        { "id": 32, "name": "Скорочтение" }
+        {
+          "id": 7,
+          "name": "Предпринимательство"
+        },
+        {
+          "id": 20,
+          "name": "Хранение вещей"
+        },
+        {
+          "id": 32,
+          "name": "Скорочтение"
+        }
       ]
     },
     {
@@ -848,7 +1019,7 @@
       "avatarUrl": "https://example.com/avatars/user30.jpg",
       "name": "Андрей Павлов",
       "cityId": 27,
-      "dateOfBirth": "46",
+      "dateOfBirth": "1141689600",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 4,
@@ -857,9 +1028,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 1, "name": "Маркетинг и реклама" },
-        { "id": 9, "name": "Французский" },
-        { "id": 35, "name": "Йога и медитация" }
+        {
+          "id": 1,
+          "name": "Маркетинг и реклама"
+        },
+        {
+          "id": 9,
+          "name": "Французский"
+        },
+        {
+          "id": 35,
+          "name": "Йога и медитация"
+        }
       ]
     },
     {
@@ -867,7 +1047,7 @@
       "avatarUrl": "https://example.com/avatars/user31.jpg",
       "name": "Елена Морозова",
       "cityId": 28,
-      "dateOfBirth": "28",
+      "dateOfBirth": "908323200",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 25,
@@ -876,9 +1056,18 @@
       },
       "image": ["https://example.com/photos/user31_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 0, "name": "Управление командой" },
-        { "id": 8, "name": "Английский" },
-        { "id": 34, "name": "Коучинг" }
+        {
+          "id": 0,
+          "name": "Управление командой"
+        },
+        {
+          "id": 8,
+          "name": "Английский"
+        },
+        {
+          "id": 34,
+          "name": "Коучинг"
+        }
       ]
     },
     {
@@ -886,7 +1075,7 @@
       "avatarUrl": "https://example.com/avatars/user32.jpg",
       "name": "Иван Петров",
       "cityId": 4,
-      "dateOfBirth": "41",
+      "dateOfBirth": "666403200",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 11,
@@ -895,9 +1084,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 6, "name": "Проектное управление" },
-        { "id": 17, "name": "Приготовление еды" },
-        { "id": 40, "name": "Сон и восстановление" }
+        {
+          "id": 6,
+          "name": "Проектное управление"
+        },
+        {
+          "id": 17,
+          "name": "Приготовление еды"
+        },
+        {
+          "id": 40,
+          "name": "Сон и восстановление"
+        }
       ]
     },
     {
@@ -905,7 +1103,7 @@
       "avatarUrl": "https://example.com/avatars/user33.jpg",
       "name": "Софья Васильева",
       "cityId": 7,
-      "dateOfBirth": "25",
+      "dateOfBirth": "408844800",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 30,
@@ -917,9 +1115,18 @@
         "https://example.com/photos/user33_2.jpg"
       ],
       "skillsWantToLearn": [
-        { "id": 2, "name": "Продажи и переговоры" },
-        { "id": 9, "name": "Французский" },
-        { "id": 36, "name": "Питание и ЗОЖ" }
+        {
+          "id": 2,
+          "name": "Продажи и переговоры"
+        },
+        {
+          "id": 9,
+          "name": "Французский"
+        },
+        {
+          "id": 36,
+          "name": "Питание и ЗОЖ"
+        }
       ]
     },
     {
@@ -927,7 +1134,7 @@
       "avatarUrl": "https://example.com/avatars/user34.jpg",
       "name": "Николай Соколов",
       "cityId": 12,
-      "dateOfBirth": "39",
+      "dateOfBirth": "1104624000",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 5,
@@ -936,9 +1143,18 @@
       },
       "image": ["https://example.com/photos/user34_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 7, "name": "Предпринимательство" },
-        { "id": 13, "name": "Японский" },
-        { "id": 38, "name": "Осознанность" }
+        {
+          "id": 7,
+          "name": "Предпринимательство"
+        },
+        {
+          "id": 13,
+          "name": "Японский"
+        },
+        {
+          "id": 38,
+          "name": "Осознанность"
+        }
       ]
     },
     {
@@ -946,7 +1162,7 @@
       "avatarUrl": "https://example.com/avatars/user35.jpg",
       "name": "Алина Иванова",
       "cityId": 11,
-      "dateOfBirth": "23",
+      "dateOfBirth": "744336000",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 20,
@@ -955,9 +1171,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 1, "name": "Маркетинг и реклама" },
-        { "id": 12, "name": "Китайский" },
-        { "id": 32, "name": "Скорочтение" }
+        {
+          "id": 1,
+          "name": "Маркетинг и реклама"
+        },
+        {
+          "id": 12,
+          "name": "Китайский"
+        },
+        {
+          "id": 32,
+          "name": "Скорочтение"
+        }
       ]
     },
     {
@@ -965,7 +1190,7 @@
       "avatarUrl": "https://example.com/avatars/user36.jpg",
       "name": "Дмитрий Никитин",
       "cityId": 9,
-      "dateOfBirth": "47",
+      "dateOfBirth": "718070400",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 33,
@@ -974,9 +1199,18 @@
       },
       "image": ["https://example.com/photos/user36_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 4, "name": "Резюме и собеседование" },
-        { "id": 18, "name": "Домашние растения" },
-        { "id": 39, "name": "Физические тренировки" }
+        {
+          "id": 4,
+          "name": "Резюме и собеседование"
+        },
+        {
+          "id": 18,
+          "name": "Домашние растения"
+        },
+        {
+          "id": 39,
+          "name": "Физические тренировки"
+        }
       ]
     },
     {
@@ -984,7 +1218,7 @@
       "avatarUrl": "https://example.com/avatars/user37.jpg",
       "name": "Мария Фёдорова",
       "cityId": 29,
-      "dateOfBirth": "30",
+      "dateOfBirth": "524620800",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 27,
@@ -996,9 +1230,18 @@
         "https://example.com/photos/user37_2.jpg"
       ],
       "skillsWantToLearn": [
-        { "id": 3, "name": "Личный бренд" },
-        { "id": 10, "name": "Испанский" },
-        { "id": 35, "name": "Йога и медитация" }
+        {
+          "id": 3,
+          "name": "Личный бренд"
+        },
+        {
+          "id": 10,
+          "name": "Испанский"
+        },
+        {
+          "id": 35,
+          "name": "Йога и медитация"
+        }
       ]
     },
     {
@@ -1006,7 +1249,7 @@
       "avatarUrl": "https://example.com/avatars/user38.jpg",
       "name": "Андрей Кузнецов",
       "cityId": 13,
-      "dateOfBirth": "36",
+      "dateOfBirth": "586742400",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 15,
@@ -1015,9 +1258,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 5, "name": "Тайм‑менеджмент" },
-        { "id": 14, "name": "Подготовка к экзаменам (IELTS, TOEFL)" },
-        { "id": 41, "name": "Баланс жизни и работы" }
+        {
+          "id": 5,
+          "name": "Тайм‑менеджмент"
+        },
+        {
+          "id": 14,
+          "name": "Подготовка к экзаменам (IELTS, TOEFL)"
+        },
+        {
+          "id": 41,
+          "name": "Баланс жизни и работы"
+        }
       ]
     },
     {
@@ -1025,7 +1277,7 @@
       "avatarUrl": "https://example.com/avatars/user39.jpg",
       "name": "Ольга Смирнова",
       "cityId": 14,
-      "dateOfBirth": "29",
+      "dateOfBirth": "815443200",
       "gender": "Женский",
       "skillsCanTeach": {
         "id": 22,
@@ -1034,9 +1286,18 @@
       },
       "image": ["https://example.com/photos/user39_1.jpg"],
       "skillsWantToLearn": [
-        { "id": 7, "name": "Предпринимательство" },
-        { "id": 19, "name": "Ремонт" },
-        { "id": 31, "name": "Когнитивные техники" }
+        {
+          "id": 7,
+          "name": "Предпринимательство"
+        },
+        {
+          "id": 19,
+          "name": "Ремонт"
+        },
+        {
+          "id": 31,
+          "name": "Когнитивные техники"
+        }
       ]
     },
     {
@@ -1044,7 +1305,7 @@
       "avatarUrl": "https://example.com/avatars/user40.jpg",
       "name": "Сергей Романов",
       "cityId": 30,
-      "dateOfBirth": "44",
+      "dateOfBirth": "421891200",
       "gender": "Мужской",
       "skillsCanTeach": {
         "id": 37,
@@ -1053,9 +1314,18 @@
       },
       "image": [],
       "skillsWantToLearn": [
-        { "id": 0, "name": "Управление командой" },
-        { "id": 8, "name": "Английский" },
-        { "id": 34, "name": "Коучинг" }
+        {
+          "id": 0,
+          "name": "Управление командой"
+        },
+        {
+          "id": 8,
+          "name": "Английский"
+        },
+        {
+          "id": 34,
+          "name": "Коучинг"
+        }
       ]
     }
   ]
