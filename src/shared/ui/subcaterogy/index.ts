@@ -1,0 +1,1 @@
+export { SubcategoryUI } from "./subcategory";

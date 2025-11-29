@@ -1,0 +1,35 @@
+@use "../../../styles/variables" as vars;
+@use "../../../styles/mixins" as *;
+
+.subcategory {
+  border-radius: 20px;
+  padding: 8px 12px;
+}
+
+.business-career {
+  background-color: vars.$color-tag-business-career;
+}
+
+.creativity-art {
+  background-color: vars.$color-tag-creativity-art;
+}
+
+.foreign-languages {
+  background-color: vars.$color-tag-foreign-languages;
+}
+
+.education-development {
+  background-color: vars.$color-tag-education-development;
+}
+
+.home-comfort {
+  background-color: vars.$color-tag-home-comfort;
+}
+
+.health-lifestyle {
+  background-color: vars.$color-tag-health-lifestyle;
+}
+
+.tag-plus {
+  background-color: vars.$color-tag-plus;
+}
