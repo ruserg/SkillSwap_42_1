@@ -7,10 +7,7 @@ import { ModalOverlayUI } from "../modal-overlay";
 // Принимает обязательный пропс onClose (функция закрытия модального окна).
 // Дочерние элементы children позволяют полностью кастомизировать содержимое модального окна.
 // При клике на оверлей вызывается функция onClose для закрытия модального окна.
-export const ModalUI: FC<TModalUIProps> = ({
-  onClose,
-  children,
-}) => (
+export const ModalUI: FC<TModalUIProps> = ({ onClose, children }) => (
   <>
     <ModalOverlayUI onClick={onClose} />
     <div className={styles.modal} data-cy="modal">
