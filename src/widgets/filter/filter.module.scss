@@ -22,7 +22,7 @@
       @extend .showAllButton;
 
       &SVG {
-        width: 24px;
+        inline-size: 24px;
         aspect-ratio: 1;
       }
     }

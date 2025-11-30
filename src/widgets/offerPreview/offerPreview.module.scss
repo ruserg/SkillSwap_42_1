@@ -17,9 +17,9 @@
   );
   border-radius: 12px;
   border-width: 2px;
-  width: 100%;
-  min-width: 1020px;
-  max-width: 1024px;
+  inline-size: 100%;
+  min-inline-size: 1020px;
+  max-inline-size: 1024px;
   padding: clamp(40px, 5vw, 80px) clamp(52px, 1vw + 50px, 60px)
     clamp(40px, 6vw, 72px);
 
@@ -30,7 +30,7 @@
       $align: center,
       $gap: 16px
     );
-    width: 399px;
+    inline-size: 399px;
     grid-column: 1;
     grid-row: 2;
   }
@@ -50,8 +50,8 @@
     font-style: normal;
     vertical-align: middle;
     color: vars.$color-caption;
-    width: 239px;
-    height: 16px;
+    inline-size: 239px;
+    block-size: 16px;
   }
 
   .category {
@@ -68,14 +68,14 @@
     align-self: center;
     font-style: normal;
     padding: 10px;
-    max-width: 399px;
+    max-inline-size: 399px;
     overflow: auto;
-    height: 168px;
+    block-size: 168px;
     border-radius: 10px;
   }
 
   .btnClamp {
-    width: 100%;
+    inline-size: 100%;
     padding-top: clamp(4px, 4vw, 12px);
   }
 
@@ -83,7 +83,7 @@
     scrollbar-gutter: stable;
 
     &::-webkit-scrollbar {
-      width: 5px;
+      inline-size: 5px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -104,8 +104,8 @@
   .mainButton {
     @include text-style($weight: 400, $size: 16px, $line: 24px);
     font-family: Roboto, sans-serif;
-    width: 399px;
-    height: 48px;
+    inline-size: 399px;
+    block-size: 48px;
 
     gap: 20px;
     font-style: normal;
@@ -119,13 +119,13 @@
     $align: center,
     $gap: 16px
   );
-  width: 440px;
-  height: 24px;
+  inline-size: 440px;
+  block-size: 24px;
   padding-bottom: 24px;
 
   .decorButton {
-    width: 24px;
-    height: 24px;
+    inline-size: 24px;
+    block-size: 24px;
     background-color: #3c3250;
   }
 }

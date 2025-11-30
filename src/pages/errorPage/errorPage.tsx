@@ -1,8 +1,8 @@
 import { Button } from "@/shared/ui/button";
 import error404 from "@images/png/error-404.png";
 import error500 from "@images/png/error-500.png";
-import styles from "./error-page.module.scss";
-import type { errorPropsType } from "./error-page.types";
+import styles from "./errorPage.module.scss";
+import type { errorPropsType } from "./errorPage.types";
 
 export const ErrorPage = (props: errorPropsType) => {
   const { statusCode } = props;

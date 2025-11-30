@@ -5,7 +5,7 @@
   gap: 32px 24px;
   padding: 0 36px 68px;
   justify-items: center;
-  min-height: 100vh;
+  min-block-size: 100vh;
   background-color: #f9faf7;
 }
 
@@ -21,7 +21,7 @@ header {
 
 .main {
   grid-column: 2;
-  width: 100%;
+  inline-size: 100%;
   background-color: #7282af;
 }
 

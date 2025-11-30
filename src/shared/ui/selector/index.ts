@@ -1,1 +1,1 @@
-export { SelectorUI } from "./selector";
+export { Selector } from "./selector";

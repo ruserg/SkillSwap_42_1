@@ -20,17 +20,17 @@
 .input::after {
   content: "";
   position: absolute;
-  width: 24px;
-  height: 24px;
+  inline-size: 24px;
+  block-size: 24px;
   background-image: url("../../../images/icons/checkbox-empty.svg");
   background-repeat: no-repeat;
 }
 
-.input_checked::after {
+.inputChecked::after {
   content: "";
   position: absolute;
-  width: 24px;
-  height: 24px;
+  inline-size: 24px;
+  block-size: 24px;
   background-image: url("../../../images/icons/checkbox-done.svg");
   background-repeat: no-repeat;
 }

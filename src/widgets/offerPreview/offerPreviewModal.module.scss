@@ -8,14 +8,14 @@
 }
 
 .wrapper {
-  width: 100%;
-  min-width: 1020px;
-  max-width: 1024px;
+  inline-size: 100%;
+  min-inline-size: 1020px;
+  max-inline-size: 1024px;
   border-radius: 12px;
 }
 
 .containerModalTitle {
-  height: 52px;
+  block-size: 52px;
   grid-column: span 2;
   display: flex;
   justify-content: center;

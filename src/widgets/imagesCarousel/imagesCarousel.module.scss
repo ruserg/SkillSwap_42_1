@@ -15,21 +15,21 @@
       $column-gap: 0
     );
     gap: 24px;
-    width: 440px;
-    height: 324px;
+    inline-size: 440px;
+    block-size: 324px;
 
     position: relative;
 
     img {
-      max-width: 100%;
-      max-height: 100%;
+      max-inline-size: 100%;
+      max-block-size: 100%;
       object-fit: fill;
     }
 
     .buttonSwap {
       position: absolute;
-      width: 32px;
-      height: 32px;
+      inline-size: 32px;
+      block-size: 32px;
       border-radius: 100px;
       z-index: 5;
     }
@@ -47,8 +47,8 @@
     }
 
     .mainCard {
-      width: 324px;
-      height: 324px;
+      inline-size: 324px;
+      block-size: 324px;
       grid-row: span 3;
       border-radius: 5%;
       transition:
@@ -60,8 +60,8 @@
       position: relative;
 
       .otherCard {
-        width: 92px;
-        height: 92px;
+        inline-size: 92px;
+        block-size: 92px;
         border-radius: 10%;
       }
 

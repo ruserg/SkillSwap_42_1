@@ -27,7 +27,7 @@ export const Selector: FC<TSelectorProps> = memo(
       <div className={clsx(styles.wrapper)}>
         <div
           className={clsx(styles.container, {
-            [styles.container_open]: isOpen,
+            [styles.containerOpen]: isOpen,
           })}
           onClick={() => setIsOpen(!isOpen)}
         >

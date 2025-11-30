@@ -5,7 +5,7 @@
   grid-template-columns: auto 1fr auto auto;
   column-gap: 32px;
   align-items: center;
-  width: 100%;
+  inline-size: 100%;
   padding: 36px 36px 20px;
 }
 
@@ -36,8 +36,8 @@
 .navigationDropDownLink::after {
   content: "";
   display: block;
-  width: 24px;
-  height: 24px;
+  inline-size: 24px;
+  block-size: 24px;
   background-image: (url("/src/images/icons/chevron-down.svg"));
   background-size: contain;
   background-repeat: no-repeat;
@@ -49,9 +49,9 @@
 
 .input {
   border-radius: 12px;
-  width: 100%;
-  max-width: 527px;
-  min-width: 150px;
+  inline-size: 100%;
+  max-inline-size: 527px;
+  min-inline-size: 150px;
   padding: 12px;
 }
 
@@ -61,8 +61,8 @@
 }
 
 .themeIcon {
-  width: 24px;
-  height: 24px;
+  inline-size: 24px;
+  block-size: 24px;
 }
 
 .themeToggle {

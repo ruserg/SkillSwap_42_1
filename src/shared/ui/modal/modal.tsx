@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import styles from "./modal.module.scss";
 import type { TModalUIProps } from "./types";
-import { ModalOverlayUI } from "../modal-overlay";
+import { ModalOverlayUI } from "../modalOverlay";
 
 // Компонент ModalUI отображает универсальное модальное окно с затемнённым фоном.
 // Принимает обязательный пропс onClose (функция закрытия модального окна).

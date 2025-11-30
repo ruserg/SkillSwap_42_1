@@ -1,5 +1,5 @@
 import type { TRegisterStepsProps } from "./types.ts";
-import styles from "./signup-steps.module.scss";
+import styles from "./signupSteps.module.scss";
 import clsx from "clsx";
 
 export const SignupSteps = (props: TRegisterStepsProps) => {

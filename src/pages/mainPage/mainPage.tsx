@@ -1,4 +1,4 @@
-import styles from "./main-page.module.scss";
+import styles from "./mainPage.module.scss";
 import { Header } from "@widgets/header/header.tsx";
 import { Footer } from "@widgets/footer/footer.tsx";
 

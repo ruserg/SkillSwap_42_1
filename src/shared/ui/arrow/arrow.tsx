@@ -11,7 +11,7 @@ export const Arrow: FC<TArrowProps> = ({ isOpen }) => {
     <img
       src={arrow}
       alt="иконка стрелочки"
-      className={clsx(styles.arrow, { [styles.arrow_open]: isOpen })}
+      className={clsx(styles.arrow, { [styles.arrowOpen]: isOpen })}
     />
   );
 };

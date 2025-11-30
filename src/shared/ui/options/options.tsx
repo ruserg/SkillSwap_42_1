@@ -20,7 +20,7 @@ export const Options: FC<TOptionsProps> = ({
         >
           <input
             className={clsx(styles.input, {
-              [styles.input_checked]: selectedOptions.includes(option),
+              [styles.inputChecked]: selectedOptions.includes(option),
             })}
             type="checkbox"
             checked={selectedOptions.includes(option)}
