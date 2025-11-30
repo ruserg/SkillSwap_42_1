@@ -39,7 +39,7 @@ export const Filter = () => {
     setShowSubcategorys((prev) =>
       prev.includes(categoryId)
         ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
+        : [...prev, categoryId],
     );
   };
   const toggleShowAllSkills = () => setShowAllSkills(!showAllSkills);
@@ -73,7 +73,7 @@ export const Filter = () => {
       ...prevFilters,
       skills: prevFilters.skills.includes(subcategoryId)
         ? prevFilters.skills.filter(
-            (subcategory) => subcategory !== subcategoryId
+            (subcategory) => subcategory !== subcategoryId,
           )
         : [...prevFilters.skills, subcategoryId],
     }));
