@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Евгений Симонов",
-    "avatarUrl": "https://example.com/avatars/user1.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=1",
     "cityId": 1,
     "dateOfBirth": "1995-05-23",
     "gender": "M",
@@ -12,7 +12,7 @@
   {
     "id": 2,
     "name": "Анна Кузнецова",
-    "avatarUrl": "https://example.com/avatars/user2.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=2",
     "cityId": 25,
     "dateOfBirth": "1998-03-14",
     "gender": "F",
@@ -22,7 +22,7 @@
   {
     "id": 3,
     "name": "Сергей Иванов",
-    "avatarUrl": "https://example.com/avatars/user3.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=3",
     "cityId": 30,
     "dateOfBirth": "1990-01-14",
     "gender": "M",
@@ -32,7 +32,7 @@
   {
     "id": 4,
     "name": "Екатерина Морозова",
-    "avatarUrl": "https://example.com/avatars/user4.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=4",
     "cityId": 18,
     "dateOfBirth": "1995-08-09",
     "gender": "F",
@@ -42,7 +42,7 @@
   {
     "id": 5,
     "name": "Дмитрий Смирнов",
-    "avatarUrl": "https://example.com/avatars/user5.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=5",
     "cityId": 3,
     "dateOfBirth": "1988-12-17",
     "gender": "M",
@@ -52,7 +52,7 @@
   {
     "id": 6,
     "name": "Ольга Лебедева",
-    "avatarUrl": "https://example.com/avatars/user6.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=6",
     "cityId": 21,
     "dateOfBirth": "2000-06-12",
     "gender": "F",
@@ -62,7 +62,7 @@
   {
     "id": 7,
     "name": "Алексей Ковалев",
-    "avatarUrl": "https://example.com/avatars/user7.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=7",
     "cityId": 14,
     "dateOfBirth": "1993-09-02",
     "gender": "M",
@@ -72,7 +72,7 @@
   {
     "id": 8,
     "name": "Наталья Васильева",
-    "avatarUrl": "https://example.com/avatars/user8.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=8",
     "cityId": 5,
     "dateOfBirth": "1997-02-28",
     "gender": "F",
@@ -82,7 +82,7 @@
   {
     "id": 9,
     "name": "Виктор Орлов",
-    "avatarUrl": "https://example.com/avatars/user9.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=9",
     "cityId": 27,
     "dateOfBirth": "1991-04-18",
     "gender": "M",
@@ -92,7 +92,7 @@
   {
     "id": 10,
     "name": "Людмила Федорова",
-    "avatarUrl": "https://example.com/avatars/user10.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=10",
     "cityId": 9,
     "dateOfBirth": "1996-10-21",
     "gender": "F",
@@ -102,7 +102,7 @@
   {
     "id": 11,
     "name": "Константин Громов",
-    "avatarUrl": "https://example.com/avatars/user11.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=11",
     "cityId": 2,
     "dateOfBirth": "1989-03-17",
     "gender": "M",
@@ -112,7 +112,7 @@
   {
     "id": 12,
     "name": "Вероника Кузьмина",
-    "avatarUrl": "https://example.com/avatars/user12.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=12",
     "cityId": 26,
     "dateOfBirth": "2001-05-30",
     "gender": "F",
@@ -122,7 +122,7 @@
   {
     "id": 13,
     "name": "Андрей Волков",
-    "avatarUrl": "https://example.com/avatars/user13.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=13",
     "cityId": 14,
     "dateOfBirth": "1994-08-09",
     "gender": "M",
@@ -132,7 +132,7 @@
   {
     "id": 14,
     "name": "Татьяна Николаева",
-    "avatarUrl": "https://example.com/avatars/user14.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=14",
     "cityId": 19,
     "dateOfBirth": "1998-12-12",
     "gender": "F",
@@ -142,7 +142,7 @@
   {
     "id": 15,
     "name": "Евгений Борисов",
-    "avatarUrl": "https://example.com/avatars/user15.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=15",
     "cityId": 6,
     "dateOfBirth": "1990-09-04",
     "gender": "M",
@@ -152,7 +152,7 @@
   {
     "id": 16,
     "name": "Алина Романова",
-    "avatarUrl": "https://example.com/avatars/user16.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=16",
     "cityId": 12,
     "dateOfBirth": "1995-07-18",
     "gender": "F",
@@ -162,7 +162,7 @@
   {
     "id": 17,
     "name": "Владислав Михайлов",
-    "avatarUrl": "https://example.com/avatars/user17.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=17",
     "cityId": 29,
     "dateOfBirth": "1988-11-29",
     "gender": "M",
@@ -172,7 +172,7 @@
   {
     "id": 18,
     "name": "Светлана Ермолаева",
-    "avatarUrl": "https://example.com/avatars/user18.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=18",
     "cityId": 4,
     "dateOfBirth": "2000-02-14",
     "gender": "F",
@@ -182,7 +182,7 @@
   {
     "id": 19,
     "name": "Максим Крылов",
-    "avatarUrl": "https://example.com/avatars/user19.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=19",
     "cityId": 8,
     "dateOfBirth": "1992-05-27",
     "gender": "M",
@@ -192,7 +192,7 @@
   {
     "id": 20,
     "name": "Оксана Дмитриева",
-    "avatarUrl": "https://example.com/avatars/user20.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=20",
     "cityId": 17,
     "dateOfBirth": "1997-10-11",
     "gender": "F",
@@ -202,7 +202,7 @@
   {
     "id": 21,
     "name": "Никита Павлов",
-    "avatarUrl": "https://example.com/avatars/user21.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=21",
     "cityId": 25,
     "dateOfBirth": "1993-03-03",
     "gender": "M",
@@ -212,7 +212,7 @@
   {
     "id": 22,
     "name": "Дарья Белова",
-    "avatarUrl": "https://example.com/avatars/user22.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=22",
     "cityId": 13,
     "dateOfBirth": "2002-06-05",
     "gender": "F",
@@ -222,7 +222,7 @@
   {
     "id": 23,
     "name": "Игорь Соколов",
-    "avatarUrl": "https://example.com/avatars/user23.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=23",
     "cityId": 22,
     "dateOfBirth": "1987-08-19",
     "gender": "M",
@@ -232,7 +232,7 @@
   {
     "id": 24,
     "name": "Анастасия Тимофеева",
-    "avatarUrl": "https://example.com/avatars/user24.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=24",
     "cityId": 20,
     "dateOfBirth": "1999-12-02",
     "gender": "F",
@@ -242,7 +242,7 @@
   {
     "id": 25,
     "name": "Кирилл Захаров",
-    "avatarUrl": "https://example.com/avatars/user25.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=25",
     "cityId": 3,
     "dateOfBirth": "1991-04-17",
     "gender": "M",
@@ -252,7 +252,7 @@
   {
     "id": 26,
     "name": "Марина Алексеева",
-    "avatarUrl": "https://example.com/avatars/user26.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=26",
     "cityId": 11,
     "dateOfBirth": "1996-07-09",
     "gender": "F",
@@ -262,7 +262,7 @@
   {
     "id": 27,
     "name": "Артём Васильев",
-    "avatarUrl": "https://example.com/avatars/user27.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=27",
     "cityId": 28,
     "dateOfBirth": "1989-12-23",
     "gender": "M",
@@ -272,7 +272,7 @@
   {
     "id": 28,
     "name": "Полина Миронова",
-    "avatarUrl": "https://example.com/avatars/user28.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=28",
     "cityId": 16,
     "dateOfBirth": "2000-06-02",
     "gender": "F",
@@ -282,7 +282,7 @@
   {
     "id": 29,
     "name": "Николай Кузьмин",
-    "avatarUrl": "https://example.com/avatars/user29.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=29",
     "cityId": 7,
     "dateOfBirth": "1993-03-10",
     "gender": "M",
@@ -292,7 +292,7 @@
   {
     "id": 30,
     "name": "Елена Филиппова",
-    "avatarUrl": "https://example.com/avatars/user30.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=30",
     "cityId": 13,
     "dateOfBirth": "1998-08-22",
     "gender": "F",
@@ -302,7 +302,7 @@
   {
     "id": 31,
     "name": "Вячеслав Орлов",
-    "avatarUrl": "https://example.com/avatars/user31.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=31",
     "cityId": 22,
     "dateOfBirth": "1987-05-06",
     "gender": "M",
@@ -312,7 +312,7 @@
   {
     "id": 32,
     "name": "Дарина Никитина",
-    "avatarUrl": "https://example.com/avatars/user32.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=32",
     "cityId": 5,
     "dateOfBirth": "2001-09-14",
     "gender": "F",
@@ -322,7 +322,7 @@
   {
     "id": 33,
     "name": "Илья Тимофеев",
-    "avatarUrl": "https://example.com/avatars/user33.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=33",
     "cityId": 19,
     "dateOfBirth": "1994-11-12",
     "gender": "M",
@@ -332,7 +332,7 @@
   {
     "id": 34,
     "name": "София Воронова",
-    "avatarUrl": "https://example.com/avatars/user34.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=34",
     "cityId": 21,
     "dateOfBirth": "1999-01-25",
     "gender": "F",
@@ -342,7 +342,7 @@
   {
     "id": 35,
     "name": "Александр Логинов",
-    "avatarUrl": "https://example.com/avatars/user35.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=35",
     "cityId": 10,
     "dateOfBirth": "1992-06-15",
     "gender": "M",
@@ -352,7 +352,7 @@
   {
     "id": 36,
     "name": "Екатерина Щербакова",
-    "avatarUrl": "https://example.com/avatars/user36.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=36",
     "cityId": 7,
     "dateOfBirth": "1997-12-03",
     "gender": "F",
@@ -362,7 +362,7 @@
   {
     "id": 37,
     "name": "Денис Гаврилов",
-    "avatarUrl": "https://example.com/avatars/user37.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=37",
     "cityId": 13,
     "dateOfBirth": "1988-09-21",
     "gender": "M",
@@ -372,7 +372,7 @@
   {
     "id": 38,
     "name": "Анна Григорьева",
-    "avatarUrl": "https://example.com/avatars/user38.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=38",
     "cityId": 18,
     "dateOfBirth": "1995-05-17",
     "gender": "F",
@@ -382,7 +382,7 @@
   {
     "id": 39,
     "name": "Михаил Серов",
-    "avatarUrl": "https://example.com/avatars/user39.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=39",
     "cityId": 5,
     "dateOfBirth": "1990-11-05",
     "gender": "M",
@@ -392,7 +392,7 @@
   {
     "id": 40,
     "name": "Виктория Полякова",
-    "avatarUrl": "https://example.com/avatars/user40.jpg",
+    "avatarUrl": "https://i.pravatar.cc/150?img=40",
     "cityId": 23,
     "dateOfBirth": "1998-02-28",
     "gender": "F",
