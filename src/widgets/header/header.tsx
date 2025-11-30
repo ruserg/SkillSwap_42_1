@@ -49,7 +49,7 @@ export const Header = () => {
         <div className={styles.themeIcon}></div>
       </button>
 
-      <div className={styles.auth}>
+      <div className={styles.authButtons}>
         <Link to="/login" className={styles.navLink}>
           <Button children={"Войти"} variant="secondary"></Button>
         </Link>
