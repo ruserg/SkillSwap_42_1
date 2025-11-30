@@ -2,9 +2,9 @@ import { type FC, memo, useState } from "react";
 import type { TSelectorProps } from "./type";
 import styles from "./selector.module.scss";
 import clsx from "clsx";
-import { Arrow } from "../Arrow/Arrow";
-import type { TOption } from "../Options/type";
-import { Options } from "../Options/Options";
+import { Arrow } from "@shared/ui/arrow";
+import type { TOption } from "@shared/ui/options/type.ts";
+import { Options } from "@shared/ui/options/options.tsx";
 
 // Данный компонент отображает раскрывающийся список чекбоксов
 

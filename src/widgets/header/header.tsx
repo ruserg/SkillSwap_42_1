@@ -1,8 +1,10 @@
 import styles from "./header.module.scss";
 import { Link } from "react-router-dom";
-import { Logo } from "../../shared/ui/Logo/Logo.tsx";
+import { Logo } from "@shared/ui/logo/logo.tsx";
 import { Button } from "@shared/ui/button";
 import clsx from "clsx";
+import { Input } from "@shared/ui/input";
+import { DecoratedButton } from "@shared/ui/decoratedButton/decoratedButton.tsx";
 
 export const Header = () => {
   return (
@@ -35,26 +37,17 @@ export const Header = () => {
       </nav>
 
       <div className={styles.search}>
-        <Link to="/favorites" className={styles.navLink}>
-          <input
-            type="text"
-            placeholder={"Искать навык"}
-            className={styles.input}
-          />
-        </Link>
+        <Input type={"search"} />
       </div>
 
-      {/* // TODO: Заменить на компонент кнопки переключения светлой/темной темы */}
-      <button className={styles.themeToggle}>
-        <div className={styles.themeIcon}></div>
-      </button>
+      <DecoratedButton variant={"moon"} />
 
       <div className={styles.authButtons}>
         <Link to="/login" className={styles.navLink}>
           <Button children={"Войти"} variant="secondary"></Button>
         </Link>
 
-        <Link to="/login" className={styles.navLink}>
+        <Link to="/registration/step1" className={styles.navLink}>
           <Button children={"Зарегистрироваться"}></Button>
         </Link>
       </div>
