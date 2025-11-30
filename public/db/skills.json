@@ -3,20 +3,1200 @@
     "id": 1,
     "subcategoryId": 1,
     "userId": 1,
-    "name": "Игра на гитаре",
-    "description": "Базовые аккорды, переборы, ритмика",
-    "type_of_proposal": "обучение",
+    "name": "Эффективное управление командой",
+    "description": "Методы мотивации и организации работы команды.",
+    "type_of_proposal": "учусь",
     "images": [],
-    "modified_datetime": "2025-11-28T22:00:00Z"
+    "modified_datetime": "2025-11-29T20:15:00Z"
   },
   {
     "id": 2,
-    "subcategoryId": 3,
+    "subcategoryId": 17,
     "userId": 2,
-    "name": "Английский для начинающих",
-    "description": "Базовая грамматика и разговорные фразы",
-    "type_of_proposal": "обучение",
+    "name": "Разговорный английский",
+    "description": "Фразы для повседневного общения и работы.",
+    "type_of_proposal": "учусь",
     "images": [],
-    "modified_datetime": "2025-11-28T22:10:00Z"
+    "modified_datetime": "2025-11-29T20:05:00Z"
+  },
+  {
+    "id": 3,
+    "subcategoryId": 8,
+    "userId": 3,
+    "name": "Предпринимательское мышление",
+    "description": "Идеи, стратегии и первые шаги для стартапа.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:55:00Z"
+  },
+  {
+    "id": 4,
+    "subcategoryId": 31,
+    "userId": 4,
+    "name": "Управление домашними финансами",
+    "description": "Планирование бюджета, учет расходов и экономия.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:55:00Z"
+  },
+  {
+    "id": 5,
+    "subcategoryId": 32,
+    "userId": 5,
+    "name": "Готовка для начинающих",
+    "description": "Простые рецепты и основы кулинарии.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:35:00Z"
+  },
+  {
+    "id": 6,
+    "subcategoryId": 9,
+    "userId": 6,
+    "name": "Рисование для начинающих",
+    "description": "Основы техники, перспективы и композиции.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:15:00Z"
+  },
+  {
+    "id": 7,
+    "subcategoryId": 3,
+    "userId": 7,
+    "name": "Техника успешных переговоров",
+    "description": "Методы ведения переговоров и закрытия сделок.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:05:00Z"
+  },
+  {
+    "id": 8,
+    "subcategoryId": 29,
+    "userId": 8,
+    "name": "Основы коучинга",
+    "description": "Помогаем людям достигать целей и развиваться.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:25:00Z"
+  },
+  {
+    "id": 9,
+    "subcategoryId": 3,
+    "userId": 9,
+    "name": "Английский для IT",
+    "description": "Терминология и фразы для работы в IT-сфере.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:50:00Z"
+  },
+  {
+    "id": 10,
+    "subcategoryId": 6,
+    "userId": 10,
+    "name": "Тайм-менеджмент для продуктивности",
+    "description": "Секреты планирования задач и соблюдения дедлайнов.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:50:00Z"
+  },
+  {
+    "id": 11,
+    "subcategoryId": 6,
+    "userId": 11,
+    "name": "Тайм-менеджмент для продуктивности",
+    "description": "Инструменты планирования и оптимизации времени.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:20:00Z"
+  },
+  {
+    "id": 12,
+    "subcategoryId": 7,
+    "userId": 12,
+    "name": "Управление проектами",
+    "description": "От планирования до контроля выполнения задач.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:30:00Z"
+  },
+  {
+    "id": 13,
+    "subcategoryId": 20,
+    "userId": 13,
+    "name": "Немецкий для работы",
+    "description": "Важные слова и фразы для бизнеса.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:05:00Z"
+  },
+  {
+    "id": 14,
+    "subcategoryId": 11,
+    "userId": 14,
+    "name": "Монтаж видео для начинающих",
+    "description": "Работа с программами монтажа и создание роликов.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:50:00Z"
+  },
+  {
+    "id": 15,
+    "subcategoryId": 23,
+    "userId": 15,
+    "name": "Подготовка к IELTS",
+    "description": "Стратегии для успешной сдачи экзамена и практические задания.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:05:00Z"
+  },
+  {
+    "id": 16,
+    "subcategoryId": 25,
+    "userId": 16,
+    "name": "Ускоренное обучение",
+    "description": "Методы быстрого запоминания информации.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:50:00Z"
+  },
+  {
+    "id": 17,
+    "subcategoryId": 11,
+    "userId": 17,
+    "name": "Видеомонтаж",
+    "description": "Создание и редактирование видео для различных целей: блог, презентации, соцсети.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:00:00Z"
+  },
+  {
+    "id": 18,
+    "subcategoryId": 41,
+    "userId": 18,
+    "name": "Качественный сон и восстановление",
+    "description": "Ритуалы сна и техники восстановления энергии.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:30:00Z"
+  },
+  {
+    "id": 19,
+    "subcategoryId": 25,
+    "userId": 19,
+    "name": "Эффективное обучение",
+    "description": "Методы запоминания и структурирования информации.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:10:00Z"
+  },
+  {
+    "id": 20,
+    "subcategoryId": 1,
+    "userId": 20,
+    "name": "Эффективная коммуникация в команде",
+    "description": "Учимся правильно общаться и мотивировать сотрудников.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:05:00Z"
+  },
+  {
+    "id": 21,
+    "subcategoryId": 12,
+    "userId": 21,
+    "name": "Игра на гитаре",
+    "description": "Базовые аккорды, переборы, ритмика",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:15:00Z"
+  },
+  {
+    "id": 22,
+    "subcategoryId": 2,
+    "userId": 22,
+    "name": "Контент-маркетинг",
+    "description": "Создание стратегий для продвижения бренда.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:10:00Z"
+  },
+  {
+    "id": 23,
+    "subcategoryId": 38,
+    "userId": 23,
+    "name": "Управление стрессом",
+    "description": "Методы снижения тревожности и улучшения настроения.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:55:00Z"
+  },
+  {
+    "id": 24,
+    "subcategoryId": 34,
+    "userId": 24,
+    "name": "Ремонт своими руками",
+    "description": "Базовые навыки работы с инструментами.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:45:00Z"
+  },
+  {
+    "id": 25,
+    "subcategoryId": 40,
+    "userId": 25,
+    "name": "Домашние тренировки",
+    "description": "Простые комплексы упражнений без спортзала.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:05:00Z"
+  },
+  {
+    "id": 26,
+    "subcategoryId": 29,
+    "userId": 26,
+    "name": "Коучинг для личного роста",
+    "description": "Методы постановки целей и поддержка клиента на пути развития.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:15:00Z"
+  },
+  {
+    "id": 27,
+    "subcategoryId": 28,
+    "userId": 27,
+    "name": "Навыки преподавания онлайн",
+    "description": "Создаем уроки и обучаем дистанционно эффективно.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:30:00Z"
+  },
+  {
+    "id": 28,
+    "subcategoryId": 28,
+    "userId": 28,
+    "name": "Навыки преподавания",
+    "description": "Методы эффективной подачи информации.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:30:00Z"
+  },
+  {
+    "id": 29,
+    "subcategoryId": 19,
+    "userId": 29,
+    "name": "Испанский разговорный",
+    "description": "Повседневная лексика и общение с носителями языка.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-28T22:20:00Z"
+  },
+  {
+    "id": 30,
+    "subcategoryId": 37,
+    "userId": 30,
+    "name": "Здоровое питание",
+    "description": "Принципы рационального и сбалансированного питания.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:10:00Z"
+  },
+  {
+    "id": 31,
+    "subcategoryId": 5,
+    "userId": 31,
+    "name": "Подготовка резюме",
+    "description": "Создаём впечатляющее резюме для работодателей.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:40:00Z"
+  },
+  {
+    "id": 32,
+    "subcategoryId": 12,
+    "userId": 32,
+    "name": "Основы музыкальной композиции",
+    "description": "Создание простых мелодий и ритмов для начинающих.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-28T22:50:00Z"
+  },
+  {
+    "id": 33,
+    "subcategoryId": 18,
+    "userId": 33,
+    "name": "Французский для путешествий",
+    "description": "Учим базовые фразы и культуру.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:40:00Z"
+  },
+  {
+    "id": 34,
+    "subcategoryId": 36,
+    "userId": 34,
+    "name": "Йога и дыхательные практики",
+    "description": "Асаны и упражнения для энергии и релаксации.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:50:00Z"
+  },
+  {
+    "id": 35,
+    "subcategoryId": 30,
+    "userId": 35,
+    "name": "Уборка и организация пространства",
+    "description": "Методы наведения порядка дома и на рабочем месте.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:55:00Z"
+  },
+  {
+    "id": 36,
+    "subcategoryId": 11,
+    "userId": 36,
+    "name": "Монтаж видео для начинающих",
+    "description": "Основы монтажа, работа с эффектами и музыкой.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:10:00Z"
+  },
+  {
+    "id": 37,
+    "subcategoryId": 4,
+    "userId": 37,
+    "name": "Создание личного бренда",
+    "description": "Развитие и продвижение вашего личного бренда в интернете и оффлайн.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:50:00Z"
+  },
+  {
+    "id": 38,
+    "subcategoryId": 2,
+    "userId": 38,
+    "name": "Цифровая фотография",
+    "description": "Съёмка и обработка фотографий на компьютере.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:45:00Z"
+  },
+  {
+    "id": 39,
+    "subcategoryId": 25,
+    "userId": 39,
+    "name": "Эффективные техники обучения",
+    "description": "Методы быстрого запоминания и организации информации.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:40:00Z"
+  },
+  {
+    "id": 40,
+    "subcategoryId": 20,
+    "userId": 40,
+    "name": "Немецкий для работы",
+    "description": "Бизнес-лексика и профессиональные фразы.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:35:00Z"
+  },
+  {
+    "id": 41,
+    "subcategoryId": 8,
+    "userId": 18,
+    "name": "Начало собственного бизнеса",
+    "description": "От идеи до первых продаж: пошаговое руководство.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-28T23:10:00Z"
+  },
+  {
+    "id": 42,
+    "subcategoryId": 34,
+    "userId": 7,
+    "name": "Базовый ремонт дома",
+    "description": "Осваиваем простые техники ремонта и починки в доме.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:50:00Z"
+  },
+  {
+    "id": 43,
+    "subcategoryId": 21,
+    "userId": 31,
+    "name": "Китайский для бизнеса",
+    "description": "Словарь и выражения для делового общения.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:50:00Z"
+  },
+  {
+    "id": 44,
+    "subcategoryId": 7,
+    "userId": 39,
+    "name": "Проектное управление на практике",
+    "description": "Методы планирования и контроля проектов.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:35:00Z"
+  },
+  {
+    "id": 45,
+    "subcategoryId": 42,
+    "userId": 14,
+    "name": "Баланс работы и жизни",
+    "description": "Эффективное распределение времени между делами и отдыхом.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:40:00Z"
+  },
+  {
+    "id": 46,
+    "subcategoryId": 3,
+    "userId": 38,
+    "name": "Техника продаж по телефону",
+    "description": "Навыки холодных звонков и закрытия сделок.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:05:00Z"
+  },
+  {
+    "id": 47,
+    "subcategoryId": 26,
+    "userId": 7,
+    "name": "Когнитивные техники",
+    "description": "Приёмы улучшения мышления и анализа.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:40:00Z"
+  },
+  {
+    "id": 48,
+    "subcategoryId": 35,
+    "userId": 2,
+    "name": "Эффективное хранение вещей",
+    "description": "Системы организации и хранения предметов.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:35:00Z"
+  },
+  {
+    "id": 49,
+    "subcategoryId": 4,
+    "userId": 17,
+    "name": "Создание личного бренда",
+    "description": "Формирование узнаваемого имиджа и экспертности.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:35:00Z"
+  },
+  {
+    "id": 50,
+    "subcategoryId": 19,
+    "userId": 28,
+    "name": "Испанский для начинающих",
+    "description": "Базовый словарный запас и грамматика.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:35:00Z"
+  },
+  {
+    "id": 51,
+    "subcategoryId": 19,
+    "userId": 17,
+    "name": "Испанский с нуля",
+    "description": "Основы грамматики и разговорные выражения.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:35:00Z"
+  },
+  {
+    "id": 52,
+    "subcategoryId": 22,
+    "userId": 1,
+    "name": "Японский для путешествий",
+    "description": "Разговорные фразы и культурные советы.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:05:00Z"
+  },
+  {
+    "id": 53,
+    "subcategoryId": 33,
+    "userId": 21,
+    "name": "Уход за домашними растениями",
+    "description": "Как правильно поливать, подкармливать и размножать растения.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:45:00Z"
+  },
+  {
+    "id": 54,
+    "subcategoryId": 7,
+    "userId": 29,
+    "name": "Управление проектами для новичков",
+    "description": "Основы планирования, дедлайнов и распределения ресурсов.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:20:00Z"
+  },
+  {
+    "id": 55,
+    "subcategoryId": 17,
+    "userId": 33,
+    "name": "Английский для общения",
+    "description": "Повседневные фразы и базовая грамматика.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:15:00Z"
+  },
+  {
+    "id": 56,
+    "subcategoryId": 23,
+    "userId": 35,
+    "name": "Подготовка к IELTS",
+    "description": "Техники прохождения всех частей экзамена.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:15:00Z"
+  },
+  {
+    "id": 57,
+    "subcategoryId": 18,
+    "userId": 39,
+    "name": "Французский для путешествий",
+    "description": "Разговорные фразы и культурные нюансы.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:20:00Z"
+  },
+  {
+    "id": 58,
+    "subcategoryId": 11,
+    "userId": 3,
+    "name": "Монтаж видео для соцсетей",
+    "description": "Сделаем ролики яркими и цепляющими.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:00:00Z"
+  },
+  {
+    "id": 59,
+    "subcategoryId": 9,
+    "userId": 10,
+    "name": "Основы рисования",
+    "description": "Техники карандаша и работы с цветом.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:45:00Z"
+  },
+  {
+    "id": 60,
+    "subcategoryId": 36,
+    "userId": 31,
+    "name": "Йога для начинающих",
+    "description": "Основные асаны и дыхательные практики.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:40:00Z"
+  },
+  {
+    "id": 61,
+    "subcategoryId": 41,
+    "userId": 8,
+    "name": "Советы для качественного сна",
+    "description": "Режим сна и восстановительные практики.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:35:00Z"
+  },
+  {
+    "id": 62,
+    "subcategoryId": 1,
+    "userId": 13,
+    "name": "Лидерство для менеджеров",
+    "description": "Развитие навыков управления и мотивации команды.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:15:00Z"
+  },
+  {
+    "id": 63,
+    "subcategoryId": 4,
+    "userId": 13,
+    "name": "Построение личного бренда в соцсетях",
+    "description": "Как создавать контент и привлекать подписчиков.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-28T22:30:00Z"
+  },
+  {
+    "id": 64,
+    "subcategoryId": 37,
+    "userId": 4,
+    "name": "Основы здорового питания",
+    "description": "Как составить рацион и следить за питательными веществами.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:55:00Z"
+  },
+  {
+    "id": 65,
+    "subcategoryId": 6,
+    "userId": 3,
+    "name": "Техника тайм-менеджмента",
+    "description": "Методы планирования дня и повышения продуктивности.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:25:00Z"
+  },
+  {
+    "id": 66,
+    "subcategoryId": 10,
+    "userId": 9,
+    "name": "Фотография для социальных сетей",
+    "description": "Правильный свет, композиция и обработка фото.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:25:00Z"
+  },
+  {
+    "id": 67,
+    "subcategoryId": 13,
+    "userId": 28,
+    "name": "Актёрское мастерство для сцены",
+    "description": "Техники импровизации и постановка ролей.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:55:00Z"
+  },
+  {
+    "id": 68,
+    "subcategoryId": 24,
+    "userId": 36,
+    "name": "Мотивация и цели",
+    "description": "Как ставить и достигать цели эффективно.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:25:00Z"
+  },
+  {
+    "id": 69,
+    "subcategoryId": 24,
+    "userId": 27,
+    "name": "Личностное развитие через привычки",
+    "description": "Формируем полезные привычки и развиваем себя каждый день.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:50:00Z"
+  },
+  {
+    "id": 70,
+    "subcategoryId": 34,
+    "userId": 4,
+    "name": "Ремонт своими руками",
+    "description": "Базовые навыки ремонта и работы с инструментами.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:20:00Z"
+  },
+  {
+    "id": 71,
+    "subcategoryId": 40,
+    "userId": 27,
+    "name": "Физическая активность дома",
+    "description": "Простые упражнения для поддержания формы без спортзала.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:25:00Z"
+  },
+  {
+    "id": 72,
+    "subcategoryId": 13,
+    "userId": 24,
+    "name": "Актёрское мастерство для сцены",
+    "description": "Импровизация, эмоции и техника речи на сцене.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:05:00Z"
+  },
+  {
+    "id": 73,
+    "subcategoryId": 28,
+    "userId": 8,
+    "name": "Основы преподавания",
+    "description": "Методы эффективного обучения и работы с учениками.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:40:00Z"
+  },
+  {
+    "id": 74,
+    "subcategoryId": 31,
+    "userId": 6,
+    "name": "Бюджетирование для семьи",
+    "description": "Как планировать доходы и расходы, контролировать финансы и экономить.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:05:00Z"
+  },
+  {
+    "id": 75,
+    "subcategoryId": 5,
+    "userId": 20,
+    "name": "Планирование бюджета дома",
+    "description": "Как грамотно управлять домашними финансами.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:00:00Z"
+  },
+  {
+    "id": 76,
+    "subcategoryId": 36,
+    "userId": 36,
+    "name": "Йога для начинающих",
+    "description": "Основные асаны и дыхательные практики.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:10:00Z"
+  },
+  {
+    "id": 77,
+    "subcategoryId": 5,
+    "userId": 10,
+    "name": "Составление эффективного резюме",
+    "description": "Примеры и шаблоны для быстрого отклика работодателя.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:45:00Z"
+  },
+  {
+    "id": 78,
+    "subcategoryId": 12,
+    "userId": 25,
+    "name": "Основы звукозаписи и музыки",
+    "description": "Создание мелодий и работа с аудио редакторами.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:10:00Z"
+  },
+  {
+    "id": 79,
+    "subcategoryId": 31,
+    "userId": 22,
+    "name": "Домашние финансы",
+    "description": "Планирование бюджета и контроль расходов.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:05:00Z"
+  },
+  {
+    "id": 80,
+    "subcategoryId": 27,
+    "userId": 3,
+    "name": "Скорочтение и концентрация",
+    "description": "Учимся читать быстрее и лучше запоминать прочитанное.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:05:00Z"
+  },
+  {
+    "id": 81,
+    "subcategoryId": 13,
+    "userId": 13,
+    "name": "Актёрская игра",
+    "description": "Основы эмоций, мимики и сценического поведения.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:45:00Z"
+  },
+  {
+    "id": 82,
+    "subcategoryId": 5,
+    "userId": 38,
+    "name": "Подготовка к собеседованию",
+    "description": "Советы по составлению резюме и прохождению интервью.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:55:00Z"
+  },
+  {
+    "id": 83,
+    "subcategoryId": 40,
+    "userId": 29,
+    "name": "Физические тренировки дома",
+    "description": "Простые комплексы упражнений без спортзала.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:50:00Z"
+  },
+  {
+    "id": 84,
+    "subcategoryId": 29,
+    "userId": 17,
+    "name": "Основы коучинга",
+    "description": "Изучаем техники коучинга для личного и профессионального развития.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:40:00Z"
+  },
+  {
+    "id": 85,
+    "subcategoryId": 16,
+    "userId": 4,
+    "name": "Декор и DIY проекты",
+    "description": "Создаем уютные вещи своими руками.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:25:00Z"
+  },
+  {
+    "id": 86,
+    "subcategoryId": 38,
+    "userId": 30,
+    "name": "Укрепление ментального здоровья",
+    "description": "Практики снижения стресса и повышения устойчивости.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:20:00Z"
+  },
+  {
+    "id": 87,
+    "subcategoryId": 20,
+    "userId": 6,
+    "name": "Немецкий язык для работы",
+    "description": "Разговорная практика и деловая лексика.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:45:00Z"
+  },
+  {
+    "id": 88,
+    "subcategoryId": 16,
+    "userId": 15,
+    "name": "DIY декор",
+    "description": "Создание уникальных предметов интерьера своими руками.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:30:00Z"
+  },
+  {
+    "id": 89,
+    "subcategoryId": 8,
+    "userId": 28,
+    "name": "Предпринимательство для начинающих",
+    "description": "Создание стартапа и управление бизнесом.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:40:00Z"
+  },
+  {
+    "id": 90,
+    "subcategoryId": 10,
+    "userId": 19,
+    "name": "Основы фотографии",
+    "description": "Свет, кадр и базовые настройки камеры.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:35:00Z"
+  },
+  {
+    "id": 91,
+    "subcategoryId": 16,
+    "userId": 24,
+    "name": "DIY проекты для дома",
+    "description": "Создание декора и полезных вещей своими руками.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:00:00Z"
+  },
+  {
+    "id": 92,
+    "subcategoryId": 10,
+    "userId": 2,
+    "name": "Фотография для соцсетей",
+    "description": "Секреты съемки, обработки и публикации фото.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:35:00Z"
+  },
+  {
+    "id": 93,
+    "subcategoryId": 2,
+    "userId": 23,
+    "name": "Цифровой маркетинг",
+    "description": "Стратегии продвижения бренда в интернете.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:45:00Z"
+  },
+  {
+    "id": 94,
+    "subcategoryId": 12,
+    "userId": 12,
+    "name": "Создание музыки и битов",
+    "description": "Простые программы и техника композиции.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:10:00Z"
+  },
+  {
+    "id": 95,
+    "subcategoryId": 25,
+    "userId": 23,
+    "name": "Эффективное запоминание",
+    "description": "Методы и техники для быстрого и надёжного запоминания информации.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:55:00Z"
+  },
+  {
+    "id": 96,
+    "subcategoryId": 4,
+    "userId": 35,
+    "name": "Создание личного бренда в соцсетях",
+    "description": "Как выделяться и привлекать аудиторию.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:20:00Z"
+  },
+  {
+    "id": 97,
+    "subcategoryId": 21,
+    "userId": 7,
+    "name": "Китайский для путешествий",
+    "description": "Базовые фразы и иероглифы для туристов.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:30:00Z"
+  },
+  {
+    "id": 98,
+    "subcategoryId": 33,
+    "userId": 27,
+    "name": "Уход за домашними растениями",
+    "description": "Полив, пересадка и выбор подходящих растений.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:15:00Z"
+  },
+  {
+    "id": 99,
+    "subcategoryId": 27,
+    "userId": 10,
+    "name": "Скорочтение",
+    "description": "Увеличение скорости чтения и понимания текста.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:35:00Z"
+  },
+  {
+    "id": 100,
+    "subcategoryId": 39,
+    "userId": 16,
+    "name": "Осознанность и медитация",
+    "description": "Практики для концентрации и внутреннего баланса.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:05:00Z"
+  },
+  {
+    "id": 101,
+    "subcategoryId": 22,
+    "userId": 18,
+    "name": "Японский для начинающих",
+    "description": "Изучаем основы разговорного японского и хирагану.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:55:00Z"
+  },
+  {
+    "id": 102,
+    "subcategoryId": 16,
+    "userId": 10,
+    "name": "DIY проекты дома",
+    "description": "Создаём украшения и декор своими руками.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:20:00Z"
+  },
+  {
+    "id": 103,
+    "subcategoryId": 42,
+    "userId": 5,
+    "name": "Баланс работы и личной жизни",
+    "description": "Методы планирования времени и приоритетов.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:55:00Z"
+  },
+  {
+    "id": 104,
+    "subcategoryId": 18,
+    "userId": 33,
+    "name": "Французский для путешествий",
+    "description": "Фразы и выражения для поездок во Францию.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:15:00Z"
+  },
+  {
+    "id": 105,
+    "subcategoryId": 38,
+    "userId": 30,
+    "name": "Ментальное здоровье",
+    "description": "Техники поддержания психического благополучия и снижения стресса.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:50:00Z"
+  },
+  {
+    "id": 106,
+    "subcategoryId": 40,
+    "userId": 14,
+    "name": "Физические тренировки",
+    "description": "Упражнения и программы для поддержания физической формы.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:20:00Z"
+  },
+  {
+    "id": 107,
+    "subcategoryId": 37,
+    "userId": 27,
+    "name": "Питание и ЗОЖ",
+    "description": "Принципы правильного питания и активного образа жизни.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:20:00Z"
+  },
+  {
+    "id": 108,
+    "subcategoryId": 9,
+    "userId": 24,
+    "name": "Основы рисования и скетчинга",
+    "description": "Учимся создавать наброски и рисунки для творчества.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:55:00Z"
+  },
+  {
+    "id": 109,
+    "subcategoryId": 30,
+    "userId": 26,
+    "name": "Организация пространства дома",
+    "description": "Эффективные методы уборки и рационального хранения.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:00:00Z"
+  },
+  {
+    "id": 110,
+    "subcategoryId": 9,
+    "userId": 33,
+    "name": "Основы рисования и иллюстрации",
+    "description": "Учимся создавать рисунки, зарисовки и простые иллюстрации.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-28T23:40:00Z"
+  },
+  {
+    "id": 111,
+    "subcategoryId": 38,
+    "userId": 21,
+    "name": "Ментальное здоровье",
+    "description": "Техники расслабления и снижения стресса.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:35:00Z"
+  },
+  {
+    "id": 112,
+    "subcategoryId": 32,
+    "userId": 13,
+    "name": "Готовим здоровую еду",
+    "description": "Простые рецепты и основы правильного питания.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:50:00Z"
+  },
+  {
+    "id": 113,
+    "subcategoryId": 3,
+    "userId": 3,
+    "name": "Продажи через социальные сети",
+    "description": "Как привлекать клиентов и вести сделки онлайн.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:45:00Z"
+  },
+  {
+    "id": 114,
+    "subcategoryId": 2,
+    "userId": 34,
+    "name": "Создание рекламных кампаний",
+    "description": "Как делать кампании в соцсетях и анализировать эффективность.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:50:00Z"
+  },
+  {
+    "id": 115,
+    "subcategoryId": 17,
+    "userId": 40,
+    "name": "Английский для начинающих",
+    "description": "Базовая грамматика и разговорная практика.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T19:45:00Z"
+  },
+  {
+    "id": 116,
+    "subcategoryId": 26,
+    "userId": 27,
+    "name": "Когнитивные техники для мозга",
+    "description": "Тренируем внимание, память и креативность.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:25:00Z"
+  },
+  {
+    "id": 117,
+    "subcategoryId": 35,
+    "userId": 37,
+    "name": "Системы хранения вещей",
+    "description": "Советы по оптимизации и организации вещей дома.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:40:00Z"
+  },
+  {
+    "id": 118,
+    "subcategoryId": 24,
+    "userId": 11,
+    "name": "Личностный рост",
+    "description": "Как развивать уверенность и мотивацию.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:50:00Z"
+  },
+  {
+    "id": 119,
+    "subcategoryId": 32,
+    "userId": 23,
+    "name": "Быстрая и здоровая еда",
+    "description": "Рецепты и советы по питанию на каждый день.",
+    "type_of_proposal": "учу",
+    "images": [],
+    "modified_datetime": "2025-11-29T20:15:00Z"
+  },
+  {
+    "id": 120,
+    "subcategoryId": 30,
+    "userId": 32,
+    "name": "Организация пространства",
+    "description": "Оптимизация хранения вещей дома и на работе.",
+    "type_of_proposal": "учусь",
+    "images": [],
+    "modified_datetime": "2025-11-29T21:30:00Z"
   }
 ]

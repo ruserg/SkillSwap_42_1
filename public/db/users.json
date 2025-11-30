@@ -1,26 +1,402 @@
 [
   {
     "id": 1,
-    "name": "Евгений Симонов",
-    "avatarUrl": "https://example.com/avatars/user0.jpg",
+    "name": "Евгений",
+    "avatarUrl": "https://i.pravatar.cc/150?img=1",
     "cityId": 1,
-    "dateOfBirth": "1990-01-01",
+    "dateOfBirth": "1995-05-23",
     "gender": "M",
     "dateOfRegistration": "2025-01-01T12:00:00Z",
-    "lastLoginDatetime": "2025-11-28T21:50:00Z",
-    "skillsCanTeach": [1],
-    "skillsWantToLearn": [2]
+    "lastLoginDatetime": "2025-11-28T21:50:00Z"
   },
   {
     "id": 2,
-    "name": "Анна Кузнецова",
-    "avatarUrl": "https://example.com/avatars/user1.jpg",
-    "cityId": 2,
-    "dateOfBirth": "1992-05-20",
+    "name": "Анна",
+    "avatarUrl": "https://i.pravatar.cc/150?img=2",
+    "cityId": 25,
+    "dateOfBirth": "1998-03-14",
     "gender": "F",
-    "dateOfRegistration": "2025-02-15T10:30:00Z",
-    "lastLoginDatetime": "2025-11-28T22:05:00Z",
-    "skillsCanTeach": [2],
-    "skillsWantToLearn": [1]
+    "dateOfRegistration": "2025-02-11T09:30:00Z",
+    "lastLoginDatetime": "2025-11-28T19:12:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Сергей",
+    "avatarUrl": "https://i.pravatar.cc/150?img=3",
+    "cityId": 30,
+    "dateOfBirth": "1990-01-14",
+    "gender": "M",
+    "dateOfRegistration": "2025-03-10T12:00:00Z",
+    "lastLoginDatetime": "2025-11-20T22:45:00Z"
+  },
+  {
+    "id": 4,
+    "name": "Екатерина",
+    "avatarUrl": "https://i.pravatar.cc/150?img=4",
+    "cityId": 18,
+    "dateOfBirth": "1995-08-09",
+    "gender": "F",
+    "dateOfRegistration": "2022-09-22T11:30:00Z",
+    "lastLoginDatetime": "2025-01-15T19:00:00Z"
+  },
+  {
+    "id": 5,
+    "name": "Дмитрий",
+    "avatarUrl": "https://i.pravatar.cc/150?img=5",
+    "cityId": 3,
+    "dateOfBirth": "1988-12-17",
+    "gender": "M",
+    "dateOfRegistration": "2023-01-05T10:15:00Z",
+    "lastLoginDatetime": "2025-08-20T15:40:00Z"
+  },
+  {
+    "id": 6,
+    "name": "Ольга",
+    "avatarUrl": "https://i.pravatar.cc/150?img=6",
+    "cityId": 21,
+    "dateOfBirth": "2000-06-12",
+    "gender": "F",
+    "dateOfRegistration": "2024-04-11T09:00:00Z",
+    "lastLoginDatetime": "2025-10-28T21:25:00Z"
+  },
+  {
+    "id": 7,
+    "name": "Алексей",
+    "avatarUrl": "https://i.pravatar.cc/150?img=7",
+    "cityId": 14,
+    "dateOfBirth": "1993-09-02",
+    "gender": "M",
+    "dateOfRegistration": "2025-05-19T13:30:00Z",
+    "lastLoginDatetime": "2025-11-01T18:45:00Z"
+  },
+  {
+    "id": 8,
+    "name": "Наталья",
+    "avatarUrl": "https://i.pravatar.cc/150?img=8",
+    "cityId": 5,
+    "dateOfBirth": "1997-02-28",
+    "gender": "F",
+    "dateOfRegistration": "2022-12-10T14:40:00Z",
+    "lastLoginDatetime": "2025-07-15T17:10:00Z"
+  },
+  {
+    "id": 9,
+    "name": "Виктор",
+    "avatarUrl": "https://i.pravatar.cc/150?img=9",
+    "cityId": 27,
+    "dateOfBirth": "1991-04-18",
+    "gender": "M",
+    "dateOfRegistration": "2024-08-08T07:50:00Z",
+    "lastLoginDatetime": "2025-09-30T20:20:00Z"
+  },
+  {
+    "id": 10,
+    "name": "Людмила",
+    "avatarUrl": "https://i.pravatar.cc/150?img=10",
+    "cityId": 9,
+    "dateOfBirth": "1996-10-21",
+    "gender": "F",
+    "dateOfRegistration": "2023-07-14T10:25:00Z",
+    "lastLoginDatetime": "2025-11-15T18:05:00Z"
+  },
+  {
+    "id": 11,
+    "name": "Константин",
+    "avatarUrl": "https://i.pravatar.cc/150?img=11",
+    "cityId": 2,
+    "dateOfBirth": "1989-03-17",
+    "gender": "M",
+    "dateOfRegistration": "2024-11-03T09:10:00Z",
+    "lastLoginDatetime": "2025-10-22T20:40:00Z"
+  },
+  {
+    "id": 12,
+    "name": "Вероника",
+    "avatarUrl": "https://i.pravatar.cc/150?img=12",
+    "cityId": 26,
+    "dateOfBirth": "2001-05-30",
+    "gender": "F",
+    "dateOfRegistration": "2025-02-25T12:45:00Z",
+    "lastLoginDatetime": "2025-11-28T14:55:00Z"
+  },
+  {
+    "id": 13,
+    "name": "Андрей",
+    "avatarUrl": "https://i.pravatar.cc/150?img=13",
+    "cityId": 14,
+    "dateOfBirth": "1994-08-09",
+    "gender": "M",
+    "dateOfRegistration": "2023-05-19T08:35:00Z",
+    "lastLoginDatetime": "2025-09-10T19:25:00Z"
+  },
+  {
+    "id": 14,
+    "name": "Татьяна",
+    "avatarUrl": "https://i.pravatar.cc/150?img=14",
+    "cityId": 19,
+    "dateOfBirth": "1998-12-12",
+    "gender": "F",
+    "dateOfRegistration": "2024-03-12T15:50:00Z",
+    "lastLoginDatetime": "2025-11-20T21:15:00Z"
+  },
+  {
+    "id": 15,
+    "name": "Евгений",
+    "avatarUrl": "https://i.pravatar.cc/150?img=15",
+    "cityId": 6,
+    "dateOfBirth": "1990-09-04",
+    "gender": "M",
+    "dateOfRegistration": "2023-06-21T10:15:00Z",
+    "lastLoginDatetime": "2025-11-25T19:50:00Z"
+  },
+  {
+    "id": 16,
+    "name": "Алина",
+    "avatarUrl": "https://i.pravatar.cc/150?img=16",
+    "cityId": 12,
+    "dateOfBirth": "1995-07-18",
+    "gender": "F",
+    "dateOfRegistration": "2024-01-30T08:40:00Z",
+    "lastLoginDatetime": "2025-10-05T14:20:00Z"
+  },
+  {
+    "id": 17,
+    "name": "Владислав",
+    "avatarUrl": "https://i.pravatar.cc/150?img=17",
+    "cityId": 29,
+    "dateOfBirth": "1988-11-29",
+    "gender": "M",
+    "dateOfRegistration": "2025-03-12T12:10:00Z",
+    "lastLoginDatetime": "2025-11-18T21:30:00Z"
+  },
+  {
+    "id": 18,
+    "name": "Светлана",
+    "avatarUrl": "https://i.pravatar.cc/150?img=18",
+    "cityId": 4,
+    "dateOfBirth": "2000-02-14",
+    "gender": "F",
+    "dateOfRegistration": "2022-12-18T09:50:00Z",
+    "lastLoginDatetime": "2025-09-30T17:15:00Z"
+  },
+  {
+    "id": 19,
+    "name": "Максим",
+    "avatarUrl": "https://i.pravatar.cc/150?img=19",
+    "cityId": 8,
+    "dateOfBirth": "1992-05-27",
+    "gender": "M",
+    "dateOfRegistration": "2023-08-05T11:20:00Z",
+    "lastLoginDatetime": "2025-11-12T20:40:00Z"
+  },
+  {
+    "id": 20,
+    "name": "Оксана",
+    "avatarUrl": "https://i.pravatar.cc/150?img=20",
+    "cityId": 17,
+    "dateOfBirth": "1997-10-11",
+    "gender": "F",
+    "dateOfRegistration": "2024-04-02T14:30:00Z",
+    "lastLoginDatetime": "2025-11-10T18:55:00Z"
+  },
+  {
+    "id": 21,
+    "name": "Никита",
+    "avatarUrl": "https://i.pravatar.cc/150?img=21",
+    "cityId": 25,
+    "dateOfBirth": "1993-03-03",
+    "gender": "M",
+    "dateOfRegistration": "2024-09-15T07:50:00Z",
+    "lastLoginDatetime": "2025-10-28T19:35:00Z"
+  },
+  {
+    "id": 22,
+    "name": "Дарья",
+    "avatarUrl": "https://i.pravatar.cc/150?img=22",
+    "cityId": 13,
+    "dateOfBirth": "2002-06-05",
+    "gender": "F",
+    "dateOfRegistration": "2025-01-20T10:05:00Z",
+    "lastLoginDatetime": "2025-11-22T16:10:00Z"
+  },
+  {
+    "id": 23,
+    "name": "Игорь",
+    "avatarUrl": "https://i.pravatar.cc/150?img=23",
+    "cityId": 22,
+    "dateOfBirth": "1987-08-19",
+    "gender": "M",
+    "dateOfRegistration": "2023-10-28T09:15:00Z",
+    "lastLoginDatetime": "2025-11-05T21:50:00Z"
+  },
+  {
+    "id": 24,
+    "name": "Анастасия",
+    "avatarUrl": "https://i.pravatar.cc/150?img=24",
+    "cityId": 20,
+    "dateOfBirth": "1999-12-02",
+    "gender": "F",
+    "dateOfRegistration": "2024-06-18T12:45:00Z",
+    "lastLoginDatetime": "2025-11-27T20:00:00Z"
+  },
+  {
+    "id": 25,
+    "name": "Кирилл",
+    "avatarUrl": "https://i.pravatar.cc/150?img=25",
+    "cityId": 3,
+    "dateOfBirth": "1991-04-17",
+    "gender": "M",
+    "dateOfRegistration": "2024-02-12T08:30:00Z",
+    "lastLoginDatetime": "2025-11-26T19:15:00Z"
+  },
+  {
+    "id": 26,
+    "name": "Марина",
+    "avatarUrl": "https://i.pravatar.cc/150?img=26",
+    "cityId": 11,
+    "dateOfBirth": "1996-07-09",
+    "gender": "F",
+    "dateOfRegistration": "2023-09-15T10:10:00Z",
+    "lastLoginDatetime": "2025-10-20T16:40:00Z"
+  },
+  {
+    "id": 27,
+    "name": "Артём",
+    "avatarUrl": "https://i.pravatar.cc/150?img=27",
+    "cityId": 28,
+    "dateOfBirth": "1989-12-23",
+    "gender": "M",
+    "dateOfRegistration": "2025-03-18T11:20:00Z",
+    "lastLoginDatetime": "2025-11-19T20:30:00Z"
+  },
+  {
+    "id": 28,
+    "name": "Полина",
+    "avatarUrl": "https://i.pravatar.cc/150?img=28",
+    "cityId": 16,
+    "dateOfBirth": "2000-06-02",
+    "gender": "F",
+    "dateOfRegistration": "2024-05-21T09:50:00Z",
+    "lastLoginDatetime": "2025-11-15T18:20:00Z"
+  },
+  {
+    "id": 29,
+    "name": "Николай",
+    "avatarUrl": "https://i.pravatar.cc/150?img=29",
+    "cityId": 7,
+    "dateOfBirth": "1993-03-10",
+    "gender": "M",
+    "dateOfRegistration": "2023-11-07T12:40:00Z",
+    "lastLoginDatetime": "2025-10-28T19:55:00Z"
+  },
+  {
+    "id": 30,
+    "name": "Елена",
+    "avatarUrl": "https://i.pravatar.cc/150?img=30",
+    "cityId": 13,
+    "dateOfBirth": "1998-08-22",
+    "gender": "F",
+    "dateOfRegistration": "2024-01-10T10:15:00Z",
+    "lastLoginDatetime": "2025-11-21T17:45:00Z"
+  },
+  {
+    "id": 31,
+    "name": "Вячеслав",
+    "avatarUrl": "https://i.pravatar.cc/150?img=31",
+    "cityId": 22,
+    "dateOfBirth": "1987-05-06",
+    "gender": "M",
+    "dateOfRegistration": "2023-08-28T09:30:00Z",
+    "lastLoginDatetime": "2025-11-11T21:20:00Z"
+  },
+  {
+    "id": 32,
+    "name": "Дарина",
+    "avatarUrl": "https://i.pravatar.cc/150?img=32",
+    "cityId": 5,
+    "dateOfBirth": "2001-09-14",
+    "gender": "F",
+    "dateOfRegistration": "2025-02-05T08:50:00Z",
+    "lastLoginDatetime": "2025-11-28T20:10:00Z"
+  },
+  {
+    "id": 33,
+    "name": "Илья",
+    "avatarUrl": "https://i.pravatar.cc/150?img=33",
+    "cityId": 19,
+    "dateOfBirth": "1994-11-12",
+    "gender": "M",
+    "dateOfRegistration": "2024-09-20T11:00:00Z",
+    "lastLoginDatetime": "2025-11-26T19:40:00Z"
+  },
+  {
+    "id": 34,
+    "name": "София",
+    "avatarUrl": "https://i.pravatar.cc/150?img=34",
+    "cityId": 21,
+    "dateOfBirth": "1999-01-25",
+    "gender": "F",
+    "dateOfRegistration": "2024-06-12T13:25:00Z",
+    "lastLoginDatetime": "2025-11-24T18:35:00Z"
+  },
+  {
+    "id": 35,
+    "name": "Александр",
+    "avatarUrl": "https://i.pravatar.cc/150?img=35",
+    "cityId": 10,
+    "dateOfBirth": "1992-06-15",
+    "gender": "M",
+    "dateOfRegistration": "2023-07-11T09:10:00Z",
+    "lastLoginDatetime": "2025-11-28T20:00:00Z"
+  },
+  {
+    "id": 36,
+    "name": "Екатерина",
+    "avatarUrl": "https://i.pravatar.cc/150?img=36",
+    "cityId": 7,
+    "dateOfBirth": "1997-12-03",
+    "gender": "F",
+    "dateOfRegistration": "2024-03-22T11:30:00Z",
+    "lastLoginDatetime": "2025-11-26T18:45:00Z"
+  },
+  {
+    "id": 37,
+    "name": "Денис",
+    "avatarUrl": "https://i.pravatar.cc/150?img=37",
+    "cityId": 13,
+    "dateOfBirth": "1988-09-21",
+    "gender": "M",
+    "dateOfRegistration": "2024-09-08T10:50:00Z",
+    "lastLoginDatetime": "2025-11-20T19:20:00Z"
+  },
+  {
+    "id": 38,
+    "name": "Анна",
+    "avatarUrl": "https://i.pravatar.cc/150?img=38",
+    "cityId": 18,
+    "dateOfBirth": "1995-05-17",
+    "gender": "F",
+    "dateOfRegistration": "2025-01-14T08:40:00Z",
+    "lastLoginDatetime": "2025-11-22T20:35:00Z"
+  },
+  {
+    "id": 39,
+    "name": "Михаил",
+    "avatarUrl": "https://i.pravatar.cc/150?img=39",
+    "cityId": 5,
+    "dateOfBirth": "1990-11-05",
+    "gender": "M",
+    "dateOfRegistration": "2023-05-29T12:15:00Z",
+    "lastLoginDatetime": "2025-11-15T18:50:00Z"
+  },
+  {
+    "id": 40,
+    "name": "Виктория",
+    "avatarUrl": "https://i.pravatar.cc/150?img=40",
+    "cityId": 23,
+    "dateOfBirth": "1998-02-28",
+    "gender": "F",
+    "dateOfRegistration": "2024-06-08T14:20:00Z",
+    "lastLoginDatetime": "2025-11-28T19:45:00Z"
   }
 ]

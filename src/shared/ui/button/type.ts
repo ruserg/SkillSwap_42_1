@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from "react";
 
-type TButtonVariant = "primary" | "secondary" | "tertiary";
+type TButtonVariant = "primary" | "secondary" | "tertiary" | "signup";
 
 export type TButtonProps = {
   children: ReactNode;
@@ -10,4 +10,5 @@ export type TButtonProps = {
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  to?: string;
 };

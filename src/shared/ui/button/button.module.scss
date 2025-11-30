@@ -1,12 +1,12 @@
 @use "../../../styles/variables" as vars;
 @use "../../../styles/mixins" as *;
 
-//шрифта пока нет в проекте
 .button {
-  @include flex(row, center, center, 8px);
+  @include flex(row, center, center, 10px);
   block-size: 48px;
   inline-size: 100%;
   padding-block: 12px;
+  padding-inline: 24px;
   border: 1px solid transparent;
   border-radius: 12px;
   font-size: 16px;
@@ -19,12 +19,11 @@
   }
 }
 
-//иконок пока нет в проекте, нужно будет проверить
 .leftIcon,
 .rightIcon {
   @include flex(row, center, center);
-  width: 24px;
-  height: 24px;
+  inline-size: 24px;
+  block-size: 24px;
 }
 
 .primary {
@@ -89,4 +88,34 @@
     border-color: vars.$color-disabled;
     cursor: not-allowed;
   }
+}
+
+.signup {
+  background-color: vars.$color-input;
+  border-color: vars.$color-caption;
+
+  &:hover {
+    color: vars.$color-caption;
+    border-color: vars.$color-caption;
+  }
+
+  &:active {
+    color: vars.$color-text;
+    border-color: vars.$color-text;
+  }
+
+  &:disabled {
+    color: vars.$color-disabled-text;
+    border-color: vars.$color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+//этот стиль нужен для компонента Link
+.disabled {
+  color: vars.$color-caption;
+  background-color: vars.$color-disabled;
+  border-color: vars.$color-disabled;
+  pointer-events: none;
+  cursor: not-allowed;
 }

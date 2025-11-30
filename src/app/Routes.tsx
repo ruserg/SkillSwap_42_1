@@ -1,16 +1,18 @@
 import { Routes, Route } from "react-router-dom";
 import App from "./App";
 import ProtectedRoute from "./ProtectedRoute";
+import { MainPage } from "@pages/main-page/main-page.tsx";
 //основные страницы приложения - заглушки
 //после создания pages отсюда надо будет удалять
-function Home() {
-  return (
-    <section>
-      <h2>Главная</h2>
-      <p>Здесь будут предложения для обмена навыками</p>
-    </section>
-  );
-}
+//
+// function Home() {
+//   return (
+//     <section>
+//       <h2>Главная</h2>
+//       <p>Здесь будут предложения для обмена навыками</p>
+//     </section>
+//   );
+// }
 
 function Login() {
   return (
@@ -98,7 +100,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<App />}>
         {/* домашняя страница */}
-        <Route index element={<Home />} />
+        <Route index element={<MainPage />} />
         {/* публичные роуты, нужно ли оборачивать их в PublicRoute? */}
         <Route path="login" element={<Login />} />
         <Route path="registration/step1" element={<RegistrationStep1 />} />
