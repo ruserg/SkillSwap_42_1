@@ -10,7 +10,6 @@ import subcategorysData from "../../../public/db/subcategories.json";
 import citiesData from "../../../public/db/cities.json";
 
 //На текущий момент, данные тащу прям из public/db
-
 export const Filter = () => {
   const purpose = ["Всё", "Хочу научиться", "Хочу научить"];
   const categorys = categoriesData;
@@ -40,7 +39,7 @@ export const Filter = () => {
     setShowSubcategorys((prev) =>
       prev.includes(categoryId)
         ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
+        : [...prev, categoryId],
     );
   };
   const toggleShowAllSkills = () => setShowAllSkills(!showAllSkills);
@@ -73,7 +72,9 @@ export const Filter = () => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       skills: prevFilters.skills.includes(subcategoryId)
-        ? prevFilters.skills.filter((skill) => skill !== subcategoryId)
+        ? prevFilters.skills.filter(
+            (subcategory) => subcategory !== subcategoryId,
+          )
         : [...prevFilters.skills, subcategoryId],
     }));
   };
