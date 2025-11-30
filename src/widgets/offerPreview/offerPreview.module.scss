@@ -1,0 +1,131 @@
+/* @use "@styles/mixins" as *; */
+@use "../../styles/mixins" as *;
+@use "../../styles/variables" as vars;
+
+@mixin text-style($weight, $size, $line) {
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line;
+}
+
+.contentContainer {
+  @include flex(
+    $direction: row,
+    $justify: space-around,
+    $align: center,
+    $gap: 16px
+  );
+  border-radius: 12px;
+  border-width: 2px;
+  width: 100%;
+  min-width: 1020px;
+  max-width: 1024px;
+  padding: clamp(40px, 5vw, 80px) clamp(52px, 1vw + 50px, 60px)
+    clamp(40px, 6vw, 72px);
+
+  .previewDescription {
+    @include flex(
+      $direction: column,
+      $justify: space-around,
+      $align: center,
+      $gap: 16px
+    );
+    width: 399px;
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .contentTittle {
+    @include text-style($weight: 500, $size: 32px, $line: 40px);
+    font-family: Jost, sans-serif;
+    align-self: flex-start;
+    font-style: normal;
+    vertical-align: middle;
+  }
+
+  .contentContainerSubtitle {
+    @include text-style($weight: 400, $size: 12px, $line: 16px);
+    font-family: Roboto, sans-serif;
+    align-self: self-start;
+    font-style: normal;
+    vertical-align: middle;
+    color: vars.$color-caption;
+    width: 239px;
+    height: 16px;
+  }
+
+  .category {
+    @include text-style($weight: 400, $size: 12px, $line: 16px);
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    vertical-align: middle;
+    color: vars.$color-caption;
+  }
+
+  .contentDescription {
+    @include text-style($weight: 400, $size: 16px, $line: 24px);
+    font-family: Roboto, sans-serif;
+    align-self: center;
+    font-style: normal;
+    padding: 10px;
+    max-width: 399px;
+    overflow: auto;
+    height: 168px;
+    border-radius: 10px;
+  }
+
+  .btnClamp {
+    width: 100%;
+    padding-top: clamp(4px, 4vw, 12px);
+  }
+
+  .scrollbar {
+    scrollbar-gutter: stable;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #b2b9a9;
+      border-radius: 5px;
+
+      &:hover {
+        color: vars.$color-caption;
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: vars.$color-disabled;
+      border-radius: 10px;
+    }
+  }
+
+  .mainButton {
+    @include text-style($weight: 400, $size: 16px, $line: 24px);
+    font-family: Roboto, sans-serif;
+    width: 399px;
+    height: 48px;
+
+    gap: 20px;
+    font-style: normal;
+  }
+}
+
+.containerDecorButtons {
+  @include flex(
+    $direction: row,
+    $justify: flex-end,
+    $align: center,
+    $gap: 16px
+  );
+  width: 440px;
+  height: 24px;
+  padding-bottom: 24px;
+
+  .decorButton {
+    width: 24px;
+    height: 24px;
+    background-color: #3c3250;
+  }
+}

@@ -1,0 +1,84 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/variables" as vars;
+
+.cardsContainer {
+  grid-column: 2;
+  grid-row: 2;
+
+  .cardsSwiper {
+    @include grid(
+      $columns: 324px 92px,
+      $rows: repeat(2, 1fr),
+      $justify: normal,
+      $align: stretch,
+      $row-gap: 0,
+      $column-gap: 0
+    );
+    gap: 24px;
+    width: 440px;
+    height: 324px;
+
+    position: relative;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: fill;
+    }
+
+    .buttonSwap {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border-radius: 100px;
+      z-index: 5;
+    }
+
+    .left {
+      top: 50%;
+      left: 0;
+      background-image: url("../../images/icons/arrow-left-circle.svg");
+    }
+
+    .right {
+      top: 50%;
+      left: 66.5%;
+      background-image: url("../../images/icons/arrow-right-circle.svg");
+    }
+
+    .mainCard {
+      width: 324px;
+      height: 324px;
+      grid-row: span 3;
+      border-radius: 5%;
+      transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
+    }
+
+    .wrapperCards {
+      position: relative;
+
+      .otherCard {
+        width: 92px;
+        height: 92px;
+        border-radius: 10%;
+      }
+
+      .overlayCard {
+        filter: blur(3px);
+      }
+
+      .overlayCount {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 18px;
+        font-weight: bold;
+        pointer-events: none;
+        color: #000;
+      }
+    }
+  }
+}
