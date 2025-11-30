@@ -512,7 +512,7 @@
   {
     "id": 52,
     "subcategoryId": 22,
-    "userId": 2,
+    "userId": 1,
     "name": "Японский для путешествий",
     "description": "Разговорные фразы и культурные советы.",
     "type_of_proposal": "учу",
@@ -782,7 +782,7 @@
   {
     "id": 79,
     "subcategoryId": 31,
-    "userId": 24,
+    "userId": 22,
     "name": "Домашние финансы",
     "description": "Планирование бюджета и контроль расходов.",
     "type_of_proposal": "учусь",
@@ -872,7 +872,7 @@
   {
     "id": 88,
     "subcategoryId": 16,
-    "userId": 17,
+    "userId": 15,
     "name": "DIY декор",
     "description": "Создание уникальных предметов интерьера своими руками.",
     "type_of_proposal": "учу",
@@ -932,7 +932,7 @@
   {
     "id": 94,
     "subcategoryId": 12,
-    "userId": 13,
+    "userId": 12,
     "name": "Создание музыки и битов",
     "description": "Простые программы и техника композиции.",
     "type_of_proposal": "учу",
@@ -1025,7 +1025,7 @@
     "userId": 5,
     "name": "Баланс работы и личной жизни",
     "description": "Методы планирования времени и приоритетов.",
-    "type_of_proposal": "учу",
+    "type_of_proposal": "учусь",
     "images": [],
     "modified_datetime": "2025-11-29T19:55:00Z"
   },
@@ -1082,7 +1082,7 @@
   {
     "id": 109,
     "subcategoryId": 30,
-    "userId": 27,
+    "userId": 26,
     "name": "Организация пространства дома",
     "description": "Эффективные методы уборки и рационального хранения.",
     "type_of_proposal": "учу",
@@ -1132,7 +1132,7 @@
   {
     "id": 114,
     "subcategoryId": 2,
-    "userId": 32,
+    "userId": 34,
     "name": "Создание рекламных кампаний",
     "description": "Как делать кампании в соцсетях и анализировать эффективность.",
     "type_of_proposal": "учу",
@@ -1175,7 +1175,7 @@
     "userId": 11,
     "name": "Личностный рост",
     "description": "Как развивать уверенность и мотивацию.",
-    "type_of_proposal": "учу",
+    "type_of_proposal": "учусь",
     "images": [],
     "modified_datetime": "2025-11-29T20:50:00Z"
   },
