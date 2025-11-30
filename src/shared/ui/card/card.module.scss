@@ -82,15 +82,15 @@
 
 .card__sectionTitle {
   font: {
-    family: "Jost", sans-serif; // или ваш основной шрифт
+    family: "Jost", sans-serif;
     size: 16px;
     weight: 500;
   }
   color: $color-text;
   margin-bottom: 8px;
-  line-height: 1.5; /* 150% */
+  line-height: 1.5;
   letter-spacing: 0.02em;
-  text-transform: none; // Убираем uppercase если был
+  text-transform: none;
 }
 
 .card__skillItem {
@@ -161,7 +161,7 @@
   padding: 8px 12px;
   border-radius: 20px;
   height: 32px;
-  display: inline-block; // Для правильной работы многоточия
+  display: inline-block; // Для многоточия
   line-height: 16px;
   box-sizing: border-box;
   white-space: nowrap;
