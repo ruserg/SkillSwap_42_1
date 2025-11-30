@@ -1,0 +1,83 @@
+@use "../../../../styles/variables" as vars;
+@use "../../../../styles/mixins" as *;
+
+.logo {
+  @include flex(row, space-between, flex-end);
+  block-size: 60px;
+}
+
+.backButtonContainer {
+  inline-size: 147px;
+}
+
+.steps {
+  @include flex(row, center, center);
+  margin-block-end: 35px;
+}
+
+.section {
+  @include flex(row, center, stretch, 24px);
+  background-color: vars.$color-background;
+  font-family: Roboto, sans-serif;
+}
+
+.registerContainer {
+  @include flex(column, center, center, 20px);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 122px;
+  background-color: vars.$color-input;
+}
+
+.welcomeContainer {
+  @include flex(column, center, center);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 122px;
+  background-color: vars.$color-input;
+}
+
+.form {
+  inline-size: 100%;
+}
+
+.emailContainer,
+.passwordContainer {
+  @include flex(column, center, start, 5px);
+}
+
+.emailContainer {
+  margin-block-start: 5px;
+}
+
+.passwordContainer {
+  margin-block-end: 35px;
+}
+
+.errorText {
+  display: block;
+  min-block-size: 13px;
+  font-size: 12px;
+}
+
+.lightBulb {
+  block-size: 300px;
+  inline-size: 300px;
+  object-fit: cover;
+  margin-block-end: 40px;
+}
+
+.descriptionContainer {
+  @include flex(column, center, center, 12px);
+}
+
+.title {
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+}
+
+.description {
+  text-align: center;
+  padding-inline: 10px;
+  font-family: Roboto, sans-serif;
+}
