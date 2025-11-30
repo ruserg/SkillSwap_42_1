@@ -22,7 +22,7 @@ export const Header = () => {
           {/* // TODO: Заменить navigationDropDownLink на компонент DropdownMenu, когда он будет готов */}
           <li>
             <Link
-              to="/profile"
+              to="/"
               className={clsx(
                 styles.navigationDropDownLink,
                 styles.navigationLink,
@@ -44,7 +44,7 @@ export const Header = () => {
         </Link>
       </div>
 
-      {/* // TODO: Заменить div на компонент кнопки переключения светлой/темной темы */}
+      {/* // TODO: Заменить на компонент кнопки переключения светлой/темной темы */}
       <button className={styles.themeToggle}>
         <div className={styles.themeIcon}></div>
       </button>
