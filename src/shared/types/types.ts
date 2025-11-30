@@ -25,7 +25,7 @@ export type TSubcategory = {
 };
 
 // Типы предложений для навыков
-export type TypeOfProposal = "преподавание" | "обучение";
+export type TypeOfProposal = "учу" | "учусь";
 
 // Навыки
 export type TSkill = {

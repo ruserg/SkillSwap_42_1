@@ -7,9 +7,7 @@
     "dateOfBirth": "1995-05-23",
     "gender": "M",
     "dateOfRegistration": "2025-01-01T12:00:00Z",
-    "lastLoginDatetime": "2025-11-28T21:50:00Z",
-    "skillsCanTeach": [32, 26],
-    "skillsWantToLearn": [31, 49, 75, 99]
+    "lastLoginDatetime": "2025-11-28T21:50:00Z"
   },
   {
     "id": 2,
@@ -19,9 +17,7 @@
     "dateOfBirth": "1998-03-14",
     "gender": "F",
     "dateOfRegistration": "2025-02-11T09:30:00Z",
-    "lastLoginDatetime": "2025-11-28T19:12:00Z",
-    "skillsCanTeach": [66, 80, 112],
-    "skillsWantToLearn": [3, 77]
+    "lastLoginDatetime": "2025-11-28T19:12:00Z"
   },
   {
     "id": 3,
@@ -31,9 +27,7 @@
     "dateOfBirth": "1990-01-14",
     "gender": "M",
     "dateOfRegistration": "2025-03-10T12:00:00Z",
-    "lastLoginDatetime": "2025-11-20T22:45:00Z",
-    "skillsCanTeach": [16, 32, 48],
-    "skillsWantToLearn": [7, 13]
+    "lastLoginDatetime": "2025-11-20T22:45:00Z"
   },
   {
     "id": 4,
@@ -43,9 +37,7 @@
     "dateOfBirth": "1995-08-09",
     "gender": "F",
     "dateOfRegistration": "2022-09-22T11:30:00Z",
-    "lastLoginDatetime": "2025-01-15T19:00:00Z",
-    "skillsCanTeach": [6, 12, 114],
-    "skillsWantToLearn": [9, 19, 23, 37, 55]
+    "lastLoginDatetime": "2025-01-15T19:00:00Z"
   },
   {
     "id": 5,
@@ -55,9 +47,7 @@
     "dateOfBirth": "1988-12-17",
     "gender": "M",
     "dateOfRegistration": "2023-01-05T10:15:00Z",
-    "lastLoginDatetime": "2025-08-20T15:40:00Z",
-    "skillsCanTeach": [4],
-    "skillsWantToLearn": [1, 17, 33]
+    "lastLoginDatetime": "2025-08-20T15:40:00Z"
   },
   {
     "id": 6,
@@ -67,9 +57,7 @@
     "dateOfBirth": "2000-06-12",
     "gender": "F",
     "dateOfRegistration": "2024-04-11T09:00:00Z",
-    "lastLoginDatetime": "2025-10-28T21:25:00Z",
-    "skillsCanTeach": [2, 8, 50, 64, 80],
-    "skillsWantToLearn": [3, 7, 15]
+    "lastLoginDatetime": "2025-10-28T21:25:00Z"
   },
   {
     "id": 7,
@@ -79,9 +67,7 @@
     "dateOfBirth": "1993-09-02",
     "gender": "M",
     "dateOfRegistration": "2025-05-19T13:30:00Z",
-    "lastLoginDatetime": "2025-11-01T18:45:00Z",
-    "skillsCanTeach": [10, 22, 36, 48],
-    "skillsWantToLearn": [5, 11, 29, 77]
+    "lastLoginDatetime": "2025-11-01T18:45:00Z"
   },
   {
     "id": 8,
@@ -91,9 +77,7 @@
     "dateOfBirth": "1997-02-28",
     "gender": "F",
     "dateOfRegistration": "2022-12-10T14:40:00Z",
-    "lastLoginDatetime": "2025-07-15T17:10:00Z",
-    "skillsCanTeach": [2, 14, 90, 100, 118],
-    "skillsWantToLearn": [1, 21]
+    "lastLoginDatetime": "2025-07-15T17:10:00Z"
   },
   {
     "id": 9,
@@ -103,9 +87,7 @@
     "dateOfBirth": "1991-04-18",
     "gender": "M",
     "dateOfRegistration": "2024-08-08T07:50:00Z",
-    "lastLoginDatetime": "2025-09-30T20:20:00Z",
-    "skillsCanTeach": [12, 24, 36],
-    "skillsWantToLearn": [3, 9, 17, 23]
+    "lastLoginDatetime": "2025-09-30T20:20:00Z"
   },
   {
     "id": 10,
@@ -115,9 +97,7 @@
     "dateOfBirth": "1996-10-21",
     "gender": "F",
     "dateOfRegistration": "2023-07-14T10:25:00Z",
-    "lastLoginDatetime": "2025-11-15T18:05:00Z",
-    "skillsCanTeach": [4, 12, 36, 50],
-    "skillsWantToLearn": [1, 7, 31]
+    "lastLoginDatetime": "2025-11-15T18:05:00Z"
   },
   {
     "id": 11,
@@ -127,9 +107,7 @@
     "dateOfBirth": "1989-03-17",
     "gender": "M",
     "dateOfRegistration": "2024-11-03T09:10:00Z",
-    "lastLoginDatetime": "2025-10-22T20:40:00Z",
-    "skillsCanTeach": [8, 20, 64, 100, 112],
-    "skillsWantToLearn": [3]
+    "lastLoginDatetime": "2025-10-22T20:40:00Z"
   },
   {
     "id": 12,
@@ -139,9 +117,7 @@
     "dateOfBirth": "2001-05-30",
     "gender": "F",
     "dateOfRegistration": "2025-02-25T12:45:00Z",
-    "lastLoginDatetime": "2025-11-28T14:55:00Z",
-    "skillsCanTeach": [2, 16, 48, 120],
-    "skillsWantToLearn": [5, 11, 37, 101]
+    "lastLoginDatetime": "2025-11-28T14:55:00Z"
   },
   {
     "id": 13,
@@ -151,9 +127,7 @@
     "dateOfBirth": "1994-08-09",
     "gender": "M",
     "dateOfRegistration": "2023-05-19T08:35:00Z",
-    "lastLoginDatetime": "2025-09-10T19:25:00Z",
-    "skillsCanTeach": [6, 18, 42, 78, 88],
-    "skillsWantToLearn": [9, 13, 25]
+    "lastLoginDatetime": "2025-09-10T19:25:00Z"
   },
   {
     "id": 14,
@@ -163,9 +137,7 @@
     "dateOfBirth": "1998-12-12",
     "gender": "F",
     "dateOfRegistration": "2024-03-12T15:50:00Z",
-    "lastLoginDatetime": "2025-11-20T21:15:00Z",
-    "skillsCanTeach": [10, 24, 36, 60],
-    "skillsWantToLearn": [1, 3, 7, 19, 33]
+    "lastLoginDatetime": "2025-11-20T21:15:00Z"
   },
   {
     "id": 15,
@@ -175,9 +147,7 @@
     "dateOfBirth": "1990-09-04",
     "gender": "M",
     "dateOfRegistration": "2023-06-21T10:15:00Z",
-    "lastLoginDatetime": "2025-11-25T19:50:00Z",
-    "skillsCanTeach": [4, 16, 28, 44],
-    "skillsWantToLearn": [1, 9, 21, 35]
+    "lastLoginDatetime": "2025-11-25T19:50:00Z"
   },
   {
     "id": 16,
@@ -187,9 +157,7 @@
     "dateOfBirth": "1995-07-18",
     "gender": "F",
     "dateOfRegistration": "2024-01-30T08:40:00Z",
-    "lastLoginDatetime": "2025-10-05T14:20:00Z",
-    "skillsCanTeach": [52, 100],
-    "skillsWantToLearn": [3, 7, 15, 31, 57]
+    "lastLoginDatetime": "2025-10-05T14:20:00Z"
   },
   {
     "id": 17,
@@ -199,9 +167,7 @@
     "dateOfBirth": "1988-11-29",
     "gender": "M",
     "dateOfRegistration": "2025-03-12T12:10:00Z",
-    "lastLoginDatetime": "2025-11-18T21:30:00Z",
-    "skillsCanTeach": [6, 14, 32, 64, 120],
-    "skillsWantToLearn": [5, 13, 25, 33]
+    "lastLoginDatetime": "2025-11-18T21:30:00Z"
   },
   {
     "id": 18,
@@ -211,9 +177,7 @@
     "dateOfBirth": "2000-02-14",
     "gender": "F",
     "dateOfRegistration": "2022-12-18T09:50:00Z",
-    "lastLoginDatetime": "2025-09-30T17:15:00Z",
-    "skillsCanTeach": [8, 18, 36, 48],
-    "skillsWantToLearn": [1, 3, 9, 23, 57]
+    "lastLoginDatetime": "2025-09-30T17:15:00Z"
   },
   {
     "id": 19,
@@ -223,9 +187,7 @@
     "dateOfBirth": "1992-05-27",
     "gender": "M",
     "dateOfRegistration": "2023-08-05T11:20:00Z",
-    "lastLoginDatetime": "2025-11-12T20:40:00Z",
-    "skillsCanTeach": [12, 24, 36, 60, 84],
-    "skillsWantToLearn": [7, 17, 33, 45]
+    "lastLoginDatetime": "2025-11-12T20:40:00Z"
   },
   {
     "id": 20,
@@ -235,9 +197,7 @@
     "dateOfBirth": "1997-10-11",
     "gender": "F",
     "dateOfRegistration": "2024-04-02T14:30:00Z",
-    "lastLoginDatetime": "2025-11-10T18:55:00Z",
-    "skillsCanTeach": [48, 100, 118],
-    "skillsWantToLearn": [5, 11, 23]
+    "lastLoginDatetime": "2025-11-10T18:55:00Z"
   },
   {
     "id": 21,
@@ -247,9 +207,7 @@
     "dateOfBirth": "1993-03-03",
     "gender": "M",
     "dateOfRegistration": "2024-09-15T07:50:00Z",
-    "lastLoginDatetime": "2025-10-28T19:35:00Z",
-    "skillsCanTeach": [4, 16, 40, 72],
-    "skillsWantToLearn": [55]
+    "lastLoginDatetime": "2025-10-28T19:35:00Z"
   },
   {
     "id": 22,
@@ -259,9 +217,7 @@
     "dateOfBirth": "2002-06-05",
     "gender": "F",
     "dateOfRegistration": "2025-01-20T10:05:00Z",
-    "lastLoginDatetime": "2025-11-22T16:10:00Z",
-    "skillsCanTeach": [6, 48, 60, 84],
-    "skillsWantToLearn": [3, 7, 13, 25, 49]
+    "lastLoginDatetime": "2025-11-22T16:10:00Z"
   },
   {
     "id": 23,
@@ -271,9 +227,7 @@
     "dateOfBirth": "1987-08-19",
     "gender": "M",
     "dateOfRegistration": "2023-10-28T09:15:00Z",
-    "lastLoginDatetime": "2025-11-05T21:50:00Z",
-    "skillsCanTeach": [2, 8, 14, 30, 60],
-    "skillsWantToLearn": [5, 11, 21, 39]
+    "lastLoginDatetime": "2025-11-05T21:50:00Z"
   },
   {
     "id": 24,
@@ -283,9 +237,7 @@
     "dateOfBirth": "1999-12-02",
     "gender": "F",
     "dateOfRegistration": "2024-06-18T12:45:00Z",
-    "lastLoginDatetime": "2025-11-27T20:00:00Z",
-    "skillsCanTeach": [10, 22, 36, 48, 66],
-    "skillsWantToLearn": [7, 17, 23, 33, 57]
+    "lastLoginDatetime": "2025-11-27T20:00:00Z"
   },
   {
     "id": 25,
@@ -295,9 +247,7 @@
     "dateOfBirth": "1991-04-17",
     "gender": "M",
     "dateOfRegistration": "2024-02-12T08:30:00Z",
-    "lastLoginDatetime": "2025-11-26T19:15:00Z",
-    "skillsCanTeach": [2, 8, 40, 72],
-    "skillsWantToLearn": [5, 13, 21]
+    "lastLoginDatetime": "2025-11-26T19:15:00Z"
   },
   {
     "id": 26,
@@ -307,9 +257,7 @@
     "dateOfBirth": "1996-07-09",
     "gender": "F",
     "dateOfRegistration": "2023-09-15T10:10:00Z",
-    "lastLoginDatetime": "2025-10-20T16:40:00Z",
-    "skillsCanTeach": [100],
-    "skillsWantToLearn": [1, 3, 9, 15]
+    "lastLoginDatetime": "2025-10-20T16:40:00Z"
   },
   {
     "id": 27,
@@ -319,9 +267,7 @@
     "dateOfBirth": "1989-12-23",
     "gender": "M",
     "dateOfRegistration": "2025-03-18T11:20:00Z",
-    "lastLoginDatetime": "2025-11-19T20:30:00Z",
-    "skillsCanTeach": [12, 60, 120],
-    "skillsWantToLearn": [7, 11, 33, 55]
+    "lastLoginDatetime": "2025-11-19T20:30:00Z"
   },
   {
     "id": 28,
@@ -331,9 +277,7 @@
     "dateOfBirth": "2000-06-02",
     "gender": "F",
     "dateOfRegistration": "2024-05-21T09:50:00Z",
-    "lastLoginDatetime": "2025-11-15T18:20:00Z",
-    "skillsCanTeach": [2, 14, 28, 36],
-    "skillsWantToLearn": [3, 5, 17, 23, 51]
+    "lastLoginDatetime": "2025-11-15T18:20:00Z"
   },
   {
     "id": 29,
@@ -343,9 +287,7 @@
     "dateOfBirth": "1993-03-10",
     "gender": "M",
     "dateOfRegistration": "2023-11-07T12:40:00Z",
-    "lastLoginDatetime": "2025-10-28T19:55:00Z",
-    "skillsCanTeach": [4, 16, 48, 64],
-    "skillsWantToLearn": [1, 9, 19, 37]
+    "lastLoginDatetime": "2025-10-28T19:55:00Z"
   },
   {
     "id": 30,
@@ -355,9 +297,7 @@
     "dateOfBirth": "1998-08-22",
     "gender": "F",
     "dateOfRegistration": "2024-01-10T10:15:00Z",
-    "lastLoginDatetime": "2025-11-21T17:45:00Z",
-    "skillsCanTeach": [6, 12, 24, 48, 60],
-    "skillsWantToLearn": [5, 15, 27, 31]
+    "lastLoginDatetime": "2025-11-21T17:45:00Z"
   },
   {
     "id": 31,
@@ -367,9 +307,7 @@
     "dateOfBirth": "1987-05-06",
     "gender": "M",
     "dateOfRegistration": "2023-08-28T09:30:00Z",
-    "lastLoginDatetime": "2025-11-11T21:20:00Z",
-    "skillsCanTeach": [8, 16, 32, 64],
-    "skillsWantToLearn": [1, 11, 19, 39]
+    "lastLoginDatetime": "2025-11-11T21:20:00Z"
   },
   {
     "id": 32,
@@ -379,9 +317,7 @@
     "dateOfBirth": "2001-09-14",
     "gender": "F",
     "dateOfRegistration": "2025-02-05T08:50:00Z",
-    "lastLoginDatetime": "2025-11-28T20:10:00Z",
-    "skillsCanTeach": [2, 18, 40, 60, 100],
-    "skillsWantToLearn": [3, 7, 15, 25, 51]
+    "lastLoginDatetime": "2025-11-28T20:10:00Z"
   },
   {
     "id": 33,
@@ -391,9 +327,7 @@
     "dateOfBirth": "1994-11-12",
     "gender": "M",
     "dateOfRegistration": "2024-09-20T11:00:00Z",
-    "lastLoginDatetime": "2025-11-26T19:40:00Z",
-    "skillsCanTeach": [4, 20, 36, 48, 72],
-    "skillsWantToLearn": [9, 17, 31, 55]
+    "lastLoginDatetime": "2025-11-26T19:40:00Z"
   },
   {
     "id": 34,
@@ -403,9 +337,7 @@
     "dateOfBirth": "1999-01-25",
     "gender": "F",
     "dateOfRegistration": "2024-06-12T13:25:00Z",
-    "lastLoginDatetime": "2025-11-24T18:35:00Z",
-    "skillsCanTeach": [6, 12, 30, 48, 84],
-    "skillsWantToLearn": [1, 57]
+    "lastLoginDatetime": "2025-11-24T18:35:00Z"
   },
   {
     "id": 35,
@@ -415,9 +347,7 @@
     "dateOfBirth": "1992-06-15",
     "gender": "M",
     "dateOfRegistration": "2023-07-11T09:10:00Z",
-    "lastLoginDatetime": "2025-11-28T20:00:00Z",
-    "skillsCanTeach": [2, 14, 28, 48, 64],
-    "skillsWantToLearn": [1, 5, 15, 21]
+    "lastLoginDatetime": "2025-11-28T20:00:00Z"
   },
   {
     "id": 36,
@@ -427,9 +357,7 @@
     "dateOfBirth": "1997-12-03",
     "gender": "F",
     "dateOfRegistration": "2024-03-22T11:30:00Z",
-    "lastLoginDatetime": "2025-11-26T18:45:00Z",
-    "skillsCanTeach": [12, 24, 36, 50, 100],
-    "skillsWantToLearn": [3, 7, 9, 33]
+    "lastLoginDatetime": "2025-11-26T18:45:00Z"
   },
   {
     "id": 37,
@@ -439,9 +367,7 @@
     "dateOfBirth": "1988-09-21",
     "gender": "M",
     "dateOfRegistration": "2024-09-08T10:50:00Z",
-    "lastLoginDatetime": "2025-11-20T19:20:00Z",
-    "skillsCanTeach": [4, 16, 36, 72],
-    "skillsWantToLearn": [5, 11, 27, 49]
+    "lastLoginDatetime": "2025-11-20T19:20:00Z"
   },
   {
     "id": 38,
@@ -451,9 +377,7 @@
     "dateOfBirth": "1995-05-17",
     "gender": "F",
     "dateOfRegistration": "2025-01-14T08:40:00Z",
-    "lastLoginDatetime": "2025-11-22T20:35:00Z",
-    "skillsCanTeach": [2, 18, 36, 48, 100],
-    "skillsWantToLearn": [1, 3, 7, 17]
+    "lastLoginDatetime": "2025-11-22T20:35:00Z"
   },
   {
     "id": 39,
@@ -463,9 +387,7 @@
     "dateOfBirth": "1990-11-05",
     "gender": "M",
     "dateOfRegistration": "2023-05-29T12:15:00Z",
-    "lastLoginDatetime": "2025-11-15T18:50:00Z",
-    "skillsCanTeach": [10, 20, 40, 80, 120],
-    "skillsWantToLearn": [9, 21, 33]
+    "lastLoginDatetime": "2025-11-15T18:50:00Z"
   },
   {
     "id": 40,
@@ -475,8 +397,6 @@
     "dateOfBirth": "1998-02-28",
     "gender": "F",
     "dateOfRegistration": "2024-06-08T14:20:00Z",
-    "lastLoginDatetime": "2025-11-28T19:45:00Z",
-    "skillsCanTeach": [6, 12, 24, 48, 60],
-    "skillsWantToLearn": [1, 3, 5, 15, 27]
+    "lastLoginDatetime": "2025-11-28T19:45:00Z"
   }
 ]
