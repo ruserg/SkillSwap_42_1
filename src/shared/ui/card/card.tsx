@@ -70,16 +70,16 @@ export const Card: React.FC<CardProps> = memo(
     };
 
     // Функция для получения цвета фона тега на основе категории
-    const getTagBackgroundColor = (categoryId: number): string => {
+    const getTagClassName = (categoryId: number): string => {
       const colorMap: Record<number, string> = {
-        1: "#eee7f7", // Бизнес и карьера
-        2: "#f7e7f2", // Творчество и искусство
-        3: "#ebe5c5", // Иностранные языки
-        4: "#e7f2f6", // Образование и развитие
-        5: "#f7ebe5", // Дом и уют
-        6: "#e9f7e7", // Здоровье и лайфстайл
+        1: styles.business,
+        2: styles.creativity,
+        3: styles.languages,
+        4: styles.education,
+        5: styles.home,
+        6: styles.health,
       };
-      return colorMap[categoryId] || "#e8ecf7";
+      return colorMap[categoryId] || styles.default;
     };
 
     // Функция для получения названия города по cityId
@@ -128,11 +128,11 @@ export const Card: React.FC<CardProps> = memo(
 
     return (
       <div
-        className={`${styles.card} ${className} ${isCardLoading ? styles.loading : ""}`}
+        className={`${styles.container} ${className} ${isCardLoading ? styles.loading : ""}`}
       >
         {/* Заголовок карточки с аватаром и информацией о пользователе */}
-        <div className={styles.card__header}>
-          <div className={styles.card__avatar}>
+        <div className={styles.header}>
+          <div className={styles.avatar}>
             <img
               src={user.avatarUrl}
               alt={user.name}
@@ -143,46 +143,40 @@ export const Card: React.FC<CardProps> = memo(
               loading="lazy"
             />
           </div>
-          <div className={styles.card__userInfo}>
-            <h3 className={styles.card__name}>{user.name}</h3>
-            <p className={styles.card__details}>
+          <div className={styles.userInfo}>
+            <h3 className={styles.name}>{user.name}</h3>
+            <p className={styles.details}>
               {getCityName(user.cityId)}, {calculateAge(user.dateOfBirth)}
             </p>
           </div>
         </div>
 
         {/* Навык, которому может научить */}
-        <div className={styles.card__section}>
-          <div className={styles.card__sectionTitle}>Может научить:</div>
-          <div className={styles.card__skillItem}>
-            <div className={styles.card__skillInfo}>
-              <div className={styles.card__subcategories}>
-                {canTeachSkills.slice(0, 1).map((skill) => (
-                  <div
-                    key={skill.id}
-                    className={styles.card__subcategory}
-                    style={{
-                      background: getTagBackgroundColor(
-                        getCategoryId(skill.subcategoryId),
-                      ),
-                    }}
-                  >
-                    {skill.name}
-                  </div>
-                ))}
+        <div className={styles.section}>
+          <div className={styles.sectionTitle}>Может научить:</div>
+          <div className={styles.skillItem}>
+            <div className={styles.skillInfo}>
+              <div className={styles.tags}>
+                {canTeachSkills.slice(0, 1).map((skill) => {
+                  const categoryId = getCategoryId(skill.subcategoryId);
+                  const tagClassName = getTagClassName(categoryId);
+
+                  return (
+                    <div
+                      key={skill.id}
+                      className={`${styles.tag} ${tagClassName}`}
+                    >
+                      {skill.name}
+                    </div>
+                  );
+                })}
                 {canTeachSkills.length === 0 && !skillsLoading && (
-                  <div
-                    className={styles.card__subcategory}
-                    style={{ background: "#e8ecf7" }}
-                  >
+                  <div className={`${styles.tag} ${styles.default}`}>
                     Навыки не указаны
                   </div>
                 )}
                 {skillsLoading && (
-                  <div
-                    className={styles.card__subcategory}
-                    style={{ background: "#e8ecf7" }}
-                  >
+                  <div className={`${styles.tag} ${styles.default}`}>
                     Загрузка...
                   </div>
                 )}
@@ -192,41 +186,35 @@ export const Card: React.FC<CardProps> = memo(
         </div>
 
         {/* Навыки, которым хочет научиться */}
-        <div className={styles.card__section}>
-          <div className={styles.card__sectionTitle}>Хочет научиться:</div>
-          <div className={styles.card__learnSkills}>
-            {wantToLearnSkills.slice(0, 2).map((skill) => (
-              <div
-                key={skill.id}
-                className={styles.card__learnSkill}
-                style={{
-                  background: getTagBackgroundColor(
-                    getCategoryId(skill.subcategoryId),
-                  ),
-                }}
-              >
-                {skill.name}
-              </div>
-            ))}
+        <div className={styles.section}>
+          <div className={styles.sectionTitle}>Хочет научиться:</div>
+          <div className={styles.learnTags}>
+            {wantToLearnSkills.slice(0, 2).map((skill) => {
+              const categoryId = getCategoryId(skill.subcategoryId);
+              const tagClassName = getTagClassName(categoryId);
+
+              return (
+                <div
+                  key={skill.id}
+                  className={`${styles.learnTag} ${tagClassName}`}
+                >
+                  {skill.name}
+                </div>
+              );
+            })}
 
             {wantToLearnSkills.length > 2 && (
-              <div className={styles.card__additionalSkills}>
+              <div className={styles.additional}>
                 +{wantToLearnSkills.length - 2}
               </div>
             )}
             {wantToLearnSkills.length === 0 && !skillsLoading && (
-              <div
-                className={styles.card__learnSkill}
-                style={{ background: "#e8ecf7" }}
-              >
+              <div className={`${styles.learnTag} ${styles.default}`}>
                 Навыки не указаны
               </div>
             )}
             {skillsLoading && wantToLearnSkills.length === 0 && (
-              <div
-                className={styles.card__learnSkill}
-                style={{ background: "#e8ecf7" }}
-              >
+              <div className={`${styles.learnTag} ${styles.default}`}>
                 Загрузка...
               </div>
             )}
@@ -234,8 +222,8 @@ export const Card: React.FC<CardProps> = memo(
         </div>
 
         {/* кнопка "Подробнее" */}
-        <div className={styles.card__actions}>
-          <div className={styles.card__detailsButton}>
+        <div className={styles.actions}>
+          <div className={styles.detailsButton}>
             <Button
               variant="primary"
               disabled={isCardLoading}
