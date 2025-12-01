@@ -1,0 +1,76 @@
+@use "../../../styles/mixins" as *;
+@use "../../../styles/variables" as vars;
+
+.container {
+  max-inline-size: 556px;
+  padding: 80px 60px;
+  @include flex(
+    $direction: column,
+    $justify: space-between,
+    $align: center,
+    $gap: 0
+  );
+  border-radius: 10px;
+  block-size: 420px;
+}
+
+.containerIcon {
+  @include flex($direction: column, $justify: center, $align: center, $gap: 0);
+}
+
+.content {
+  @include flex(
+    $direction: column,
+    $justify: center,
+    $align: center,
+    $gap: 12px
+  );
+  inline-size: 100%;
+  overflow: auto;
+
+  .contentTitle {
+    font-family: Jost, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: center;
+  }
+
+  .subTittle {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+  }
+}
+
+.buttonContainer {
+  padding-block-start: 32px;
+  inline-size: 100%;
+  block-size: 48px;
+}
+
+.scrollbar {
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar {
+    inline-size: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #b2b9a9;
+    border-radius: 5px;
+
+    &:hover {
+      color: vars.$color-caption;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: vars.$color-disabled;
+    border-radius: 10px;
+  }
+}

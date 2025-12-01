@@ -1,9 +1,9 @@
 import styles from "./offerPreview.module.scss";
 import stylesModal from "./offerPreviewModal.module.scss";
 import clsx from "clsx";
-import { Button } from "../../shared/ui/Button/index.ts";
-import type { TOfferProps } from "./types.ts";
-import { ImagesCarousel } from "../ImagesCarousel/ImagesCarousel.tsx";
+import type { TOfferProps } from "./types";
+import { ImagesCarousel } from "../ImagesCarousel/ImagesCarousel";
+import { Button } from "@shared/ui/button";
 
 /*эта карточка меняется в зависимости от variant*/
 export const OfferPreview = (props: TOfferProps) => {

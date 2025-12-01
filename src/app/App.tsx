@@ -1,8 +1,7 @@
 import styles from "./styles/app.module.scss";
 import { Outlet } from "react-router-dom";
-import { Footer } from "../widgets/Footer/Footer.tsx";
-import { Header } from "../widgets/Header/Header.tsx";
-import { DecoratedButton } from "@/shared/ui/DecoratedButton/DecoratedButton.tsx";
+import { Footer } from "../widgets/Footer/Footer";
+import { Header } from "../widgets/Header/Header";
 
 // type AppProps = {
 //   title?: string;
@@ -16,7 +15,6 @@ export default function App() {
         <Outlet />
       </main>
       <Footer />
-      <DecoratedButton variant={"heart"} />
     </div>
   );
 }

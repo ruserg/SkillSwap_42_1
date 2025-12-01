@@ -1,5 +1,6 @@
 type TOfferVariant = "userProfileOffer" | "modalOffer";
 
 export type TOfferProps = {
-  variant?: TOfferVariant;
+  variant: TOfferVariant;
+  className?: string;
 };
