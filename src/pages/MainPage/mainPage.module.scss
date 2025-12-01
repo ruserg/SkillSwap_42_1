@@ -1,4 +1,8 @@
 .page {
+  background-color: #f9faf7;
+}
+
+.pageContainer {
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 1fr;
@@ -6,7 +10,6 @@
   padding: 0 36px 68px;
   justify-items: center;
   min-block-size: 100vh;
-  background-color: #f9faf7;
 }
 
 header {
@@ -32,4 +35,5 @@ header {
 
 footer {
   grid-column: 1/-1;
+  max-inline-size: 1440px;
 }

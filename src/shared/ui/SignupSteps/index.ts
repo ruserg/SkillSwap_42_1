@@ -1,1 +1,1 @@
-export { SignupSteps } from "./SignupSteps.tsx";
+export { SignupSteps } from "./SignupSteps";
