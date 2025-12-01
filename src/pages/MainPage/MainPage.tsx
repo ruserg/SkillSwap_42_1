@@ -1,13 +1,8 @@
 import styles from "./mainPage.module.scss";
-<<<<<<< HEAD
-import { Header } from "@/widgets/Header/Header";
-import { Footer } from "@widgets/Footer/Footer.tsx";
-=======
 
+import { Footer } from "@widgets/Footer/Footer.tsx";
 import { Filter } from "@widgets/filter";
-import { Header } from "@widgets/header/header.tsx";
-import { Footer } from "@widgets/footer/footer.tsx";
->>>>>>> 5b845b2 (feat(mainPage): Доработал главную страницу;)
+import { Header } from "@widgets/Header/Header";
 
 export const MainPage = () => {
   return (
