@@ -20,8 +20,8 @@
   inline-size: 100%;
   min-inline-size: 1020px;
   max-inline-size: 1024px;
-  padding: clamp(40px, 5vw, 80px) clamp(52px, 1vw + 50px, 60px)
-    clamp(40px, 6vw, 72px);
+  padding-block: clamp(40px, 5vw, 80px) clamp(40px, 6vw, 72px);
+  padding-inline: clamp(52px, 1vw + 50px, 60px);
 
   .previewDescription {
     @include flex(
@@ -67,7 +67,7 @@
     font-family: Roboto, sans-serif;
     align-self: center;
     font-style: normal;
-    padding: 10px;
+    padding-inline-end: 10px;
     max-inline-size: 399px;
     overflow: auto;
     block-size: 168px;
@@ -76,7 +76,7 @@
 
   .btnClamp {
     inline-size: 100%;
-    padding-top: clamp(4px, 4vw, 12px);
+    padding-block-start: clamp(4px, 4vw, 12px);
   }
 
   .scrollbar {
@@ -106,7 +106,6 @@
     font-family: Roboto, sans-serif;
     inline-size: 399px;
     block-size: 48px;
-
     gap: 20px;
     font-style: normal;
   }
@@ -121,11 +120,5 @@
   );
   inline-size: 440px;
   block-size: 24px;
-  padding-bottom: 24px;
-
-  .decorButton {
-    inline-size: 24px;
-    block-size: 24px;
-    background-color: #3c3250;
-  }
+  padding-block-end: 24px;
 }
