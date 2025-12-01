@@ -1,6 +1,6 @@
 import styles from "./decoratedButton.module.scss";
 import clsx from "clsx";
-import type { TDecorButtonProps } from "@shared/ui/DecoratedButton/types.ts";
+import type { TDecorButtonProps } from "@shared/ui/DecoratedButton/types";
 
 export const DecoratedButton = (props: TDecorButtonProps) => {
   const {

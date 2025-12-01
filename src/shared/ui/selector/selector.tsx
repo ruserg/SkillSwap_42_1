@@ -50,8 +50,8 @@ export const Selector: FC<TSelectorProps> = memo(
           //         key={option}
           //         onClick={() => toggleOption(option)}
           //       >
-          //         <input
-          //           className={clsx(styles.input, {
+          //         <Input
+          //           className={clsx(styles.Input, {
           //             [styles.input_checked]: selectedOptions.includes(option),
           //           })}
           //           type="checkbox"

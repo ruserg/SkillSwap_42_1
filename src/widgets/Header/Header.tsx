@@ -1,10 +1,10 @@
 import styles from "./header.module.scss";
-import { Link } from "react-router-dom";
-import { Logo } from "@shared/ui/Logo/Logo.tsx";
-import { Button } from "@shared/ui/Button/Button.tsx";
 import clsx from "clsx";
-import { Input } from "@shared/ui/input";
-import { DecoratedButton } from "@shared/ui/decoratedButton/decoratedButton.tsx";
+import { Link } from "react-router-dom";
+import { Logo } from "@shared/ui/Logo/Logo";
+import { Button } from "@shared/ui/Button/Button";
+import { Input } from "@shared/ui/Input/Input";
+import { DecoratedButton } from "@shared/ui/DecoratedButton/DecoratedButton";
 
 export const Header = () => {
   return (

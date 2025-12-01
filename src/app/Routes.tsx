@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import App from "./App";
 import ProtectedRoute from "./ProtectedRoute";
-import { MainPage } from "@pages/MainPage/MainPage.tsx";
+import { MainPage } from "@pages/MainPage/MainPage";
 
 //основные страницы приложения - заглушки
 //после создания pages отсюда надо будет удалять

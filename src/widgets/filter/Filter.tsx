@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import { Input } from "@shared/ui/input";
+import { Input } from "@shared/ui/Input";
 import styles from "./filter.module.scss";
 import { FILTER_CONFIG, type TFilterState } from "./filter.type";
 import { ClearSVG } from "./svg/ClearSvg";

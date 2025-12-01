@@ -1,7 +1,7 @@
 import styles from "./signupStepOne.module.scss";
 import { Button } from "@shared/ui/Button/Button";
 import { Separator } from "@shared/ui/Separator/Separator";
-import { Input } from "@shared/ui/input/Input";
+import { Input } from "@shared/ui/Input/Input.tsx";
 import { Logo } from "@shared/ui/Logo/Logo";
 import lightBulb from "../../../../images/png/light-bulb.png";
 import { AppleIcon } from "@shared/ui/Icons/AppleIcon";
