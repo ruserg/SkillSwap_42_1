@@ -2,7 +2,7 @@ import styles from "./signupStepOne.module.scss";
 import { Button } from "../../../../shared/ui/Button/index.ts";
 import { Separator } from "../../../../shared/ui/Separator/index.ts";
 import { Input } from "../../../../shared/ui/Input/index.ts";
-import { Logo } from "../../../../shared/ui/Logo/Logo.tsx";
+import { Logo } from "@shared/ui/logo/logo.tsx";
 import lightBulb from "../../../../images/png/light-bulb.png";
 import { AppleIcon } from "../../../../shared/ui/icons/AppleIcon.tsx";
 import { GoogleIcon } from "../../../../shared/ui/icons/GoogleIcon.tsx";

@@ -11,15 +11,15 @@
 
 header {
   grid-column: 1/-1;
-  max-width: 1400px;
+  max-inline-size: 1440px;
 }
 
 .filterContainer {
-  max-width: 324px;
+  max-inline-size: 324px;
 }
 
 .galleryContainer {
-  width: 100%;
+  inline-size: 100%;
 }
 
 .main {
@@ -27,7 +27,7 @@ header {
   gap: 24px;
   grid-column: 1;
   inline-size: 100%;
-  max-width: 1400px;
+  max-inline-size: 1400px;
 }
 
 footer {
