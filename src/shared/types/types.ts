@@ -47,3 +47,10 @@ export type TCity = {
 
 // Пол пользователя (для компактности хранения)
 export type Gender = "M" | "F";
+
+// Лайки
+export type TLike = {
+  id: number; //уникальный идентификатор лайка
+  userId: number; //ID пользователя, который поставил лайк
+  skillId: number; //ID навыка, который лайкнули
+};
