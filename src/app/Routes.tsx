@@ -2,6 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import App from "./App";
 import ProtectedRoute from "./ProtectedRoute";
 import { MainPage } from "@pages/MainPage/MainPage";
+import { SignupStepOne } from "@pages/signup/ui/signupStepOne";
+import { SignupStepThree } from "@pages/signup/ui/signupStepThree";
 
 //основные страницы приложения - заглушки
 //после создания pages отсюда надо будет удалять
@@ -15,29 +17,11 @@ function Login() {
   );
 }
 
-function RegistrationStep1() {
-  return (
-    <section>
-      <h2>Регистрация - Шаг 1</h2>
-      <p>Основные данные аккаунта</p>
-    </section>
-  );
-}
-
 function RegistrationStep2() {
   return (
     <section>
       <h2>Регистрация - Шаг 2</h2>
       <p>Личная информация</p>
-    </section>
-  );
-}
-
-function RegistrationStep3() {
-  return (
-    <section>
-      <h2>Регистрация - Шаг 3</h2>
-      <p>Добавление навыка</p>
     </section>
   );
 }
@@ -95,9 +79,9 @@ export default function AppRoutes() {
         <Route index element={<MainPage />} />
         {/* публичные роуты, нужно ли оборачивать их в PublicRoute? */}
         <Route path="login" element={<Login />} />
-        <Route path="registration/step1" element={<RegistrationStep1 />} />
+        <Route path="registration/step1" element={<SignupStepOne />} />
         <Route path="registration/step2" element={<RegistrationStep2 />} />
-        <Route path="registration/step3" element={<RegistrationStep3 />} />
+        <Route path="registration/step3" element={<SignupStepThree />} />
 
         {/* защищенные роуты */}
         <Route

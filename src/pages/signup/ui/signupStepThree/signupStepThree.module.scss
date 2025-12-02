@@ -1,0 +1,622 @@
+@use "../../../../styles/variables" as vars;
+@use "../../../../styles/mixins" as *;
+
+@mixin text-style($weight, $size, $line) {
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line;
+}
+
+.header {
+  @include flex(row, space-between, stretch);
+  padding-inline: 0 20px;
+  margin-block-end: 0;
+  block-size: 44px;
+  background-color: vars.$color-background;
+  position: relative;
+}
+
+.logo {
+  padding-block-start: 33px;
+}
+
+.steps {
+  padding-block-start: 50px;
+  position: absolute;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+.section {
+  @include flex(row, center, stretch, 24px);
+  background-color: vars.$color-background;
+  font-family: Roboto, sans-serif;
+  padding-block: 83px 80px;
+  margin-block-end: 0;
+  overflow: hidden;
+}
+
+.section::after {
+  content: "";
+  display: block;
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  block-size: 130px;
+  background-color: vars.$color-background;
+  z-index: 1;
+}
+
+.formContainer {
+  @include flex(column, flex-start, center, 20px);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 40px;
+  background-color: vars.$color-input;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
+  position: relative;
+  z-index: 2;
+  min-block-size: 680px;
+}
+
+.infoContainer {
+  @include flex(column, center, center, 40px);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 40px;
+  background-color: vars.$color-input;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
+  position: relative;
+  z-index: 2;
+  min-block-size: 680px;
+}
+
+.imageWrapper {
+  @include flex(column, center, center);
+}
+
+.infoImage {
+  inline-size: 300px;
+  block-size: 300px;
+  object-fit: contain;
+}
+
+.imagePlaceholder {
+  inline-size: 300px;
+  block-size: 300px;
+  background-color: vars.$color-disabled;
+  border-radius: 12px;
+  @include flex(column, center, center);
+}
+
+.placeholderIcon {
+  font-size: 80px;
+  color: vars.$color-caption;
+}
+
+.infoText {
+  @include flex(column, center, center, 12px);
+  text-align: center;
+}
+
+.infoTitle {
+  @include text-style($weight: 500, $size: 24px, $line: normal);
+  font-family: Jost, sans-serif;
+  color: vars.$color-text;
+  margin: 0;
+}
+
+.infoDescription {
+  @include text-style($weight: 400, $size: 16px, $line: 1.5);
+  font-family: Roboto, sans-serif;
+  color: vars.$color-caption;
+  margin: 0;
+  padding-inline: 20px;
+}
+
+.title {
+  @include text-style($weight: 500, $size: 24px, $line: normal);
+  font-family: Jost, sans-serif;
+  text-align: center;
+  color: vars.$color-text;
+  margin-block-end: 8px;
+}
+
+.subtitle {
+  @include text-style($weight: 400, $size: 16px, $line: 1.5);
+  font-family: Roboto, sans-serif;
+  text-align: center;
+  color: vars.$color-caption;
+  margin-block-end: 32px;
+}
+
+.form {
+  inline-size: 100%;
+}
+
+.fieldGroup {
+  @include flex(column, center, start, 5px);
+  margin-block-end: 24px;
+}
+
+.label {
+  @include text-style($weight: 400, $size: 14px, $line: normal);
+  color: vars.$color-text;
+}
+
+.skillNameInput,
+.descriptionTextarea {
+  inline-size: 100%;
+  padding-inline: 12px;
+  padding-block: 16px;
+  border: 1px solid vars.$color-border-input;
+  border-radius: vars.$input-border-radius;
+  @include text-style($weight: 400, $size: 16px, $line: normal);
+  font-family: Roboto, sans-serif;
+  color: vars.$color-text;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: vars.$color-border-input;
+    box-shadow: 0 0 0 2px rgb(105 115 93 / 10%);
+  }
+
+  &::placeholder {
+    color: vars.$color-caption;
+    font-weight: 400;
+  }
+
+  &:disabled {
+    background-color: vars.$color-disabled;
+    color: vars.$color-disabled-text;
+    cursor: not-allowed;
+  }
+}
+
+.input,
+.select {
+  inline-size: 100%;
+  padding-inline: 12px;
+  padding-block: 16px;
+  border: 1px solid vars.$color-border-input;
+  border-radius: vars.$input-border-radius;
+  @include text-style($weight: 400, $size: 16px, $line: normal);
+  font-family: Roboto, sans-serif;
+  color: vars.$color-text;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: vars.$color-border-input;
+    box-shadow: 0 0 0 2px rgb(105 115 93 / 10%);
+  }
+
+  &::placeholder {
+    color: vars.$color-caption;
+    font-weight: 400;
+  }
+
+  &:disabled {
+    background-color: vars.$color-disabled;
+    color: vars.$color-disabled-text;
+    cursor: not-allowed;
+  }
+}
+
+.selectWrapper {
+  position: relative;
+  inline-size: 100%;
+
+  .selectArrow {
+    position: absolute;
+    inset-inline-end: 16px;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+  }
+}
+
+.select {
+  appearance: none;
+  background-color: vars.$color-input;
+  cursor: pointer;
+  inline-size: 100%;
+  color: vars.$color-text;
+  font-weight: 400;
+
+  option {
+    color: vars.$color-text;
+    font-weight: 400;
+  }
+}
+
+.textarea {
+  resize: none;
+  min-block-size: 120px;
+  font-family: Roboto, sans-serif;
+  line-height: 1.5;
+  color: vars.$color-text;
+  font-weight: 400;
+
+  &::placeholder {
+    color: vars.$color-caption;
+    font-weight: 400;
+  }
+}
+
+.hint {
+  @include text-style($weight: 400, $size: 12px, $line: normal);
+  color: vars.$color-caption;
+  margin-block-start: 4px;
+  font-family: Roboto, sans-serif;
+}
+
+.uploadArea {
+  inline-size: 436px;
+  block-size: 96px;
+  border: 1px dashed vars.$color-caption;
+  border-radius: vars.$input-border-radius;
+  padding-block: 24px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+  background-color: transparent;
+  @include flex(column, center, center);
+
+  &:hover {
+    border-color: vars.$color-border-input;
+    background-color: rgb(105 115 93 / 5%);
+  }
+}
+
+.uploadText {
+  @include text-style($weight: 400, $size: 16px, $line: 150%);
+  font-family: Roboto, sans-serif;
+  text-align: center;
+  color: vars.$color-caption;
+  margin-block-end: 16px;
+}
+
+.uploadButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  @include flex(row, center, center, 8px);
+  inline-size: 396px;
+  block-size: 24px;
+  color: vars.$color-text-link;
+  @include text-style($weight: 400, $size: 16px, $line: normal);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.uploadButtonIcon {
+  inline-size: 20px;
+  block-size: 20px;
+  filter: invert(48%) sepia(82%) saturate(377%) hue-rotate(56deg)
+    brightness(92%) contrast(85%);
+}
+
+.fileInput {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.imagePreviews {
+  display: flex;
+  gap: 12px;
+  margin-block-start: 16px;
+  flex-wrap: wrap;
+}
+
+.imagePreview {
+  position: relative;
+  inline-size: 100px;
+  block-size: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid vars.$color-disabled-text;
+
+  .previewImage {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .removeImage {
+    position: absolute;
+    inset-block-start: 4px;
+    inset-inline-end: 4px;
+    inline-size: 20px;
+    block-size: 20px;
+    border-radius: 50%;
+    background-color: rgba(vars.$color-error, 0.8);
+    color: vars.$color-background;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: vars.$color-error;
+    }
+  }
+}
+
+.buttons {
+  @include flex(row, space-between, center, 16px);
+  margin-block-start: 32px;
+  inline-size: 100%;
+
+  & > * {
+    flex: 1;
+  }
+}
+
+.dragging {
+  border-color: vars.$color-border-input;
+  background-color: rgb(105 115 93 / 5%);
+}
+
+.modalData {
+  background-color: vars.$color-background;
+  padding: 15px;
+  border-radius: 8px;
+  margin-block-end: 20px;
+
+  p {
+    margin: 8px 0;
+    color: vars.$color-text;
+    line-height: 1.5;
+    @include text-style($weight: 400, $size: 16px, $line: 1.5);
+  }
+}
+
+.modalButtons {
+  @include flex(row, space-between, center, 12px);
+
+  & > * {
+    flex: 1;
+  }
+}
+
+.input {
+  color: vars.$color-text;
+  font-weight: 400;
+
+  &::placeholder {
+    color: vars.$color-caption;
+    font-weight: 400;
+  }
+}
+
+// Для обязательных полей с ошибками
+.input:invalid,
+.select:invalid,
+.textarea:invalid {
+  border-color: vars.$color-error;
+}
+
+// Для отключенных полей
+.select:disabled {
+  background-color: vars.$color-disabled;
+  color: vars.$color-disabled-text;
+}
+
+// Стили для кастомного селектора
+.selectorWrapper {
+  inline-size: 100%;
+  position: relative;
+
+  .selectorHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    inline-size: 100%;
+    padding: 12px 16px;
+    border: 1px solid vars.$color-border-input;
+    border-radius: vars.$input-border-radius;
+    background-color: vars.$color-input;
+    cursor: pointer;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: vars.$color-border-input;
+    }
+  }
+
+  .selectorTitle {
+    color: vars.$color-text;
+    @include text-style($weight: 400, $size: 16px, $line: normal);
+    font-family: Roboto, sans-serif;
+  }
+
+  .selectorChevron {
+    inline-size: 16px;
+    block-size: 16px;
+    transition: transform 0.3s ease-in-out;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  .optionsList {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline: 0;
+    z-index: 1000;
+    background-color: vars.$color-background;
+    border: 1px solid vars.$color-border-input;
+    border-radius: vars.$input-border-radius;
+    margin-block-start: 4px;
+    max-block-size: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+  }
+
+  .optionItem {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    @include text-style($weight: 400, $size: 16px, $line: normal);
+    color: vars.$color-text;
+
+    &:hover {
+      background-color: rgb(105 115 93 / 10%);
+    }
+
+    &.selected {
+      background-color: rgb(105 115 93 / 15%);
+      font-weight: 500;
+      color: vars.$color-text;
+    }
+  }
+}
+
+// Стили для модального окна
+.modalContent {
+  padding: 20px;
+  font-family: Roboto, sans-serif;
+
+  h3 {
+    margin-block-end: 20px;
+    color: vars.$color-text;
+    @include text-style($weight: 500, $size: 24px, $line: normal);
+    font-family: Jost, sans-serif;
+  }
+
+  p {
+    @include text-style($weight: 400, $size: 16px, $line: normal);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+// Скелетон-загрузка для полей ввода
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    vars.$color-toggle 25%,
+    vars.$color-disabled 50%,
+    vars.$color-toggle 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: inherit;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Скелетон для поля ввода
+.skeletonInput {
+  inline-size: 100%;
+  block-size: 45px;
+  padding: 12px 16px;
+  border-radius: vars.$input-border-radius;
+}
+
+// Скелетон для выпадающего списка
+.skeletonSelect {
+  inline-size: 100%;
+  block-size: 45px;
+  padding: 12px 16px;
+  border-radius: vars.$input-border-radius;
+}
+
+// Скелетон для текстовой области (описание)
+.skeletonTextarea {
+  inline-size: 100%;
+  min-block-size: 98px;
+  padding: 12px 16px;
+  border-radius: vars.$input-border-radius;
+}
+
+// Скелетон для области загрузки
+.skeletonUploadArea {
+  inline-size: 436px;
+  block-size: 96px;
+  border-radius: vars.$input-border-radius;
+}
+
+.modalPreviewContainer {
+  max-inline-size: 1080px;
+  margin: 0 auto;
+}
+
+.modalPreviewHeader {
+  margin-block-end: 10px;
+  text-align: center;
+}
+
+.modalPreviewTitle {
+  @include text-style($weight: 500, $size: 24px, $line: normal);
+  font-family: Jost, sans-serif;
+  color: vars.$color-text;
+  margin-block-end: 8px;
+}
+
+.modalPreviewSubtitle {
+  @include text-style($weight: 400, $size: 12px, $line: normal);
+  font-family: Roboto, sans-serif;
+  color: vars.$color-text;
+  margin: 0;
+}
+
+.successModalContainer {
+  text-align: center;
+  padding: 40px 20px;
+  max-inline-size: 600px;
+  margin: 0 auto;
+}
+
+.successModalTitle {
+  @include text-style($weight: 500, $size: 24px, $line: normal);
+  font-family: Jost, sans-serif;
+  color: vars.$color-text;
+  margin-block-end: 16px;
+}
+
+.successModalDescription {
+  @include text-style($weight: 400, $size: 16px, $line: 1.5);
+  font-family: Roboto, sans-serif;
+  color: vars.$color-caption;
+  margin-block-end: 32px;
+}
+
+.successModalButton {
+  display: flex;
+  justify-content: center;
+}
