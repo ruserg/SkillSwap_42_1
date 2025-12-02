@@ -1,5 +1,10 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 import type { TUser } from "@/shared/types/types";
+import type { RootState } from "@/store/store";
 import { api } from "@/shared/api/mockApi";
 
 // Типы для состояния
@@ -62,22 +67,31 @@ const usersDataSlice = createSlice({
 
 export const { clearError } = usersDataSlice.actions;
 
-// Селектор для получения пользователей с преобразованными датами
-export const selectUsers = (state: { usersData: UsersDataState }): TUser[] => {
-  return state.usersData.users.map((user) => ({
-    ...user,
-    dateOfBirth: new Date(user.dateOfBirth as unknown as string),
-    dateOfRegistration: new Date(user.dateOfRegistration as unknown as string),
-    lastLoginDatetime: new Date(user.lastLoginDatetime as unknown as string),
-  }));
-};
+// Базовый селектор для состояния пользователей
+const selectUsersDataState = (state: RootState) => state.usersData;
 
-// Селектор для получения всех данных пользователей
-export const selectUsersData = (state: { usersData: UsersDataState }) => {
-  return {
-    users: selectUsers(state),
-    isLoading: state.usersData.isLoading,
-  };
-};
+// Мемоизированный селектор для получения пользователей с преобразованными датами
+export const selectUsers = createSelector(
+  [selectUsersDataState],
+  (usersData): TUser[] => {
+    return usersData.users.map((user) => ({
+      ...user,
+      dateOfBirth: new Date(user.dateOfBirth as unknown as string),
+      dateOfRegistration: new Date(
+        user.dateOfRegistration as unknown as string,
+      ),
+      lastLoginDatetime: new Date(user.lastLoginDatetime as unknown as string),
+    }));
+  },
+);
+
+// Мемоизированный селектор для получения всех данных пользователей
+export const selectUsersData = createSelector(
+  [selectUsers, selectUsersDataState],
+  (users, usersData) => ({
+    users,
+    isLoading: usersData.isLoading,
+  }),
+);
 
 export default usersDataSlice.reducer;

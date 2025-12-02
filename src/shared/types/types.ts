@@ -51,12 +51,12 @@ export type TCity = {
 // Пол пользователя (для компактности хранения)
 export type Gender = "M" | "F";
 
-// Лайки (ПОКА НЕАКТУАЛЬНО)
-// export type TLike = {
-//   id: number; //уникальный идентификатор лайка
-//   userId: number; //ID пользователя, который поставил лайк
-//   skillId: number; //ID навыка, который лайкнули
-// };
+// Лайки
+export type TLike = {
+  id: number; //уникальный идентификатор лайка
+  userId: number; //ID пользователя, который поставил лайк
+  skillId: number; //ID навыка, который лайкнули
+};
 
 // Пользователь с количеством лайков
 export type UserWithLikes = TUser & { likesCount: number };

@@ -2,17 +2,19 @@ import type {
   TUser,
   TCity,
   TSkill,
+  TLike,
   TCategory,
   TSubcategory,
 } from "@/shared/types/types";
 
-//объект, чтобы было удобно использовать в других файлах
+// URL внешнего API через прокси Vite (для обхода CORS)
 export const MOCK_API = {
-  categories: "https://api.jsonbin.io/v3/b/692dcfe6ae596e708f7cb637",
-  cities: "https://api.jsonbin.io/v3/b/692dd00343b1c97be9d0f6af",
-  skills: "https://api.jsonbin.io/v3/b/692dd04343b1c97be9d0f721",
-  subcategories: "https://api.jsonbin.io/v3/b/692dd05bae596e708f7cb6fc",
-  users: "https://api.jsonbin.io/v3/b/692dd074ae596e708f7cb721",
+  categories: "/api/jsonbin/v3/b/692dcfe6ae596e708f7cb637",
+  cities: "/api/jsonbin/v3/b/692dd00343b1c97be9d0f6af",
+  likes: "/api/jsonbin/v3/b/692dd01f43b1c97be9d0f6dc",
+  skills: "/api/jsonbin/v3/b/692dd04343b1c97be9d0f721",
+  subcategories: "/api/jsonbin/v3/b/692dd05bae596e708f7cb6fc",
+  users: "/api/jsonbin/v3/b/692dd074ae596e708f7cb721",
 };
 
 // Тип для ответа API с данными пользователей
@@ -50,6 +52,7 @@ export const api = {
   //вызываем fetchMock с сылкой - возвращаем массив
   getCategories: () => fetchMock<TCategory[]>(MOCK_API.categories),
   getCities: () => fetchMock<TCity[] | { cities: TCity[] }>(MOCK_API.cities),
+  getLikes: () => fetchMock<TLike[]>(MOCK_API.likes),
   getSkills: () => fetchMock<TSkill[]>(MOCK_API.skills),
   getSubcategories: () => fetchMock<TSubcategory[]>(MOCK_API.subcategories),
   getUsers: () => fetchMock<TUser[]>(MOCK_API.users),

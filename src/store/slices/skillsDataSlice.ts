@@ -1,5 +1,10 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 import type { TSkill, TLike } from "@/shared/types/types";
+import type { RootState } from "@/store/store";
 import { api } from "@/shared/api/mockApi";
 
 // Типы для состояния
@@ -72,13 +77,17 @@ const skillsDataSlice = createSlice({
 
 export const { clearError } = skillsDataSlice.actions;
 
-// Селектор для получения всех данных о навыках
-export const selectSkillsData = (state: { skillsData: SkillsDataState }) => {
-  return {
-    skills: state.skillsData.skills,
-    likes: state.skillsData.likes,
-    isLoading: state.skillsData.isLoading,
-  };
-};
+// Базовый селектор для состояния навыков
+const selectSkillsDataState = (state: RootState) => state.skillsData;
+
+// Мемоизированный селектор для получения всех данных о навыках
+export const selectSkillsData = createSelector(
+  [selectSkillsDataState],
+  (skillsData) => ({
+    skills: skillsData.skills,
+    likes: skillsData.likes,
+    isLoading: skillsData.isLoading,
+  }),
+);
 
 export default skillsDataSlice.reducer;

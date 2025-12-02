@@ -1,5 +1,10 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 import type { TCity, TCategory, TSubcategory } from "@/shared/types/types";
+import type { RootState } from "@/store/store";
 import { api } from "@/shared/api/mockApi";
 
 // Типы для состояния
@@ -83,16 +88,18 @@ const referenceDataSlice = createSlice({
 
 export const { clearError } = referenceDataSlice.actions;
 
-// Селектор для получения всех справочных данных
-export const selectReferenceData = (state: {
-  referenceData: ReferenceDataState;
-}) => {
-  return {
-    cities: state.referenceData.cities,
-    categories: state.referenceData.categories,
-    subcategories: state.referenceData.subcategories,
-    isLoading: state.referenceData.isLoading,
-  };
-};
+// Базовый селектор для состояния справочных данных
+const selectReferenceDataState = (state: RootState) => state.referenceData;
+
+// Мемоизированный селектор для получения всех справочных данных
+export const selectReferenceData = createSelector(
+  [selectReferenceDataState],
+  (referenceData) => ({
+    cities: referenceData.cities,
+    categories: referenceData.categories,
+    subcategories: referenceData.subcategories,
+    isLoading: referenceData.isLoading,
+  }),
+);
 
 export default referenceDataSlice.reducer;
