@@ -13,7 +13,7 @@
     $column-gap: 189px
   );
 
-  padding-inline: 36px;
+  padding: 36px;
 
   .titleLogo {
     font-family: Jost, sans-serif;
@@ -33,6 +33,7 @@
       $row-gap: 10px,
       $column-gap: 24px
     );
+    font-family: Roboto, sans-serif;
   }
 
   .footerLogoContainer {
@@ -47,4 +48,6 @@
       vertical-align: middle;
     }
   }
+  background-color: $color-input;
+  border-radius: 20px;
 }
