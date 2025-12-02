@@ -2,7 +2,6 @@ import type {
   TUser,
   TCity,
   TSkill,
-  TLike,
   TCategory,
   TSubcategory,
 } from "@/shared/types/types";
@@ -11,7 +10,6 @@ import type {
 export const MOCK_API = {
   categories: "https://api.jsonbin.io/v3/b/692dcfe6ae596e708f7cb637",
   cities: "https://api.jsonbin.io/v3/b/692dd00343b1c97be9d0f6af",
-  likes: "https://api.jsonbin.io/v3/b/692dd01f43b1c97be9d0f6dc",
   skills: "https://api.jsonbin.io/v3/b/692dd04343b1c97be9d0f721",
   subcategories: "https://api.jsonbin.io/v3/b/692dd05bae596e708f7cb6fc",
   users: "https://api.jsonbin.io/v3/b/692dd074ae596e708f7cb721",
@@ -22,7 +20,6 @@ export type UsersDataResponse = {
   users: TUser[];
   cities: TCity[];
   skills: TSkill[];
-  likes: TLike[];
 };
 
 // Задержка между запросами для избежания rate limit
@@ -53,21 +50,19 @@ export const api = {
   //вызываем fetchMock с сылкой - возвращаем массив
   getCategories: () => fetchMock<TCategory[]>(MOCK_API.categories),
   getCities: () => fetchMock<TCity[] | { cities: TCity[] }>(MOCK_API.cities),
-  getLikes: () => fetchMock<TLike[]>(MOCK_API.likes),
   getSkills: () => fetchMock<TSkill[]>(MOCK_API.skills),
   getSubcategories: () => fetchMock<TSubcategory[]>(MOCK_API.subcategories),
   getUsers: () => fetchMock<TUser[]>(MOCK_API.users),
 
   /**
-   * Загружает все данные пользователей (users, cities, skills, likes)
+   * Загружает все данные пользователей (users, cities, skills)
    * Использует существующие методы API для единообразия
    */
   fetchAllUsersData: async (): Promise<UsersDataResponse> => {
-    const [usersData, citiesData, skillsData, likesData] = await Promise.all([
+    const [usersData, citiesData, skillsData] = await Promise.all([
       api.getUsers(),
       api.getCities(),
       api.getSkills(),
-      api.getLikes(),
     ]);
 
     // cities может быть массивом или объектом с полем cities
@@ -80,7 +75,6 @@ export const api = {
       users: usersData as TUser[],
       cities: citiesArray,
       skills: skillsData as TSkill[],
-      likes: likesData as TLike[],
     };
   },
 };
