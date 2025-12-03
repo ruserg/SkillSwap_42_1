@@ -3,6 +3,7 @@ import { Button } from "@shared/ui/Button";
 import type { CardProps } from "./type";
 import type { TSkill } from "@/shared/types/types";
 import styles from "./card.module.scss";
+import { calculateAge } from "../../../../public/utils/ageCalculator";
 
 export const Card: React.FC<CardProps> = memo(
   ({ user, cities, onDetailsClick, className = "", isLoading = false }) => {
@@ -26,37 +27,6 @@ export const Card: React.FC<CardProps> = memo(
 
       loadSkills();
     }, []);
-
-    // Функция для вычисления возраста из даты рождения
-    const calculateAge = (dateOfBirth: Date): string => {
-      const birthDate = new Date(dateOfBirth);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-
-      if (
-        monthDiff < 0 ||
-        (monthDiff === 0 && today.getDate() < birthDate.getDate())
-      ) {
-        age--;
-      }
-
-      // Склонение лет
-      const lastDigit = age % 10;
-      const lastTwoDigits = age % 100;
-
-      if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-        return `${age} лет`;
-      }
-
-      if (lastDigit === 1) {
-        return `${age} год`;
-      } else if (lastDigit >= 2 && lastDigit <= 4) {
-        return `${age} года`;
-      } else {
-        return `${age} лет`;
-      }
-    };
 
     // Функция для получения цвета фона тега на основе категории
     const getTagClassName = (categoryId: number): string => {
