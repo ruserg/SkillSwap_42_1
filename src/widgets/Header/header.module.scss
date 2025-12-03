@@ -31,21 +31,46 @@
 .navigationDropDownLink {
   position: relative;
   padding-inline-end: 24px;
+  @include flex;
+
+  &::after {
+    content: "";
+    @include flex;
+    inline-size: 24px;
+    block-size: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 0;
+  }
+
+  &Open {
+    &::after {
+      background-image: url("/src/images/icons/chevron-down.svg");
+    }
+  }
+
+  &Close {
+    &::after {
+      background-image: url("/src/images/icons/chevron-up.svg");
+    }
+  }
 }
 
-.navigationDropDownLink::after {
-  content: "";
-  display: block;
-  inline-size: 24px;
-  block-size: 24px;
-  background-image: (url("/src/images/icons/chevron-down.svg"));
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: absolute;
-  inset-inline-end: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+// Внёс свои корректировки для анимации кнопки. Сохранил оригинальный код автора для дальнейших доработок. Но есть смысл создать отдельный компонент кнопки, который будет красиво менять анимацию открытия и закрытия.
+
+// .navigationDropDownLink::after {
+//   content: "";
+//   display: block;
+//   inline-size: 24px;
+//   block-size: 24px;
+//   background-size: contain;
+//   background-repeat: no-repeat;
+//   position: absolute;
+//   inset-inline-end: 0;
+//   top: 50%;
+//   transform: translateY(-50%);
+// }
 
 .searchWrapper {
   position: relative;

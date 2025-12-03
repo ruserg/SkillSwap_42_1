@@ -1,0 +1,80 @@
+.listCategory {
+  inline-size: 1136px;
+  padding: 60px;
+
+  // @include flex(column, center, center, 40px);
+  // flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.itemCategoryContainer {
+  @include flex(row, start, start, 12px);
+
+  .itemsCategory {
+    @include flex(column, center, start, 12px);
+    inline-size: 100%;
+
+    &Title {
+      font: {
+        family: "Jost", sans-serif;
+        weight: 600;
+        size: 24px;
+      }
+    }
+
+    .itemsCategoryList {
+      inline-size: 100%;
+      font: {
+        family: "Roboto", sans-serif;
+        weight: 400;
+        size: 16px;
+      }
+      @include flex(column, center, start, 12px);
+
+      .subcategoriesTitle {
+        inline-size: 100%;
+        transition: 0.1s;
+
+        &:hover {
+          color: $color-accent;
+        }
+      }
+    }
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.imageSkeleton {
+  inline-size: 48px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.titleSkeleton {
+  inline-size: 40%;
+  block-size: 30px;
+}
+
+.linkSkeleton {
+  inline-size: 60%;
+  block-size: 20px;
+}

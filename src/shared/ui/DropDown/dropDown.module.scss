@@ -1,0 +1,14 @@
+.dropDownWrapper {
+  inline-size: 100%;
+  position: relative;
+}
+
+.dropDownContainer {
+  position: absolute;
+  inline-size: min-content;
+  block-size: min-content;
+  background-color: $color-card;
+  border-radius: $input-border-radius;
+  border: 1px solid $color-border-input;
+  z-index: 1;
+}
