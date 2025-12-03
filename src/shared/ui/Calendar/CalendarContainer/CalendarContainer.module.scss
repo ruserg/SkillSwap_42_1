@@ -1,0 +1,12 @@
+.calendarContainer {
+  @include flex(column, space-between, center, 10px);
+  block-size: 360px;
+  padding-inline: 15px;
+  padding-block: 15px;
+  border-radius: 12px;
+  border: 1px solid $color-caption;
+}
+
+.calendarFooter {
+  @include flex(row, center, center, 10px);
+}
