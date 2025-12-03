@@ -1,0 +1,10 @@
+.viewAllButtonWrapper {
+  flex-shrink: 0;
+
+  // Переопределение стилей кнопки согласно Figma
+  button,
+  a {
+    inline-size: 187px;
+    gap: 8px;
+  }
+}

@@ -12,8 +12,7 @@ import {
 import { useFilteredUsers } from "@shared/hooks/useFilteredUsers";
 import type { TFilterState } from "@widgets/filter/filter.type";
 import { ActiveFilters } from "@widgets/ActiveFilters/ActiveFilters";
-import { Button } from "@shared/ui/Button/Button";
-import chevronRight from "@images/icons/chevron-right.svg";
+import { ViewAllButton } from "@shared/ui/ViewAllButton/ViewAllButton";
 import styles from "./userCardsSection.module.scss";
 
 interface UserCardsSectionProps {
@@ -219,18 +218,13 @@ export const UserCardsSection = ({
       <section className={styles.section}>
         <div className={styles.sectionTitleRow}>
           <h2 className={styles.sectionTitle}>Популярное</h2>
-          {allPopularUsers.length > 3 && (
-            <div className={styles.viewAllButtonWrapper}>
-              <Button
-                variant="secondary"
-                rightIcon={<img src={chevronRight} alt="" />}
-                onClick={() => setPopularCount((prev) => prev + 3)}
-                disabled={popularCount >= 6}
-              >
-                Смотреть все
-              </Button>
-            </div>
-          )}
+          <ViewAllButton
+            behavior="hide"
+            initialCount={3}
+            currentCount={popularCount}
+            totalCount={allPopularUsers.length}
+            onLoadMore={setPopularCount}
+          />
         </div>
         <div className={styles.cardsGrid}>
           {popularUsers.map((user) => (
@@ -249,18 +243,13 @@ export const UserCardsSection = ({
       <section className={styles.section}>
         <div className={styles.sectionTitleRow}>
           <h2 className={styles.sectionTitle}>Новое</h2>
-          {allNewUsers.length > 3 && (
-            <div className={styles.viewAllButtonWrapper}>
-              <Button
-                variant="secondary"
-                rightIcon={<img src={chevronRight} alt="" />}
-                onClick={() => setNewCount((prev) => prev + 3)}
-                disabled={newCount >= 6}
-              >
-                Смотреть все
-              </Button>
-            </div>
-          )}
+          <ViewAllButton
+            behavior="hide"
+            initialCount={3}
+            currentCount={newCount}
+            totalCount={allNewUsers.length}
+            onLoadMore={setNewCount}
+          />
         </div>
         <div className={styles.cardsGrid}>
           {newUsers.map((user) => (
