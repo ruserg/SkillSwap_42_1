@@ -11,7 +11,7 @@ import { useAppSelector } from "@store/hooks";
 import { selectReferenceData } from "@store/slices/referenceDataSlice";
 
 export const MainPage = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState<TFilterState>({
     purpose: "",
     skills: [],
@@ -39,6 +39,13 @@ export const MainPage = () => {
     }
   }, [searchParams, subcategories]);
 
+  // Функция для очистки параметра q из URL
+  const clearSearchQuery = () => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete("q");
+    setSearchParams(newSearchParams);
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.pageContainer}>
@@ -46,7 +53,11 @@ export const MainPage = () => {
 
         <main className={styles.main}>
           <aside className={styles.filterContainer}>
-            <Filter filters={filters} onFiltersChange={setFilters} />
+            <Filter
+              filters={filters}
+              onFiltersChange={setFilters}
+              onClearSearchQuery={clearSearchQuery}
+            />
           </aside>
           <section className={styles.galleryContainer}>
             <UserCardsSection filters={filters} onFiltersChange={setFilters} />

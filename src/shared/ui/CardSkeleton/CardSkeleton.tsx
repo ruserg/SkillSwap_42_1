@@ -6,7 +6,9 @@ export const CardSkeleton = () => {
     <div className={cardStyles.container}>
       {/* Заголовок карточки с аватаром */}
       <div className={cardStyles.header}>
-        <div className={`${cardStyles.avatar} ${skeletonStyles.skeleton}`} />
+        <div
+          className={`${cardStyles.avatar} ${skeletonStyles.skeleton} ${skeletonStyles.skeletonAvatar}`}
+        />
         <div className={cardStyles.userInfo}>
           <div
             className={`${skeletonStyles.skeleton} ${skeletonStyles.skeletonName}`}

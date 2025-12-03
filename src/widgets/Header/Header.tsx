@@ -30,6 +30,9 @@ export const Header = () => {
     const queryParam = searchParams.get("q");
     if (queryParam) {
       setSearchValue(queryParam);
+    } else {
+      // Очищаем строку поиска, если параметр q удален из URL
+      setSearchValue("");
     }
   }, [searchParams]);
 

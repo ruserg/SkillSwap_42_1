@@ -15,6 +15,11 @@
   border-radius: 8px;
 }
 
+// Аватарка должна быть круглой
+.skeletonAvatar {
+  border-radius: 50% !important;
+}
+
 .skeletonName {
   inline-size: 120px;
   block-size: 24px;

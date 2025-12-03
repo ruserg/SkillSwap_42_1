@@ -20,11 +20,13 @@ import { FilterSkeleton } from "@widgets/FilterSkeleton/FilterSkeleton";
 interface FilterProps {
   filters: TFilterState;
   onFiltersChange: (filters: TFilterState) => void;
+  onClearSearchQuery?: () => void;
 }
 
 export const Filter = ({
   filters,
   onFiltersChange,
+  onClearSearchQuery,
 }: FilterProps): ReactElement => {
   const dispatch = useAppDispatch();
   const { categories, subcategories, cities, isLoading } =
@@ -120,6 +122,10 @@ export const Filter = ({
       gender: "",
       citys: [],
     });
+    // Очищаем параметр q из URL
+    if (onClearSearchQuery) {
+      onClearSearchQuery();
+    }
   };
 
   if (isLoading) {
