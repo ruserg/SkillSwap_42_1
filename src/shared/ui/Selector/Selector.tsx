@@ -1,4 +1,3 @@
-
 import { type FC, memo, useState } from "react";
 import type { TSelectorProps } from "./type";
 import styles from "./selector.module.scss";
@@ -75,51 +74,51 @@ export const Selector: FC<TSelectorProps> = memo(
 
     return (
       <>
-      <span>{selectionTitle}</span>
-      <div className={clsx(styles.wrapper, { [styles.wrapperOpen]: isOpen })}>
-        <div
-          className={clsx(styles.container, {
-            [styles.containerOpen]: isOpen,
-          })}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {/* Поле ввода или просто заголовок в зависимости от значения enableSearch */}
-          {enableSearch ? (
-            <input
-              className={styles.inputField}
-              placeholder={selectionPlaceholder}
-              value={searchValue}
-              onChange={(e) => {
-                setSearchValue(e.target.value);
-                // setIsOpen(true);
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                // setIsOpen(true);
-              }}
+        <span>{selectionTitle}</span>
+        <div className={clsx(styles.wrapper, { [styles.wrapperOpen]: isOpen })}>
+          <div
+            className={clsx(styles.container, {
+              [styles.containerOpen]: isOpen,
+            })}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {/* Поле ввода или просто заголовок в зависимости от значения enableSearch */}
+            {enableSearch ? (
+              <input
+                className={styles.inputField}
+                placeholder={selectionPlaceholder}
+                value={searchValue}
+                onChange={(e) => {
+                  setSearchValue(e.target.value);
+                  // setIsOpen(true);
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // setIsOpen(true);
+                }}
+              />
+            ) : (
+              subTitle
+            )}
+            {/* Показ знака очистки строки поиска */}
+            {showClear ? (
+              <span onClick={clearSearch}>
+                <img src={cross} alt="иконка крестика" />
+              </span>
+            ) : (
+              <Arrow isOpen={isOpen} />
+            )}
+          </div>
+          {isOpen && (
+            <Options
+              selectionOptions={visibleOptions}
+              toggleOption={toggleOption}
+              selectedOptions={selectedOptions}
+              selectorType={selectorType}
             />
-          ) : (
-            subTitle
-          )}
-          {/* Показ знака очистки строки поиска */}
-          {showClear ? (
-            <span onClick={clearSearch}>
-              <img src={cross} alt="иконка крестика" />
-            </span>
-          ) : (
-            <Arrow isOpen={isOpen} />
           )}
         </div>
-        {isOpen && (
-          <Options
-          selectionOptions={visibleOptions}
-          toggleOption={toggleOption}
-          selectedOptions={selectedOptions}
-          selectorType={selectorType}
-        />
-      )}
-      </div>
-    </>
-  );
-},
+      </>
+    );
+  },
 );
