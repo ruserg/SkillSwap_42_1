@@ -21,6 +21,7 @@
   font-size: 16px;
   line-height: 24px;
   color: $color-text;
+  cursor: pointer;
 }
 
 .navigationLinkContainer {
@@ -121,4 +122,65 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url("/src/images/icons/moon.svg");
+}
+
+.decorateButtonsWrapper {
+  display: flex;
+  column-gap: 16px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  cursor: pointer;
+}
+
+.userImage {
+  inline-size: 48px;
+  block-size: 48px;
+  border-radius: 50%;
+}
+
+.userName {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+// Стили для заглушки меню профиля
+.profileMenu {
+  position: absolute;
+  top: 100px;
+  right: 259px;
+  padding: 15px;
+  border-radius: 20px;
+  z-index: 1;
+  background-color: white;
+}
+
+// Стили для заглушки окна уведомлений
+.notifications {
+  position: absolute;
+  top: 100px;
+  right: 430px;
+  padding: 15px;
+  border-radius: 20px;
+  z-index: 1;
+  background-color: white;
+  max-inline-size: 300px;
+}
+
+// Стили для заглушки меню категорий
+.categoriesMenu {
+  position: absolute;
+  top: 100px;
+  left: 229px;
+  padding: 15px;
+  border-radius: 20px;
+  z-index: 1;
+  background-color: white;
+  max-inline-size: 900px;
 }

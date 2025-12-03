@@ -19,6 +19,10 @@ import { selectReferenceData } from "@store/slices/referenceDataSlice";
 
 export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [isAuth, setIsAuth] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isCategoriesMenuOpen, setIsCategoriesMenuOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -98,16 +102,14 @@ export const Header = () => {
           </li>
 
           {/* // TODO: Заменить navigationDropDownLink на компонент DropdownMenu, когда он будет готов */}
-          <li>
-            <Link
-              to="/"
-              className={clsx(
-                styles.navigationDropDownLink,
-                styles.navigationLink,
-              )}
-            >
-              Все навыки
-            </Link>
+          <li
+            className={clsx(
+              styles.navigationDropDownLink,
+              styles.navigationLink,
+            )}
+            onClick={() => setIsCategoriesMenuOpen(!isCategoriesMenuOpen)}
+          >
+            Все навыки
           </li>
         </ul>
       </nav>
@@ -137,17 +139,108 @@ export const Header = () => {
         )}
       </div>
 
-      <DecoratedButton variant={"moon"} />
+      {isAuth ? (
+        <>
+          <div className={styles.decorateButtonsWrapper}>
+            <DecoratedButton variant={"moon"} />
+            <DecoratedButton
+              variant={"bell"}
+              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+            />
+            <DecoratedButton variant={"heart"} />
+          </div>
 
-      <div className={styles.authButtons}>
-        <Link to="/login" className={styles.navLink}>
-          <Button children={"Войти"} variant="secondary"></Button>
-        </Link>
+          <div
+            className={styles.profile}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span className={styles.userName}>Мария</span>
+            <img
+              className={styles.userImage}
+              src="https://i.pravatar.cc/150?img=17"
+              alt="Аватар пользователя"
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={styles.decorateButtonsWrapper}>
+            <DecoratedButton variant={"moon"} />
+          </div>
 
-        <Link to="/registration/step1" className={styles.navLink}>
-          <Button children={"Зарегистрироваться"}></Button>
-        </Link>
-      </div>
+          <div className={styles.authButtons}>
+            <Link to="/login" className={styles.navLink}>
+              <Button children={"Войти"} variant="secondary"></Button>
+            </Link>
+
+            <Link to="/registration/step1" className={styles.navLink}>
+              <Button children={"Зарегистрироваться"}></Button>
+            </Link>
+          </div>
+        </>
+      )}
+      {/* // ToDo Заменить на меню профиля когда оно будет готово */}
+      {isMenuOpen && (
+        <div className={styles.profileMenu}>
+          <ul>
+            <li>Личный кабинет</li>
+            <li>Выйти из аккаунта</li>
+          </ul>
+        </div>
+      )}
+
+      {/* // ToDo Заменить на окно с уведомлениями когда оно будет готово */}
+      {isNotificationsOpen && (
+        <div className={styles.notifications}>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda
+            dolore dolorem doloremque, enim error exercitationem fugiat modi
+            numquam porro quasi rerum sit tempore unde. Doloremque, maiores
+            placeat! Magni, repellat, repudiandae?
+          </p>
+        </div>
+      )}
+      {/* // ToDo Заменить на окно с категориями когда оно будет готово */}
+      {isCategoriesMenuOpen && (
+        <div className={styles.categoriesMenu}>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
+            delectus dolorem doloribus eligendi harum illum, itaque laboriosam
+            maxime natus nostrum numquam perspiciatis, provident qui recusandae
+            repudiandae sed tempore, veniam voluptatem?
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
+            delectus dolorem doloribus eligendi harum illum, itaque laboriosam
+            maxime natus nostrum numquam perspiciatis, provident qui recusandae
+            repudiandae sed tempore, veniam voluptatem?
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
+            delectus dolorem doloribus eligendi harum illum, itaque laboriosam
+            maxime natus nostrum numquam perspiciatis, provident qui recusandae
+            repudiandae sed tempore, veniam voluptatem?
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
+            delectus dolorem doloribus eligendi harum illum, itaque laboriosam
+            maxime natus nostrum numquam perspiciatis, provident qui recusandae
+            repudiandae sed tempore, veniam voluptatem?
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
+            delectus dolorem doloribus eligendi harum illum, itaque laboriosam
+            maxime natus nostrum numquam perspiciatis, provident qui recusandae
+            repudiandae sed tempore, veniam voluptatem?
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
+            delectus dolorem doloribus eligendi harum illum, itaque laboriosam
+            maxime natus nostrum numquam perspiciatis, provident qui recusandae
+            repudiandae sed tempore, veniam voluptatem?
+          </p>
+        </div>
+      )}
     </header>
   );
 };
