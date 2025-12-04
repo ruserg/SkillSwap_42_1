@@ -21,7 +21,7 @@ import { DropDownListCategory } from "@/shared/ui/DropDownListCategory";
 
 export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [isAuth] = useState(false);
+  const [isAuth] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isCategoriesMenuOpen, setIsCategoriesMenuOpen] = useState(false);
