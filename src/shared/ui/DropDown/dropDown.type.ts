@@ -4,5 +4,6 @@ export type IDropDownProps = {
   bottom?: string;
   left?: string;
   children: React.ReactNode;
+  triggerGroupe: string;
   onClose: () => void;
 };

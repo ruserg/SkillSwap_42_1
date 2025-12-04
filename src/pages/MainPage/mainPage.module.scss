@@ -3,38 +3,33 @@
 }
 
 .pageContainer {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: 1fr;
-  gap: 32px 24px;
-  justify-items: center;
   min-block-size: 100vh;
 }
 
 header {
-  grid-column: 1/-1;
+  margin: 0 auto;
   max-inline-size: 1440px;
 }
 
 .filterContainer {
-  max-inline-size: 324px;
+  inline-size: 100%;
 }
 
 .galleryContainer {
   inline-size: 100%;
-  max-inline-size: 1020px;
 }
 
 .main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 324px 1020px;
+  justify-items: center;
   gap: 24px;
-  grid-column: 1/-1;
+  margin: 0 auto;
+  padding: 32px 36px 60px;
   inline-size: 100%;
   max-inline-size: 1440px;
-  padding: 0 36px;
 }
 
 footer {
-  grid-column: 1/-1;
-  max-inline-size: 1440px;
+  inline-size: 100%;
 }

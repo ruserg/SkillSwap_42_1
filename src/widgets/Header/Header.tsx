@@ -128,6 +128,7 @@ export const Header = () => {
               <DropDown
                 top="22px"
                 left="-293px"
+                triggerGroupe="category"
                 onClose={() => {
                   setShowCategory(false);
                 }}
@@ -168,15 +169,27 @@ export const Header = () => {
         <>
           <div className={styles.decorateButtonsWrapper}>
             <DecoratedButton variant={"moon"} onClick={() => toggle()} />
-            <DecoratedButton
-              variant="bell"
-              data-trigger-dropdown="notifications"
-              notificationsCount={notificationsCount}
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsNotificationsOpen((prev) => !prev);
-              }}
-            />
+            <div data-trigger-dropdown="notifications">
+              <DecoratedButton
+                variant="bell"
+                data-trigger-dropdown="notifications"
+                notificationsCount={notificationsCount}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsNotificationsOpen((prev) => !prev);
+                }}
+              />
+              {isNotificationsOpen && (
+                <DropDown
+                  top="20px"
+                  left="-137px"
+                  triggerGroupe="notifications"
+                  onClose={() => setIsNotificationsOpen(false)}
+                >
+                  <NotificationPanel />
+                </DropDown>
+              )}
+            </div>
             <DecoratedButton variant={"heart"} />
           </div>
 
@@ -195,7 +208,8 @@ export const Header = () => {
           {isMenuOpen && (
             <DropDown
               top="20px"
-              left="1108px"
+              left="1105px"
+              triggerGroupe="profile"
               onClose={() => {
                 setIsMenuOpen(false);
               }}
@@ -237,7 +251,7 @@ export const Header = () => {
       {/* // ToDo Заменить на меню профиля когда оно будет готово */}
 
       {/* // ToDo Заменить на окно с уведомлениями когда оно будет готово */}
-      {isNotificationsOpen && (
+      {/* {isNotificationsOpen && (
         <DropDown
           top="20px"
           left="812px"
@@ -245,7 +259,7 @@ export const Header = () => {
         >
           <NotificationPanel />
         </DropDown>
-      )}
+      )} */}
       {/* // ToDo Заменить на окно с категориями когда оно будет готово */}
       {isCategoriesMenuOpen && (
         <div className={styles.categoriesMenu}>

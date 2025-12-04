@@ -63,6 +63,7 @@ export const MainPage = () => {
             <UserCardsSection filters={filters} onFiltersChange={setFilters} />
           </section>
         </main>
+
         <Footer />
       </div>
     </div>
