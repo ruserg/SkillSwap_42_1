@@ -133,28 +133,20 @@
       weight: 400;
       size: 16px;
     }
+    cursor: pointer;
   }
 
   .inputRadioCustom {
     inline-size: 20px;
     block-size: 20px;
-    border: 1.5px solid $color-border-input-radio-checkbox;
-    border-radius: 50%;
+    @include input-icon("@images/icons/radiobutton-empty.svg");
     cursor: pointer;
     @include flex;
   }
 
   .inputRadio:checked + .inputRadioCustom {
     border-color: $color-button-pressed;
-
-    &::after {
-      content: "";
-      @include flex;
-      inline-size: 10px;
-      aspect-ratio: 1;
-      background-color: $color-button-pressed;
-      border-radius: 50%;
-    }
+    @include input-icon("@images/icons/radiobutton-active.svg");
   }
 }
 

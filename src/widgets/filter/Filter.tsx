@@ -6,7 +6,7 @@ import {
 } from "react";
 import { Input } from "@shared/ui/Input";
 import styles from "./filter.module.scss";
-import { FILTER_CONFIG, type TFilterState } from "@widgets/filter/filter.type";
+import { FILTER_CONFIG, type TFilterState } from "@widgets/Filter/filter.type";
 import { ClearSVG } from "@widgets/Filter/svg/ClearSvg";
 import chevronUp from "@images/icons/chevron-up.svg";
 import chevronDown from "@images/icons/chevron-down.svg";
@@ -215,6 +215,8 @@ export const Filter = ({
                     checked={hasSelectedSubcategories(category.id)}
                     onChange={() => handleCategoryChange(category.id)}
                     isOpenList={hasAllSelectedSubcategories(category.id)}
+                    isBlockCheckedLabel
+                    openListFunction={() => toggleCategory(category.id)}
                   />
                   <button onClick={() => toggleCategory(category.id)}>
                     <img

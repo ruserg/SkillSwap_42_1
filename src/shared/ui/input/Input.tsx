@@ -1,6 +1,6 @@
 import type { InputProps } from "./input.types";
 import styles from "./input.module.scss";
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type MouseEvent } from "react";
 import showPasswordSVG from "@images/icons/eye.svg";
 import hidePasswordSVG from "@images/icons/eye-slash.svg";
 
@@ -10,6 +10,8 @@ export const Input = (props: InputProps) => {
     children,
     isOpenList = false,
     isShowPassword = false,
+    isBlockCheckedLabel = false,
+    openListFunction,
     ...restProps
   } = props;
 
@@ -25,6 +27,13 @@ export const Input = (props: InputProps) => {
         ? styles.inputRadioCustom
         : `${styles.inputCheckboxCustom} ${isOpenList ? styles.isList : styles.nonList}`;
 
+    const blockChecked = (e: MouseEvent<HTMLSpanElement>) => {
+      if (isBlockCheckedLabel) {
+        e.preventDefault();
+        openListFunction?.();
+      }
+    };
+
     return (
       <label className={labelClass}>
         <input
@@ -33,7 +42,12 @@ export const Input = (props: InputProps) => {
           {...restProps}
         />
         <span className={inputCustom}> </span>
-        <span className={styles.inputText}>{children}</span>
+        <span
+          className={`${styles.inputText} ${isBlockCheckedLabel && styles.blockCheckedLabel}`}
+          onClick={blockChecked}
+        >
+          {children}
+        </span>
       </label>
     );
   }
