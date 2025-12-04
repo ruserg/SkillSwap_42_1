@@ -46,6 +46,7 @@
 
 .inputPasswordWrapper {
   position: relative;
+  inline-size: 100%;
 
   .inputPassword {
     @extend .input;
@@ -94,6 +95,7 @@
 .inputSearchWrapper {
   @include flex;
   position: relative;
+  inline-size: 100%;
 
   &::after {
     position: absolute;
