@@ -106,10 +106,8 @@ export const Header = () => {
             </Link>
           </li>
 
-          {/* // TODO: Заменить navigationDropDownLink на компонент DropdownMenu, когда он будет готов */}
           <li>
-            <Link
-              to="/"
+            <p
               className={clsx(
                 styles.navigationDropDownLink,
                 {
@@ -123,11 +121,11 @@ export const Header = () => {
             >
               {/* Для работы компонента DropDown компоненту контроллеру нужно указать атрибут data-trigger-dropdown */}
               Все навыки
-            </Link>
+            </p>
             {showCategory && (
               <DropDown
                 top="22px"
-                left="-330px"
+                left="-293px"
                 onClose={() => {
                   setShowCategory(false);
                 }}
@@ -177,6 +175,7 @@ export const Header = () => {
 
           <div
             className={styles.profile}
+            data-trigger-dropdown="profile"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <span className={styles.userName}>Мария</span>
@@ -186,6 +185,30 @@ export const Header = () => {
               alt="Аватар пользователя"
             />
           </div>
+          {isMenuOpen && (
+            <DropDown
+              top="20px"
+              left="1108px"
+              onClose={() => {
+                setIsMenuOpen(false);
+              }}
+            >
+              <ul className={styles.profileMenuList}>
+                <li className={styles.profileMenuItem}>
+                  <Link to={"/profile"}>Личный кабинет</Link>
+                </li>
+                <li
+                  className={clsx(
+                    styles.profileMenuItem,
+                    styles.profileMenuItemExit,
+                  )}
+                  onClick={() => console.log("Вы вышли из аккаунта")}
+                >
+                  Выйти из аккаунта
+                </li>
+              </ul>
+            </DropDown>
+          )}
         </>
       ) : (
         <>
@@ -205,14 +228,6 @@ export const Header = () => {
         </>
       )}
       {/* // ToDo Заменить на меню профиля когда оно будет готово */}
-      {isMenuOpen && (
-        <div className={styles.profileMenu}>
-          <ul>
-            <li>Личный кабинет</li>
-            <li>Выйти из аккаунта</li>
-          </ul>
-        </div>
-      )}
 
       {/* // ToDo Заменить на окно с уведомлениями когда оно будет готово */}
       {isNotificationsOpen && (

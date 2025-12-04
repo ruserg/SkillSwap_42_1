@@ -20,7 +20,7 @@ export const DropDown = (props: IDropDownProps) => {
 
       if (!(target instanceof Element)) return;
 
-      const isTriggerClick = target.closest("[data-trigger-dropdown");
+      const isTriggerClick = target.closest("[data-trigger-dropdown]");
 
       if (!dropDownRef.current?.contains(target) && !isTriggerClick) {
         event.stopPropagation();
