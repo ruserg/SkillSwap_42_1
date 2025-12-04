@@ -29,6 +29,7 @@ export const Header = () => {
   const [isCategoriesMenuOpen, setIsCategoriesMenuOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showCategory, setShowCategory] = useState(false);
+  const [notificationsCount, setNotificationsCount] = useState(1);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchRef = useRef<HTMLDivElement>(null);
@@ -170,6 +171,7 @@ export const Header = () => {
             <DecoratedButton
               variant="bell"
               data-trigger-dropdown="notifications"
+              notificationsCount={notificationsCount}
               onClick={(e) => {
                 e.stopPropagation();
                 setIsNotificationsOpen((prev) => !prev);

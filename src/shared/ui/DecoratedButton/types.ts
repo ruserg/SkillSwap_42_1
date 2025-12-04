@@ -14,4 +14,5 @@ export type TDecorButtonProps = {
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  notificationsCount?: number;
 };

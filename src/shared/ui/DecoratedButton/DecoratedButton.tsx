@@ -9,6 +9,7 @@ export const DecoratedButton = (props: TDecorButtonProps) => {
     disabled = false,
     onClick,
     htmlType = "button",
+    notificationsCount,
   } = props;
 
   return (
@@ -41,11 +42,19 @@ export const DecoratedButton = (props: TDecorButtonProps) => {
           type={htmlType}
         ></button>
       )}
-      {variant === "bell" && (
+      {variant === "bell" && !notificationsCount && (
         <button
           onClick={onClick}
           disabled={disabled}
           className={clsx(styles.decorButton, styles.buttonBell, className)}
+          type={htmlType}
+        ></button>
+      )}
+      {variant === "bell" && notificationsCount && (
+        <button
+          onClick={onClick}
+          disabled={disabled}
+          className={clsx(styles.decorButton, styles.buttonBellFill, className)}
           type={htmlType}
         ></button>
       )}
