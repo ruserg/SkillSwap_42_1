@@ -17,17 +17,11 @@
   $column-gap: 0
 ) {
   display: grid;
-  grid-template-columns: repeat(
-    $columns,
-    1fr
-  ); // grid-template-columns: repeat($columns, 1fr);
-  grid-template-rows: repeat(
-    $rows,
-    1fr
-  ); // grid-template-rows: repeat($rows, 1fr);
-  justify-content: $justify; // не было. Если не указан, по умолчанию - normal
-  align-items: $align; // не было Если не указан, по умолчанию - stretch
-  gap: $row-gap $column-gap; // не было // не было
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $row-gap $column-gap;
 }
 
 @mixin input-icon($icon, $size: 24px) {

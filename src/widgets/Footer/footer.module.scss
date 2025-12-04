@@ -1,8 +1,8 @@
-/* @use "@styles/mixins" as *; */
-@use "../../styles/mixins" as *;
+@use "@styles/mixins" as *;
 
 .footerContainer {
   inline-size: 100%;
+  font-family: Roboto, sans-serif;
 
   @include grid(
     $columns: repeat(2, auto),
@@ -13,10 +13,9 @@
     $column-gap: 189px
   );
 
-  padding: 36px;
+  padding-inline: 36px;
 
   .titleLogo {
-    font-family: Jost, sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
@@ -26,21 +25,23 @@
 
   .footerLinks {
     @include grid(
-      $columns: repeat(3, 324px),
+      $columns: repeat(3, minmax(0, 324px)),
       $rows: repeat(2, auto),
       $justify: space-evenly,
       $align: center,
       $row-gap: 10px,
       $column-gap: 24px
     );
-    font-family: Roboto, sans-serif;
   }
 
   .footerLogoContainer {
     @include flex(column, space-evenly, start, 112px);
 
+    .linkContainer {
+      @include flex(row, space-evenly, start, 12px);
+    }
+
     .subtitleLogo {
-      font-family: Roboto, sans-serif;
       font-style: normal;
       font-weight: 400;
       font-size: 12px;
@@ -48,6 +49,4 @@
       vertical-align: middle;
     }
   }
-  background-color: $color-input;
-  border-radius: 20px;
 }
