@@ -1,8 +1,8 @@
-import type { InputProps } from "./input.types";
-import styles from "./input.module.scss";
-import { useState, type ChangeEvent } from "react";
-import showPasswordSVG from "@images/icons/eye.svg";
-import hidePasswordSVG from "@images/icons/eye-slash.svg";
+import type { InputProps } from './input.types';
+import styles from './input.module.scss';
+import { useState, type ChangeEvent, type MouseEvent } from 'react';
+import showPasswordSVG from '@images/icons/eye.svg';
+import hidePasswordSVG from '@images/icons/eye-slash.svg';
 
 export const Input = (props: InputProps) => {
   const {
@@ -10,20 +10,29 @@ export const Input = (props: InputProps) => {
     children,
     isOpenList = false,
     isShowPassword = false,
+    isBlockCheckedLabel = false,
+    openListFunction,
     ...restProps
   } = props;
 
-  if (type === "radio" || type === "checkbox") {
+  if (type === 'radio' || type === 'checkbox') {
     const inputClass =
-      type === "radio" ? styles.inputRadio : styles.inputCheckbox;
+      type === 'radio' ? styles.inputRadio : styles.inputCheckbox;
 
     const labelClass =
-      type === "radio" ? styles.labelRadio : styles.labelCheckbox;
+      type === 'radio' ? styles.labelRadio : styles.labelCheckbox;
 
     const inputCustom =
-      type === "radio"
+      type === 'radio'
         ? styles.inputRadioCustom
         : `${styles.inputCheckboxCustom} ${isOpenList ? styles.isList : styles.nonList}`;
+
+    const blockChecked = (e: MouseEvent<HTMLSpanElement>) => {
+      if (isBlockCheckedLabel) {
+        e.preventDefault();
+        openListFunction?.();
+      }
+    };
 
     return (
       <label className={labelClass}>
@@ -33,25 +42,27 @@ export const Input = (props: InputProps) => {
           {...restProps}
         />
         <span className={inputCustom}> </span>
-        <span className={styles.inputText}>{children}</span>
+        <span className={styles.inputText} onClick={blockChecked}>
+          {children}
+        </span>
       </label>
     );
   }
 
-  if (type === "search") {
+  if (type === 'search') {
     return (
       <label className={styles.inputSearchWrapper}>
         <input
           className={styles.inputSearch}
           type={type}
-          placeholder={props.placeholder || "Искать навык"}
+          placeholder={props.placeholder || 'Искать навык'}
           {...restProps}
         />
       </label>
     );
   }
 
-  if (type === "date") {
+  if (type === 'date') {
     const handlePlaceHolderColor = (event: ChangeEvent<HTMLInputElement>) => {
       event.target.value
         ? event.target.classList.remove(styles.datePlaceholder)
@@ -68,7 +79,7 @@ export const Input = (props: InputProps) => {
     );
   }
 
-  if (type === "password") {
+  if (type === 'password') {
     const [showPassword, setShowPassword] = useState(isShowPassword);
     const [hasValue, setHasValue] = useState(false);
 
@@ -81,7 +92,7 @@ export const Input = (props: InputProps) => {
       <div className={styles.inputPasswordWrapper}>
         <input
           className={styles.inputPassword}
-          type={showPassword ? "text" : "password"}
+          type={showPassword ? 'text' : 'password'}
           onChange={handleHasValue}
           {...restProps}
         />
@@ -90,13 +101,13 @@ export const Input = (props: InputProps) => {
             type="button"
             className={styles.showPassword}
             onClick={handleShowPassword}
-            aria-label={showPassword ? "Показать пароль" : "Скрыть пароль"}
+            aria-label={showPassword ? 'Показать пароль' : 'Скрыть пароль'}
             aria-pressed={showPassword}
           >
             <img
               className={styles.showPasswordImage}
               src={showPassword ? hidePasswordSVG : showPasswordSVG}
-              alt={showPassword ? "Показать пароль" : "Скрыть пароль"}
+              alt={showPassword ? 'Показать пароль' : 'Скрыть пароль'}
               aria-hidden="true"
             />
           </button>
