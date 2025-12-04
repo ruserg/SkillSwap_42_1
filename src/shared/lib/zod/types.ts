@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  userSchema,
-  createUserSchema,
-  updateUserSchema,
-} from "./schemas/userSchema";
+import { userSchema, updateUserSchema } from "./schemas/userSchema";
 import { loginSchema, signupStep1Schema } from "./schemas/userAuthSchema";
 import { createSkillSchema, updateSkillSchema } from "./schemas/skillSchema";
 import {
@@ -15,7 +11,6 @@ import {
 
 // Экспорт всех типов
 export type User = z.infer<typeof userSchema>;
-export type CreateUserData = z.infer<typeof createUserSchema>;
 export type UpdateUserData = z.infer<typeof updateUserSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 export type SignupStep1Data = z.infer<typeof signupStep1Schema>;

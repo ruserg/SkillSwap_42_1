@@ -6,7 +6,8 @@ export const skillTitleSchema = z
   .max(50, { message: "Название не должно превышать 50 символов" })
   .regex(/^[А-Яа-яA-Za-z0-9\s\-_,.!?()]+$/, {
     message: "Название содержит недопустимые символы",
-  });
+  })
+  .min(1, { message: "Введите название навыка" });
 
 export const skillDescriptionSchema = z
   .string()
@@ -48,7 +49,7 @@ export const createSkillSchema = z.object({
   title: skillTitleSchema,
   description: skillDescriptionSchema,
   category: skillCategorySchema,
-  subcategore: skillSubcategorySchema,
+  subcategory: skillSubcategorySchema,
   image: skillImageSchema,
   tags: skillTagsSchema,
 });

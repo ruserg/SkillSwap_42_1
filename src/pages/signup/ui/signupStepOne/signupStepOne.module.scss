@@ -47,7 +47,7 @@
 }
 
 .emailContainer {
-  margin-block-start: 5px;
+  margin-block: 5px 16px;
 }
 
 .passwordContainer {
@@ -58,6 +58,7 @@
   display: block;
   min-block-size: 13px;
   font-size: 12px;
+  color: vars.$color-error;
 }
 
 .lightBulb {
