@@ -123,7 +123,7 @@ export const Header = () => {
             {showCategory && (
               <DropDown
                 top="22px"
-                left="-330px"
+                left="-293px"
                 onClose={() => {
                   setShowCategory(false);
                 }}
