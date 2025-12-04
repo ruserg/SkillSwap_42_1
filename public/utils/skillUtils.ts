@@ -1,6 +1,5 @@
 import type { TSkill, TypeOfProposal } from "../../src/shared/types/types";
 
-//
 //  Фильтрует навыки пользователя по типу предложения
 //  Принимает на вход skills - массив всех навыков, userId - ID пользователя,
 //  type - тип навыка ("учу" или "учусь")

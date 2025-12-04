@@ -1,7 +1,6 @@
 //  Утилита вычисляет возраст по дате рождения
 //  dateOfBirth - Дата рождения (объект Date)
 //  Возвращает возраст в отформатированном виде, например: "33 года"
-
 export const calculateAge = (dateOfBirth: Date): string => {
   // Проверяем валидность даты
   if (!dateOfBirth || isNaN(dateOfBirth.getTime())) {
