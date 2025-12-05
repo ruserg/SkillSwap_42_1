@@ -1,3 +1,4 @@
+// Типы для API авторизации
 export interface RegisterRequest {
   email: string;
   password: string;

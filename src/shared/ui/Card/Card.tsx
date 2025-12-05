@@ -14,7 +14,14 @@ import { getCityNameById } from "@shared/lib/utils/cityUtils";
 import type { TSubcategory } from "@entities/category/types";
 
 export const Card: React.FC<CardProps> = memo(
-  ({ user, cities, onDetailsClick, className = "", isLoading = false }) => {
+  ({
+    user,
+    cities,
+    isAuthenticated = false,
+    onDetailsClick,
+    className = "",
+    isLoading = false,
+  }) => {
     const [skills, setSkills] = useState<TSkill[]>([]);
     const [skillsLoading, setSkillsLoading] = useState(true);
     const [subcategories, setSubcategories] = useState<TSubcategory[]>([]);
@@ -77,9 +84,10 @@ export const Card: React.FC<CardProps> = memo(
           </div>
           <div className={styles.userInfo}>
             <Like
-              currentLikeCount={user.likesCount ?? user.likes}
+              currentLikeCount={user.likesCount ?? 0}
               isLiked={user.isLikedByCurrentUser ?? false}
               userId={user.id}
+              isAuthenticated={isAuthenticated}
               className={styles.like}
               onLikeToggle={() => {}}
             />

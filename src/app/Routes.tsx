@@ -5,18 +5,19 @@ import { MainPage } from "@pages/MainPage/MainPage";
 import { SignupStepOne } from "@pages/signup/ui/SignupStepOne/SignupStepOne";
 import { SignupStepThree } from "@pages/signup/ui/SignupStepThree/SignupStepThree";
 import { SignupStepTwo } from "@pages/signup/ui/SignupStepTwo/SignupStepTwo";
+import { Login } from "@/pages/Login/Login";
 
 //основные страницы приложения - заглушки
 //после создания pages отсюда надо будет удалять
 
-function Login() {
-  return (
-    <section>
-      <h2>Вход</h2>
-      <p>Форма входа в аккаунт</p>
-    </section>
-  );
-}
+// function Login() {
+//   return (
+//     <section>
+//       <h2>Вход</h2>
+//       <p>Форма входа в аккаунт</p>
+//     </section>
+//   );
+// }
 
 function CreateOffer() {
   return (

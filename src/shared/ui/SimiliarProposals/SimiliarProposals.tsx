@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "@shared/ui/Card/Card";
 import { CardSkeleton } from "@shared/ui/CardSkeleton/CardSkeleton";
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
-import { selectCities } from "@entities/city/model/slice";
-import { fetchUsersData, selectUsersData } from "@entities/user/model/slice";
+import type { TUser } from "@entities/user/types";
+import type { TCity } from "@entities/city/types";
 import styles from "./similiarProposals.module.scss";
 import leftArrow from "@images/icons/chevron-right.svg";
 import rightArrow from "@images/icons/chevron-right.svg";
@@ -13,26 +12,23 @@ import rightArrow from "@images/icons/chevron-right.svg";
 // При клике на стрелки происходит навигация между слайдами, стрелки отключаются на крайних позициях.
 
 interface SimiliarProposalsProps {
+  users: TUser[];
+  cities: TCity[];
+  isAuthenticated?: boolean;
+  isLoading?: boolean;
   cardsPerSlide?: number;
   maxUsers?: number;
 }
 
 export const SimiliarProposals: React.FC<SimiliarProposalsProps> = ({
+  users,
+  cities,
+  isAuthenticated = false,
+  isLoading = false,
   cardsPerSlide = 4,
   maxUsers = 12,
 }) => {
-  const dispatch = useAppDispatch();
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  const { users, isLoading: usersLoading } = useAppSelector(selectUsersData);
-  const { cities } = useAppSelector(selectCities);
-
-  // Загрузка пользователей
-  useEffect(() => {
-    if (users.length === 0 && !usersLoading) {
-      dispatch(fetchUsersData());
-    }
-  }, [dispatch, users.length, usersLoading]);
 
   const displayUsers = users.slice(0, maxUsers);
 
@@ -65,7 +61,7 @@ export const SimiliarProposals: React.FC<SimiliarProposalsProps> = ({
     setCurrentSlide(0);
   }, [displayUsers.length]);
 
-  if (usersLoading) {
+  if (isLoading) {
     return (
       <section className={styles.container}>
         <h2 className={styles.title}>Похожие предложения</h2>
@@ -101,7 +97,12 @@ export const SimiliarProposals: React.FC<SimiliarProposalsProps> = ({
         )}
         {currentSlideUsers.map((user) => (
           <div key={user.id} className={styles.cardWrapper}>
-            <Card user={user} cities={cities} isLoading={false} />
+            <Card
+              user={user}
+              cities={cities}
+              isAuthenticated={isAuthenticated}
+              isLoading={false}
+            />
           </div>
         ))}
         {slidesCount > 1 && (

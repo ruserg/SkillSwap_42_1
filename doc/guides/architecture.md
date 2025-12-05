@@ -1,0 +1,349 @@
+# Архитектура проекта
+
+Обзор архитектуры и структуры проекта SkillSwap.
+
+## Общая архитектура
+
+Проект построен на принципах Feature-Sliced Design с разделением на слои:
+
+```
+src/
+├── app/              # Инициализация приложения
+│   ├── store/        # Redux store
+│   ├── Routes.tsx    # Маршруты
+│   └── App.tsx        # Корневой компонент
+├── pages/            # Страницы приложения
+│   ├── MainPage/
+│   ├── login/
+│   └── signup/
+├── widgets/          # Крупные переиспользуемые блоки
+│   ├── Header/
+│   ├── Footer/
+│   └── UserCardsSection/
+├── features/         # Бизнес-логика
+│   ├── auth/         # Авторизация
+│   ├── signup/       # Регистрация
+│   └── filter-users/ # Фильтрация
+├── entities/         # Бизнес-сущности
+│   ├── user/
+│   ├── skill/
+│   ├── category/
+│   ├── city/
+│   └── like/
+└── shared/           # Переиспользуемый код
+    ├── api/          # API клиенты
+    ├── lib/          # Утилиты и типы
+    └── ui/           # UI компоненты
+```
+
+## Слои архитектуры
+
+### App Layer (`src/app/`)
+
+Слой инициализации приложения:
+
+- **App.tsx** - корневой компонент
+- **Routes.tsx** - конфигурация маршрутов
+- **ProtectedRoute.tsx** - защита маршрутов
+
+**Ответственность:**
+
+- Инициализация роутера
+- Настройка провайдеров (Redux, Router)
+- Защита маршрутов
+
+### Pages Layer (`src/pages/`)
+
+Страницы приложения:
+
+- **MainPage** - главная страница
+- **signup/** - страницы регистрации
+- **errorPage** - страницы ошибок
+
+**Ответственность:**
+
+- Композиция виджетов
+- Управление состоянием страницы
+- Обработка URL параметров
+
+### Widgets Layer (`src/widgets/`)
+
+Крупные переиспользуемые блоки:
+
+- **Filter** - фильтр пользователей
+- **UserCardsSection** - секция карточек
+- **Header/Footer** - шапка и подвал
+- **OfferPreview** - предпросмотр предложений
+
+**Ответственность:**
+
+- Бизнес-логика виджета
+- Композиция компонентов
+- Интеграция с Redux
+
+### Shared Layer (`src/shared/`)
+
+Переиспользуемый код:
+
+#### `api/` - API клиенты
+
+- **api.ts** - основной API клиент
+- **mockApi.ts** - моковый API (для разработки)
+
+#### `hooks/` - Переиспользуемые хуки
+
+- **useFilteredUsers** - фильтрация пользователей
+- **useDebounce** - debounce значений
+- **useLocalStorage** - работа с localStorage
+
+#### `lib/` - Утилиты
+
+- **cookies.ts** - работа с cookies
+- **helpers.ts** - вспомогательные функции
+- **constants.ts** - константы
+
+#### `lib/` - Утилиты и типы
+
+- **types/api.ts** - типы для API запросов
+- **cookies.ts** - работа с cookies
+- **utils/** - вспомогательные функции
+
+#### `ui/` - UI компоненты
+
+Переиспользуемые компоненты интерфейса
+
+**Ответственность:**
+
+- Переиспользование кода
+- Изоляция бизнес-логики
+- Типобезопасность
+
+### Features Layer (`src/features/`)
+
+Бизнес-логика приложения:
+
+- **auth/** - авторизация
+  - `model/slice.ts` - Redux slice для авторизации
+- **signup/** - регистрация
+  - `model/slice.ts` - Redux slice для регистрации
+- **filter-users/** - фильтрация пользователей
+  - `model/useFilteredUsers.ts` - хук для фильтрации
+
+**Ответственность:**
+
+- Бизнес-логика приложения
+- Интеграция с API
+- Управление состоянием фич
+
+### Entities Layer (`src/entities/`)
+
+Бизнес-сущности:
+
+- **user/** - пользователи
+  - `model/slice.ts` - Redux slice
+  - `types.ts` - типы пользователя
+- **skill/** - навыки
+- **category/** - категории и подкатегории
+- **city/** - города
+- **like/** - лайки
+
+**Ответственность:**
+
+- Модели данных
+- Redux slices для сущностей
+- Типы сущностей
+
+## Паттерны проектирования
+
+### Component Composition
+
+Компоненты собираются из более мелких:
+
+```typescript
+// Виджет использует компоненты
+<UserCardsSection>
+  <Card />      // UI компонент
+  <Like />      // UI компонент
+  <Button />    // UI компонент
+</UserCardsSection>
+```
+
+### Container/Presentational Pattern
+
+Разделение на контейнеры и презентационные компоненты:
+
+- **Контейнеры** (widgets) - управляют состоянием и логикой
+- **Презентационные** (ui) - отображают данные
+
+### Custom Hooks
+
+Извлечение логики в переиспользуемые хуки:
+
+```typescript
+// Логика фильтрации вынесена в хук
+const { filteredUsers } = useFilteredUsers({
+  filters,
+  usersWithLikes,
+  skills,
+});
+```
+
+## Потоки данных
+
+### Redux Flow
+
+```
+Component → Dispatch Action → Thunk → API → Reducer → State → Component
+```
+
+### Пример потока
+
+1. Пользователь нажимает кнопку "Лайк"
+2. Компонент вызывает `dispatch(createLike({ toUserId: userId }))`
+3. Thunk отправляет запрос на API
+4. API возвращает данные
+5. Reducer обновляет состояние
+6. Компонент перерисовывается с новыми данными
+
+**Важно:** Лайки теперь ставятся от пользователя к пользователю, а не к навыкам.
+
+## Управление состоянием
+
+### Глобальное состояние (Redux)
+
+Используется для:
+
+- Данных пользователей (`entities/user`)
+- Навыков (`entities/skill`)
+- Лайков (`entities/like`) - от пользователя к пользователю
+- Категорий и городов (`entities/category`, `entities/city`)
+- Авторизации (`features/auth`)
+- Регистрации (`features/signup`)
+
+### Локальное состояние (useState)
+
+Используется для:
+
+- UI состояния (открыт/закрыт модал)
+- Временных данных формы
+- Состояния компонента
+
+## Стилизация
+
+### CSS Modules
+
+Каждый компонент имеет свой файл стилей:
+
+```typescript
+// Component.tsx
+import styles from './component.module.scss';
+
+<div className={styles.container}>
+```
+
+### Глобальные стили
+
+- **variables.scss** - CSS переменные
+- **themes/** - темы (светлая/темная)
+- **mixins.scss** - SCSS миксины
+
+## Типизация
+
+### TypeScript
+
+Строгая типизация во всем проекте:
+
+- Все компоненты типизированы
+- Все функции имеют типы параметров и возвращаемых значений
+- Используются интерфейсы и типы из `shared/types`
+
+## Алиасы путей
+
+Настроены алиасы для удобного импорта:
+
+```typescript
+@app/           → src/app/
+@pages/         → src/pages/
+@widgets/       → src/widgets/
+@features/      → src/features/
+@entities/      → src/entities/
+@shared/        → src/shared/
+@images/        → src/images/
+```
+
+## Правила организации кода
+
+### Именование
+
+- **Компоненты**: PascalCase (`UserCard.tsx`)
+- **Хуки**: camelCase с префиксом `use` (`useFilteredUsers.ts`)
+- **Утилиты**: camelCase (`cookies.ts`)
+- **Типы**: PascalCase или с префиксом `T` (`TUser`, `CardProps`)
+
+### Структура файлов компонента
+
+```
+Component/
+├── Component.tsx          # Компонент
+├── component.module.scss  # Стили
+├── type.ts               # Типы компонента
+└── index.ts              # Экспорт
+```
+
+### Импорты
+
+Порядок импортов:
+
+1. React и библиотеки
+2. Внешние зависимости
+3. Внутренние модули (shared, widgets, pages)
+4. Типы
+5. Стили
+
+```typescript
+import { useState } from "react";
+import { useAppSelector } from "@app/store/hooks";
+import { Button } from "@shared/ui/Button/Button";
+import type { CardProps } from "./types";
+import styles from "./component.module.scss";
+```
+
+## Лучшие практики
+
+### 1. Разделение ответственности
+
+Каждый модуль должен иметь одну ответственность:
+
+- Компонент - отображение
+- Хук - логика
+- Утилита - обработка данных
+
+### 2. Переиспользование
+
+Выносите переиспользуемый код в `shared/`:
+
+- Компоненты → `shared/ui/`
+- Хуки → `shared/hooks/`
+- Утилиты → `shared/lib/utils/`
+- Типы API → `shared/lib/types/`
+
+### 3. Типобезопасность
+
+Всегда используйте TypeScript типы:
+
+- Не используйте `any`
+- Определяйте типы для пропсов
+- Используйте типы из `shared/lib/types/` для API
+- Используйте типы из `entities/*/types.ts` для сущностей
+
+### 4. Производительность
+
+- Используйте `memo` для тяжелых компонентов
+- Используйте `useMemo` и `useCallback` где нужно
+- Ленивая загрузка для больших компонентов
+
+## Следующие шаги
+
+- [Работа с компонентами](../components/ui-components.md)
+- [Redux Store](../store/overview.md)
+- [API](../api/overview.md)

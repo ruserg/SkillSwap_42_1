@@ -7,9 +7,19 @@ import type { TUser } from "../types";
 import type { RootState } from "@app/store/store";
 import { api } from "@shared/api/api";
 
+// Тип пользователя в state (даты хранятся как строки для сериализации)
+type UserInState = Omit<
+  TUser,
+  "dateOfBirth" | "dateOfRegistration" | "lastLoginDatetime"
+> & {
+  dateOfBirth: string;
+  dateOfRegistration: string;
+  lastLoginDatetime: string;
+};
+
 // Типы для состояния
 type UsersDataState = {
-  users: TUser[];
+  users: UserInState[];
   isLoading: boolean;
   error: string | null;
 };
@@ -38,6 +48,21 @@ export const fetchUsersData = createAsyncThunk(
   },
 );
 
+// Асинхронный thunk для обновления одного пользователя
+export const updateUserInState = createAsyncThunk(
+  "usersData/updateUser",
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      const user = await api.getUser(userId);
+      return user as TUser;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Ошибка загрузки пользователя",
+      );
+    }
+  },
+);
+
 // Slice
 const usersDataSlice = createSlice({
   name: "usersData",
@@ -45,6 +70,20 @@ const usersDataSlice = createSlice({
   reducers: {
     clearError: (state) => {
       state.error = null;
+    },
+    // Оптимистичное обновление лайков пользователя
+    updateUserLikesOptimistic: (
+      state,
+      action: {
+        payload: { userId: number; isLiked: boolean; likesCount: number };
+      },
+    ) => {
+      const { userId, isLiked, likesCount } = action.payload;
+      const user = state.users.find((u) => u.id === userId);
+      if (user) {
+        user.isLikedByCurrentUser = isLiked;
+        user.likesCount = likesCount;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -55,17 +94,59 @@ const usersDataSlice = createSlice({
       })
       .addCase(fetchUsersData.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users = action.payload.users;
+        // Сохраняем пользователей с датами как строками (API возвращает строки)
+        // Селектор selectUsers преобразует их в Date объекты при чтении
+        state.users = action.payload.users.map(
+          (user): UserInState => ({
+            ...user,
+            // Убеждаемся, что даты сохраняются как строки, а не Date объекты
+            dateOfBirth:
+              typeof user.dateOfBirth === "string"
+                ? user.dateOfBirth
+                : String(user.dateOfBirth),
+            dateOfRegistration:
+              typeof user.dateOfRegistration === "string"
+                ? user.dateOfRegistration
+                : String(user.dateOfRegistration),
+            lastLoginDatetime:
+              typeof user.lastLoginDatetime === "string"
+                ? user.lastLoginDatetime
+                : String(user.lastLoginDatetime),
+          }),
+        );
         state.error = null;
       })
       .addCase(fetchUsersData.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+      .addCase(updateUserInState.fulfilled, (state, action) => {
+        const updatedUser = action.payload;
+        const index = state.users.findIndex((u) => u.id === updatedUser.id);
+        if (index !== -1) {
+          // Обновляем пользователя в массиве, сохраняя даты как строки (не Date объекты)
+          // Селектор selectUsers преобразует их в Date объекты при чтении
+          state.users[index] = {
+            ...updatedUser,
+            dateOfBirth:
+              typeof updatedUser.dateOfBirth === "string"
+                ? updatedUser.dateOfBirth
+                : String(updatedUser.dateOfBirth),
+            dateOfRegistration:
+              typeof updatedUser.dateOfRegistration === "string"
+                ? updatedUser.dateOfRegistration
+                : String(updatedUser.dateOfRegistration),
+            lastLoginDatetime:
+              typeof updatedUser.lastLoginDatetime === "string"
+                ? updatedUser.lastLoginDatetime
+                : String(updatedUser.lastLoginDatetime),
+          };
+        }
       });
   },
 });
 
-export const { clearError } = usersDataSlice.actions;
+export const { clearError, updateUserLikesOptimistic } = usersDataSlice.actions;
 
 // Базовый селектор для состояния пользователей
 const selectUsersDataState = (state: RootState) => state.usersData;

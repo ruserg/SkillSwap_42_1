@@ -5,7 +5,9 @@ export type TUser = {
   username: string;
   email: string;
   avatarUrl: string;
-  likes: number;
+  likes: number; // устаревшее поле, используйте likesCount
+  likesCount: number; // количество лайков пользователя
+  isLikedByCurrentUser: boolean; // лайкнул ли текущий пользователь этого пользователя
   cityId: number;
   dateOfBirth: Date; // дата рождения пользователя
   gender: Gender; // пол пользователя

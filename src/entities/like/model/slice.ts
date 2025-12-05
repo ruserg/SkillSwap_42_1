@@ -41,18 +41,23 @@ export const fetchUsersLikesInfo = createAsyncThunk(
 // Создание лайка от текущего пользователя к другому пользователю
 export const createLike = createAsyncThunk(
   "likes/createLike",
-  async (params: { toUserId: number }, { rejectWithValue, dispatch }) => {
+  async (params: { toUserId: number }, { rejectWithValue }) => {
     try {
       await api.createLike({
         toUserId: params.toUserId,
       });
-      // После создания лайка обновляем информацию о лайках этого пользователя
-      await dispatch(fetchUserLikesInfo(params.toUserId));
       return params.toUserId;
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : "Ошибка создания лайка",
-      );
+      // Если лайк уже существует, не считаем это ошибкой
+      const errorMessage =
+        error instanceof Error ? error.message : "Ошибка создания лайка";
+      if (
+        errorMessage.includes("уже существует") ||
+        errorMessage.includes("already exists")
+      ) {
+        return params.toUserId;
+      }
+      return rejectWithValue(errorMessage);
     }
   },
 );
@@ -60,11 +65,9 @@ export const createLike = createAsyncThunk(
 // Удаление лайка
 export const deleteLike = createAsyncThunk(
   "likes/deleteLike",
-  async (toUserId: number, { rejectWithValue, dispatch }) => {
+  async (toUserId: number, { rejectWithValue }) => {
     try {
       await api.deleteLikeByUserId(toUserId);
-      // После удаления лайка обновляем информацию о лайках этого пользователя
-      await dispatch(fetchUserLikesInfo(toUserId));
       return toUserId;
     } catch (error) {
       return rejectWithValue(
@@ -118,20 +121,21 @@ const likesSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
+      .addCase(fetchUserLikesInfo.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(fetchUserLikesInfo.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.usersLikesInfo[action.payload.userId] = action.payload;
+        state.error = null;
       })
       .addCase(fetchUserLikesInfo.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload as string;
-      })
-      .addCase(createLike.fulfilled, () => {
-        // Информация обновляется через fetchUserLikesInfo
       })
       .addCase(createLike.rejected, (state, action) => {
         state.error = action.payload as string;
-      })
-      .addCase(deleteLike.fulfilled, () => {
-        // Информация обновляется через fetchUserLikesInfo
       })
       .addCase(deleteLike.rejected, (state, action) => {
         state.error = action.payload as string;

@@ -1,7 +1,10 @@
-import { useState, useEffect, type MouseEventHandler } from "react";
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
+import { useState, useEffect, useRef, type MouseEventHandler } from "react";
+import { useAppDispatch } from "@app/store/hooks";
 import { createLike, deleteLike } from "@entities/like/model/slice";
-import { selectIsAuthenticated } from "@features/auth/model/slice";
+import {
+  updateUserInState,
+  updateUserLikesOptimistic,
+} from "@entities/user/model/slice";
 import styles from "./like.module.scss";
 import type { ILikeProps } from "./like.types";
 
@@ -10,13 +13,14 @@ export const Like = (props: ILikeProps) => {
     currentLikeCount,
     isLiked: initialIsLiked = false,
     userId,
+    isAuthenticated = false,
     className = "",
   } = props;
   const dispatch = useAppDispatch();
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const [likeCount, setLikeCount] = useState(currentLikeCount);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [isLoading, setIsLoading] = useState(false);
+  const pendingRequestRef = useRef<Promise<void> | null>(null);
 
   // Синхронизируем состояние с пропсами
   useEffect(() => {
@@ -27,33 +31,64 @@ export const Like = (props: ILikeProps) => {
   const toggleliked: MouseEventHandler<HTMLButtonElement> = async (event) => {
     event.preventDefault();
 
-    if (isLoading) return;
-
     // Если пользователь не авторизован, не позволяем ставить лайки
     if (!isAuthenticated) {
       // TODO: переадресация на страницу авторизации
       return;
     }
 
-    setIsLoading(true);
-    const newIsLike = !isLiked;
-
-    try {
-      if (newIsLike) {
-        await dispatch(createLike({ toUserId: userId })).unwrap();
-        setLikeCount(likeCount + 1);
-      } else {
-        await dispatch(deleteLike(userId)).unwrap();
-        setLikeCount(likeCount - 1);
-      }
-      setIsLiked(newIsLike);
-      props.onLikeToggle?.(newIsLike ? likeCount + 1 : likeCount - 1);
-    } catch (error) {
-      console.error("Ошибка при изменении лайка:", error);
-      // Откатываем изменения при ошибке
-    } finally {
-      setIsLoading(false);
+    // Если уже есть запрос в процессе, ждем его завершения
+    if (pendingRequestRef.current) {
+      await pendingRequestRef.current;
     }
+
+    const newIsLike = !isLiked;
+    const newLikeCount = newIsLike ? likeCount + 1 : likeCount - 1;
+
+    // Оптимистичное обновление UI и Redux - сразу обновляем состояние везде
+    setIsLiked(newIsLike);
+    setLikeCount(newLikeCount);
+    dispatch(
+      updateUserLikesOptimistic({
+        userId,
+        isLiked: newIsLike,
+        likesCount: newLikeCount,
+      }),
+    );
+    props.onLikeToggle?.(newLikeCount);
+
+    // Создаем промис для текущего запроса
+    const requestPromise = (async () => {
+      setIsLoading(true);
+      try {
+        if (newIsLike) {
+          await dispatch(createLike({ toUserId: userId })).unwrap();
+        } else {
+          await dispatch(deleteLike(userId)).unwrap();
+        }
+
+        // Обновляем только этого пользователя для синхронизации с сервером
+        await dispatch(updateUserInState(userId));
+      } catch (error) {
+        console.error("Ошибка при изменении лайка:", error);
+        // Откатываем оптимистичное обновление при ошибке
+        setIsLiked(!newIsLike);
+        setLikeCount(likeCount);
+        dispatch(
+          updateUserLikesOptimistic({
+            userId,
+            isLiked: !newIsLike,
+            likesCount: likeCount,
+          }),
+        );
+        props.onLikeToggle?.(likeCount);
+      } finally {
+        setIsLoading(false);
+        pendingRequestRef.current = null;
+      }
+    })();
+
+    pendingRequestRef.current = requestPromise;
   };
 
   return (

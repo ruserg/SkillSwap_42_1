@@ -1,0 +1,127 @@
+@use "../../styles/variables" as vars;
+@use "../../styles/mixins" as *;
+
+.pageWrapper {
+  padding-block: 20px 40px;
+  padding-inline: 36px;
+  max-inline-size: 1440px;
+  margin: 0 auto;
+}
+
+.logo {
+  @include flex(row, space-between, flex-end);
+  block-size: 60px;
+}
+
+.backButtonContainer {
+  inline-size: 147px;
+}
+
+.section {
+  @include flex(row, center, stretch, 24px);
+  background-color: vars.$color-background;
+  font-family: Roboto, sans-serif;
+  margin-block-start: 40px;
+}
+
+.loginContainer {
+  @include flex(column, center, center, 20px);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 122px;
+  background-color: vars.$color-input;
+}
+
+.welcomeContainer {
+  @include flex(column, center, center);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 122px;
+  background-color: vars.$color-input;
+}
+
+.title {
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-block-end: 20px;
+  text-align: center;
+}
+
+.form {
+  inline-size: 100%;
+  @include flex(column, center, center, 20px);
+}
+
+.emailContainer,
+.passwordContainer {
+  @include flex(column, center, start, 5px);
+  inline-size: 100%;
+}
+
+.emailContainer {
+  margin-block: 5px 16px;
+}
+
+.passwordContainer {
+  margin-block-end: 20px;
+}
+
+.errorText {
+  display: block;
+  min-block-size: 13px;
+  font-size: 12px;
+  color: vars.$color-error;
+}
+
+.errorMessage {
+  inline-size: 100%;
+  padding: 12px;
+  background-color: vars.$color-error;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.lightBulb {
+  block-size: 300px;
+  inline-size: 300px;
+  object-fit: cover;
+  margin-block-end: 40px;
+}
+
+.descriptionContainer {
+  @include flex(column, center, center, 12px);
+}
+
+.welcomeTitle {
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.description {
+  text-align: center;
+  padding-inline: 10px;
+  font-family: Roboto, sans-serif;
+}
+
+.registerLink {
+  inline-size: 100%;
+  text-align: center;
+  margin-block-start: 10px;
+
+  p {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    color: vars.$color-caption;
+  }
+}
+
+.linkButton {
+  display: inline;
+  padding: 0;
+  text-decoration: underline;
+  font-size: 14px;
+}

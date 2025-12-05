@@ -7,10 +7,7 @@ import { fetchUsersData, selectUsersData } from "@entities/user/model/slice";
 import { selectCategoryData } from "@entities/category/model/slice";
 import { selectCities, fetchCities } from "@entities/city/model/slice";
 import { fetchSkillsData, selectSkillsData } from "@entities/skill/model/slice";
-import {
-  fetchUsersLikesInfo,
-  selectUsersLikesInfo,
-} from "@entities/like/model/slice";
+import { selectIsAuthenticated } from "@features/auth/model/slice";
 import { useFilteredUsers } from "@features/filter-users/model/useFilteredUsers";
 import type { TFilterState } from "@features/filter-users/types";
 import { ActiveFilters } from "@widgets/ActiveFilters/ActiveFilters";
@@ -31,10 +28,7 @@ export const UserCardsSection = ({
   const { subcategories } = useAppSelector(selectCategoryData);
   const { cities } = useAppSelector(selectCities);
   const { skills, isLoading: skillsLoading } = useAppSelector(selectSkillsData);
-  // Получаем информацию о лайках для всех пользователей
-  const usersLikesInfo = useAppSelector(
-    selectUsersLikesInfo(users.map((u) => u.id)),
-  );
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   const isLoading = usersLoading || skillsLoading;
 
@@ -51,10 +45,6 @@ export const UserCardsSection = ({
     if (skills.length === 0 && !skillsLoading) {
       dispatch(fetchSkillsData());
     }
-    // Загружаем информацию о лайках для всех пользователей
-    if (users.length > 0) {
-      dispatch(fetchUsersLikesInfo(users.map((u) => u.id)));
-    }
     if (cities.length === 0) {
       dispatch(fetchCities());
     }
@@ -67,27 +57,8 @@ export const UserCardsSection = ({
     cities.length,
   ]);
 
-  // Объединяем пользователей с информацией о лайках
-  const usersWithLikes = useMemo(() => {
-    // Создаем Map для быстрого доступа к информации о лайках
-    const likesInfoMap = new Map(
-      usersLikesInfo.map((info) => [info.userId, info]),
-    );
-
-    return users.map((user) => {
-      const likesInfo = likesInfoMap.get(user.id) || {
-        userId: user.id,
-        likesCount: 0,
-        isLikedByCurrentUser: false,
-      };
-
-      return {
-        ...user,
-        likesCount: likesInfo.likesCount,
-        isLikedByCurrentUser: likesInfo.isLikedByCurrentUser,
-      };
-    });
-  }, [users, usersLikesInfo]);
+  // Пользователи уже приходят с информацией о лайках из API
+  const usersWithLikes = users;
 
   // Все популярные пользователи (по количеству лайков)
   const allPopularUsers = useMemo(() => {
@@ -212,6 +183,7 @@ export const UserCardsSection = ({
                   key={user.id}
                   user={user}
                   cities={cities}
+                  isAuthenticated={isAuthenticated}
                   onDetailsClick={handleDetailsClick}
                   isLoading={isLoading}
                 />
@@ -248,6 +220,7 @@ export const UserCardsSection = ({
               key={user.id}
               user={user}
               cities={cities}
+              isAuthenticated={isAuthenticated}
               onDetailsClick={handleDetailsClick}
               isLoading={isLoading}
             />
@@ -273,6 +246,7 @@ export const UserCardsSection = ({
               key={user.id}
               user={user}
               cities={cities}
+              isAuthenticated={isAuthenticated}
               onDetailsClick={handleDetailsClick}
               isLoading={isLoading}
             />
@@ -289,6 +263,7 @@ export const UserCardsSection = ({
               key={user.id}
               user={user}
               cities={cities}
+              isAuthenticated={isAuthenticated}
               onDetailsClick={handleDetailsClick}
               isLoading={isLoading}
             />

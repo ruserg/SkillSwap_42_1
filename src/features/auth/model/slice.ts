@@ -3,7 +3,7 @@ import { api } from "@shared/api/api";
 import type { User } from "@entities/user/types";
 import type { RootState } from "@app/store/store";
 import { getCookie, setCookie, removeCookie } from "@shared/lib/cookies";
-import type { LoginRequest, RegisterRequest } from "../types";
+import type { LoginRequest, RegisterRequest } from "@shared/lib/types/api";
 
 type AuthState = {
   user: User | null;
@@ -44,9 +44,9 @@ export const login = createAsyncThunk(
       localStorage.setItem("refreshToken", response.refreshToken);
       return response;
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : "Ошибка входа",
-      );
+      const errorMessage =
+        error instanceof Error ? error.message : "Ошибка входа";
+      return rejectWithValue(errorMessage);
     }
   },
 );
@@ -179,8 +179,11 @@ export const { clearError } = authSlice.actions;
 
 // Селекторы
 export const selectAuth = (state: RootState) => state.auth;
-export const selectIsAuthenticated = (state: RootState) =>
-  !!getCookie("accessToken") && !!state.auth.user;
+export const selectIsAuthenticated = (state: RootState) => {
+  const hasToken = !!getCookie("accessToken");
+  const hasUser = !!state.auth.user;
+  return hasToken && hasUser;
+};
 export const selectUser = (state: RootState) => state.auth.user;
 
 export const authReducer = authSlice.reducer;

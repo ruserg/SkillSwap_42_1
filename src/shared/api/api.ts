@@ -8,7 +8,7 @@ import type {
   AuthResponse,
   RefreshTokenRequest,
   RefreshTokenResponse,
-} from "@features/auth/types";
+} from "@shared/lib/types/api";
 import type { User } from "@entities/user/types";
 
 // Конфигурация API из переменных окружения
@@ -50,7 +50,8 @@ async function fetchApi<T>(
     headers["authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${API_BASE_URL}${url}`, {
+  const fullUrl = `${API_BASE_URL}${url}`;
+  const res = await fetch(fullUrl, {
     ...options,
     headers,
   });
@@ -92,9 +93,17 @@ async function fetchApi<T>(
     let errorData: unknown;
 
     try {
-      errorData = await res.json();
-      if (errorData && typeof errorData === "object" && "error" in errorData) {
-        errorMessage = (errorData as { error: string }).error;
+      // Проверяем, есть ли тело ответа перед парсингом
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        errorData = await res.json();
+        if (
+          errorData &&
+          typeof errorData === "object" &&
+          "error" in errorData
+        ) {
+          errorMessage = (errorData as { error: string }).error;
+        }
       }
     } catch {
       // Если не удалось распарсить JSON, используем statusText
@@ -103,8 +112,20 @@ async function fetchApi<T>(
     throw new ApiError(errorMessage, res.status, errorData);
   }
 
-  const data = await res.json();
-  return data;
+  // Если статус 204 No Content, не пытаемся парсить JSON
+  if (res.status === 204) {
+    return undefined as T;
+  }
+
+  // Проверяем Content-Type перед парсингом JSON
+  const contentType = res.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
+    const data = await res.json();
+    return data;
+  }
+
+  // Если не JSON, возвращаем пустой ответ
+  return undefined as T;
 }
 
 export const api = {
@@ -127,11 +148,17 @@ export const api = {
     });
   },
 
-  login: (body: LoginRequest): Promise<AuthResponse> =>
-    fetchApi<AuthResponse>("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
+  login: async (body: LoginRequest): Promise<AuthResponse> => {
+    try {
+      const response = await fetchApi<AuthResponse>("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
 
   refreshToken: (body: RefreshTokenRequest): Promise<RefreshTokenResponse> =>
     fetchApi<RefreshTokenResponse>("/api/auth/refresh", {
@@ -245,16 +272,17 @@ export const api = {
   // ========== ЛАЙКИ ==========
   // Получить информацию о лайках для списка пользователей
   // Возвращает только счетчик лайков и статус лайка текущего пользователя
-  getUsersLikesInfo: (
+  getUsersLikesInfo: async (
     userIds: number[],
-  ): Promise<import("@entities/like/types").TUserLikesInfo[]> =>
-    fetchApi<import("@entities/like/types").TUserLikesInfo[]>(
-      "/api/likes/users-info",
-      {
-        method: "POST",
-        body: JSON.stringify({ userIds }),
-      },
-    ),
+  ): Promise<import("@entities/like/types").TUserLikesInfo[]> => {
+    const result = await fetchApi<
+      import("@entities/like/types").TUserLikesInfo[]
+    >("/api/likes/users-info", {
+      method: "POST",
+      body: JSON.stringify({ userIds }),
+    });
+    return result;
+  },
 
   // Получить информацию о лайках одного пользователя
   getUserLikesInfo: (

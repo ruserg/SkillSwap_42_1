@@ -116,7 +116,7 @@ export const submitSignup = createAsyncThunk<
       Женский: "F",
     };
 
-    const registerData: import("@features/auth/types").RegisterRequest = {
+    const registerData: import("@shared/lib/types/api").RegisterRequest = {
       email: state.step1.email,
       password: state.step1.password,
       name:
