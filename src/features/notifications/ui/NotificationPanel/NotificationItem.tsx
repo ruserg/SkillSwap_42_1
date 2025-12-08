@@ -7,6 +7,9 @@ import type { INotificationItemProps } from "../../model/types";
 export const NotificationItem: React.FC<INotificationItemProps> = ({
   notification,
 }) => {
+  // Используем отформатированную дату из стейта
+  const formattedDate = notification.formattedDate || notification.date;
+
   return (
     <div className={styles.notificationCard}>
       <div className={styles.notificationContent}>
@@ -21,7 +24,7 @@ export const NotificationItem: React.FC<INotificationItemProps> = ({
           </div>
 
           <div>
-            <p className={styles.notificationDate}>{notification.date}</p>
+            <p className={styles.notificationDate}>{formattedDate}</p>
           </div>
         </div>
       </div>

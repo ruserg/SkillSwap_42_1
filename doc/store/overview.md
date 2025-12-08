@@ -12,6 +12,7 @@
   cities: CityState,           // Города (entities/city)
   skillsData: SkillsDataState,  // Навыки (entities/skill)
   likes: LikesState,           // Лайки (entities/like)
+  notifications: NotificationsState, // Уведомления (entities/notification)
   signup: SignupState,         // Состояние регистрации (features/signup)
 }
 ```
@@ -29,6 +30,7 @@ import { categoryReducer } from "@entities/category/model/slice";
 import { cityReducer } from "@entities/city/model/slice";
 import { skillsDataReducer } from "@entities/skill/model/slice";
 import { likesReducer } from "@entities/like/model/slice";
+import { notificationsReducer } from "@entities/notification/model/slice";
 import { signupReducer } from "@features/signup/model/slice";
 
 export const store = configureStore({
@@ -39,6 +41,7 @@ export const store = configureStore({
     cities: cityReducer,
     skillsData: skillsDataReducer,
     likes: likesReducer,
+    notifications: notificationsReducer,
     signup: signupReducer,
   },
 });
@@ -235,6 +238,50 @@ const users = useAppSelector(selectUsersData);
 
 Подробнее: [City Data Slice](./city-data-slice.md)
 
+### notificationsSlice
+
+Уведомления пользователя.
+
+**Состояние:**
+
+```typescript
+{
+  notifications: INotification[];
+  toast: INotification | null;
+  isLoading: boolean;
+  error: string | null;
+}
+```
+
+**Thunks:**
+
+- `fetchNotifications` - загрузка всех уведомлений
+- `fetchUnreadNotifications` - загрузка непрочитанных уведомлений
+- `fetchToastNotification` - загрузка тост-уведомления
+- `fetchNotificationById` - загрузка уведомления по ID
+- `markNotificationAsRead` - отметить уведомление как прочитанное
+- `markAllNotificationsAsRead` - отметить все уведомления как прочитанные
+- `deleteNotification` - удалить уведомление
+- `deleteAllNotifications` - удалить все уведомления
+
+**Селекторы:**
+
+- `selectNotifications` - все уведомления
+- `selectUnreadNotifications` - непрочитанные уведомления
+- `selectUnreadNotificationsCount` - количество непрочитанных
+- `selectToast` - текущее тост-уведомление
+- `selectNotificationById` - уведомление по ID
+
+**Actions:**
+
+- `clearToast` - очистить тост
+- `clearError` - очистить ошибку
+- `markAsReadOptimistic` - оптимистичное обновление статуса прочитанности
+
+**Важно:** Форматирование дат (`formattedDate`) выполняется на сервере. Все уведомления приходят с уже отформатированными датами в формате "сегодня", "вчера" или "dd.mm.YYYY".
+
+Подробнее: [Notifications Slice](./notifications-slice.md)
+
 ## Работа с данными
 
 ### Загрузка данных
@@ -305,3 +352,4 @@ if (isLoading) {
 - [Likes Slice](./likes-slice.md) - работа с лайками
 - [Category Data Slice](./category-data-slice.md) - категории и подкатегории
 - [City Data Slice](./city-data-slice.md) - города
+- [Notifications Slice](./notifications-slice.md) - работа с уведомлениями

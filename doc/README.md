@@ -29,6 +29,7 @@
 - [UserCardsSection](./widgets/user-cards-section.md) - секция карточек пользователей
 - [Header и Footer](./widgets/header-footer.md) - шапка и подвал сайта
 - [OfferPreview](./widgets/offer-preview.md) - предпросмотр предложений
+- [Toast](./widgets/toast.md) - тост-уведомления
 
 ### 🪝 Хуки
 
@@ -43,6 +44,7 @@
 - [Likes Slice](./store/likes-slice.md) - лайки (от пользователя к пользователю)
 - [Category Data Slice](./store/category-data-slice.md) - категории и подкатегории
 - [City Data Slice](./store/city-data-slice.md) - города
+- [Notifications Slice](./store/notifications-slice.md) - уведомления
 
 ### 📝 Типы
 

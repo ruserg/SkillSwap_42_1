@@ -41,17 +41,20 @@ src/
 ├── widgets/                    # Сложные UI компоненты
 │   ├── Header/
 │   ├── Footer/
-│   └── UserCardsSection/
+│   ├── UserCardsSection/
+│   └── Toast/                  # Тосты-уведомления
 ├── features/                   # Бизнес-логика
 │   ├── auth/                   # Авторизация
 │   ├── signup/                 # Регистрация
-│   └── filter-users/           # Фильтрация пользователей
+│   ├── filter-users/           # Фильтрация пользователей
+│   └── notifications/          # Уведомления
 ├── entities/                   # Бизнес-сущности
 │   ├── user/
 │   ├── skill/
 │   ├── category/
 │   ├── city/
-│   └── like/
+│   ├── like/
+│   └── notification/           # Уведомления
 └── shared/                     # Переиспользуемый код
     ├── api/                    # API клиенты
     ├── lib/                    # Утилиты и типы
@@ -88,6 +91,7 @@ src/
 - [Likes Slice](../store/likes-slice.md) - лайки
 - [Category Data Slice](../store/category-data-slice.md) - категории
 - [City Data Slice](../store/city-data-slice.md) - города
+- [Notifications Slice](../store/notifications-slice.md) - уведомления
 
 ## Компоненты
 
@@ -100,6 +104,7 @@ src/
 - [Filter](../widgets/filter.md) - виджет фильтрации
 - [UserCardsSection](../widgets/user-cards-section.md) - секция карточек пользователей
 - [Header и Footer](../widgets/header-footer.md) - шапка и подвал сайта
+- [Toast](../widgets/toast.md) - тост-уведомления
 
 ## Гайды
 

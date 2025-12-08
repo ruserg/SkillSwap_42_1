@@ -25,9 +25,9 @@ export const LikePaintedOver = () => (
   >
     <path
       className={styles.likePaintedOverPath}
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       d="M7.5 3A5.5 5.5 0 0 0 2 8.5C2 14 8.5 19 12 20.163 15.5 19 22 14 22 8.5a5.5 5.5 0 0 0-10-3.163A5.5 5.5 0 0 0 7.5 3"
     />
   </svg>

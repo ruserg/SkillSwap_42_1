@@ -4,10 +4,10 @@ import type { IDropDownProps } from "./dropDown.types";
 
 export const DropDown = (props: IDropDownProps) => {
   const {
-    top = "0",
-    right = "0",
-    bottom = "0",
-    left = "0",
+    top,
+    right,
+    bottom,
+    left,
     children,
     triggerGroupe,
     onClose,
@@ -48,20 +48,24 @@ export const DropDown = (props: IDropDownProps) => {
       document.removeEventListener("keydown", handleKeyDownClose);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onClose]);
+  }, [onClose, triggerGroupe]);
+
+  const style: React.CSSProperties = {};
+  if (top !== undefined) style.top = top;
+  if (right !== undefined) style.right = right;
+  if (bottom !== undefined) style.bottom = bottom;
+  if (left !== undefined) style.left = left;
 
   return (
     <div
       className={`${styles.dropDownWrapper} ${isOpen ? styles.visible : ""}`}
+      data-notifications={triggerGroupe === "notifications" ? "" : undefined}
       ref={dropDownRef}
       role={role}
       aria-hidden={!isOpen}
       aria-label={ariaLabel}
     >
-      <div
-        className={styles.dropDownContainer}
-        style={{ top, right, bottom, left }}
-      >
+      <div className={styles.dropDownContainer} style={style}>
         {children}
       </div>
     </div>

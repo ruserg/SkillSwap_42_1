@@ -4,7 +4,11 @@
   border-radius: 12px;
   padding: 60px;
   inline-size: 556px;
+  max-inline-size: calc(100vw - 16px);
   block-size: 616px;
+  max-block-size: calc(100vh - 80px);
+  overflow-y: auto;
+  overscroll-behavior: contain; // Предотвращает всплытие прокрутки на страницу
 }
 
 .titleContainer {
@@ -53,12 +57,24 @@
   color: vars.$color-text;
 }
 
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-inline-size: 0;
+  max-inline-size: 300px;
+}
+
 .notificationDate {
   font-family: Roboto, sans-serif;
   font-size: 16px;
   line-height: 150%;
   letter-spacing: 0.02em;
   color: vars.$color-caption;
+  white-space: nowrap;
+  text-align: right;
+  flex-shrink: 0;
 }
 
 .notificationContent {
@@ -69,7 +85,9 @@
 .messageContainer {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   inline-size: 100%;
+  gap: 16px;
 }
 
 .actionButton {

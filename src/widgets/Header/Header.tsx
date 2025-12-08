@@ -20,11 +20,15 @@ import { selectCategoryData } from "@entities/category/model/slice";
 import { DropDown } from "@shared/ui/DropDown/DropDown";
 import { DropDownListCategory } from "@shared/ui/DropDownListCategory/DropDownListCategory";
 import NotificationPanel from "@features/notifications/ui/NotificationPanel/NotificationPanel";
-import type { INotification } from "@features/notifications/model/types";
-import { defaultNotifications } from "@features/notifications/model/useNotifications";
 import { selectUser } from "@/features/auth/model/slice";
 import { useAppDispatch } from "@app/store/hooks";
 import { logout } from "@/features/auth/model/slice";
+import {
+  selectNotifications,
+  selectUnreadNotificationsCount,
+  fetchNotifications,
+  markAllNotificationsAsRead,
+} from "@entities/notification/model/slice";
 
 export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -37,23 +41,33 @@ export const Header = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showCategory, setShowCategory] = useState(false);
-  // TODO: закомментировать после добавления notificationsCount в state
-  // const notificationsCount = 1; // TODO: заменить на state
-  // const [notificationsCount, setNotificationsCount] = useState(1);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchRef = useRef<HTMLDivElement>(null);
   const { subcategories } = useAppSelector(selectCategoryData);
   const { toggle } = useTheme();
 
-  //настроить уведомления
-  const [notificationsCount, setNotificationsCount] = useState<number>(2);
-  const [notifications, setNotifications] =
-    useState<INotification[]>(defaultNotifications);
+  // Получаем уведомления из Redux
+  const notifications = useAppSelector(selectNotifications);
+  const notificationsCount = useAppSelector(selectUnreadNotificationsCount);
 
-  //обработчик, который передаем в панель
-  const handleMarkAllRead = () => {
-    setNotificationsCount(0);
+  // Загружаем уведомления при открытии панели (если авторизован)
+  useEffect(() => {
+    if (isAuth && isNotificationsOpen) {
+      dispatch(fetchNotifications());
+
+      // Обновляем уведомления каждые 10 секунд, пока панель открыта
+      const interval = setInterval(() => {
+        dispatch(fetchNotifications());
+      }, 10000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isAuth, isNotificationsOpen, dispatch]);
+
+  // Обработчик, который передаем в панель
+  const handleMarkAllRead = async () => {
+    await dispatch(markAllNotificationsAsRead());
   };
 
   // Синхронизируем значение поиска с URL параметром
@@ -204,16 +218,14 @@ export const Header = () => {
               />
               {isNotificationsOpen && (
                 <DropDown
-                  top="30px"
-                  left="-137px"
                   triggerGroupe="notifications"
                   onClose={() => setIsNotificationsOpen(false)}
                   isOpen={isNotificationsOpen}
                 >
                   <NotificationPanel
                     notifications={notifications}
-                    setNotifications={setNotifications}
                     onMarkAllRead={handleMarkAllRead}
+                    isOpen={isNotificationsOpen}
                   />
                 </DropDown>
               )}

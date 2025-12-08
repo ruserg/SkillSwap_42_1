@@ -186,7 +186,22 @@ const notificationsSlice = createSlice({
       })
       .addCase(fetchNotifications.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.notifications = action.payload;
+        // Данные уже отформатированы в API
+        const notifications = action.payload;
+
+        // Если есть тост в state.toast и он есть в новом списке, заменяем его на уже отформатированный
+        // чтобы избежать мерцания (state.toast уже отформатирован)
+        if (state.toast) {
+          const toastIndex = notifications.findIndex(
+            (n) => n.id === state.toast?.id,
+          );
+          if (toastIndex !== -1) {
+            notifications[toastIndex] = state.toast;
+          }
+          // Если тоста нет в новом списке, не добавляем его - тосты показываются отдельно
+        }
+
+        state.notifications = notifications;
         state.error = null;
       })
       .addCase(fetchNotifications.rejected, (state, action) => {
@@ -200,7 +215,7 @@ const notificationsSlice = createSlice({
       })
       .addCase(fetchUnreadNotifications.fulfilled, (state, action) => {
         state.isLoading = false;
-        // Обновляем только непрочитанные уведомления
+        // Обновляем только непрочитанные уведомления (данные уже отформатированы в API)
         action.payload.forEach((notification) => {
           const index = state.notifications.findIndex(
             (n) => n.id === notification.id,
@@ -219,13 +234,16 @@ const notificationsSlice = createSlice({
       })
       // fetchToastNotification
       .addCase(fetchToastNotification.fulfilled, (state, action) => {
+        // Данные уже отформатированы в API
         state.toast = action.payload;
+        // Тост не добавляется в список уведомлений, он показывается отдельно
       })
       .addCase(fetchToastNotification.rejected, (state, action) => {
         state.error = action.payload as string;
       })
       // fetchNotificationById
       .addCase(fetchNotificationById.fulfilled, (state, action) => {
+        // Данные уже отформатированы в API
         const notification = action.payload;
         const index = state.notifications.findIndex(
           (n) => n.id === notification.id,
@@ -238,6 +256,7 @@ const notificationsSlice = createSlice({
       })
       // markNotificationAsRead
       .addCase(markNotificationAsRead.fulfilled, (state, action) => {
+        // Данные уже отформатированы в API
         const notification = action.payload;
         const index = state.notifications.findIndex(
           (n) => n.id === notification.id,
@@ -254,7 +273,7 @@ const notificationsSlice = createSlice({
       })
       // markAllNotificationsAsRead
       .addCase(markAllNotificationsAsRead.fulfilled, (state, action) => {
-        // Обновляем все уведомления из ответа
+        // Обновляем все уведомления из ответа (данные уже отформатированы в API)
         action.payload.notifications.forEach((notification) => {
           const index = state.notifications.findIndex(
             (n) => n.id === notification.id,
@@ -262,11 +281,11 @@ const notificationsSlice = createSlice({
           if (index !== -1) {
             state.notifications[index] = notification;
           }
+          // Если это тост, обновляем его
+          if (state.toast?.id === notification.id) {
+            state.toast = notification;
+          }
         });
-        // Если есть тост, тоже помечаем как прочитанный
-        if (state.toast) {
-          state.toast.isRead = true;
-        }
       })
       .addCase(markAllNotificationsAsRead.rejected, (state, action) => {
         state.error = action.payload as string;

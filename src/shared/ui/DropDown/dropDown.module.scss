@@ -16,4 +16,13 @@
   border-radius: $input-border-radius;
   border: 1px solid $color-border-input;
   z-index: 1;
+  max-inline-size: calc(100vw - 16px);
+}
+
+// Для notifications используем fixed позиционирование и выравниваем по правому краю контента
+// Header имеет max-width: 1440px и padding: 36px
+.dropDownWrapper[data-notifications] .dropDownContainer {
+  position: fixed;
+  top: 100px;
+  right: 36px;
 }

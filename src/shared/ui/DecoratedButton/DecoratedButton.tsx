@@ -12,72 +12,34 @@ export const DecoratedButton = (props: TDecorButtonProps) => {
     notificationsCount,
   } = props;
 
+  const getButtonClass = () => {
+    if (variant === "heart") {
+      return styles.buttonHeart;
+    }
+    if (variant === "heartFill") {
+      return styles.buttonHeartFill;
+    }
+    if (variant === "moon") {
+      return styles.buttonMoon;
+    }
+    if (variant === "bell") {
+      return notificationsCount ? styles.buttonBellFill : styles.buttonBell;
+    }
+    if (variant === "share") {
+      return styles.buttonShare;
+    }
+    if (variant === "parameters") {
+      return styles.buttonParameters;
+    }
+    return styles.buttonHeart;
+  };
+
   return (
-    <>
-      {variant === "heart" && (
-        <button
-          onClick={onClick}
-          disabled={disabled}
-          className={clsx(styles.decorButton, styles.buttonHeart, className)}
-          type={htmlType}
-        ></button>
-      )}
-      {variant === "heartFill" && (
-        <button
-          onClick={onClick}
-          disabled={disabled}
-          className={clsx(
-            styles.decorButton,
-            styles.buttonHeartFill,
-            className,
-          )}
-          type={htmlType}
-        ></button>
-      )}
-      {variant === "moon" && (
-        <button
-          onClick={onClick}
-          disabled={disabled}
-          className={clsx(styles.decorButton, styles.buttonMoon, className)}
-          type={htmlType}
-        ></button>
-      )}
-      {variant === "bell" && !notificationsCount && (
-        <button
-          onClick={onClick}
-          disabled={disabled}
-          className={clsx(styles.decorButton, styles.buttonBell, className)}
-          type={htmlType}
-        ></button>
-      )}
-      {variant === "bell" && notificationsCount && (
-        <button
-          onClick={onClick}
-          disabled={disabled}
-          className={clsx(styles.decorButton, styles.buttonBellFill, className)}
-          type={htmlType}
-        ></button>
-      )}
-      {variant === "share" && (
-        <button
-          onClick={onClick}
-          disabled={disabled}
-          className={clsx(styles.decorButton, styles.buttonShare, className)}
-          type={htmlType}
-        ></button>
-      )}
-      {variant === "parameters" && (
-        <button
-          onClick={onClick}
-          disabled={disabled}
-          className={clsx(
-            styles.decorButton,
-            styles.buttonParameters,
-            className,
-          )}
-          type={htmlType}
-        ></button>
-      )}
-    </>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={clsx(styles.decorButton, getButtonClass(), className)}
+      type={htmlType}
+    ></button>
   );
 };

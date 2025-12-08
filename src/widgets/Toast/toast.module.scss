@@ -1,0 +1,121 @@
+@use "@styles/variables" as vars;
+
+.toastContainer {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  inline-size: 100%;
+  max-inline-size: 1440px;
+  padding-inline: 36px;
+  pointer-events: none;
+  animation: slide-up 0.3s ease-out;
+
+  @media (width <= 600px) {
+    padding-inline: 16px;
+    bottom: 16px;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  background-color: vars.$color-toast-background;
+  border: 1px solid vars.$color-border-input;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  pointer-events: auto;
+  max-inline-size: 600px;
+  margin-inline: auto;
+
+  // Для темной темы используем более темную тень
+  [data-theme="dark"] & {
+    box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
+  }
+}
+
+.toastContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.toastMessage {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  color: vars.$color-text;
+}
+
+.toastDetails {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  color: vars.$color-text;
+  opacity: 0.8;
+}
+
+.toastClose {
+  inline-size: 24px;
+  block-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  color: vars.$color-text;
+  opacity: 0.6;
+  flex-shrink: 0;
+  padding: 0;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.toastAction {
+  padding: 8px 16px;
+  background-color: vars.$color-accent;
+  color: vars.$color-text;
+  border: none;
+  border-radius: 8px;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: vars.$color-button-hover;
+  }
+
+  &:active {
+    background-color: vars.$color-button-pressed;
+    color: vars.$color-input;
+  }
+}
