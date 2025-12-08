@@ -36,10 +36,22 @@ export const DropDownListCategory = () => {
   }
 
   return (
-    <div className={styles.listCategory}>
+    <div
+      className={styles.listCategory}
+      role="list"
+      aria-label="Категории навыков"
+    >
       {categories.map((category) => (
-        <div key={category.id} className={styles.itemCategoryContainer}>
-          <img src={setImagesCategory(category.id)} alt={category.name} />
+        <div
+          key={category.id}
+          className={styles.itemCategoryContainer}
+          aria-label={`Категория: ${category.name}`}
+        >
+          <img
+            src={setImagesCategory(category.id)}
+            alt={category.name}
+            aria-hidden="true"
+          />
           <div className={styles.itemsCategory}>
             <h3 className={styles.itemsCategoryTitle}>{category.name}</h3>
             <ul className={styles.itemsCategoryList}>
@@ -50,7 +62,12 @@ export const DropDownListCategory = () => {
                     key={subcategory.id}
                     className={styles.subcategoriesTitle}
                   >
-                    <a href="#">{subcategory.name}</a>
+                    <a
+                      href="#"
+                      aria-label={`Подкатегория: ${subcategory.name}`}
+                    >
+                      {subcategory.name}
+                    </a>
                     {/* т.к. это заглушка, то и ссылки никуда не ведут */}
                   </li>
                 ))}

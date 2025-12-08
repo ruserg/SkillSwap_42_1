@@ -133,6 +133,8 @@ export const Header = () => {
                 onClose={() => {
                   setShowCategory(false);
                 }}
+                isOpen={showCategory}
+                role="listbox"
               >
                 <DropDownListCategory />
               </DropDown>
@@ -187,6 +189,8 @@ export const Header = () => {
                   left="-137px"
                   triggerGroupe="notifications"
                   onClose={() => setIsNotificationsOpen(false)}
+                  isOpen={isNotificationsOpen}
+                  role="menu"
                 >
                   <NotificationPanel />
                 </DropDown>
@@ -214,6 +218,8 @@ export const Header = () => {
                 onClose={() => {
                   setIsMenuOpen(false);
                 }}
+                isOpen={isMenuOpen}
+                role="menu"
               >
                 <ul className={styles.profileMenuList}>
                   <li className={styles.profileMenuItem}>

@@ -11,6 +11,9 @@ export const DropDown = (props: IDropDownProps) => {
     children,
     triggerGroupe,
     onClose,
+    isOpen = false,
+    role,
+    ariaLabel,
   } = props;
 
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -48,7 +51,13 @@ export const DropDown = (props: IDropDownProps) => {
   }, [onClose]);
 
   return (
-    <div className={styles.dropDownWrapper} ref={dropDownRef}>
+    <div
+      className={`${styles.dropDownWrapper} ${isOpen ? styles.visible : ""}`}
+      ref={dropDownRef}
+      role={role}
+      aria-hidden={!isOpen}
+      aria-label={ariaLabel}
+    >
       <div
         className={styles.dropDownContainer}
         style={{ top, right, bottom, left }}
