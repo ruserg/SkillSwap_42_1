@@ -2,6 +2,7 @@ import type { TUser } from "@entities/user/types";
 import type { TCategory, TSubcategory } from "@entities/category/types";
 import type { TCity } from "@entities/city/types";
 import type { TSkill } from "@entities/skill/types";
+import type { INotification } from "@entities/notification/types";
 import type {
   RegisterRequest,
   LoginRequest,
@@ -309,6 +310,53 @@ export const api = {
   // Удалить лайк по пользователю (кому ставили лайк)
   deleteLikeByUserId: (toUserId: number): Promise<void> =>
     fetchApi<void>(`/api/likes?toUserId=${toUserId}`, {
+      method: "DELETE",
+    }),
+
+  // ========== УВЕДОМЛЕНИЯ ==========
+  // Получить все уведомления текущего пользователя
+  getNotifications: (): Promise<INotification[]> =>
+    fetchApi<INotification[]>("/api/notifications"),
+
+  // Получить непрочитанные уведомления
+  getUnreadNotifications: (): Promise<INotification[]> =>
+    fetchApi<INotification[]>("/api/notifications/unread"),
+
+  // Получить тост-уведомление
+  getToastNotification: (): Promise<INotification> =>
+    fetchApi<INotification>("/api/notifications/toast"),
+
+  // Получить уведомление по ID
+  getNotificationById: (id: string): Promise<INotification> =>
+    fetchApi<INotification>(`/api/notifications/${id}`),
+
+  // Отметить уведомление как прочитанное
+  markNotificationAsRead: (id: string): Promise<INotification> =>
+    fetchApi<INotification>(`/api/notifications/${id}/read`, {
+      method: "PATCH",
+    }),
+
+  // Отметить все уведомления как прочитанные
+  markAllNotificationsAsRead: (): Promise<{
+    count: number;
+    notifications: INotification[];
+  }> =>
+    fetchApi<{ count: number; notifications: INotification[] }>(
+      "/api/notifications/read-all",
+      {
+        method: "PATCH",
+      },
+    ),
+
+  // Удалить уведомление
+  deleteNotification: (id: string): Promise<void> =>
+    fetchApi<void>(`/api/notifications/${id}`, {
+      method: "DELETE",
+    }),
+
+  // Удалить все уведомления текущего пользователя
+  deleteAllNotifications: (): Promise<{ message: string; count: number }> =>
+    fetchApi<{ message: string; count: number }>("/api/notifications", {
       method: "DELETE",
     }),
 
