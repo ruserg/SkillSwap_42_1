@@ -22,11 +22,15 @@ import { DropDownListCategory } from "@shared/ui/DropDownListCategory/DropDownLi
 import NotificationPanel from "../NotificationPanel/NotificationPanel";
 import { selectUser } from "@/features/auth/model/slice";
 
+import { useAppDispatch } from "@app/store/hooks";
+import { logout } from "@/features/auth/model/slice";
+
 export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   //меняем состояние шапки
   const user = useAppSelector(selectUser);
   const isAuth = Boolean(user);
+  const dispatch = useAppDispatch();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -228,7 +232,10 @@ export const Header = () => {
                       styles.profileMenuItem,
                       styles.profileMenuItemExit,
                     )}
-                    onClick={() => console.log("Вы вышли из аккаунта")}
+                    onClick={() => {
+                      dispatch(logout());
+                      setIsMenuOpen(false);
+                    }}
                   >
                     Выйти из аккаунта
                   </li>
