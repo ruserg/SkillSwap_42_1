@@ -1,5 +1,6 @@
 import styles from "./footer.module.scss";
 import { Logo } from "@shared/ui/Logo/Logo";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -13,27 +14,27 @@ export const Footer = () => {
         </div>
         <ul className={styles.footerLinks}>
           <li>
-            <a href="#">О проекте</a>
+            <Link to="/">О проекте</Link>
           </li>
 
           <li>
-            <a href="#">Контакты</a>
+            <Link to="/">Контакты</Link>
           </li>
 
           <li>
-            <a href="#">Политика конфиденциальности</a>
+            <Link to="/">Политика конфиденциальности</Link>
           </li>
 
           <li>
-            <a href="#">Все навыки</a>
+            <Link to="/">Все навыки</Link>
           </li>
 
           <li>
-            <a href="#">Блог</a>
+            <Link to="/">Блог</Link>
           </li>
 
           <li>
-            <a href="#">Пользовательское соглашение</a>
+            <Link to="/">Пользовательское соглашение</Link>
           </li>
         </ul>
       </div>
