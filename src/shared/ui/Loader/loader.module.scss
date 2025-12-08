@@ -1,0 +1,24 @@
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.innerStar {
+  transform-origin: 50% 50%;
+  animation: rotate-and-pulse 2s linear infinite;
+}
+
+@keyframes rotate-and-pulse {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.5);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
