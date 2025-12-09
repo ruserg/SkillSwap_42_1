@@ -1,17 +1,15 @@
 import styles from "./signupStepOne.module.scss";
 import { Button } from "@shared/ui/Button/Button";
-import { Separator } from "@shared/ui/Separator/Separator";
 import { Input } from "@shared/ui/Input/Input";
 import { Logo } from "@shared/ui/Logo/Logo";
 import lightBulb from "@images/png/light-bulb.png";
-import { AppleIcon } from "@shared/ui/Icons/AppleIcon";
 import { SignupSteps } from "@shared/ui/SignupSteps/SignupSteps";
 import { ArrowLeftIcon } from "@shared/ui/Icons/ArrowLeftIcon";
-import { GoogleIcon } from "@shared/ui/Icons/GoogleIcon";
 import { useEffect, useState } from "react";
 import type { z } from "zod";
 import type { SignupStep1Data } from "@shared/lib/zod/types";
 import { signupStep1Schema } from "@shared/lib/zod/schemas/userAuthSchema";
+import { ExternalLogIn } from "@/widgets/ExternalLogIn/ExternalLogIn";
 
 export const SignupStepOne = () => {
   const [formData, setFormData] = useState<SignupStep1Data>({
@@ -82,15 +80,7 @@ export const SignupStepOne = () => {
       </div>
       <section className={styles.section}>
         <div className={styles.registerContainer}>
-          <Button variant="signup" leftIcon={<GoogleIcon />}>
-            Продолжить с Google
-          </Button>
-          <Button variant="signup" leftIcon={<AppleIcon />}>
-            Продолжить с Apple
-          </Button>
-
-          <Separator />
-
+          <ExternalLogIn />
           <form className={styles.form}>
             <div className={styles.emailContainer}>
               <label htmlFor="email">Email</label>
