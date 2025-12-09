@@ -19,14 +19,14 @@ interface SignupState {
     location: string;
     dateOfBirth: string;
     gender: string;
-    avatar: File | null; // обязательный файл аватара
+    avatar: File | null;
   };
   step3: {
     skillName: string;
-    category: string;
-    categoryName?: string;
-    subcategory: string;
-    subcategoryName?: string;
+    category: string[];
+    categoryName?: string[];
+    subcategory: string[];
+    subcategoryName?: string[];
     description: string;
     images: string[];
   };
@@ -41,7 +41,19 @@ const loadStateFromStorage = (): SignupState => {
     if (serializedState === null) {
       return getInitialState();
     }
-    return JSON.parse(serializedState);
+    const parsed = JSON.parse(serializedState);
+    // Конвертируем старые одиночные значения в массивы для обратной совместимости
+    if (typeof parsed.step3?.category === "string") {
+      parsed.step3.category = parsed.step3.category
+        ? [parsed.step3.category]
+        : [];
+    }
+    if (typeof parsed.step3?.subcategory === "string") {
+      parsed.step3.subcategory = parsed.step3.subcategory
+        ? [parsed.step3.subcategory]
+        : [];
+    }
+    return parsed;
   } catch (err) {
     console.error("Ошибка при загрузке состояния из localStorage:", err);
     return getInitialState();
@@ -64,10 +76,10 @@ const getInitialState = (): SignupState => ({
   },
   step3: {
     skillName: "",
-    category: "",
-    categoryName: "",
-    subcategory: "",
-    subcategoryName: "",
+    category: [],
+    categoryName: [],
+    subcategory: [],
+    subcategoryName: [],
     description: "",
     images: [],
   },
@@ -138,18 +150,23 @@ export const submitSignup = createAsyncThunk<
     await dispatch(register(registerData)).unwrap();
 
     // 2. Создание навыка из step3 (если заполнено)
-    if (state.step3.skillName && state.step3.subcategory) {
-      const subcategoryId = parseInt(state.step3.subcategory, 10);
-      if (!isNaN(subcategoryId)) {
-        await api.createSkill({
-          subcategoryId,
-          title: state.step3.skillName,
-          description: state.step3.description || "",
-          type_of_proposal: "offer", // По умолчанию "учу" (предложение)
-          images:
-            state.step3.images.length > 0 ? state.step3.images : undefined,
-        });
-      }
+    // Теперь создаем навык для каждой выбранной подкатегории
+    if (state.step3.skillName && state.step3.subcategory.length > 0) {
+      const skillPromises = state.step3.subcategory.map(async (subcatId) => {
+        const subcategoryId = parseInt(subcatId, 10);
+        if (!isNaN(subcategoryId)) {
+          return api.createSkill({
+            subcategoryId,
+            title: state.step3.skillName,
+            description: state.step3.description || "",
+            type_of_proposal: "offer",
+            images:
+              state.step3.images.length > 0 ? state.step3.images : undefined,
+          });
+        }
+      });
+
+      await Promise.all(skillPromises);
     }
 
     return;
@@ -169,7 +186,6 @@ const signupSlice = createSlice({
       action: PayloadAction<Partial<SignupState["step1"]>>,
     ) => {
       state.step1 = { ...state.step1, ...action.payload };
-      // Сохраняем в localStorage после обновления
       saveStateToStorage(state);
     },
     updateStep2: (
@@ -177,7 +193,6 @@ const signupSlice = createSlice({
       action: PayloadAction<Partial<SignupState["step2"]>>,
     ) => {
       state.step2 = { ...state.step2, ...action.payload };
-      // Сохраняем в localStorage после обновления
       saveStateToStorage(state);
     },
     updateStep3: (
@@ -185,25 +200,55 @@ const signupSlice = createSlice({
       action: PayloadAction<Partial<SignupState["step3"]>>,
     ) => {
       state.step3 = { ...state.step3, ...action.payload };
-      // Сохраняем в localStorage после обновления
       saveStateToStorage(state);
     },
+    // Новые экшены для работы с массивами категорий
+    addCategory: (state, action: PayloadAction<string>) => {
+      if (!state.step3.category.includes(action.payload)) {
+        state.step3.category.push(action.payload);
+        saveStateToStorage(state);
+      }
+    },
+    removeCategory: (state, action: PayloadAction<string>) => {
+      state.step3.category = state.step3.category.filter(
+        (id) => id !== action.payload,
+      );
+      saveStateToStorage(state);
+    },
+    setCategories: (state, action: PayloadAction<string[]>) => {
+      state.step3.category = action.payload;
+      saveStateToStorage(state);
+    },
+    // Новые экшены для работы с массивами подкатегорий
+    addSubcategory: (state, action: PayloadAction<string>) => {
+      if (!state.step3.subcategory.includes(action.payload)) {
+        state.step3.subcategory.push(action.payload);
+        saveStateToStorage(state);
+      }
+    },
+    removeSubcategory: (state, action: PayloadAction<string>) => {
+      state.step3.subcategory = state.step3.subcategory.filter(
+        (id) => id !== action.payload,
+      );
+      saveStateToStorage(state);
+    },
+    setSubcategories: (state, action: PayloadAction<string[]>) => {
+      state.step3.subcategory = action.payload;
+      saveStateToStorage(state);
+    },
+    // Старые экшены для обратной совместимости
     addImage: (state, action: PayloadAction<string>) => {
       state.step3.images.push(action.payload);
-      // Сохраняем в localStorage после обновления
       saveStateToStorage(state);
     },
     removeImage: (state, action: PayloadAction<number>) => {
       state.step3.images.splice(action.payload, 1);
-      // Сохраняем в localStorage после обновления
       saveStateToStorage(state);
     },
     clearSignupData: (state) => {
       Object.assign(state, getInitialState());
-      // Удаляем из localStorage
       localStorage.removeItem("signupState");
     },
-    // Новый action для явного сохранения всего состояния
     saveSignupState: (state) => {
       saveStateToStorage(state);
     },
@@ -217,7 +262,6 @@ const signupSlice = createSlice({
       .addCase(submitSignup.fulfilled, (state) => {
         state.isSubmitting = false;
         state.submitError = null;
-        // Очищаем данные после успешной регистрации
         Object.assign(state, getInitialState());
         localStorage.removeItem("signupState");
       })
@@ -232,6 +276,12 @@ export const {
   updateStep1,
   updateStep2,
   updateStep3,
+  addCategory,
+  removeCategory,
+  setCategories,
+  addSubcategory,
+  removeSubcategory,
+  setSubcategories,
   addImage,
   removeImage,
   clearSignupData,

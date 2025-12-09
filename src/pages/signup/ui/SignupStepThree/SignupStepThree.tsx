@@ -15,16 +15,29 @@ import {
   submitSignup,
   selectIsSubmitting,
   selectSubmitError,
+  setCategories,
+  setSubcategories,
 } from "@features/signup/model/slice";
 import { ModalUI } from "@shared/ui/Modal/Modal";
-import { api } from "@shared/api/mockApi";
 import galleryAddIcon from "@images/icons/gallery-add.svg";
-import chevronDown from "@images/icons/chevron-down.svg";
 import schoolBoard from "@images/webp/school-board.webp";
-import type { Category, Subcategory } from "./types";
+
+// Импортируем компоненты категорий
+import {
+  fetchCategories,
+  selectCategoryData,
+} from "@entities/category/model/slice";
 
 // Импортируем кастомный компонент
 import { OfferPreviewFormData } from "../signupStepThreePreviewForm/OfferPreviewFormData";
+import { CategorySelector } from "./CategorySelector";
+
+interface ImageFile {
+  id: string;
+  name: string;
+  size: number;
+  dataUrl: string;
+}
 
 export const SignupStepThree = () => {
   const navigate = useNavigate();
@@ -33,92 +46,89 @@ export const SignupStepThree = () => {
   const isSubmitting = useAppSelector(selectIsSubmitting);
   const submitError = useAppSelector(selectSubmitError);
 
+  // Получаем данные категорий из entities
+  const {
+    categories: categoriesData,
+    subcategories: subcategoriesData,
+    isLoading,
+  } = useAppSelector(selectCategoryData);
+
   const [skillName, setSkillName] = useState(step3.skillName);
-  const [category, setCategory] = useState(step3.category);
-  const [subcategory, setSubcategory] = useState(step3.subcategory);
   const [description, setDescription] = useState(step3.description);
-  const [images, setImages] = useState<string[]>(step3.images);
+  const [images, setImages] = useState<ImageFile[]>(() => {
+    return step3.images.map((img, index) => ({
+      id: `image-${index}-${Date.now()}`,
+      name: `image-${index}.jpg`,
+      size: 1024 * 1024,
+      dataUrl: img,
+    }));
+  });
 
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isSubcategoryOpen, setIsSubcategoryOpen] = useState(false);
-
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragAreaRef = useRef<HTMLDivElement>(null);
 
   // Функция для перехода на главную страницу с очисткой данных
   const handleGoToHome = useCallback(() => {
-    // 1. Очищаем состояние Redux
     dispatch(clearSignupData());
-
-    // 2. Закрываем модальное окно
     setIsSuccessModalOpen(false);
-
-    // 3. Переходим на главную страницу
     navigate("/");
   }, [dispatch, navigate]);
 
+  // Загружаем категории при монтировании
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+    if (categoriesData.length === 0 && !isLoading) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, categoriesData.length, isLoading]);
 
-        const [categoriesData, subcategoriesData] = await Promise.all([
-          api.getCategories() as Promise<Category[]>,
-          api.getSubcategories() as Promise<Subcategory[]>,
-        ]);
-
-        setCategories(categoriesData);
-        setSubcategories(subcategoriesData);
-      } catch (error) {
-        console.error("Ошибка при загрузке данных:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
-
-  const filteredSubcategories = subcategories.filter(
-    (sub) => sub.categoryId.toString() === category,
-  );
-
-  const getCategoryName = (id: string) => {
-    const cat = categories.find((c) => c.id.toString() === id);
-    return cat ? cat.name : "Не выбрана";
+  // Получаем имена выбранных категорий и подкатегорий
+  const getSelectedCategoryNames = () => {
+    return step3.category
+      .map((id) => {
+        const cat = categoriesData.find((c) => c.id.toString() === id);
+        return cat ? cat.name : "";
+      })
+      .filter((name) => name);
   };
 
-  const getSubcategoryName = (id: string) => {
-    const sub = subcategories.find((s) => s.id.toString() === id);
-    return sub ? sub.name : "Не выбрана";
+  const getSelectedSubcategoryNames = () => {
+    return step3.subcategory
+      .map((id) => {
+        const sub = subcategoriesData.find((s) => s.id.toString() === id);
+        return sub ? sub.name : "";
+      })
+      .filter((name) => name);
+  };
+
+  // Фильтруем подкатегории по выбранным категориям
+  const getFilteredSubcategories = () => {
+    if (step3.category.length === 0) return [];
+    return subcategoriesData.filter((sub) =>
+      step3.category.includes(sub.categoryId.toString()),
+    );
   };
 
   useEffect(() => {
+    const currentImageUrls = images.map((img) => img.dataUrl);
     dispatch(
       updateStep3({
         skillName,
-        category,
-        subcategory,
         description,
-        images,
+        images: currentImageUrls,
       }),
     );
-  }, [skillName, category, subcategory, description, images, dispatch]);
+  }, [skillName, description, images, dispatch]);
 
+  // Очищаем подкатегории при изменении категорий
   useEffect(() => {
-    if (category !== step3.category) {
-      setSubcategory("");
-      setIsSubcategoryOpen(false);
+    if (step3.category.length === 0 && step3.subcategory.length > 0) {
+      dispatch(setSubcategories([]));
     }
-  }, [category, step3.category]);
+  }, [step3.category, dispatch]);
 
   useEffect(() => {
     return () => {
@@ -159,7 +169,13 @@ export const SignupStepThree = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result as string;
-        setImages((prev) => [...prev, result]);
+        const newImage: ImageFile = {
+          id: `image-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          name: file.name,
+          size: file.size,
+          dataUrl: result,
+        };
+        setImages((prev) => [...prev, newImage]);
         dispatch(addImage(result));
       };
       reader.readAsDataURL(file);
@@ -190,33 +206,42 @@ export const SignupStepThree = () => {
 
       const files = e.dataTransfer.files;
       if (files.length > 0) {
-        const file = files[0];
+        Array.from(files).forEach((file) => {
+          if (file.size > 2 * 1024 * 1024) {
+            alert("Файл слишком большой. Максимальный размер - 2 МБ");
+            return;
+          }
 
-        if (file.size > 2 * 1024 * 1024) {
-          alert("Файл слишком большой. Максимальный размер - 2 МБ");
-          return;
-        }
+          if (!file.type.match("image.*")) {
+            alert("Пожалуйста, перетащите только изображения");
+            return;
+          }
 
-        if (!file.type.match("image.*")) {
-          alert("Пожалуйста, перетащите только изображения");
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const result = reader.result as string;
-          setImages((prev) => [...prev, result]);
-          dispatch(addImage(result));
-        };
-        reader.readAsDataURL(file);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const result = reader.result as string;
+            const newImage: ImageFile = {
+              id: `image-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+              name: file.name,
+              size: file.size,
+              dataUrl: result,
+            };
+            setImages((prev) => [...prev, newImage]);
+            dispatch(addImage(result));
+          };
+          reader.readAsDataURL(file);
+        });
       }
     },
     [dispatch],
   );
 
-  const handleRemoveImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
-    dispatch(removeImage(index));
+  const handleRemoveImage = (id: string) => {
+    const imageIndex = images.findIndex((img) => img.id === id);
+    if (imageIndex !== -1) {
+      setImages((prev) => prev.filter((img) => img.id !== id));
+      dispatch(removeImage(imageIndex));
+    }
   };
 
   const handleContinue = () => {
@@ -225,13 +250,13 @@ export const SignupStepThree = () => {
       return;
     }
 
-    if (!category) {
-      alert("Пожалуйста, выберите категорию");
+    if (step3.category.length === 0) {
+      alert("Пожалуйста, выберите хотя бы одну категорию");
       return;
     }
 
-    if (!subcategory) {
-      alert("Пожалуйста, выберите подкатегорию");
+    if (step3.subcategory.length === 0) {
+      alert("Пожалуйста, выберите хотя бы одну подкатегорию");
       return;
     }
 
@@ -248,22 +273,16 @@ export const SignupStepThree = () => {
     setIsOfferModalOpen(false);
 
     try {
-      // Отправляем регистрацию через signup thunk
       await dispatch(submitSignup()).unwrap();
-
-      // После успешной регистрации показываем модальное окно успеха
       setIsSuccessModalOpen(true);
     } catch (error) {
-      // Ошибка уже сохранена в state через extraReducers
       console.error("Ошибка регистрации:", error);
-      // Можно показать ошибку пользователю
       if (submitError) {
         alert(submitError);
       }
     }
   };
 
-  // Функция для закрытия успешного модального окна
   const handleCloseSuccessModal = useCallback(() => {
     dispatch(clearSignupData());
     setIsSuccessModalOpen(false);
@@ -284,7 +303,7 @@ export const SignupStepThree = () => {
       <section className={styles.section}>
         <div className={styles.formContainer}>
           <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-            {/* Для валидации: Название навыка */}
+            {/* Название навыка */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="skillName">
                 Название навыка
@@ -294,7 +313,7 @@ export const SignupStepThree = () => {
               ) : (
                 <input
                   id="skillName"
-                  name="skillName" // Для валидации
+                  name="skillName"
                   className={styles.skillNameInput}
                   type="text"
                   placeholder="Введите название вашего навыка"
@@ -305,126 +324,50 @@ export const SignupStepThree = () => {
               )}
             </div>
 
-            {/* Для валидации: Категория навыка */}
-            <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="category-selector">
-                Категория навыка
-              </label>
-              {isLoading ? (
+            {/* Категория навыка - используем кастомный селектор */}
+            {isLoading ? (
+              <div className={styles.fieldGroup}>
                 <div
                   className={`${styles.skeleton} ${styles.skeletonSelect}`}
                 />
-              ) : (
-                <div id="category-selector" className={styles.selectorWrapper}>
-                  <div
-                    className={styles.selectorHeader}
-                    onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                  >
-                    <span className={styles.selectorTitle}>
-                      {category
-                        ? getCategoryName(category)
-                        : "Выберите категорию навыка"}
-                    </span>
-                    <img
-                      src={chevronDown}
-                      alt="chevron"
-                      className={`${styles.selectorChevron} ${isCategoryOpen ? styles.open : ""}`}
-                    />
-                  </div>
-                  <input
-                    type="hidden"
-                    name="category"
-                    value={category}
-                    required
-                  />
-                  {isCategoryOpen && (
-                    <div className={styles.optionsList}>
-                      {categories.map((cat) => (
-                        <div
-                          key={cat.id}
-                          className={`${styles.optionItem} ${category === cat.id.toString() ? styles.selected : ""}`}
-                          onClick={() => {
-                            setCategory(cat.id.toString());
-                            setIsCategoryOpen(false);
-                          }}
-                          data-value={cat.id}
-                        >
-                          {cat.name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <CategorySelector
+                label="Категория навыка"
+                options={categoriesData.map((cat) => ({
+                  id: cat.id.toString(),
+                  name: cat.name,
+                }))}
+                selectedIds={step3.category}
+                onChange={(selectedIds) => dispatch(setCategories(selectedIds))}
+                placeholder="Выберите категории навыка"
+              />
+            )}
 
-            {/* Для валидации: Подкатегория */}
-            <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="subcategory-selector">
-                Подкатегория
-              </label>
-              {isLoading ? (
+            {/* Подкатегория - используем кастомный селектор */}
+            {isLoading ? (
+              <div className={styles.fieldGroup}>
                 <div
                   className={`${styles.skeleton} ${styles.skeletonSelect}`}
                 />
-              ) : (
-                <div
-                  id="subcategory-selector"
-                  className={styles.selectorWrapper}
-                >
-                  <div
-                    className={styles.selectorHeader}
-                    onClick={() =>
-                      category && setIsSubcategoryOpen(!isSubcategoryOpen)
-                    }
-                    style={{
-                      cursor: category ? "pointer" : "not-allowed",
-                      opacity: category ? 1 : 0.5,
-                    }}
-                  >
-                    <span className={styles.selectorTitle}>
-                      {subcategory
-                        ? getSubcategoryName(subcategory)
-                        : category
-                          ? "Выберите подкатегорию"
-                          : "Сначала выберите категорию"}
-                    </span>
-                    {category && (
-                      <img
-                        src={chevronDown}
-                        alt="chevron"
-                        className={`${styles.selectorChevron} ${isSubcategoryOpen ? styles.open : ""}`}
-                      />
-                    )}
-                  </div>
-                  <input
-                    type="hidden"
-                    name="subcategory"
-                    value={subcategory}
-                    required={!!category}
-                  />
-                  {isSubcategoryOpen && category && (
-                    <div className={styles.optionsList}>
-                      {filteredSubcategories.map((sub) => (
-                        <div
-                          key={sub.id}
-                          className={`${styles.optionItem} ${subcategory === sub.id.toString() ? styles.selected : ""}`}
-                          onClick={() => {
-                            setSubcategory(sub.id.toString());
-                            setIsSubcategoryOpen(false);
-                          }}
-                          data-value={sub.id}
-                        >
-                          {sub.name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <CategorySelector
+                label="Подкатегория"
+                options={getFilteredSubcategories().map((sub) => ({
+                  id: sub.id.toString(),
+                  name: sub.name,
+                }))}
+                selectedIds={step3.subcategory}
+                onChange={(selectedIds) =>
+                  dispatch(setSubcategories(selectedIds))
+                }
+                placeholder="Выберите подкатегории"
+                disabled={step3.category.length === 0}
+              />
+            )}
 
-            {/* Для валидации: Описание */}
+            {/* Описание */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="description">
                 Описание
@@ -449,7 +392,7 @@ export const SignupStepThree = () => {
               )}
             </div>
 
-            {/* Для валидации: Изображения */}
+            {/* Изображения */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="images-upload">
                 Изображения
@@ -471,6 +414,9 @@ export const SignupStepThree = () => {
                   >
                     <div className={styles.uploadText}>
                       Перетащите или выберите изображения навыка
+                      <div className={styles.uploadHint}>
+                        Максимальный размер файла: 2 МБ
+                      </div>
                     </div>
                     <button
                       type="button"
@@ -493,28 +439,20 @@ export const SignupStepThree = () => {
                       multiple
                       className={styles.fileInput}
                       onChange={handleFileChange}
-                      // Для валидации файлов:
-                      // data-max-size="5242880" (5MB)
-                      // data-accepted-types="image/jpeg,image/png,image/gif"
                     />
                   </div>
 
                   {images.length > 0 && (
-                    <div className={styles.imagePreviews}>
-                      {images.map((img, index) => (
-                        <div key={index} className={styles.imagePreview}>
-                          <img
-                            src={img}
-                            alt={`Предпросмотр ${index + 1}`}
-                            className={styles.previewImage}
-                          />
+                    <div className={styles.fileItems}>
+                      {images.map((img) => (
+                        <div key={img.id} className={styles.fileItem}>
+                          <span className={styles.fileName}>{img.name}</span>
                           <button
                             type="button"
-                            className={styles.removeImage}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleRemoveImage(index);
-                            }}
+                            className={styles.removeFile}
+                            onClick={() => handleRemoveImage(img.id)}
+                            title="Удалить файл"
+                            aria-label={`Удалить файл ${img.name}`}
                           >
                             ×
                           </button>
@@ -580,10 +518,10 @@ export const SignupStepThree = () => {
 
             <OfferPreviewFormData
               skillName={skillName}
-              categoryName={getCategoryName(category)}
-              subcategoryName={getSubcategoryName(subcategory)}
+              categoryName={getSelectedCategoryNames().join(", ")}
+              subcategoryName={getSelectedSubcategoryNames().join(", ")}
               description={description}
-              images={images}
+              images={images.map((img) => img.dataUrl)}
               onEdit={() => {
                 setIsOfferModalOpen(false);
               }}
