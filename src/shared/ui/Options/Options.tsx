@@ -6,13 +6,14 @@ import styles from "./options.module.scss";
 // Данный компонент отображает список чекбоксов
 
 export const Options: FC<TOptionsProps> = ({
+  id,
   selectionOptions,
   toggleOption,
   selectedOptions,
   selectorType,
 }) => {
   return (
-    <ul className={clsx(styles.list)}>
+    <ul id={id} role="listbox" className={clsx(styles.list)}>
       {selectionOptions.map((option) => (
         <li
           className={clsx(
@@ -24,9 +25,12 @@ export const Options: FC<TOptionsProps> = ({
               styles.inputRadioChecked,
           )}
           key={option}
+          role="option"
+          aria-selected={selectedOptions.includes(option)}
           onClick={() => toggleOption(option)}
         >
           <input
+            aria-hidden="true"
             className={clsx(
               selectorType === "checkbox"
                 ? selectedOptions.includes(option)
