@@ -2,10 +2,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  row-gap: 14px;
+  row-gap: 16px;
   padding: 12px 20px 12px 12px;
   cursor: default;
-
   inline-size: calc(100% + 2px);
   inset-inline-start: -1px;
   position: absolute;
@@ -26,6 +25,8 @@
 
 .listElementRadio {
   padding-inline-start: 8px;
+  display: flex;
+  flex-direction: row;
 }
 
 .inputCheckbox,
@@ -33,6 +34,11 @@
 .inputRadio,
 .inputRadioChecked {
   appearance: none;
+  inline-size: fit-content;
+}
+
+.inputRadioChecked {
+  color: $color-accent;
 }
 
 .inputCheckbox::after {
@@ -40,7 +46,7 @@
   position: absolute;
   inline-size: 24px;
   block-size: 24px;
-  background-image: url("../../../images/icons/checkbox-empty.svg");
+  background-image: url("@shared/assets/images/icons/checkbox-empty.svg");
   background-repeat: no-repeat;
 }
 
@@ -49,10 +55,6 @@
   position: absolute;
   inline-size: 24px;
   block-size: 24px;
-  background-image: url("../../../images/icons/checkbox-done.svg");
+  background-image: url("@shared/assets/images/icons/checkbox-done.svg");
   background-repeat: no-repeat;
-}
-
-.inputRadioChecked {
-  background-color: $color-accent;
 }

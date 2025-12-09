@@ -3,14 +3,40 @@ import { Button } from "@shared/ui/Button/Button";
 import { Input } from "@shared/ui/Input/Input";
 import { Logo } from "@shared/ui/Logo/Logo";
 import userInfo from "@images/png/user-info.png";
-import userCircle from "@images/icons/user-circle.svg";
-import add from "@images/icons/add.svg";
+import userCircle from "@shared/assets/images/icons/user-circle.svg";
+import add from "@images/icons/add2.svg";
 import { SignupSteps } from "@shared/ui/SignupSteps/SignupSteps";
 import { ArrowLeftIcon } from "@shared/ui/Icons/ArrowLeftIcon";
 import { Selector } from "@shared/ui/Selector/Selector";
 import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
 
 export const SignupStepTwo = () => {
+  const [openSelectorId, setOpenSelectorId] = useState<string | null>(null);
+  const selectorsRef = useRef<HTMLFormElement | null>(null);
+
+  // Для закрытия выпадающего списка при открытии другого
+  const handleToggle = (id: string) => {
+    setOpenSelectorId((prev) => (prev === id ? null : id));
+  };
+
+  // Закрытие выпадающих списков при клике вне
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        openSelectorId &&
+        selectorsRef.current &&
+        !selectorsRef.current.contains(event.target as Node)
+      ) {
+        setOpenSelectorId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openSelectorId]);
+
   return (
     <>
       <div className={clsx(styles.logo)}>
@@ -30,10 +56,9 @@ export const SignupStepTwo = () => {
             <img
               className={styles.userCircle}
               src={userCircle}
-              alt="картинка человеком"
+              alt="картинка с человеком"
               loading="lazy"
             />
-            {/* // TODO: значок плюс не соответсвует макету */}
             <img
               className={styles.add}
               src={add}
@@ -41,14 +66,13 @@ export const SignupStepTwo = () => {
               loading="lazy"
             />
           </div>
-          <form className={clsx(styles.form)}>
+          <form ref={selectorsRef} className={clsx(styles.form)}>
             <div className={clsx(styles.nameContainer, styles.container)}>
               <label htmlFor="name">Имя</label>
               <Input type="text" id="name" placeholder="Введите ваше имя" />
             </div>
 
             <div className={clsx(styles.containerWrapper)}>
-              {/* // TODO: поменять цвет шрифта placeholder и иконку календаря */}
               <div className={clsx(styles.container)}>
                 <label htmlFor="date">Дата рождения</label>
                 <Input type="date" id="date" placeholder="дд.мм.гггг" />
@@ -56,6 +80,9 @@ export const SignupStepTwo = () => {
 
               <div className={clsx(styles.container)}>
                 <Selector
+                  id="gender"
+                  isOpen={openSelectorId === "gender"}
+                  onToggle={handleToggle}
                   selectionTitle={"Пол"}
                   selectionPlaceholder={"Не указан"}
                   selectionOptions={["Не указан", "Мужской", "Женский"]}
@@ -64,8 +91,12 @@ export const SignupStepTwo = () => {
               </div>
             </div>
 
+            {/* // TODO: поменять selectionOptions на нужные опции */}
             <div className={clsx(styles.container)}>
               <Selector
+                id="city"
+                isOpen={openSelectorId === "city"}
+                onToggle={handleToggle}
                 selectionTitle={"Город"}
                 selectionPlaceholder={"Не указан"}
                 selectionOptions={["Санкт-Петербург", "Самара", "Москва"]}
@@ -77,6 +108,9 @@ export const SignupStepTwo = () => {
             {/* // TODO: поменять selectionOptions на нужные опции */}
             <div className={clsx(styles.container)}>
               <Selector
+                id="category"
+                isOpen={openSelectorId === "category"}
+                onToggle={handleToggle}
                 selectionTitle={"Категория навыка, которому хотите научиться"}
                 selectionPlaceholder={"Выберите категорию"}
                 selectionOptions={[
@@ -91,6 +125,9 @@ export const SignupStepTwo = () => {
             {/* // TODO: поменять selectionOptions на нужные опции */}
             <div className={clsx(styles.container)}>
               <Selector
+                id="subcategory"
+                isOpen={openSelectorId === "subcategory"}
+                onToggle={handleToggle}
                 selectionTitle={
                   "Подкатегория навыка, которому хотите научиться"
                 }

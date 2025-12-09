@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import arrow from "@images/icons/chevron-down.svg";
+import arrow from "@shared/assets/images/icons/chevron-down.svg";
 import type { FC } from "react";
 import type { TArrowProps } from "@shared/ui/Arrow/types";
 import styles from "./arrow.module.scss";
