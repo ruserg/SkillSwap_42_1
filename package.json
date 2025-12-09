@@ -40,6 +40,7 @@
     "autoprefixer": "^10.4.22",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "focus-trap-react": "^11.0.4",
     "react": "^19.2.0",
     "react-datepicker": "^8.10.0",
     "react-dom": "^19.2.0",
