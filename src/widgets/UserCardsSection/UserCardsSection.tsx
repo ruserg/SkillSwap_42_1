@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Card } from "@shared/ui/Card/Card";
 import { CardSkeleton } from "@shared/ui/CardSkeleton/CardSkeleton";
 import type { UserWithLikes } from "@entities/user/types";
@@ -33,12 +33,18 @@ export const UserCardsSection = ({
 
   const isLoading = usersLoading || skillsLoading;
 
+  const popularSentinelRef = useRef<HTMLDivElement | null>(null);
+  const newSentinelRef = useRef<HTMLDivElement | null>(null);
+  const recommendationsSentinelRef = useRef<HTMLDivElement | null>(null);
+
   // Состояния для отслеживания, сколько элементов показывать (по умолчанию 3)
   const [popularCount, setPopularCount] = useState(3);
   const [newCount, setNewCount] = useState(3);
-  const [recommendationsCount, setRecommendationsCount] = useState(6);
-  const [isInfinityScrollActivated, setIsInfinityScrollActivated] =
-    useState(false);
+  const [recommendationsCount, setRecommendationsCount] = useState(3);
+  const [isInfinityScrollActivated, setIsInfinityScrollActivated] = useState({
+    popular: false,
+    new: false,
+  });
 
   // Загрузка данных при монтировании компонента
   useEffect(() => {
@@ -60,33 +66,6 @@ export const UserCardsSection = ({
     skillsLoading,
     cities.length,
   ]);
-
-  // Бесконечный скролл
-  useEffect(() => {
-    let timeoutDelay: null | number = null;
-    const infinityScroll = () => {
-      if (timeoutDelay) clearTimeout(timeoutDelay);
-
-      timeoutDelay = setTimeout(() => {
-        const scrollTop = document.documentElement.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight;
-        const clientHeight = window.innerHeight;
-
-        if (
-          scrollHeight - (scrollTop + clientHeight) < 232 &&
-          users.length > 0 &&
-          recommendationsCount < users.length
-        ) {
-          setRecommendationsCount((prev) => prev + 6);
-          setIsInfinityScrollActivated(true);
-        }
-      }, 200);
-    };
-
-    window.addEventListener("scroll", infinityScroll);
-
-    return () => window.removeEventListener("scroll", infinityScroll);
-  }, [users, recommendationsCount]);
 
   // Пользователи уже приходят с информацией о лайках из API
   const usersWithLikes = users;
@@ -115,32 +94,175 @@ export const UserCardsSection = ({
     return allNewUsers.slice(0, newCount);
   }, [allNewUsers, newCount]);
 
-  // Рекомендуемые пользователи (берем пользователей, которые не входят в популярных и новых)
-  // const recommendedUsers = useMemo(() => {
-  //   // Исключаем пользователей, которые уже есть в показанных популярных и новых
-  //   const popularIds = new Set(popularUsers.map((u) => u.id));
-  //   const newIds = new Set(newUsers.map((u) => u.id));
-  //   const excludedIds = new Set([...popularIds, ...newIds]);
-
-  //   const availableUsers = usersWithLikes.filter((u) => !excludedIds.has(u.id));
-
-  //   // Сортируем по количеству лайков и берем топ-6
-  //   return [...availableUsers]
-  //     .sort((a, b) => b.likesCount - a.likesCount)
-  //     .slice(0, 6);
-  // }, [usersWithLikes, popularUsers, newUsers]);
-
+  // Рекомендуемые пользователи для отображения
   const recommendedUsers = useMemo(() => {
     return [...users].slice(0, recommendationsCount);
   }, [users, recommendationsCount]);
 
-  const hideRecommendations = () => {
+  // Бесконечный скролл для популярных пользователей
+  useEffect(() => {
+    if (users.length === 0) return;
+    if (!isInfinityScrollActivated.popular) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          setPopularCount((prev) => {
+            if (prev + 3 >= allPopularUsers.length) {
+              setIsInfinityScrollActivated((prev) => ({
+                ...prev,
+                popular: true,
+              }));
+              return allPopularUsers.length;
+            }
+            return prev + 3;
+          });
+        });
+      },
+      {
+        root: null,
+        threshold: 0,
+      },
+    );
+
+    const isElementInViewport = (element: HTMLElement) => {
+      const rect = element.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom >= 0;
+    };
+
+    if (popularSentinelRef.current) {
+      observer.observe(popularSentinelRef.current);
+
+      if (isElementInViewport(popularSentinelRef.current)) {
+        setPopularCount((prev) => prev + 3);
+      }
+    }
+
+    return () => observer.disconnect();
+  }, [users, allPopularUsers, isInfinityScrollActivated.popular]);
+
+  //Бесконечный скролл для новых пользователей
+  useEffect(() => {
+    if (users.length === 0) return;
+    if (!isInfinityScrollActivated.new) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          setNewCount((prev) => {
+            if (prev + 3 >= allNewUsers.length) {
+              setIsInfinityScrollActivated((prev) => ({
+                ...prev,
+                new: true,
+              }));
+              return allNewUsers.length;
+            }
+            return prev + 3;
+          });
+        });
+      },
+      {
+        root: null,
+        threshold: 0,
+      },
+    );
+
+    const isElementInViewport = (element: HTMLElement) => {
+      const rect = element.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom >= 0;
+    };
+
+    if (newSentinelRef.current) {
+      observer.observe(newSentinelRef.current);
+
+      if (isElementInViewport(newSentinelRef.current)) {
+        setNewCount((prev) => prev + 3);
+      }
+    }
+
+    return () => observer.disconnect();
+  }, [users, allNewUsers, isInfinityScrollActivated.new]);
+
+  // Бесконечный скролл для рекомендаций
+  useEffect(() => {
+    if (users.length === 0) return;
+    if (recommendationsCount >= users.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          setRecommendationsCount((prev) => {
+            if (prev + 6 > users.length) {
+              return users.length;
+            }
+            return prev + 6;
+          });
+        });
+      },
+      {
+        root: null,
+        threshold: 0,
+      },
+    );
+
+    const isElementInViewport = (element: HTMLElement) => {
+      const rect = element.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom >= 0;
+    };
+
+    if (recommendationsSentinelRef.current) {
+      observer.observe(recommendationsSentinelRef.current);
+
+      if (isElementInViewport(recommendationsSentinelRef.current)) {
+        setRecommendationsCount((prev) => prev + 6);
+      }
+    }
+
+    return () => observer.disconnect();
+  }, [users, recommendationsCount]);
+
+  const loadMorePopular = () => {
+    setIsInfinityScrollActivated((prev) => ({
+      ...prev,
+      popular: true,
+    }));
+  };
+
+  const hideMorePopular = (count: number) => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
-    setRecommendationsCount(6);
-    setIsInfinityScrollActivated(false);
+    setPopularCount(count);
+    setIsInfinityScrollActivated((prev) => ({
+      ...prev,
+      popular: false,
+    }));
+  };
+
+  const loadMoreNew = () => {
+    setIsInfinityScrollActivated((prev) => ({
+      ...prev,
+      new: true,
+    }));
+  };
+
+  const hideMoreNew = (count: number) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setNewCount(count);
+    setIsInfinityScrollActivated((prev) => ({
+      ...prev,
+      new: false,
+    }));
   };
 
   // Используем хук для фильтрации пользователей
@@ -149,6 +271,16 @@ export const UserCardsSection = ({
     usersWithLikes,
     skills,
   });
+
+  const hideAllSection = (count: number) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    hideMorePopular(count);
+    hideMoreNew(count);
+    setRecommendationsCount(count);
+  };
 
   const handleDetailsClick = (user: UserWithLikes) => {
     console.log("User details clicked:", user);
@@ -260,7 +392,7 @@ export const UserCardsSection = ({
             initialCount={3}
             currentCount={popularCount}
             totalCount={allPopularUsers.length}
-            onLoadMore={setPopularCount}
+            onLoadMore={loadMorePopular}
           />
         </div>
         <div className={styles.cardsGrid}>
@@ -275,6 +407,18 @@ export const UserCardsSection = ({
             />
           ))}
         </div>
+        {isInfinityScrollActivated.popular && (
+          <>
+            <div ref={popularSentinelRef} className={styles.sentinel}></div>
+            <ViewAllButton
+              behavior="2-way"
+              initialCount={3}
+              currentCount={popularCount}
+              totalCount={allPopularUsers.length}
+              onLoadMore={hideMorePopular}
+            />
+          </>
+        )}
       </section>
 
       {/* Секция "Новое" */}
@@ -286,7 +430,7 @@ export const UserCardsSection = ({
             initialCount={3}
             currentCount={newCount}
             totalCount={allNewUsers.length}
-            onLoadMore={setNewCount}
+            onLoadMore={loadMoreNew}
           />
         </div>
         <div className={styles.cardsGrid}>
@@ -301,6 +445,18 @@ export const UserCardsSection = ({
             />
           ))}
         </div>
+        {isInfinityScrollActivated.new && (
+          <>
+            <div ref={newSentinelRef} className={styles.sentinel}></div>
+            <ViewAllButton
+              behavior="2-way"
+              initialCount={3}
+              currentCount={newCount}
+              totalCount={allNewUsers.length}
+              onLoadMore={hideMoreNew}
+            />
+          </>
+        )}
       </section>
 
       {/* Секция "Рекомендуем" */}
@@ -317,9 +473,13 @@ export const UserCardsSection = ({
               isLoading={isLoading}
             />
           ))}
+          <div
+            ref={recommendationsSentinelRef}
+            className={styles.sentinel}
+          ></div>
         </div>
-        {isInfinityScrollActivated && (
-          <Button variant="secondary" onClick={hideRecommendations}>
+        {recommendationsCount >= users.length && (
+          <Button variant="secondary" onClick={() => hideAllSection(3)}>
             К началу страницы
           </Button>
         )}

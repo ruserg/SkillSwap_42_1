@@ -4,7 +4,8 @@
   // Переопределение стилей кнопки согласно Figma
   button,
   a {
-    inline-size: 187px;
+    // inline-size: 187px;
+    inline-size: 100%;
     gap: 8px;
   }
 }
