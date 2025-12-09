@@ -33,10 +33,13 @@ src/
 ├── app/                        # Инициализация приложения
 │   ├── store/                  # Redux store
 │   ├── Routes.tsx              # Маршруты
-│   └── App.tsx                 # Корневой компонент
+│   ├── App.tsx                 # Корневой компонент (централизованная проверка авторизации)
+│   └── ProtectedRoute.tsx      # Защита маршрутов
 ├── pages/                      # Страницы
 │   ├── MainPage/
-│   ├── login/
+│   ├── Login/
+│   ├── Favorites/              # Страница избранного
+│   ├── ErrorPage/
 │   └── signup/
 ├── widgets/                    # Сложные UI компоненты
 │   ├── Header/

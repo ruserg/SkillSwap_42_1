@@ -11,17 +11,17 @@ import {
 
 export const App = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(selectAuth);
+  const { user, isLoading } = useAppSelector(selectAuth);
   const isAuth = Boolean(user);
+  const hasToken = !!getCookie("accessToken");
 
+  // При монтировании приложения проверяем наличие токена
+  // Если токен есть, но пользователь не загружен, загружаем его
   useEffect(() => {
-    // При монтировании приложения проверяем наличие токена
-    // Если токен есть, но пользователь не загружен, загружаем его
-    const accessToken = getCookie("accessToken");
-    if (accessToken && !user) {
+    if (hasToken && !user && !isLoading) {
       dispatch(fetchUser());
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, hasToken, isLoading]);
 
   // Загружаем уведомления и тосты при авторизации
   useEffect(() => {
@@ -46,6 +46,12 @@ export const App = () => {
       };
     }
   }, [isAuth, dispatch]);
+
+  // Если есть токен, но пользователь еще не загружен, ждем
+  // Это предотвращает редиректы во время загрузки пользователя
+  if (hasToken && !user) {
+    return null; // или можно показать лоадер
+  }
 
   return (
     <BrowserRouter>

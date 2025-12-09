@@ -30,8 +30,9 @@ import { MainPage } from "@pages/MainPage/MainPage";
 ### Защищенные маршруты
 
 ```typescript
-/favorites          - Избранное
-/create-offer       - Создание предложения
+/favorites          - Избранное (список лайкнутых пользователей)
+/profile            - Профиль пользователя
+/create-offer        - Создание предложения
 ```
 
 ## Защищенные маршруты
@@ -43,20 +44,26 @@ import { MainPage } from "@pages/MainPage/MainPage";
 ```typescript
 // src/app/ProtectedRoute.tsx
 import { Navigate, useLocation } from "react-router-dom";
-import { useAppSelector } from "@store/hooks";
-import { selectIsAuthenticated } from "@store/slices/authSlice";
+import { useAppSelector } from "@app/store/hooks";
+import { selectAuth } from "@features/auth/model/slice";
+import { getCookie } from "@shared/lib/cookies";
 
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const { user } = useAppSelector(selectAuth);
+  const hasToken = !!getCookie("accessToken");
   const location = useLocation();
 
-  if (!isAuthenticated) {
+  // Если нет токена или пользователя, редиректим на логин
+  // Проверка загрузки пользователя уже происходит в App.tsx
+  if (!hasToken || !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return <>{children}</>;
-}
+};
 ```
+
+**Важно:** Проверка авторизации централизована в `App.tsx`. Если есть токен, но пользователь еще не загружен, `App.tsx` ждет завершения загрузки перед рендером роутов. Это предотвращает редиректы во время загрузки пользователя.
 
 ### Использование
 

@@ -20,9 +20,11 @@
 }
 
 // Для notifications используем fixed позиционирование и выравниваем по правому краю контента
-// Header имеет max-width: 1440px и padding: 36px
+// Header имеет max-width: 1440px и padding: 36px, контент центрируется
+// На экранах шире 1440px: right = отступ от края до контента + padding контента
+// На экранах уже 1440px: right = padding контента
 .dropDownWrapper[data-notifications] .dropDownContainer {
   position: fixed;
   top: 100px;
-  right: 36px;
+  right: max(36px, calc((100vw - 1440px) / 2 + 36px));
 }

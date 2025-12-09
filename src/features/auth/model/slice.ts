@@ -182,6 +182,14 @@ export const selectAuth = (state: RootState) => state.auth;
 export const selectIsAuthenticated = (state: RootState) => {
   const hasToken = !!getCookie("accessToken");
   const hasUser = !!state.auth.user;
+  const isLoading = state.auth.isLoading;
+
+  // Если есть токен и идет загрузка пользователя, считаем авторизованным
+  // чтобы избежать редиректов во время загрузки
+  if (hasToken && isLoading) {
+    return true;
+  }
+
   return hasToken && hasUser;
 };
 export const selectUser = (state: RootState) => state.auth.user;

@@ -135,6 +135,12 @@ input {
   column-gap: 20px;
 }
 
+.favoritesLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 .themeIcon {
   inline-size: 24px;
   block-size: 24px;

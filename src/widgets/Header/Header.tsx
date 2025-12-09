@@ -230,7 +230,9 @@ export const Header = () => {
                 </DropDown>
               )}
             </div>
-            <DecoratedButton variant={"heart"} />
+            <Link to="/favorites" className={styles.favoritesLink}>
+              <DecoratedButton variant={"heart"} />
+            </Link>
           </div>
 
           <div

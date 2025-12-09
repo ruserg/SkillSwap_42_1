@@ -39,7 +39,6 @@ export const Like = (props: ILikeProps) => {
     if (!isAuthenticated) {
       sessionStorage.setItem("redirectPath", location.pathname);
       navigate("/login", { state: { from: location } });
-      // TODO: переадресация на страницу авторизации
       return;
     }
 

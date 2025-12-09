@@ -201,9 +201,22 @@ localStorage.removeItem("refreshToken");
 1. При получении ошибки 403 (истекший токен)
 2. API автоматически вызывает `/api/auth/refresh`
 3. Если успешно - обновляет accessToken и повторяет запрос
-4. Если refreshToken истек - очищает токены и редиректит на `/login`
+4. Если сервер использует rotation refresh tokens, новый refreshToken также обновляется в localStorage
+5. Если refreshToken истек - очищает токены и редиректит на `/login`
 
 **Не нужно обрабатывать вручную!**
+
+### Rotation Refresh Tokens
+
+Если сервер использует стратегию rotation (одноразовые refresh токены), сервер может вернуть новый `refreshToken` в ответе на `/api/auth/refresh`. В этом случае новый токен автоматически сохраняется в localStorage:
+
+```typescript
+// api.ts автоматически обрабатывает это
+interface RefreshTokenResponse {
+  accessToken: string;
+  refreshToken?: string; // Опционально, если сервер использует rotation
+}
+```
 
 ## Защищенные маршруты
 

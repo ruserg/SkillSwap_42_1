@@ -28,4 +28,5 @@ export interface RefreshTokenRequest {
 
 export interface RefreshTokenResponse {
   accessToken: string;
+  refreshToken?: string; // Опционально, если сервер использует rotation refresh tokens
 }

@@ -153,13 +153,17 @@ const auth = useAppSelector(selectAuth);
 Проверка авторизации.
 
 ```typescript
-import { selectIsAuthenticated } from "@store/slices/authSlice";
+import { selectIsAuthenticated } from "@features/auth/model/slice";
 
 const isAuthenticated = useAppSelector(selectIsAuthenticated);
 // true | false
 ```
 
-**Логика:** Проверяет наличие accessToken в cookies и пользователя в state.
+**Логика:**
+
+- Проверяет наличие accessToken в cookies и пользователя в state
+- Если есть токен и идет загрузка пользователя (`isLoading === true`), возвращает `true` для предотвращения редиректов во время загрузки
+- Иначе возвращает `hasToken && hasUser`
 
 ### selectUser
 
@@ -225,25 +229,36 @@ export const Profile = () => {
 
 ### Загрузка пользователя при монтировании
 
+Проверка авторизации централизована в `App.tsx`:
+
 ```typescript
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { fetchUser, selectUser } from "@store/slices/authSlice";
+import { useAppDispatch, useAppSelector } from "@app/store/hooks";
+import { fetchUser, selectAuth } from "@features/auth/model/slice";
+import { getCookie } from "@shared/lib/cookies";
 
 export const App = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
-  const accessToken = getCookie("accessToken");
+  const { user, isLoading } = useAppSelector(selectAuth);
+  const hasToken = !!getCookie("accessToken");
 
   useEffect(() => {
-    if (accessToken && !user) {
+    if (hasToken && !user && !isLoading) {
       dispatch(fetchUser());
     }
-  }, [dispatch, accessToken, user]);
+  }, [dispatch, user, hasToken, isLoading]);
+
+  // Если есть токен, но пользователь еще не загружен, ждем
+  // Это предотвращает редиректы во время загрузки пользователя
+  if (hasToken && !user) {
+    return null; // или можно показать лоадер
+  }
 
   // ...
 };
 ```
+
+**Важно:** Централизованная проверка в `App.tsx` предотвращает редиректы на страницу логина во время загрузки пользователя при наличии токена.
 
 ### Обработка ошибок
 
