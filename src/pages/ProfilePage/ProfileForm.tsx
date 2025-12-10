@@ -411,7 +411,7 @@ export const ProfileForm = () => {
                 </div>
 
                 <div className={styles.buttonSave}>
-                  <Button htmlType="submit" disabled={isLoading}>
+                  <Button type="submit" disabled={isLoading}>
                     {isLoading ? "Сохранение..." : "Сохранить"}
                   </Button>{" "}
                 </div>
@@ -490,9 +490,9 @@ export const ProfileForm = () => {
                 />
               </div>
               <div className={styles.modalButtons}>
-                <Button htmlType="submit">Изменить пароль</Button>
+                <Button type="submit">Изменить пароль</Button>
                 <Button
-                  htmlType="button"
+                  type="button"
                   variant="secondary"
                   onClick={() => setIsPasswordModalOpen(false)}
                 >
