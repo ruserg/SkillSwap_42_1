@@ -7,9 +7,9 @@ import {
 } from "@entities/user/model/slice";
 import styles from "./like.module.scss";
 import type { ILikeProps } from "./like.types";
-import { LikeEmpty, LikePaintedOver } from "./likeSvg/LikeSVG";
 import { useLocation, useNavigate } from "react-router-dom";
 import { selectUser } from "@/features/auth/model/slice";
+import { DecoratedButton } from "../DecoratedButton/DecoratedButton";
 
 export const Like = (props: ILikeProps) => {
   const {
@@ -107,19 +107,15 @@ export const Like = (props: ILikeProps) => {
       >
         {likeCount}
       </span>
-      <button
-        className={styles.likeButton}
-        onClick={toggleliked}
-        disabled={isLoading}
-        aria-label={isLiked ? "Убрать лайк" : "Поставить лайк"}
-        aria-busy={isLoading}
-      >
-        {isLiked ? (
-          <LikePaintedOver />
-        ) : (
-          <LikeEmpty isUser={currentUser?.id === userId} />
-        )}
-      </button>
+      {isLiked ? (
+        <DecoratedButton onClick={toggleliked} variant="heartFill" />
+      ) : (
+        <DecoratedButton
+          onClick={toggleliked}
+          variant="heart"
+          isUser={currentUser?.id === userId}
+        />
+      )}
     </div>
   );
 };

@@ -1,8 +1,7 @@
 import { Button } from "@shared/ui/Button/Button";
-import chevronRight from "@images/icons/chevron-right.svg";
-import chevronUp from "@images/icons/chevron-up.svg";
 import type { TViewAllButtonProps } from "./types";
 import styles from "./viewAllButton.module.scss";
+import { ArrowSvg } from "./svg/arrowSvg";
 
 export const ViewAllButton = ({
   behavior = "disable",
@@ -46,9 +45,6 @@ export const ViewAllButton = ({
   // Определяем текст кнопки
   const buttonText = isExpanded ? "Свернуть" : children;
 
-  // Определяем иконку
-  const icon = isExpanded ? chevronUp : chevronRight;
-
   // Определяем disabled для disable поведения (когда показано все или больше начального)
   const isDisabled = behavior === "disable" && currentCount > initialCount;
 
@@ -56,12 +52,7 @@ export const ViewAllButton = ({
     <div className={`${styles.viewAllButtonWrapper} ${className || ""}`}>
       <Button
         variant="secondary"
-        rightIcon={
-          <img
-            src={icon}
-            alt={isExpanded ? "стрелка вверх" : "стрелка вправо"}
-          />
-        }
+        rightIcon={<ArrowSvg isDirection={isExpanded} />}
         onClick={handleClick}
         disabled={isDisabled}
       >

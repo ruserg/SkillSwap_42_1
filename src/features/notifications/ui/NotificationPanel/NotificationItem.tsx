@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./notificationPanel.module.scss";
-import ideaIcon from "@images/icons/idea.svg?url";
 import { Button } from "@shared/ui/Button/Button";
 import type { INotificationItemProps } from "../../model/types";
+import { NotificationSvg } from "./svg/NotificationSvg";
 
 export const NotificationItem: React.FC<INotificationItemProps> = ({
   notification,
@@ -14,9 +14,8 @@ export const NotificationItem: React.FC<INotificationItemProps> = ({
     <div className={styles.notificationCard}>
       <div className={styles.notificationContent}>
         <div className={styles.icon}>
-          <img src={ideaIcon} alt="idea" width={40} height={40} />
+          <NotificationSvg />
         </div>
-
         <div className={styles.messageContainer}>
           <div className={styles.textContainer}>
             <p className={styles.notificationMessage}>{notification.message}</p>

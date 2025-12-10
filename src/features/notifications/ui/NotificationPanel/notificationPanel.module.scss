@@ -9,6 +9,24 @@
   max-block-size: calc(100vh - 80px);
   overflow-y: auto;
   overscroll-behavior: contain; // Предотвращает всплытие прокрутки на страницу
+
+  &::-webkit-scrollbar {
+    inline-size: 10px;
+    border-radius: $input-border-radius;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-block: $input-border-radius;
+    background-color: $color-disabled;
+    border-radius: $input-border-radius;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-toggle;
+    block-size: 10%;
+    border-radius: $input-border-radius;
+    cursor: pointer;
+  }
 }
 
 .titleContainer {
@@ -78,8 +96,7 @@
 }
 
 .notificationContent {
-  display: flex;
-  gap: 10px;
+  @include flex(row, center, center, 8px);
 }
 
 .messageContainer {

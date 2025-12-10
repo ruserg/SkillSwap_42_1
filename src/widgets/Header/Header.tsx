@@ -29,6 +29,8 @@ import {
   fetchNotifications,
   markAllNotificationsAsRead,
 } from "@entities/notification/model/slice";
+import { Arrow } from "@/shared/ui/Arrow/Arrow";
+import { LogOutSvg } from "./svg/LogoutSvg";
 
 export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -159,6 +161,7 @@ export const Header = () => {
             >
               {/* Для работы компонента DropDown компоненту контроллеру нужно указать атрибут data-trigger-dropdown */}
               Все навыки
+              <Arrow isOpen={showCategory} />
             </p>
             {showCategory && (
               <DropDown
@@ -208,7 +211,10 @@ export const Header = () => {
           <div className={styles.buttons}>
             <DecoratedButton variant={"moon"} onClick={() => toggle()} />
 
-            <div data-trigger-dropdown="notifications">
+            <div
+              data-trigger-dropdown="notifications"
+              className={styles.buttonNotifications}
+            >
               <DecoratedButton
                 variant="bell"
                 data-trigger-dropdown="notifications"
@@ -276,6 +282,7 @@ export const Header = () => {
                     }}
                   >
                     Выйти из аккаунта
+                    <LogOutSvg />
                   </li>
                 </ul>
               </DropDown>

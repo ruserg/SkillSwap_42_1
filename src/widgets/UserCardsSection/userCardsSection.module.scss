@@ -1,6 +1,3 @@
-@use "../../styles/variables" as *;
-@use "../../styles/mixins" as *;
-
 .container {
   display: flex;
   flex-direction: column;
@@ -12,6 +9,16 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  &TitleWrapper {
+    inline-size: 100%;
+    @include flex(row, space-between, center);
+  }
+
+  .buttonSort {
+    inline-size: auto;
+    @include flex(row, center, center, 8px);
+  }
 }
 
 .sectionHeader {

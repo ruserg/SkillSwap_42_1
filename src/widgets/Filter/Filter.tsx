@@ -14,7 +14,8 @@ import {
 } from "@entities/category/model/slice";
 import { selectCities, fetchCities } from "@entities/city/model/slice";
 import { FilterSkeleton } from "@widgets/FilterSkeleton/FilterSkeleton";
-import { Chevron, ClearSVG } from "./svg/FilterSvg";
+import { ClearSVG } from "./svg/FilterSvg";
+import { Arrow } from "@/shared/ui/Arrow/Arrow";
 
 interface FilterProps {
   filters: TFilterState;
@@ -236,13 +237,7 @@ export const Filter = ({
                     }
                     aria-expanded={showSubcategorys.includes(category.id)}
                   >
-                    <Chevron
-                      color="black"
-                      directionArrow={
-                        showSubcategorys.includes(category.id) ? "up" : "down"
-                      }
-                      aria-hidden="true"
-                    />
+                    <Arrow isOpen={showSubcategorys.includes(category.id)} />
                   </button>
                 </div>
                 {showSubcategorys.includes(category.id) && (
@@ -277,11 +272,7 @@ export const Filter = ({
                   aria-expanded={showAllSkills}
                 >
                   {showAllSkills ? "Скрыть" : "Все категории"}
-                  <Chevron
-                    color="green"
-                    directionArrow={showAllSkills ? "up" : "down"}
-                    aria-hidden="true"
-                  />
+                  <Arrow color="green" isOpen={showAllSkills} />
                 </button>
               </li>
             )}
@@ -331,11 +322,7 @@ export const Filter = ({
                   aria-expanded={showAllCities}
                 >
                   {showAllCities ? "Скрыть" : "Все города"}
-                  <Chevron
-                    color="green"
-                    directionArrow={showAllCities ? "up" : "down"}
-                    aria-hidden="true"
-                  />
+                  <Arrow color="green" isOpen={showAllCities} />
                 </button>
               </li>
             )}

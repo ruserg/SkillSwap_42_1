@@ -15,6 +15,8 @@ import { ViewAllButton } from "@shared/ui/ViewAllButton/ViewAllButton";
 import styles from "./userCardsSection.module.scss";
 import { Button } from "@/shared/ui/Button/Button";
 import { useInfinityScroll } from "@/shared/hooks/useInfinityScroll";
+import { Arrow } from "@/shared/ui/Arrow/Arrow";
+import { SortSvg } from "./svg/SortSvg";
 
 interface UserCardsSectionProps {
   filters: TFilterState;
@@ -46,6 +48,8 @@ export const UserCardsSection = ({
     popular: false,
     new: false,
   });
+
+  const [sortByDate, setSortByDate] = useState(false);
 
   // Загрузка данных при монтировании компонента
   useEffect(() => {
@@ -135,10 +139,11 @@ export const UserCardsSection = ({
   });
 
   // Используем хук для фильтрации пользователей
-  const { filteredOffers, filteredUsers, hasActiveFilters } = useFilteredUsers({
+  const { filteredOffers, sortedUsers, hasActiveFilters } = useFilteredUsers({
     filters,
     usersWithLikes,
     skills,
+    sortByDate,
   });
 
   const hideAllSection = (count: number) => {
@@ -211,9 +216,22 @@ export const UserCardsSection = ({
       <div className={styles.container}>
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h1 className={styles.sectionTitle}>
-              Подходящие предложения: {filteredOffers.length}
-            </h1>
+            <div className={styles.sectionTitleWrapper}>
+              <h2 className={styles.sectionTitle}>
+                Подходящие предложения: {filteredOffers.length}
+              </h2>
+              <Button
+                variant={sortByDate ? "primary" : "tertiary"}
+                otherClassNames={styles.buttonSort}
+                onClick={() => setSortByDate(!sortByDate)}
+              >
+                <SortSvg
+                  aria-label={sortByDate ? "Без сортировки" : "Сначала новые"}
+                  aria-hidden="true"
+                />
+                {sortByDate ? "Без сортировки" : "Сначала новые"}
+              </Button>
+            </div>
             <ActiveFilters
               filters={filters}
               subcategories={subcategories}
@@ -222,8 +240,8 @@ export const UserCardsSection = ({
             />
           </div>
           <div className={styles.cardsGrid}>
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
+            {sortedUsers.length > 0 ? (
+              sortedUsers.map((user) => (
                 <Card
                   key={user.id}
                   user={user}
@@ -350,6 +368,7 @@ export const UserCardsSection = ({
         {recommendationsCount >= users.length && (
           <Button variant="secondary" onClick={() => hideAllSection(3)}>
             К началу страницы
+            <Arrow isOpen={true} />
           </Button>
         )}
       </section>

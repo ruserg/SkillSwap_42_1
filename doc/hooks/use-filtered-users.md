@@ -19,6 +19,7 @@ interface UseFilteredUsersParams {
   filters: TFilterState;
   usersWithLikes: UserWithLikes[];
   skills: TSkill[];
+  sortByDate: boolean;
 }
 ```
 
@@ -27,7 +28,7 @@ interface UseFilteredUsersParams {
 ```typescript
 interface FilteredResult {
   filteredOffers: Array<{ skill: TSkill; user: UserWithLikes }>;
-  filteredUsers: UserWithLikes[];
+  sortedUsers: UserWithLikes[];
   hasActiveFilters: boolean;
 }
 ```

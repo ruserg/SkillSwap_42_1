@@ -39,6 +39,7 @@
   position: relative;
   padding-inline-end: 24px;
   @include flex;
+  gap: 4px;
 
   &::after {
     content: "";
@@ -133,6 +134,10 @@ input {
   display: flex;
   align-items: center;
   column-gap: 20px;
+
+  .buttonNotifications {
+    @include flex(column);
+  }
 }
 
 .favoritesLink {
@@ -187,6 +192,7 @@ input {
 }
 
 .profileMenuItem {
+  @include flex(row, space-between, center);
   font-family: Roboto, sans-serif;
   font-weight: 500;
   font-size: 16px;

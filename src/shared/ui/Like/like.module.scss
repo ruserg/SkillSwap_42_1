@@ -8,17 +8,9 @@
       size: 16px;
     }
     color: $color-text;
-    line-height: normal;
-    transition: 0.1s;
   }
 
   .likeCountActive {
     color: $color-accent;
-  }
-
-  .likeButton {
-    inline-size: 24px;
-    block-size: 24px;
-    transition: 0.1s;
   }
 }

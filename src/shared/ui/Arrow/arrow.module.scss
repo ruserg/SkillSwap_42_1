@@ -1,8 +1,5 @@
-.arrow {
-  flex-shrink: 0;
-  transition: transform 0.5s ease;
-}
-
-.arrowOpen {
-  transform: rotate(180deg);
+.button {
+  inline-size: min-content;
+  block-size: min-content;
+  @include flex;
 }
