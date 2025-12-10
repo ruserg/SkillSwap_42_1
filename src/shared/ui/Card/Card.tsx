@@ -1,6 +1,7 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useMemo, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@shared/ui/Button/Button";
-import type { CardProps } from "./types";
+import type { CardProps, CardVariant } from "./types";
 import type { TSkill } from "@entities/skill/types";
 import styles from "./card.module.scss";
 import { calculateAge } from "@shared/lib/utils/ageCalculator";
@@ -11,63 +12,147 @@ import {
   getCategoryIdBySubcategory,
 } from "@shared/lib/utils/categoryUtils";
 import { getCityNameById } from "@shared/lib/utils/cityUtils";
-import type { TSubcategory } from "@entities/category/types";
+import { useAppSelector } from "@app/store/hooks";
+import { selectSkillsData } from "@entities/skill/model/slice";
+import { selectCategoryData } from "@entities/category/model/slice";
+import { selectIsAuthenticated } from "@features/auth/model/slice";
 
 export const Card: React.FC<CardProps> = memo(
   ({
     user,
     cities,
-    isAuthenticated = false,
-    onDetailsClick,
     className = "",
     isLoading = false,
+    variant = "default",
+    description = "Привет! Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое",
   }) => {
-    const [skills, setSkills] = useState<TSkill[]>([]);
-    const [skillsLoading, setSkillsLoading] = useState(true);
-    const [subcategories, setSubcategories] = useState<TSubcategory[]>([]);
-    const [subcategoriesLoading, setSubcategoriesLoading] = useState(true);
+    const navigate = useNavigate();
 
-    // Загружаем навыки и подкатегории при монтировании компонента
-    useEffect(() => {
-      const loadData = async () => {
-        try {
-          const skillsResponse = await fetch("/db/skills.json");
-          const skillsData: TSkill[] = await skillsResponse.json();
-          setSkills(skillsData);
+    // Получаем данные из Redux
+    const { skills } = useAppSelector(selectSkillsData);
+    const { subcategories } = useAppSelector(selectCategoryData);
 
-          const subcategoriesResponse = await fetch("/db/subcategories.json");
-          //subcategoriesData - массив подкатегорий
-          const subcategoriesData: TSubcategory[] =
-            await subcategoriesResponse.json();
-          setSubcategories(subcategoriesData);
-        } catch (error) {
-          console.error("Error loading skills:", error);
-          setSkills([]);
-          setSubcategories([]);
-        } finally {
-          setSkillsLoading(false);
-          setSubcategoriesLoading(false);
-        }
-      };
+    // Получаем статус авторизации ТОЛЬКО из Redux
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
-      loadData();
-    }, []);
+    const handleDetailsClick = useCallback(() => {
+      if (isLoading) return;
+      // Если авторизован - переход на страницу пользователя
+      navigate(`/user/${user.id}`);
+    }, [isLoading, isAuthenticated, navigate, user.id]);
 
-    // Получаем навыки пользователя
-    const canTeachSkills = getUserSkillsByType(skills, user.id, "учу");
-    const wantToLearnSkills = getUserSkillsByType(skills, user.id, "учусь");
+    // Мемоизированные навыки пользователя
+    const { canTeachSkills, wantToLearnSkills } = useMemo(
+      () => ({
+        canTeachSkills: getUserSkillsByType(skills, user.id, "учу"),
+        wantToLearnSkills: getUserSkillsByType(skills, user.id, "учусь"),
+      }),
+      [skills, user.id],
+    );
 
-    const handleDetailsClick = React.useCallback(() => {
-      if (!isLoading && !skillsLoading && !subcategoriesLoading) {
-        onDetailsClick?.(user);
+    // Определяем количество показываемых навыков в зависимости от варианта
+    const getVisibleSkillsCount = useCallback(() => {
+      switch (variant) {
+        case "profile":
+          return 2;
+        case "compact":
+          return 1;
+        default:
+          return 1;
       }
-    }, [isLoading, skillsLoading, subcategoriesLoading, onDetailsClick, user]);
+    }, [variant]);
 
-    const isCardLoading = isLoading || skillsLoading || subcategoriesLoading;
+    // Функция для рендеринга тегов с логикой "+N" для секции "Может научить"
+    const renderTeachTags = useCallback(() => {
+      if (canTeachSkills.length === 0) {
+        return (
+          <div className={`${styles.tag} ${styles.default}`}>
+            Навыки не указаны
+          </div>
+        );
+      }
+
+      const visibleCount = getVisibleSkillsCount();
+      const visibleSkills = canTeachSkills.slice(0, visibleCount);
+      const hasAdditional = canTeachSkills.length > visibleCount;
+
+      return (
+        <>
+          {visibleSkills.map((skill: TSkill) => {
+            const categoryId = getCategoryIdBySubcategory(
+              skill.subcategoryId,
+              subcategories,
+            );
+            const tagClassName = getTagClassName(categoryId, styles);
+
+            return (
+              <div
+                key={skill.id}
+                className={`${styles.tag} ${tagClassName}`}
+                title={skill.name}
+              >
+                {skill.name}
+              </div>
+            );
+          })}
+
+          {hasAdditional && (
+            <div className={`${styles.tag} ${styles.additional}`}>
+              +{canTeachSkills.length - visibleCount}
+            </div>
+          )}
+        </>
+      );
+    }, [canTeachSkills, subcategories, getVisibleSkillsCount]);
+
+    // Функция для рендеринга тегов с логикой "+N" для секции "Хочет научиться"
+    const renderLearnTags = useCallback(() => {
+      if (wantToLearnSkills.length === 0) {
+        return (
+          <div className={`${styles.learnTag} ${styles.default}`}>
+            Навыки не указаны
+          </div>
+        );
+      }
+
+      const visibleCount = getVisibleSkillsCount();
+      const visibleSkills = wantToLearnSkills.slice(0, visibleCount);
+      const hasAdditional = wantToLearnSkills.length > visibleCount;
+
+      return (
+        <>
+          {visibleSkills.map((skill: TSkill) => {
+            const categoryId = getCategoryIdBySubcategory(
+              skill.subcategoryId,
+              subcategories,
+            );
+            const tagClassName = getTagClassName(categoryId, styles);
+
+            return (
+              <div
+                key={skill.id}
+                className={`${styles.learnTag} ${tagClassName}`}
+                title={skill.name}
+              >
+                {skill.name}
+              </div>
+            );
+          })}
+
+          {hasAdditional && (
+            <div className={`${styles.learnTag} ${styles.additional}`}>
+              +{wantToLearnSkills.length - visibleCount}
+            </div>
+          )}
+        </>
+      );
+    }, [wantToLearnSkills, subcategories, getVisibleSkillsCount]);
 
     return (
       <div
-        className={`${styles.container} ${className} ${isCardLoading ? styles.loading : ""}`}
+        className={`${styles.container} ${className} ${
+          isLoading ? styles.loading : ""
+        } ${styles[variant]}`}
       >
         {/* Заголовок карточки с аватаром и информацией о пользователе */}
         <div className={styles.header}>
@@ -91,8 +176,11 @@ export const Card: React.FC<CardProps> = memo(
               className={styles.like}
               onLikeToggle={() => {}}
             />
-            {/* Загушка на будущее когда мы будем менять кол-во лайков через сервер и диспатч, если будем */}
-            <h3 className={styles.name}>{user.name}</h3>
+            {variant === "profile" ? (
+              <h1 className={styles.name}>{user.name}</h1>
+            ) : (
+              <h3 className={styles.name}>{user.name}</h3>
+            )}
             <p className={styles.details}>
               {getCityNameById(user.cityId, cities)},{" "}
               {calculateAge(user.dateOfBirth)}
@@ -100,97 +188,58 @@ export const Card: React.FC<CardProps> = memo(
           </div>
         </div>
 
+        {/* Описание пользователя (только для variant="profile") */}
+        {variant === "profile" && description && (
+          <div className={styles.description}>
+            <p>{description}</p>
+          </div>
+        )}
+
         {/* Навык, которому может научить */}
         <div className={styles.section}>
           <div className={styles.sectionTitle}>Может научить:</div>
-          <div className={styles.skillItem}>
-            <div className={styles.skillInfo}>
-              <div className={styles.tags}>
-                {canTeachSkills.slice(0, 1).map((skill: TSkill) => {
-                  const categoryId = getCategoryIdBySubcategory(
-                    skill.subcategoryId,
-                    subcategories,
-                  );
-                  const tagClassName = getTagClassName(categoryId, styles);
-
-                  return (
-                    <div
-                      key={skill.id}
-                      className={`${styles.tag} ${tagClassName}`}
-                      title={skill.name}
-                    >
-                      {skill.name}
-                    </div>
-                  );
-                })}
-                {canTeachSkills.length === 0 && !skillsLoading && (
-                  <div className={`${styles.tag} ${styles.default}`}>
-                    Навыки не указаны
-                  </div>
-                )}
-                {skillsLoading && (
-                  <div className={`${styles.tag} ${styles.default}`}>
-                    Загрузка...
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <div className={styles.tags}>{renderTeachTags()}</div>
         </div>
 
         {/* Навыки, которым хочет научиться */}
         <div className={styles.section}>
           <div className={styles.sectionTitle}>Хочет научиться:</div>
-          <div className={styles.learnTags}>
-            {wantToLearnSkills.slice(0, 2).map((skill: TSkill) => {
-              const categoryId = getCategoryIdBySubcategory(
-                skill.subcategoryId,
-                subcategories,
-              );
-              const tagClassName = getTagClassName(categoryId, styles);
-
-              return (
-                <div
-                  key={skill.id}
-                  className={`${styles.learnTag} ${tagClassName}`}
-                  title={skill.name}
-                >
-                  {skill.name}
-                </div>
-              );
-            })}
-
-            {wantToLearnSkills.length > 2 && (
-              <div className={styles.additional}>
-                +{wantToLearnSkills.length - 2}
-              </div>
-            )}
-            {wantToLearnSkills.length === 0 && !skillsLoading && (
-              <div className={`${styles.learnTag} ${styles.default}`}>
-                Навыки не указаны
-              </div>
-            )}
-            {skillsLoading && wantToLearnSkills.length === 0 && (
-              <div className={`${styles.learnTag} ${styles.default}`}>
-                Загрузка...
-              </div>
-            )}
-          </div>
+          <div className={styles.learnTags}>{renderLearnTags()}</div>
         </div>
 
-        {/* кнопка "Подробнее" */}
-        <div className={styles.actions}>
-          <div className={styles.detailsButton}>
-            <Button
-              variant="primary"
-              disabled={isCardLoading}
-              onClick={handleDetailsClick}
-            >
-              {skillsLoading ? "Загрузка..." : "Подробнее"}
-            </Button>
+        {/* кнопка "Подробнее" (не показываем для variant="profile") */}
+        {variant !== "profile" && (
+          <div className={styles.actions}>
+            <div className={styles.detailsButton}>
+              <Button
+                variant="primary"
+                disabled={isLoading}
+                onClick={handleDetailsClick}
+              >
+                Подробнее
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
+    );
+  },
+  // Функция сравнения пропсов для memo
+  (prevProps, nextProps) => {
+    return (
+      prevProps.user.id === nextProps.user.id &&
+      prevProps.user.name === nextProps.user.name &&
+      prevProps.user.avatarUrl === nextProps.user.avatarUrl &&
+      prevProps.user.likesCount === nextProps.user.likesCount &&
+      prevProps.user.isLikedByCurrentUser ===
+        nextProps.user.isLikedByCurrentUser &&
+      prevProps.user.cityId === nextProps.user.cityId &&
+      prevProps.user.dateOfBirth === nextProps.user.dateOfBirth &&
+      prevProps.isLoading === nextProps.isLoading &&
+      prevProps.variant === nextProps.variant &&
+      prevProps.description === nextProps.description &&
+      prevProps.className === nextProps.className &&
+      prevProps.cities === nextProps.cities
     );
   },
 );

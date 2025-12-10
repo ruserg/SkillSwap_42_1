@@ -6,6 +6,7 @@ import { SignupStepOne } from "@pages/signup/ui/SignupStepOne/SignupStepOne";
 import { SignupStepThree } from "@pages/signup/ui/SignupStepThree/SignupStepThree";
 import { SignupStepTwo } from "@pages/signup/ui/SignupStepTwo/SignupStepTwo";
 import { Login } from "@/pages/Login/Login";
+import UserPage from "@/pages/UserPage/UserPage";
 
 //основные страницы приложения - заглушки
 //после создания pages отсюда надо будет удалять
@@ -98,6 +99,14 @@ export default function AppRoutes() {
           element={
             <ProtectedRoute>
               <CreateOffer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="user/:userId"
+          element={
+            <ProtectedRoute>
+              <UserPage />
             </ProtectedRoute>
           }
         />
