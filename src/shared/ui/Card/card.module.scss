@@ -3,7 +3,6 @@
 
 .container {
   background: $color-card;
-  border: 1px solid $color-disabled;
   border-radius: 16px;
   padding: 24px;
   inline-size: 324px;
@@ -13,21 +12,103 @@
   display: flex;
   flex-direction: column;
 
-  // &:hover {
-  //   box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
-  //   transform: translateY(-2px);
-  // }
-  // Убрал hover, но оставил оригинальный код автора
-
   &.loading {
     opacity: 0.7;
     pointer-events: none;
+  }
+
+  // Вариант для страницы профиля
+  &.profile {
+    max-width: 400px;
+    inline-size: 100%;
+    padding: 32px;
+    block-size: 444px;
+
+    .avatar {
+      inline-size: 100px;
+      block-size: 100px;
+      border: 3px solid $color-disabled;
+    }
+
+    .name {
+      font-size: 28px;
+    }
+
+    .details {
+      font-size: 14px;
+    }
+
+    .description {
+      padding: 20px;
+      background: rgba($color-disabled, 0.3);
+      border-radius: 12px;
+
+      p {
+        font: {
+          family: "Roboto", sans-serif;
+          size: 16px;
+          line-height: 24px;
+          weight: 400;
+        }
+        color: $color-text;
+        margin: 0;
+      }
+    }
+
+    .sectionTitle {
+      font-size: 18px;
+      margin-block-end: 12px;
+    }
+
+    .tag {
+      padding: 8px 16px;
+    }
+  }
+
+  // Компактный вариант
+  &.compact {
+    padding: 20px;
+    min-height: 300px;
+
+    .avatar {
+      inline-size: 80px;
+      block-size: 80px;
+    }
+
+    .name {
+      font-size: 18px;
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .sectionTitle {
+      font-size: 14px;
+    }
+
+    .tag,
+    .learnTag {
+      font-size: 12px;
+      padding: 6px 10px;
+      block-size: 28px;
+    }
   }
 }
 
 .header {
   @include flex(row, flex-start, flex-start, 12px);
   margin-bottom: 20px;
+
+  .profile & {
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .compact & {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
 }
 
 .avatar {
@@ -85,6 +166,14 @@
   &:last-of-type {
     margin-bottom: 24px;
   }
+
+  .compact & {
+    margin-bottom: 16px;
+
+    &:last-of-type {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 .sectionTitle {
@@ -98,16 +187,6 @@
   line-height: 1.5;
   letter-spacing: 0.02em;
   text-transform: none;
-}
-
-.skillName {
-  font: {
-    family: "Jost", sans-serif;
-    weight: 500;
-    size: 16px;
-  }
-  color: $color-text;
-  margin-block-end: 8px;
 }
 
 .tags {
@@ -167,6 +246,15 @@
 .learnTags {
   display: grid;
   grid-template-columns: 1fr 1fr 38px;
+  gap: 8px;
+  inline-size: 100%;
+  align-items: center;
+}
+
+// Отдельный стиль для профильной страницы
+.profileLearnTags {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 8px;
   inline-size: 100%;
   align-items: center;

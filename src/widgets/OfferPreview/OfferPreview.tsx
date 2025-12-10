@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./offerPreview.module.scss";
 import stylesModal from "./offerPreviewModal.module.scss";
 import clsx from "clsx";
@@ -25,8 +26,27 @@ export const OfferPreview: React.FC<TOfferProps> = (props) => {
   const showEditButtons = variant === "modalOffer" || isEditable;
   const isUserProfile = variant === "userProfileOffer";
 
+export const OfferPreview: React.FC<TOfferProps> = (props) => {
+  const {
+    variant = "userProfileOffer",
+    skillName = "",
+    categoryName = "",
+    subcategoryName = "",
+    description = "",
+    images = [],
+    onEdit,
+    onConfirm,
+    onExchange,
+    isEditable = false,
+    isExchangeProposed = false,
+  } = props;
+
+  // Определяем, показывать ли кнопки редактирования
+  const showEditButtons = variant === "modalOffer" || isEditable;
+  const isUserProfile = variant === "userProfileOffer";
+
   return (
-    <div className={stylesModal.wrapper}>
+    <div className={styles.wrapper}>
       {variant === "modalOffer" && (
         <div className={stylesModal.containerModalTitle}>
           <h2 className={stylesModal.title}>Ваше предложение</h2>
@@ -58,9 +78,9 @@ export const OfferPreview: React.FC<TOfferProps> = (props) => {
             </p>
           )}
 
-          <p className={clsx(styles.contentDescription, styles.scrollbar)}>
-            {description || "Описание навыка не добавлено"}
-          </p>
+          <div className={clsx(styles.contentDescription, styles.scrollbar)}>
+            <p>{description || "Описание навыка не добавлено"}</p>
+          </div>
 
           <div className={styles.btnClamp}>
             {showEditButtons ? (
@@ -80,13 +100,22 @@ export const OfferPreview: React.FC<TOfferProps> = (props) => {
                   </Button>
                 )}
               </div>
-            ) : isUserProfile && onExchange ? (
-              <Button onClick={onExchange}>Предложить обмен</Button>
+            ) : isUserProfile ? (
+              // Кнопка "Предложить обмен" или "Обмен предложен"
+              onExchange && (
+                <Button
+                  onClick={onExchange}
+                  disabled={isExchangeProposed}
+                  variant={isExchangeProposed ? "secondary" : "primary"}
+                >
+                  {isExchangeProposed ? "Обмен предложен" : "Предложить обмен"}
+                </Button>
+              )
             ) : null}
           </div>
         </div>
 
-        <div className={clsx(styles.cardsContainer)}>
+        <div className={styles.imageContainer}>
           {isUserProfile && !isEditable && (
             <div className={styles.containerDecorButtons}>
               <DecoratedButton variant={"heart"} />

@@ -1,8 +1,7 @@
 type TOfferVariant = "userProfileOffer" | "modalOffer";
 
 export type TOfferProps = {
-  variant?: TOfferVariant;
-
+  variant?: "modalOffer" | "userProfileOffer";
   skillName?: string;
   categoryName?: string;
   subcategoryName?: string;
@@ -12,4 +11,5 @@ export type TOfferProps = {
   onConfirm?: () => void;
   onExchange?: () => void;
   isEditable?: boolean;
+  isExchangeProposed?: boolean; // Добавляем новый пропс
 };

@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styles from "./imagesCarousel.module.scss";
 import clsx from "clsx";
 
 interface ImagesCarouselProps {
-  images?: string[];
-  visibleCount?: number;
+  images?: string[]; // Массив URL изображений (может быть base64 или внешние URL)
+  visibleCount?: number; // Количество видимых карточек
   onImageClick?: (index: number) => void;
 }
 
@@ -14,34 +14,59 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
   onImageClick,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [processedImages, setProcessedImages] = useState<string[]>([]);
 
+  // Обрабатываем изображения (фильтруем невалидные)
+  useEffect(() => {
+    if (!images || images.length === 0) {
+      setProcessedImages([]);
+      return;
+    }
+
+    // Фильтруем пустые строки и null/undefined
+    const validImages = images.filter(
+      (img) =>
+        img &&
+        typeof img === "string" &&
+        (img.startsWith("http") ||
+          img.startsWith("data:image") ||
+          img.startsWith("https") ||
+          img.trim() !== ""),
+    );
+
+    setProcessedImages(validImages);
+  }, [images]);
+
+  // Получаем видимые изображения
   const getVisibleImages = useCallback(() => {
-    if (images.length === 0) return [];
+    if (processedImages.length === 0) return [];
 
     const result = [];
-    for (let i = 0; i < Math.min(visibleCount, images.length); i++) {
-      const index = (currentIndex + i) % images.length;
+    for (let i = 0; i < Math.min(visibleCount, processedImages.length); i++) {
+      const index = (currentIndex + i) % processedImages.length;
       result.push({
-        url: images[index],
+        url: processedImages[index],
         index: index,
         isMain: i === 0,
       });
     }
     return result;
-  }, [images, currentIndex, visibleCount]);
+  }, [processedImages, currentIndex, visibleCount]);
 
   const visibleImages = getVisibleImages();
-  const hasImages = images.length > 0;
-  const canNavigate = images.length > visibleCount;
+  const hasImages = processedImages.length > 0;
+  const canNavigate = processedImages.length > visibleCount;
 
   const handleNext = () => {
     if (!canNavigate) return;
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setCurrentIndex((prev) => (prev + 1) % processedImages.length);
   };
 
   const handlePrev = () => {
     if (!canNavigate) return;
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + processedImages.length) % processedImages.length,
+    );
   };
 
   const handleImageClick = (index: number) => {
@@ -50,17 +75,52 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
     }
   };
 
+  // Функция для проверки Base64 изображений
+  const isValidBase64 = (str: string): boolean => {
+    if (!str.startsWith("data:image")) return false;
+    try {
+      // Проверяем формат Base64
+      const base64Data = str.split(",")[1];
+      if (!base64Data) return false;
+
+      // Проверяем длину (минимальная длина для валидного изображения)
+      if (base64Data.length < 100) return false;
+
+      // Попробуем декодировать
+      atob(base64Data);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  // Функция для обработки ошибок загрузки изображений
+  const handleImageError = (
+    index: number,
+    e: React.SyntheticEvent<HTMLImageElement>,
+  ) => {
+    console.error(`Ошибка загрузки изображения ${index}`, e);
+    // Можно установить placeholder изображение
+    e.currentTarget.src =
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23999' font-family='sans-serif' font-size='12'%3EИзображение%3C/text%3E%3C/svg%3E";
+  };
+
   if (!hasImages) {
     return (
       <div className={styles.cardsContainer}>
-        <div className={styles.noImages}>Нет загруженных изображений</div>
+        <div className={styles.noImages}>
+          Нет загруженных изображений
+          <p className={styles.noImagesHint}>
+            Добавьте изображения, чтобы показать ваш навык
+          </p>
+        </div>
       </div>
     );
   }
 
   const mainImage = visibleImages[0];
   const otherImages = visibleImages.slice(1);
-  const hiddenCount = Math.max(0, images.length - visibleCount);
+  const hiddenCount = Math.max(0, processedImages.length - visibleCount);
 
   return (
     <div className={styles.cardsContainer}>
@@ -70,6 +130,7 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
             className={clsx(styles.buttonSwap, styles.left)}
             onClick={handlePrev}
             aria-label="Предыдущее изображение"
+            type="button"
           />
         )}
 
@@ -83,6 +144,8 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
               className={styles.mainCard}
               alt="Главное изображение"
               loading="lazy"
+              onError={(e) => handleImageError(mainImage.index, e)}
+              crossOrigin="anonymous"
             />
           </div>
         )}
@@ -106,6 +169,8 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
                   )}
                   alt={`Изображение ${idx + 2}`}
                   loading="lazy"
+                  onError={(e) => handleImageError(img.index, e)}
+                  crossOrigin="anonymous"
                 />
                 {isLastThumbnail && hiddenCount > 0 && (
                   <div className={styles.overlayCount}>+{hiddenCount}</div>
@@ -114,6 +179,7 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
             );
           })}
 
+          {/* Заполнители если картинок меньше visibleCount */}
           {visibleImages.length < visibleCount &&
             Array.from({ length: visibleCount - visibleImages.length }).map(
               (_, idx) => (
@@ -129,6 +195,7 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
             className={clsx(styles.buttonSwap, styles.right)}
             onClick={handleNext}
             aria-label="Следующее изображение"
+            type="button"
           />
         )}
       </div>
