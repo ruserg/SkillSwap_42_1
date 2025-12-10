@@ -5,15 +5,16 @@ import type { INotificationItemProps } from "../../model/types";
 import { NotificationSvg } from "./svg/NotificationSvg";
 import { useNavigate } from "react-router-dom";
 
-export const NotificationItem: React.FC<INotificationItemProps & { onClose?: () => void }> = ({
-  notification,
-  onClose,
-}) => {
+export const NotificationItem: React.FC<
+  INotificationItemProps & { onClose?: () => void }
+> = ({ notification, onClose }) => {
   // Используем отформатированную дату из стейта
   const formattedDate = notification.formattedDate || notification.date;
   const navigate = useNavigate();
 
-  const isRouteAction = typeof notification.action === "string" && notification.action.startsWith("/");
+  const isRouteAction =
+    typeof notification.action === "string" &&
+    notification.action.startsWith("/");
   const buttonLabel = isRouteAction ? "Перейти" : notification.action;
 
   return (
