@@ -1,5 +1,5 @@
-@use "../../styles/variables" as vars;
-@use "../../styles/mixins" as *;
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
 
 .pageWrapper {
   padding-block: 20px 40px;
@@ -22,14 +22,14 @@
   @include flex(row, center, stretch, 24px);
   background-color: vars.$color-background;
   font-family: Roboto, sans-serif;
-  margin-block-start: 40px;
+  margin-block-start: 32px;
 }
 
 .loginContainer {
   @include flex(column, center, center, 20px);
   inline-size: 556px;
   padding-inline: 60px;
-  padding-block: 122px;
+  padding-block: 112px;
   background-color: vars.$color-input;
   border-radius: $input-border-radius;
 }
@@ -53,7 +53,8 @@
 
 .form {
   inline-size: 100%;
-  @include flex(column, center, center, 20px);
+  @include flex(column, center, center, 12px);
+  padding-block-start: 8px;
 }
 
 .emailContainer,
@@ -113,13 +114,8 @@
 .registerLink {
   inline-size: 100%;
   text-align: center;
-  margin-block-start: 10px;
-
-  p {
-    font-family: Roboto, sans-serif;
-    font-size: 14px;
-    color: vars.$color-caption;
-  }
+  color: vars.$color-button-pressed;
+  padding-block-start: 5px;
 }
 
 .linkButton {

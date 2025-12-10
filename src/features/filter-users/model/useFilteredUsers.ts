@@ -7,11 +7,12 @@ interface UseFilteredUsersParams {
   filters: TFilterState;
   usersWithLikes: UserWithLikes[];
   skills: TSkill[];
+  sortByDate: boolean;
 }
 
 interface FilteredResult {
   filteredOffers: Array<{ skill: TSkill; user: UserWithLikes }>;
-  filteredUsers: UserWithLikes[];
+  sortedUsers: UserWithLikes[];
   hasActiveFilters: boolean;
 }
 
@@ -19,6 +20,7 @@ export const useFilteredUsers = ({
   filters,
   usersWithLikes,
   skills,
+  sortByDate,
 }: UseFilteredUsersParams): FilteredResult => {
   // Проверяем, есть ли активные фильтры
   const hasActiveFilters =
@@ -97,16 +99,22 @@ export const useFilteredUsers = ({
         userMap.set(user.id, user);
       }
     });
-    return Array.from(userMap.values()).sort(
+    return Array.from(userMap.values());
+  }, [filteredOffers]);
+
+  const sortedUsers = useMemo(() => {
+    if (!sortByDate) return filteredUsers;
+
+    return [...filteredUsers].sort(
       (a, b) =>
         new Date(b.dateOfRegistration).getTime() -
         new Date(a.dateOfRegistration).getTime(),
     );
-  }, [filteredOffers]);
+  }, [filteredUsers, sortByDate]);
 
   return {
     filteredOffers,
-    filteredUsers,
+    sortedUsers,
     hasActiveFilters,
   };
 };

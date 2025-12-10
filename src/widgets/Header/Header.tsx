@@ -16,7 +16,6 @@ import { Input } from "@shared/ui/Input/Input";
 import { DecoratedButton } from "@shared/ui/DecoratedButton/DecoratedButton";
 import { useTheme } from "@shared/hooks/useTheme";
 import { useAppSelector } from "@app/store/hooks";
-import { selectCategoryData } from "@entities/category/model/slice";
 import { DropDown } from "@shared/ui/DropDown/DropDown";
 import { DropDownListCategory } from "@shared/ui/DropDownListCategory/DropDownListCategory";
 import NotificationPanel from "@features/notifications/ui/NotificationPanel/NotificationPanel";
@@ -30,7 +29,15 @@ import {
   markAllNotificationsAsRead,
 } from "@entities/notification/model/slice";
 
-export const Header = () => {
+import type { TFilterState } from "@/features/filter-users/types";
+import type { TSubcategory } from "@/entities/category/types";
+
+interface HeaderProps {
+  onFiltersChange: (filters: TFilterState) => void;
+  subcategories: TSubcategory[];
+}
+
+export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
   const [searchValue, setSearchValue] = useState("");
   //меняем состояние шапки
   const user = useAppSelector(selectUser);
@@ -44,7 +51,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchRef = useRef<HTMLDivElement>(null);
-  const { subcategories } = useAppSelector(selectCategoryData);
+  // const { subcategories } = useAppSelector(selectCategoryData);
   const { toggle } = useTheme();
 
   // Получаем уведомления из Redux
@@ -130,7 +137,7 @@ export const Header = () => {
 
   return (
     <header className={styles.header}>
-      <nav className={styles.navigation} aria-label="main navigation">
+      <nav className={styles.navigation} aria-label="Основная навигация">
         <Logo />
 
         <ul className={styles.navigationList}>
@@ -141,7 +148,7 @@ export const Header = () => {
           </li>
 
           <li>
-            <p
+            <button
               className={clsx(
                 styles.navigationDropDownLink,
                 {
@@ -152,22 +159,43 @@ export const Header = () => {
               )}
               data-trigger-dropdown="category"
               onClick={() => setShowCategory(!showCategory)}
+              aria-expanded={showCategory}
+              aria-haspopup="menu"
             >
               {/* Для работы компонента DropDown компоненту контроллеру нужно указать атрибут data-trigger-dropdown */}
               Все навыки
-            </p>
+            </button>
             {showCategory && (
               <DropDown
                 top="22px"
                 left="-293px"
                 triggerGroupe="category"
-                onClose={() => {
-                  setShowCategory(false);
-                }}
+                onClose={() => setShowCategory(false)}
                 isOpen={showCategory}
-                role="listbox"
               >
-                <DropDownListCategory />
+                <DropDownListCategory
+                  subcategories={subcategories}
+                  onSubcategoryClick={(subcategoryId) => {
+                    //устанавливаем фильтр только по выбранной подкатегории
+                    onFiltersChange({
+                      purpose: "",
+                      skills: [subcategoryId],
+                      gender: "",
+                      cityAll: [],
+                    });
+
+                    //закрываем дропдаун
+                    setShowCategory(false);
+
+                    //обновляем url
+                    const subcategory = subcategories.find(
+                      (sub) => sub.id === subcategoryId,
+                    );
+                    if (subcategory) {
+                      navigate(`/?q=${encodeURIComponent(subcategory.name)}`);
+                    }
+                  }}
+                />
               </DropDown>
             )}
           </li>
@@ -181,6 +209,9 @@ export const Header = () => {
             value={searchValue}
             onChange={handleSearchChange}
             onFocus={() => setShowSuggestions(true)}
+            id="search-input"
+            aria-autocomplete="list"
+            aria-expanded={showSuggestions}
           />
         </form>
         {showSuggestions && suggestions.length > 0 && (
@@ -226,6 +257,8 @@ export const Header = () => {
                     notifications={notifications}
                     onMarkAllRead={handleMarkAllRead}
                     isOpen={isNotificationsOpen}
+                    onClose={() => setIsNotificationsOpen(false)}
+                    aria-expanded={isNotificationsOpen}
                   />
                 </DropDown>
               )}

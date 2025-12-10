@@ -20,13 +20,14 @@ const WEEKDAYS_MAP: Record<string, string> = {
 };
 
 //Компонент кастомного календаря, который отдает в onChange дату (объект Date js)
-//Календарь календарь принимает обязательные пропсы value и onChange - это будет стейт
+//Календарь принимает обязательные пропсы value и onChange - это будет стейт
 //и его сеттер типа Date | null. Сделано для того, чтоб не "запирать" выбранную дату
-//внутри компонента, т.к. ее мы будем передавать куда-то еще. По итогу добавлять так:
+//внутри компонента, т.к. ее мы будем передавать куда-то еще. Так же в календарь можно
+// передать пропсы placeholder и id(для инпута). По итогу добавлять так:
 //const [date, setDate] = useState<Date | null>(null) - вместо null можно выставить new Date()
 //<Calendar value={date} onChange={setDate} />
 export const Calendar = (props: TCalendarProps) => {
-  const { value, onChange } = props;
+  const { value, onChange, placeholder, id } = props;
 
   const [draftDate, setDraftDate] = useState<Date | null>(value);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -47,30 +48,35 @@ export const Calendar = (props: TCalendarProps) => {
   };
 
   return (
-    <DatePicker
-      locale={ru}
-      dateFormat="dd.MM.yyyy"
-      placeholderText={"Выберите дату"}
-      open={isOpen}
-      onInputClick={handleOpen}
-      onClickOutside={handleCancel}
-      shouldCloseOnSelect={false}
-      selected={draftDate ?? value ?? null}
-      onChange={(value) => setDraftDate(value)}
-      showMonthDropdown
-      showYearDropdown
-      formatWeekDay={(nameOfDay) => {
-        const key = nameOfDay.toLowerCase();
-        return WEEKDAYS_MAP[key];
-      }}
-      customInput={<CalendarInput />}
-      calendarContainer={(containerProps) => (
-        <CalendarContainer
-          {...containerProps}
-          onCancel={handleCancel}
-          onConfirm={handleConfirm}
-        />
-      )}
-    />
+    <div>
+      <DatePicker
+        locale={ru}
+        id={id}
+        dateFormat="dd.MM.yyyy"
+        placeholderText={placeholder}
+        open={isOpen}
+        onInputClick={handleOpen}
+        onClickOutside={handleCancel}
+        shouldCloseOnSelect={false}
+        selected={draftDate ?? value ?? null}
+        onChange={(value) => setDraftDate(value)}
+        showMonthDropdown
+        showYearDropdown
+        scrollableYearDropdown
+        yearDropdownItemNumber={70}
+        formatWeekDay={(nameOfDay) => {
+          const key = nameOfDay.toLowerCase();
+          return WEEKDAYS_MAP[key];
+        }}
+        customInput={<CalendarInput />}
+        calendarContainer={(containerProps) => (
+          <CalendarContainer
+            {...containerProps}
+            onCancel={handleCancel}
+            onConfirm={handleConfirm}
+          />
+        )}
+      />
+    </div>
   );
 };

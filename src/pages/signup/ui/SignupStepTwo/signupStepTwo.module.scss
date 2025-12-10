@@ -26,12 +26,8 @@
   inline-size: 556px;
   padding-inline: 60px;
   padding-block: 40px;
+  border-radius: 12px;
   background-color: vars.$color-input;
-}
-
-.userWrapper {
-  position: relative;
-  display: block;
 }
 
 .welcomeContainer {
@@ -39,6 +35,7 @@
   inline-size: 556px;
   padding-inline: 60px;
   padding-block: 122px;
+  border-radius: 12px;
   background-color: vars.$color-input;
 }
 
@@ -67,6 +64,18 @@
   display: block;
   min-block-size: 13px;
   font-size: 12px;
+  color: vars.$color-error;
+}
+
+.userWrapper {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .userCircle {
@@ -87,6 +96,7 @@
   inline-size: 300px;
   object-fit: cover;
   margin-block-end: 40px;
+  border-radius: 50%;
 }
 
 .descriptionContainer {
@@ -96,10 +106,154 @@
 .title {
   font-family: Jost, sans-serif;
   font-size: 24px;
+  color: vars.$color-text;
 }
 
 .description {
   text-align: center;
   padding-inline: 10px;
   font-family: Roboto, sans-serif;
+  color: vars.$color-caption;
+}
+
+// Стили для полей формы
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  inline-size: 100%;
+}
+
+.label {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: vars.$color-text;
+  margin-block-end: 4px;
+}
+
+.selectorWrapper {
+  inline-size: 100%;
+  position: relative;
+}
+
+.selectorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  inline-size: 100%;
+  padding: 12px 16px;
+  border: 1px solid vars.$color-border-input;
+  border-radius: 8px;
+  background-color: vars.$color-background;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  outline: none;
+
+  &:hover:not(.disabled) {
+    border-color: vars.$color-accent;
+  }
+
+  &:focus:not(.disabled) {
+    border-color: vars.$color-accent;
+    box-shadow: 0 0 0 2px rgb(66 153 225 / 20%);
+  }
+
+  &.disabled {
+    background-color: vars.$color-disabled;
+    cursor: not-allowed;
+    opacity: 0.6;
+    border-color: vars.$color-disabled-text;
+  }
+}
+
+.selectorTitle {
+  color: vars.$color-text;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  font-family: Roboto, sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectorChevron {
+  inline-size: 16px;
+  block-size: 16px;
+  transition: transform 0.3s ease-in-out;
+  flex-shrink: 0;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.avatarPreview {
+  inline-size: 54px;
+  block-size: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid vars.$color-background;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.avatarDelete {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  background: vars.$color-error;
+  color: vars.$color-background;
+  border: none;
+  border-radius: 50%;
+  inline-size: 18px;
+  block-size: 18px;
+  font-size: 12px;
+  cursor: pointer;
+  @include flex(row, center, center);
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-disabled) 25%,
+    var(--color-disabled-light) 50%,
+    var(--color-disabled) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+
+.skeletonSelect {
+  inline-size: 100%;
+  block-size: 45px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  @extend .skeleton;
+}
+
+.avatarSkeleton {
+  inline-size: 54px;
+  block-size: 54px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: block;
+  @extend .skeleton;
+}
+
+.buttonSkeleton {
+  block-size: 45px;
+  border-radius: 8px;
+  @extend .skeleton;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }

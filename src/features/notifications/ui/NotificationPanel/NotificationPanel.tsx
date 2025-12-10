@@ -8,6 +8,7 @@ import { deleteNotification } from "@entities/notification/model/slice";
 const NotificationPanel: React.FC<IReadProps> = ({
   notifications,
   onMarkAllRead,
+  onClose,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -50,7 +51,9 @@ const NotificationPanel: React.FC<IReadProps> = ({
         {newSlice.length === 0 ? (
           <p className={styles.noNotifications}>Нет новых уведомлений</p>
         ) : (
-          newSlice.map((n) => <NotificationItem key={n.id} notification={n} />)
+          newSlice.map((n) => (
+            <NotificationItem key={n.id} notification={n} onClose={onClose} />
+          ))
         )}
       </div>
 
@@ -75,7 +78,7 @@ const NotificationPanel: React.FC<IReadProps> = ({
             </p>
           ) : (
             viewedSlice.map((n) => (
-              <NotificationItem key={n.id} notification={n} />
+              <NotificationItem key={n.id} notification={n} onClose={onClose} />
             ))
           )}
         </div>

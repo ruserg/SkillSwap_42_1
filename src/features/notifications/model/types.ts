@@ -11,4 +11,5 @@ export interface IReadProps {
   notifications: INotification[];
   onMarkAllRead?: () => void; //вызывается при пометке всех как прочитанных
   isOpen?: boolean; //пропс, чтобы знать, открыта панель или нет
+  onClose?: () => void; // опциональный пропс для закрытия панели
 }

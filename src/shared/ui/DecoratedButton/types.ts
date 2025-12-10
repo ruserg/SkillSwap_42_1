@@ -15,4 +15,5 @@ export type TDecorButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   notificationsCount?: number;
+  isUser?: boolean;
 };

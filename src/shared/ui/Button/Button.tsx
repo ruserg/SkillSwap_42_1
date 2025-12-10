@@ -1,4 +1,4 @@
-import type { TButtonProps } from "./types";
+import type { TButtonAsButton, TButtonAsLink, TButtonProps } from "./types";
 import clsx from "clsx";
 import styles from "./button.module.scss";
 import { Link } from "react-router-dom";
@@ -13,42 +13,55 @@ import { Link } from "react-router-dom";
 export const Button = (props: TButtonProps) => {
   const {
     children,
-    htmlType = "button",
+    type = "button",
     variant = "primary",
     disabled = false,
     leftIcon,
     rightIcon,
-    onClick,
-    to,
+    isLoading,
+    ...otherProps
   } = props;
 
-  if (to) {
+  const variantWithFallback = variant && styles[variant] ? variant : "primary";
+  const isDisabled = disabled || isLoading;
+
+  if ("to" in props) {
+    const { to, ...linkProps } = otherProps as TButtonAsLink;
     return (
       <Link
         to={to}
         className={clsx(
           styles.button,
-          styles[variant],
-          disabled && styles.disabled,
+          styles[variantWithFallback],
+          isDisabled && styles.disabled,
         )}
-        aria-disabled={disabled}
+        aria-disabled={isDisabled}
+        aria-busy={isLoading || undefined}
+        aria-live={isLoading ? "polite" : undefined}
+        {...linkProps}
       >
         {leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
-        {children}
+        {isLoading ? "Загрузка..." : children}
         {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
       </Link>
     );
   }
 
+  const { onClick, ...buttonProps } = otherProps as TButtonAsButton;
+
   return (
     <button
-      className={clsx(styles.button, styles[variant])}
-      type={htmlType}
-      disabled={disabled}
+      className={clsx(styles.button, styles[variantWithFallback])}
+      type={type}
       onClick={onClick}
+      disabled={isDisabled}
+      aria-disabled={isDisabled}
+      aria-busy={isLoading || undefined}
+      aria-live={isLoading ? "polite" : undefined}
+      {...buttonProps}
     >
       {leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
-      {children}
+      {isLoading ? "Загрузка..." : children}
       {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
     </button>
   );

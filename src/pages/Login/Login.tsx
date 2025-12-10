@@ -1,19 +1,17 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { login, selectAuth, clearError } from "@features/auth/model/slice";
 import { Button } from "@shared/ui/Button/Button";
 import { Input } from "@shared/ui/Input/Input";
 import { Logo } from "@shared/ui/Logo/Logo";
-import { Separator } from "@shared/ui/Separator/Separator";
 import { ArrowLeftIcon } from "@shared/ui/Icons/ArrowLeftIcon";
-import { GoogleIcon } from "@shared/ui/Icons/GoogleIcon";
-import { AppleIcon } from "@shared/ui/Icons/AppleIcon";
 import lightBulb from "@images/png/light-bulb.png";
 import type { z } from "zod";
 import type { SignupStep1Data } from "@shared/lib/zod/types";
 import { signupStep1Schema } from "@shared/lib/zod/schemas/userAuthSchema";
 import styles from "./login.module.scss";
+import { ExternalLogIn } from "@/widgets/ExternalLogIn/ExternalLogIn";
 import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection.tsx";
 
 export const Login = () => {
@@ -118,18 +116,11 @@ export const Login = () => {
         </div>
       </div>
 
+      <h1 className={styles.title}>Вход</h1>
+
       <section className={styles.section}>
         <div className={styles.loginContainer}>
-          <h2 className={styles.title}>Вход в аккаунт</h2>
-
-          <Button variant="signup" leftIcon={<GoogleIcon />}>
-            Продолжить с Google
-          </Button>
-          <Button variant="signup" leftIcon={<AppleIcon />}>
-            Продолжить с Apple
-          </Button>
-
-          <Separator />
+          <ExternalLogIn />
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.emailContainer}>
@@ -152,7 +143,7 @@ export const Login = () => {
               <Input
                 type="password"
                 id="password"
-                placeholder="Введите пароль"
+                placeholder="Введите ваш пароль"
                 value={formData.password}
                 onChange={handleInputChange}
                 disabled={isLoading}
@@ -169,7 +160,7 @@ export const Login = () => {
             )}
 
             <Button
-              htmlType="submit"
+              type="submit"
               disabled={!isFormValid || isLoading}
               onClick={() => {
                 console.log("🖱️ [Login] Button clicked!", {
@@ -183,23 +174,27 @@ export const Login = () => {
             </Button>
 
             <div className={styles.registerLink}>
-              <p>
-                Нет аккаунта?{" "}
-                <Button to="/registration/step1" variant="tertiary">
-                  Зарегистрироваться
-                </Button>
-              </p>
+              <Link to="/registration/step1">Зарегистрироваться</Link>
             </div>
           </form>
         </div>
-        <WelcomeSection
-          src={lightBulb}
-          alt={"Картинка с нарисованной лампочкой"}
-          title={"Добро пожаловать обратно!"}
-          description={
-            "Войдите в свой аккаунт, чтобы продолжить обмен навыками с другими пользователями"
-          }
-        />
+
+        <div className={styles.welcomeContainer}>
+          <img
+            className={styles.lightBulb}
+            src={lightBulb}
+            alt="Картинка с нарисованной лампочкой"
+            width="300"
+            height="300"
+            loading="lazy"
+          />
+          <div className={styles.descriptionContainer}>
+            <h3 className={styles.welcomeTitle}>С возвращением в SkillSwap!</h3>
+            <p className={styles.description}>
+              Обменивайтесь знаниями и навыками с другими людьми
+            </p>
+          </div>
+        </div>
       </section>
     </div>
   );

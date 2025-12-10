@@ -1,0 +1,32 @@
+.svg {
+  inline-size: 24px;
+  block-size: 24px;
+
+  &NonUser {
+    fill: $color-disabled;
+    stroke: $color-toggle;
+  }
+
+  &Fill {
+    fill: $color-accent;
+    stroke: $color-accent;
+  }
+
+  &MainPath {
+    fill: $color-text;
+  }
+
+  &MainStroke {
+    fill: none;
+    stroke: $color-text;
+  }
+
+  &Paint {
+    fill: $color-text-link;
+    stroke: $color-text-link;
+  }
+
+  &Circle {
+    fill: $color-alarm;
+  }
+}

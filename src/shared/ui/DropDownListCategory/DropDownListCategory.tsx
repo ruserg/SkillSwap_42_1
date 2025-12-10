@@ -13,8 +13,18 @@ import homeAndComfortImg from "@images/png/Home-and-comfort.png";
 import DropDownListCategorySkeleton from "./DropDownListCategorySkeleton";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/app/store/hooks";
+// import type { Subcategory } from "@/pages/signup/ui/SignupStepThree/types";
 
-export const DropDownListCategory = () => {
+import type { TSubcategory } from "@/entities/category/types";
+
+interface DropDownListCategoryProps {
+  subcategories: TSubcategory[];
+  onSubcategoryClick: (subcategoryId: number) => void;
+}
+
+export const DropDownListCategory = ({
+  onSubcategoryClick,
+}: DropDownListCategoryProps) => {
   const { categories, subcategories, isLoading } =
     useSelector(selectCategoryData);
 
@@ -75,13 +85,12 @@ export const DropDownListCategory = () => {
                     key={subcategory.id}
                     className={styles.subcategoriesTitle}
                   >
-                    <a
-                      href="#"
-                      aria-label={`Подкатегория: ${subcategory.name}`}
+                    <button
+                      type="button"
+                      onClick={() => onSubcategoryClick?.(subcategory.id)}
                     >
                       {subcategory.name}
-                    </a>
-                    {/* т.к. это заглушка, то и ссылки никуда не ведут */}
+                    </button>
                   </li>
                 ))}
             </ul>

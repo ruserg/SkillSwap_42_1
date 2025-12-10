@@ -9,7 +9,7 @@ export const SignupSteps = (props: TRegisterStepsProps) => {
 
   return (
     <div className={styles.container}>
-      <h2>{`Шаг ${currentStep} из ${totalSteps}`}</h2>
+      <h1>{`Шаг ${currentStep} из ${totalSteps}`}</h1>
       <div className={styles.stepsContainer}>
         {steps.map((step) => (
           <div

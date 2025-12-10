@@ -9,6 +9,7 @@ import { selectCategoryData } from "@entities/category/model/slice";
 
 export const MainPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [filters, setFilters] = useState<TFilterState>({
     purpose: "",
     skills: [],
@@ -22,13 +23,11 @@ export const MainPage = () => {
   useEffect(() => {
     const searchQuery = searchParams.get("q");
     if (searchQuery) {
-      // Ищем подкатегории, которые содержат поисковый запрос (регистронезависимый поиск)
       const searchLower = searchQuery.toLowerCase();
       const matchingSubcategories = subcategories
         .filter((sub) => sub.name.toLowerCase().includes(searchLower))
         .map((sub) => sub.id);
 
-      // Обновляем фильтры, добавляя найденные подкатегории
       setFilters((prev) => ({
         ...prev,
         skills: matchingSubcategories,
@@ -36,7 +35,6 @@ export const MainPage = () => {
     }
   }, [searchParams, subcategories]);
 
-  // Функция для очистки параметра q из URL
   const clearSearchQuery = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.delete("q");

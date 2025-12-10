@@ -29,7 +29,7 @@ export const ErrorPage = (props: errorPropsType) => {
         />
         <div className={styles.errorContainer}>
           <div className={styles.errorInfo}>
-            <h2 className={styles.errorTitle}>{errorTitle}</h2>
+            <h1 className={styles.errorTitle}>{errorTitle}</h1>
             <p className={styles.errorDescription}>{errorDescription}</p>
           </div>
           <div className={styles.errorButtons}>

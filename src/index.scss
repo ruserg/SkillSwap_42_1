@@ -10,6 +10,9 @@ html,
 body {
   background-color: var(--color-background);
   color: var(--color-text);
+  transform: translateZ(
+    0
+  ); // Фикс полос на тёмной теме на бэкграунде. Оказывается, это запускает принудительный рендеринг на GPU и фиксит проблему.
   transition:
     background-color 200ms ease,
     color 200ms ease;

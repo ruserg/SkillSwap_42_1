@@ -10,133 +10,122 @@ import {
   updateStep3,
   addImage,
   removeImage,
-  saveSignupState,
   clearSignupData,
-  submitSignup,
-  selectIsSubmitting,
-  selectSubmitError,
+  setCategories,
+  setSubcategories,
+  selectTeachCategories,
+  selectTeachSubcategories,
 } from "@features/signup/model/slice";
 import { ModalUI } from "@shared/ui/Modal/Modal";
-import { api } from "@shared/api/mockApi";
 import galleryAddIcon from "@images/icons/gallery-add.svg";
-import chevronDown from "@images/icons/chevron-down.svg";
 import schoolBoard from "@images/webp/school-board.webp";
-import type { Category, Subcategory } from "./types";
 
-// Импортируем кастомный компонент
-import { OfferPreviewFormData } from "../signupStepThreePreviewForm/OfferPreviewFormData";
-import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection.tsx";
+import {
+  fetchCategories,
+  selectCategoryData,
+} from "@entities/category/model/slice";
+
+import { OfferPreview } from "@widgets/OfferPreview/OfferPreview";
+import { CategorySelector } from "./CategorySelector";
+
+interface ImageFile {
+  id: string;
+  name: string;
+  size: number;
+  dataUrl: string;
+}
 
 export const SignupStepThree = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { step3 } = useAppSelector((state) => state.signup);
-  const isSubmitting = useAppSelector(selectIsSubmitting);
-  const submitError = useAppSelector(selectSubmitError);
 
-  const [skillName, setSkillName] = useState(step3.skillName);
-  const [category, setCategory] = useState(step3.category);
-  const [subcategory, setSubcategory] = useState(step3.subcategory);
-  const [description, setDescription] = useState(step3.description);
-  const [images, setImages] = useState<string[]>(step3.images);
+  const teachCategories = useAppSelector(selectTeachCategories);
+  const teachSubcategories = useAppSelector(selectTeachSubcategories);
+
+  const { step3 } = useAppSelector((state) => state.signup);
+  const skillName = step3.skillName;
+  const description = step3.description;
+  const images = step3.images;
+
+  const {
+    categories: categoriesData,
+    subcategories: subcategoriesData,
+    isLoading,
+  } = useAppSelector(selectCategoryData);
+
+  const [localSkillName, setLocalSkillName] = useState(skillName);
+  const [localDescription, setLocalDescription] = useState(description);
+  const [localImages, setLocalImages] = useState<ImageFile[]>(() => {
+    return images.map((img, index) => ({
+      id: `image-${index}-${Date.now()}`,
+      name: `image-${index}.jpg`,
+      size: 1024 * 1024,
+      dataUrl: img,
+    }));
+  });
 
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isSubcategoryOpen, setIsSubcategoryOpen] = useState(false);
-
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragAreaRef = useRef<HTMLDivElement>(null);
 
-  // Функция для перехода на главную страницу с очисткой данных
   const handleGoToHome = useCallback(() => {
-    // 1. Очищаем состояние Redux
     dispatch(clearSignupData());
-
-    // 2. Закрываем модальное окно
     setIsSuccessModalOpen(false);
-
-    // 3. Переходим на главную страницу
     navigate("/");
   }, [dispatch, navigate]);
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+    if (categoriesData.length === 0 && !isLoading) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, categoriesData.length, isLoading]);
 
-        const [categoriesData, subcategoriesData] = await Promise.all([
-          api.getCategories() as Promise<Category[]>,
-          api.getSubcategories() as Promise<Subcategory[]>,
-        ]);
-
-        setCategories(categoriesData);
-        setSubcategories(subcategoriesData);
-      } catch (error) {
-        console.error("Ошибка при загрузке данных:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
-
-  const filteredSubcategories = subcategories.filter(
-    (sub) => sub.categoryId.toString() === category,
-  );
-
-  const getCategoryName = (id: string) => {
-    const cat = categories.find((c) => c.id.toString() === id);
-    return cat ? cat.name : "Не выбрана";
+  const getSelectedCategoryNames = () => {
+    return teachCategories
+      .map((id) => {
+        const cat = categoriesData.find((c) => c.id.toString() === id);
+        return cat ? cat.name : "";
+      })
+      .filter((name) => name)
+      .join(", ");
   };
 
-  const getSubcategoryName = (id: string) => {
-    const sub = subcategories.find((s) => s.id.toString() === id);
-    return sub ? sub.name : "Не выбрана";
+  const getSelectedSubcategoryNames = () => {
+    return teachSubcategories
+      .map((id) => {
+        const sub = subcategoriesData.find((s) => s.id.toString() === id);
+        return sub ? sub.name : "";
+      })
+      .filter((name) => name)
+      .join(", ");
+  };
+
+  const getFilteredSubcategories = () => {
+    if (teachCategories.length === 0) return [];
+    return subcategoriesData.filter((sub) =>
+      teachCategories.includes(sub.categoryId.toString()),
+    );
   };
 
   useEffect(() => {
+    const currentImageUrls = localImages.map((img) => img.dataUrl);
     dispatch(
       updateStep3({
-        skillName,
-        category,
-        subcategory,
-        description,
-        images,
+        skillName: localSkillName,
+        description: localDescription,
+        images: currentImageUrls,
       }),
     );
-  }, [skillName, category, subcategory, description, images, dispatch]);
+  }, [localSkillName, localDescription, localImages, dispatch]);
 
   useEffect(() => {
-    if (category !== step3.category) {
-      setSubcategory("");
-      setIsSubcategoryOpen(false);
+    if (teachCategories.length === 0 && teachSubcategories.length > 0) {
+      dispatch(setSubcategories([]));
     }
-  }, [category, step3.category]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(saveSignupState());
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      dispatch(saveSignupState());
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [dispatch]);
+  }, [teachCategories, dispatch]);
 
   const handleFileSelect = () => {
     fileInputRef.current?.click();
@@ -160,7 +149,13 @@ export const SignupStepThree = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result as string;
-        setImages((prev) => [...prev, result]);
+        const newImage: ImageFile = {
+          id: `image-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          name: file.name,
+          size: file.size,
+          dataUrl: result,
+        };
+        setLocalImages((prev) => [...prev, newImage]);
         dispatch(addImage(result));
       };
       reader.readAsDataURL(file);
@@ -191,80 +186,142 @@ export const SignupStepThree = () => {
 
       const files = e.dataTransfer.files;
       if (files.length > 0) {
-        const file = files[0];
+        Array.from(files).forEach((file) => {
+          if (file.size > 2 * 1024 * 1024) {
+            alert("Файл слишком большой. Максимальный размер - 2 МБ");
+            return;
+          }
 
-        if (file.size > 2 * 1024 * 1024) {
-          alert("Файл слишком большой. Максимальный размер - 2 МБ");
-          return;
-        }
+          if (!file.type.match("image.*")) {
+            alert("Пожалуйста, перетащите только изображения");
+            return;
+          }
 
-        if (!file.type.match("image.*")) {
-          alert("Пожалуйста, перетащите только изображения");
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const result = reader.result as string;
-          setImages((prev) => [...prev, result]);
-          dispatch(addImage(result));
-        };
-        reader.readAsDataURL(file);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const result = reader.result as string;
+            const newImage: ImageFile = {
+              id: `image-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+              name: file.name,
+              size: file.size,
+              dataUrl: result,
+            };
+            setLocalImages((prev) => [...prev, newImage]);
+            dispatch(addImage(result));
+          };
+          reader.readAsDataURL(file);
+        });
       }
     },
     [dispatch],
   );
 
-  const handleRemoveImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
-    dispatch(removeImage(index));
+  const handleRemoveImage = (id: string) => {
+    const imageIndex = localImages.findIndex((img) => img.id === id);
+    if (imageIndex !== -1) {
+      setLocalImages((prev) => prev.filter((img) => img.id !== id));
+      dispatch(removeImage(imageIndex));
+    }
   };
 
   const handleContinue = () => {
-    if (!skillName.trim()) {
-      alert("Пожалуйста, введите название навыка");
+    // Валидация для шага 3
+    if (!localSkillName.trim()) {
+      alert("Пожалуйста, введите название навыка, которому хотите научить");
       return;
     }
 
-    if (!category) {
-      alert("Пожалуйста, выберите категорию");
+    if (teachCategories.length === 0) {
+      alert(
+        "Пожалуйста, выберите хотя бы одну категорию навыка, которому хотите научить",
+      );
       return;
     }
 
-    if (!subcategory) {
-      alert("Пожалуйста, выберите подкатегорию");
+    if (teachSubcategories.length === 0) {
+      alert(
+        "Пожалуйста, выберите хотя бы одну подкатегорию навыка, которому хотите научить",
+      );
       return;
     }
 
-    if (!description.trim()) {
+    if (!localDescription.trim()) {
       alert("Пожалуйста, добавьте описание навыка");
       return;
     }
 
-    dispatch(saveSignupState());
     setIsOfferModalOpen(true);
   };
 
-  const handleConfirmOffer = async () => {
-    setIsOfferModalOpen(false);
-
+  const saveUserOffer = useCallback(() => {
     try {
-      // Отправляем регистрацию через signup thunk
-      await dispatch(submitSignup()).unwrap();
+      const userData = JSON.parse(localStorage.getItem("signupData") || "{}");
 
-      // После успешной регистрации показываем модальное окно успеха
-      setIsSuccessModalOpen(true);
-    } catch (error) {
-      // Ошибка уже сохранена в state через extraReducers
-      console.error("Ошибка регистрации:", error);
-      // Можно показать ошибку пользователю
-      if (submitError) {
-        alert(submitError);
+      const offerData = {
+        id: `offer-${Date.now()}`,
+        skillName: localSkillName,
+        categoryName: getSelectedCategoryNames(),
+        subcategoryName: getSelectedSubcategoryNames(),
+        description: localDescription,
+        images: localImages.map((img) => img.dataUrl),
+        createdAt: new Date().toISOString(),
+
+        userInfo: {
+          firstName: userData.step2?.firstName || "",
+          city: userData.step2?.city || "",
+          gender: userData.step2?.gender || "",
+          dateOfBirth: userData.step2?.dateOfBirth || "",
+          avatar: userData.step2?.avatar || "",
+        },
+      };
+
+      const userOffers = JSON.parse(localStorage.getItem("userOffers") || "[]");
+
+      const updatedOffers = [...userOffers, offerData];
+
+      localStorage.setItem("userOffers", JSON.stringify(updatedOffers));
+
+      if (!localStorage.getItem("userProfile")) {
+        localStorage.setItem(
+          "userProfile",
+          JSON.stringify({
+            ...userData.step2,
+            email: userData.step1?.email || "",
+            offers: updatedOffers,
+          }),
+        );
       }
+
+      return offerData;
+    } catch (error) {
+      console.error("Ошибка при сохранении предложения:", error);
+      return null;
+    }
+  }, [
+    localSkillName,
+    localDescription,
+    localImages,
+    categoriesData,
+    subcategoriesData,
+  ]);
+
+  const handleConfirmOffer = () => {
+    const savedOffer = saveUserOffer();
+
+    if (savedOffer) {
+      setIsOfferModalOpen(false);
+      setIsSuccessModalOpen(true);
+
+      setLocalSkillName("");
+      setLocalDescription("");
+      setLocalImages([]);
+      dispatch(setCategories([]));
+      dispatch(setSubcategories([]));
+    } else {
+      alert("Не удалось сохранить предложение. Попробуйте еще раз.");
     }
   };
 
-  // Функция для закрытия успешного модального окна
   const handleCloseSuccessModal = useCallback(() => {
     dispatch(clearSignupData());
     setIsSuccessModalOpen(false);
@@ -285,7 +342,7 @@ export const SignupStepThree = () => {
       <section className={styles.section}>
         <div className={styles.formContainer}>
           <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-            {/* Для валидации: Название навыка */}
+            {/* Название навыка */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="skillName">
                 Название навыка
@@ -295,137 +352,61 @@ export const SignupStepThree = () => {
               ) : (
                 <input
                   id="skillName"
-                  name="skillName" // Для валидации
+                  name="skillName"
                   className={styles.skillNameInput}
                   type="text"
                   placeholder="Введите название вашего навыка"
-                  value={skillName}
-                  onChange={(e) => setSkillName(e.target.value)}
+                  value={localSkillName}
+                  onChange={(e) => setLocalSkillName(e.target.value)}
                   required
                 />
               )}
             </div>
 
-            {/* Для валидации: Категория навыка */}
-            <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="category-selector">
-                Категория навыка
-              </label>
-              {isLoading ? (
+            {/* Категория навыка */}
+            {isLoading ? (
+              <div className={styles.fieldGroup}>
                 <div
                   className={`${styles.skeleton} ${styles.skeletonSelect}`}
                 />
-              ) : (
-                <div id="category-selector" className={styles.selectorWrapper}>
-                  <div
-                    className={styles.selectorHeader}
-                    onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                  >
-                    <span className={styles.selectorTitle}>
-                      {category
-                        ? getCategoryName(category)
-                        : "Выберите категорию навыка"}
-                    </span>
-                    <img
-                      src={chevronDown}
-                      alt="chevron"
-                      className={`${styles.selectorChevron} ${isCategoryOpen ? styles.open : ""}`}
-                    />
-                  </div>
-                  <input
-                    type="hidden"
-                    name="category"
-                    value={category}
-                    required
-                  />
-                  {isCategoryOpen && (
-                    <div className={styles.optionsList}>
-                      {categories.map((cat) => (
-                        <div
-                          key={cat.id}
-                          className={`${styles.optionItem} ${category === cat.id.toString() ? styles.selected : ""}`}
-                          onClick={() => {
-                            setCategory(cat.id.toString());
-                            setIsCategoryOpen(false);
-                          }}
-                          data-value={cat.id}
-                        >
-                          {cat.name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <CategorySelector
+                label="Категория навыка"
+                options={categoriesData.map((cat) => ({
+                  id: cat.id.toString(),
+                  name: cat.name,
+                }))}
+                selectedIds={teachCategories}
+                onChange={(selectedIds) => dispatch(setCategories(selectedIds))}
+                placeholder="Выберите категории навыка"
+              />
+            )}
 
-            {/* Для валидации: Подкатегория */}
-            <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="subcategory-selector">
-                Подкатегория
-              </label>
-              {isLoading ? (
+            {/* Подкатегория */}
+            {isLoading ? (
+              <div className={styles.fieldGroup}>
                 <div
                   className={`${styles.skeleton} ${styles.skeletonSelect}`}
                 />
-              ) : (
-                <div
-                  id="subcategory-selector"
-                  className={styles.selectorWrapper}
-                >
-                  <div
-                    className={styles.selectorHeader}
-                    onClick={() =>
-                      category && setIsSubcategoryOpen(!isSubcategoryOpen)
-                    }
-                    style={{
-                      cursor: category ? "pointer" : "not-allowed",
-                      opacity: category ? 1 : 0.5,
-                    }}
-                  >
-                    <span className={styles.selectorTitle}>
-                      {subcategory
-                        ? getSubcategoryName(subcategory)
-                        : category
-                          ? "Выберите подкатегорию"
-                          : "Сначала выберите категорию"}
-                    </span>
-                    {category && (
-                      <img
-                        src={chevronDown}
-                        alt="chevron"
-                        className={`${styles.selectorChevron} ${isSubcategoryOpen ? styles.open : ""}`}
-                      />
-                    )}
-                  </div>
-                  <input
-                    type="hidden"
-                    name="subcategory"
-                    value={subcategory}
-                    required={!!category}
-                  />
-                  {isSubcategoryOpen && category && (
-                    <div className={styles.optionsList}>
-                      {filteredSubcategories.map((sub) => (
-                        <div
-                          key={sub.id}
-                          className={`${styles.optionItem} ${subcategory === sub.id.toString() ? styles.selected : ""}`}
-                          onClick={() => {
-                            setSubcategory(sub.id.toString());
-                            setIsSubcategoryOpen(false);
-                          }}
-                          data-value={sub.id}
-                        >
-                          {sub.name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <CategorySelector
+                label="Подкатегория"
+                options={getFilteredSubcategories().map((sub) => ({
+                  id: sub.id.toString(),
+                  name: sub.name,
+                }))}
+                selectedIds={teachSubcategories}
+                onChange={(selectedIds) =>
+                  dispatch(setSubcategories(selectedIds))
+                }
+                placeholder="Выберите подкатегории"
+                disabled={teachCategories.length === 0}
+              />
+            )}
 
-            {/* Для валидации: Описание */}
+            {/* Описание */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="description">
                 Описание
@@ -441,8 +422,8 @@ export const SignupStepThree = () => {
                   className={styles.descriptionTextarea}
                   placeholder="Коротко опишите, чему можете научить"
                   rows={4}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={localDescription}
+                  onChange={(e) => setLocalDescription(e.target.value)}
                   required
                   maxLength={500}
                   minLength={10}
@@ -450,7 +431,7 @@ export const SignupStepThree = () => {
               )}
             </div>
 
-            {/* Для валидации: Изображения */}
+            {/* Изображения */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="images-upload">
                 Изображения
@@ -494,28 +475,20 @@ export const SignupStepThree = () => {
                       multiple
                       className={styles.fileInput}
                       onChange={handleFileChange}
-                      // Для валидации файлов:
-                      // data-max-size="5242880" (5MB)
-                      // data-accepted-types="image/jpeg,image/png,image/gif"
                     />
                   </div>
 
-                  {images.length > 0 && (
-                    <div className={styles.imagePreviews}>
-                      {images.map((img, index) => (
-                        <div key={index} className={styles.imagePreview}>
-                          <img
-                            src={img}
-                            alt={`Предпросмотр ${index + 1}`}
-                            className={styles.previewImage}
-                          />
+                  {localImages.length > 0 && (
+                    <div className={styles.fileItems}>
+                      {localImages.map((img) => (
+                        <div key={img.id} className={styles.fileItem}>
+                          <span className={styles.fileName}>{img.name}</span>
                           <button
                             type="button"
-                            className={styles.removeImage}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleRemoveImage(index);
-                            }}
+                            className={styles.removeFile}
+                            onClick={() => handleRemoveImage(img.id)}
+                            title="Удалить файл"
+                            aria-label={`Удалить файл ${img.name}`}
                           >
                             ×
                           </button>
@@ -531,11 +504,8 @@ export const SignupStepThree = () => {
               <Button to="/registration/step2" variant="secondary">
                 Назад
               </Button>
-              <Button
-                onClick={handleContinue}
-                disabled={isLoading || isSubmitting}
-              >
-                {isLoading || isSubmitting ? "Загрузка..." : "Продолжить"}
+              <Button onClick={handleContinue} disabled={isLoading}>
+                {isLoading ? "Загрузка..." : "Продолжить"}
               </Button>
             </div>
           </form>
@@ -554,19 +524,13 @@ export const SignupStepThree = () => {
       {isOfferModalOpen && (
         <ModalUI onClose={() => setIsOfferModalOpen(false)}>
           <div className={styles.modalPreviewContainer}>
-            <div className={styles.modalPreviewHeader}>
-              <h3 className={styles.modalPreviewTitle}>Ваше предложение</h3>
-              <p className={styles.modalPreviewSubtitle}>
-                Пожалуйста, проверьте и подтвердите правильность данных
-              </p>
-            </div>
-
-            <OfferPreviewFormData
-              skillName={skillName}
-              categoryName={getCategoryName(category)}
-              subcategoryName={getSubcategoryName(subcategory)}
-              description={description}
-              images={images}
+            <OfferPreview
+              variant="modalOffer"
+              skillName={localSkillName}
+              categoryName={getSelectedCategoryNames()}
+              subcategoryName={getSelectedSubcategoryNames()}
+              description={localDescription}
+              images={localImages.map((img) => img.dataUrl)}
               onEdit={() => {
                 setIsOfferModalOpen(false);
               }}
@@ -585,7 +549,8 @@ export const SignupStepThree = () => {
             </div>
             <p className={styles.successModalDescription}>
               Теперь вы можете предлагать обмен навыками с другими
-              пользователями.
+              пользователями. Перейдите в личный кабинет, чтобы увидеть ваше
+              предложение.
             </p>
             <div className={styles.successModalButton}>
               <Button onClick={handleGoToHome}>Перейти на главную</Button>

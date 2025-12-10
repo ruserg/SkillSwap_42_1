@@ -5,6 +5,7 @@ import { SignupStepOne } from "@pages/signup/ui/SignupStepOne/SignupStepOne";
 import { SignupStepThree } from "@pages/signup/ui/SignupStepThree/SignupStepThree";
 import { SignupStepTwo } from "@pages/signup/ui/SignupStepTwo/SignupStepTwo";
 import { Login } from "@/pages/Login/Login";
+import UserPage from "@/pages/UserPage/UserPage";
 import { Layout } from "@/widgets/Layout/Layout";
 import { ErrorPage } from "@/pages/ErrorPage/ErrorPage";
 import { ProfilePage } from "@/pages/ProfilePage/ProfilePage";
@@ -53,6 +54,14 @@ export const AppRoutes = () => (
         element={
           <ProtectedRoute>
             <CreateOffer />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="user/:userId"
+        element={
+          <ProtectedRoute>
+            <UserPage />
           </ProtectedRoute>
         }
       />

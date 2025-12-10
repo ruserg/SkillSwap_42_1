@@ -6,11 +6,11 @@ import type { TCalendarInputProps } from "@shared/ui/Calendar/CalendarInput/type
 
 export const CalendarInput = forwardRef(
   (props: TCalendarInputProps, ref: ForwardedRef<HTMLInputElement>) => {
-    const { className, ...rest } = props;
+    const { className, id, ...rest } = props;
 
     return (
       <div className={styles.container} onClick={props.onClick}>
-        <input className={styles.input} ref={ref} readOnly {...rest} />
+        <input className={styles.input} ref={ref} readOnly id={id} {...rest} />
         {
           <span className={styles.icon}>
             <CalendarIcon />

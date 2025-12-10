@@ -1,35 +1,5 @@
-.decorButton {
-  inline-size: 24px;
-  block-size: 24px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.buttonHeart {
-  background-image: url("/src/shared/assets/images/icons/like.svg");
-}
-
-.buttonHeartFill {
-  background-image: url("/src/shared/assets/images/icons/like-painted-over.svg");
-}
-
-.buttonMoon {
-  background-image: url("/src/shared/assets/images/icons/moon.svg");
-}
-
-.buttonBell {
-  background-image: url("/src/shared/assets/images/icons/notification.svg");
-}
-
-.buttonBellFill {
-  background-image: url("/src/shared/assets/images/icons/notificationFill.svg");
-}
-
-.buttonShare {
-  background-image: url("/src/shared/assets/images/icons/share.svg");
-}
-
-.buttonParameters {
-  background-image: url("/src/shared/assets/images/icons/more-square.svg");
+.decorationButton {
+  inline-size: 100%;
+  block-size: 100%;
+  @include flex(column);
 }
