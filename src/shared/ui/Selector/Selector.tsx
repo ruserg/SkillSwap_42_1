@@ -97,11 +97,6 @@ export const Selector: FC<TSelectorProps> = memo(
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
-                onFocus={() => {
-                  if (!isOpen) {
-                    onToggle(id);
-                  }
-                }}
               />
             ) : (
               subTitle
