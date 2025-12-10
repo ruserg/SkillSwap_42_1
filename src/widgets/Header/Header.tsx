@@ -131,8 +131,12 @@ export const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
-      <nav className={styles.navigation} aria-label="main navigation">
+    <header role="banner" className={styles.header}>
+      <nav
+        className={styles.navigation}
+        aria-label="main navigation"
+        role="navigation"
+      >
         <Logo />
 
         <ul className={styles.navigationList}>

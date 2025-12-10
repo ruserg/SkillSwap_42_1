@@ -11,7 +11,7 @@ export const SidebarMenu = () => {
   return (
     <aside>
       <div className={styles.sidebarBackground}>
-        <nav className={styles.menu}>
+        <nav className={styles.menu} role="navigation">
           <a className={styles.menuItem}>
             <img src={requestIcon} alt="Заявки" width={24} height={24} />
             Заявки

@@ -7,7 +7,7 @@ import { Toast } from "../Toast/Toast";
 export const Layout = () => (
   <div className={styles.pageContainer}>
     <Header />
-    <main className={styles.main}>
+    <main id="main-content" role="main" className={styles.main}>
       <Outlet />
     </main>
     <Footer />

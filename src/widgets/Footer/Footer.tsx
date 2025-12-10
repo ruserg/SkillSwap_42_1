@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <footer className={styles.footer}>
+    <footer role="contentinfo" className={styles.footer}>
       <div className={styles.footerContainer}>
         <div className={styles.footerLogoContainer}>
           <Logo />
