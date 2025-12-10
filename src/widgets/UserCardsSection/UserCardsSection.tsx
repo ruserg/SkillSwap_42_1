@@ -14,6 +14,7 @@ import { ActiveFilters } from "@widgets/ActiveFilters/ActiveFilters";
 import { ViewAllButton } from "@shared/ui/ViewAllButton/ViewAllButton";
 import styles from "./userCardsSection.module.scss";
 import { Button } from "@/shared/ui/Button/Button";
+import { useInfinityScroll } from "@/shared/hooks/useInfinityScroll";
 
 interface UserCardsSectionProps {
   filters: TFilterState;
@@ -100,170 +101,38 @@ export const UserCardsSection = ({
   }, [users, recommendationsCount]);
 
   // Бесконечный скролл для популярных пользователей
-  useEffect(() => {
-    if (users.length === 0) return;
-    if (!isInfinityScrollActivated.popular) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          setPopularCount((prev) => {
-            if (prev + 3 >= allPopularUsers.length) {
-              setIsInfinityScrollActivated((prev) => ({
-                ...prev,
-                popular: true,
-              }));
-              return allPopularUsers.length;
-            }
-            return prev + 3;
-          });
-        });
-      },
-      {
-        root: null,
-        threshold: 0,
-      },
-    );
-
-    const isElementInViewport = (element: HTMLElement) => {
-      const rect = element.getBoundingClientRect();
-      return rect.top < window.innerHeight && rect.bottom >= 0;
-    };
-
-    if (popularSentinelRef.current) {
-      observer.observe(popularSentinelRef.current);
-
-      if (isElementInViewport(popularSentinelRef.current)) {
-        setPopularCount((prev) => prev + 3);
-      }
-    }
-
-    return () => observer.disconnect();
-  }, [users, allPopularUsers, isInfinityScrollActivated.popular]);
+  const { loadMoreList: loadMorePopular, hideMoreList: hideMorePopular } =
+    useInfinityScroll({
+      triggerArray: allPopularUsers,
+      isSectionActive: isInfinityScrollActivated,
+      scrollSection: "popular",
+      nextNumber: 3,
+      setCountState: setPopularCount,
+      setSectionActive: setIsInfinityScrollActivated,
+      sentinelRef: popularSentinelRef,
+    });
 
   //Бесконечный скролл для новых пользователей
-  useEffect(() => {
-    if (users.length === 0) return;
-    if (!isInfinityScrollActivated.new) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          setNewCount((prev) => {
-            if (prev + 3 >= allNewUsers.length) {
-              setIsInfinityScrollActivated((prev) => ({
-                ...prev,
-                new: true,
-              }));
-              return allNewUsers.length;
-            }
-            return prev + 3;
-          });
-        });
-      },
-      {
-        root: null,
-        threshold: 0,
-      },
-    );
-
-    const isElementInViewport = (element: HTMLElement) => {
-      const rect = element.getBoundingClientRect();
-      return rect.top < window.innerHeight && rect.bottom >= 0;
-    };
-
-    if (newSentinelRef.current) {
-      observer.observe(newSentinelRef.current);
-
-      if (isElementInViewport(newSentinelRef.current)) {
-        setNewCount((prev) => prev + 3);
-      }
-    }
-
-    return () => observer.disconnect();
-  }, [users, allNewUsers, isInfinityScrollActivated.new]);
+  const { loadMoreList: loadMoreNew, hideMoreList: hideMoreNew } =
+    useInfinityScroll({
+      triggerArray: allNewUsers,
+      isSectionActive: isInfinityScrollActivated,
+      scrollSection: "new",
+      nextNumber: 3,
+      setCountState: setNewCount,
+      setSectionActive: setIsInfinityScrollActivated,
+      sentinelRef: newSentinelRef,
+    });
 
   // Бесконечный скролл для рекомендаций
-  useEffect(() => {
-    if (users.length === 0) return;
-    if (recommendationsCount >= users.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          setRecommendationsCount((prev) => {
-            if (prev + 6 > users.length) {
-              return users.length;
-            }
-            return prev + 6;
-          });
-        });
-      },
-      {
-        root: null,
-        threshold: 0,
-      },
-    );
-
-    const isElementInViewport = (element: HTMLElement) => {
-      const rect = element.getBoundingClientRect();
-      return rect.top < window.innerHeight && rect.bottom >= 0;
-    };
-
-    if (recommendationsSentinelRef.current) {
-      observer.observe(recommendationsSentinelRef.current);
-
-      if (isElementInViewport(recommendationsSentinelRef.current)) {
-        setRecommendationsCount((prev) => prev + 6);
-      }
-    }
-
-    return () => observer.disconnect();
-  }, [users, recommendationsCount]);
-
-  const loadMorePopular = () => {
-    setIsInfinityScrollActivated((prev) => ({
-      ...prev,
-      popular: true,
-    }));
-  };
-
-  const hideMorePopular = (count: number) => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    setPopularCount(count);
-    setIsInfinityScrollActivated((prev) => ({
-      ...prev,
-      popular: false,
-    }));
-  };
-
-  const loadMoreNew = () => {
-    setIsInfinityScrollActivated((prev) => ({
-      ...prev,
-      new: true,
-    }));
-  };
-
-  const hideMoreNew = (count: number) => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    setNewCount(count);
-    setIsInfinityScrollActivated((prev) => ({
-      ...prev,
-      new: false,
-    }));
-  };
+  useInfinityScroll({
+    triggerArray: users,
+    nextNumber: 6,
+    setCountState: setRecommendationsCount,
+    sentinelRef: recommendationsSentinelRef,
+    isWithoutToggle: true,
+    currentCount: recommendationsCount,
+  });
 
   // Используем хук для фильтрации пользователей
   const { filteredOffers, filteredUsers, hasActiveFilters } = useFilteredUsers({
