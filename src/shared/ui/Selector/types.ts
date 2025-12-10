@@ -11,4 +11,6 @@ export type TSelectorProps = {
   selectionOptions: TOption[];
   selectorType: TSelector;
   enableSearch?: boolean;
+  onChange?: (selectedValue: string) => void; // Добавляем этот пропс
+  selectedValue?: string; // Добавляем этот пропс
 };

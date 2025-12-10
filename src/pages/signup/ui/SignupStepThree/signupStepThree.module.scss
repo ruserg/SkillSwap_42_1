@@ -1,5 +1,6 @@
 @use "../../../../styles/variables" as vars;
 @use "../../../../styles/mixins" as *;
+@use "sass:color";
 
 @mixin text-style($weight, $size, $line) {
   font-weight: $weight;
@@ -138,11 +139,11 @@
 
 .fieldGroup {
   @include flex(column, center, start, 5px);
-  margin-block-end: 24px;
+  margin-block-end: 12px;
 }
 
 .label {
-  @include text-style($weight: 400, $size: 14px, $line: normal);
+  @include text-style($weight: 400, $size: 16px, $line: normal);
   color: vars.$color-text;
 }
 
@@ -244,7 +245,7 @@
 
 .textarea {
   resize: none;
-  min-block-size: 120px;
+  min-block-size: 96px;
   font-family: Roboto, sans-serif;
   line-height: 1.5;
   color: vars.$color-text;
@@ -266,7 +267,7 @@
 .uploadArea {
   inline-size: 436px;
   block-size: auto;
-  min-block-size: 120px;
+  min-block-size: 96px;
   border: 1px dashed vars.$color-caption;
   border-radius: vars.$input-border-radius;
   padding-block: 24px;
@@ -642,6 +643,7 @@
 
   .optionText {
     flex: 1;
+    color: vars.$color-text;
   }
 }
 
@@ -724,13 +726,13 @@
 .skeleton {
   background: linear-gradient(
     90deg,
-    vars.$color-toggle 25%,
-    vars.$color-disabled 50%,
-    vars.$color-toggle 75%
+    var(--color-disabled) 25%,
+    var(--color-disabled-light) 50%,
+    var(--color-disabled) 75%
   );
   background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: inherit;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: 8px;
 }
 
 @keyframes loading {

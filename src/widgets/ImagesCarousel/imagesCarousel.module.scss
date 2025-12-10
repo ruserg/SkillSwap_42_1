@@ -2,83 +2,136 @@
 @use "../../styles/variables" as vars;
 
 .cardsContainer {
-  grid-column: 2;
-  grid-row: 2;
+  inline-size: 440px;
+  block-size: 324px;
+}
 
-  .cardsSwiper {
-    @include grid(
-      $columns: 324px 92px,
-      $rows: repeat(2, 1fr),
-      $justify: normal,
-      $align: stretch,
-      $row-gap: 0,
-      $column-gap: 0
-    );
-    gap: 24px;
-    inline-size: 440px;
-    block-size: 324px;
+.cardsSwiper {
+  @include flex(row, flex-start, flex-start);
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  gap: 24px;
+}
 
-    position: relative;
+.buttonSwap {
+  position: absolute;
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: 100px;
+  border: none;
+  background-color: rgb(255 255 255 / 80%);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  z-index: 5;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background-color 0.2s;
 
-    img {
-      max-inline-size: 100%;
-      max-block-size: 100%;
-      object-fit: fill;
-    }
-
-    .buttonSwap {
-      position: absolute;
-      inline-size: 32px;
-      block-size: 32px;
-      border-radius: 100px;
-      z-index: 5;
-    }
-
-    .left {
-      top: 50%;
-      left: 0;
-      background-image: url("../../images/icons/arrow-left-circle.svg");
-    }
-
-    .right {
-      top: 50%;
-      left: 66.5%;
-      background-image: url("../../images/icons/arrow-right-circle.svg");
-    }
-
-    .mainCard {
-      inline-size: 324px;
-      block-size: 324px;
-      grid-row: span 3;
-      border-radius: 5%;
-      transition:
-        transform 0.4s ease,
-        opacity 0.4s ease;
-    }
-
-    .wrapperCards {
-      position: relative;
-
-      .otherCard {
-        inline-size: 92px;
-        block-size: 92px;
-        border-radius: 10%;
-      }
-
-      .overlayCard {
-        filter: blur(3px);
-      }
-
-      .overlayCount {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 18px;
-        font-weight: bold;
-        pointer-events: none;
-        color: #000;
-      }
-    }
+  &:hover {
+    background-color: rgb(255 255 255 / 95%);
   }
+
+  &.left {
+    left: 10px;
+    background-image: url("@shared/assets/images/icons/arrow-left-circle.svg");
+  }
+
+  &.right {
+    right: 10px;
+    background-image: url("@shared/assets/images/icons/arrow-right-circle.svg");
+  }
+}
+
+.mainImageContainer {
+  flex: 0 0 324px;
+  inline-size: 324px;
+  block-size: 324px;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 12px;
+
+  .mainCard {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+}
+
+.thumbnailsContainer {
+  @include flex(column, space-between, center);
+  flex: 0 0 92px;
+  inline-size: 92px;
+  block-size: 324px;
+}
+
+.thumbnailWrapper {
+  position: relative;
+  inline-size: 92px;
+  block-size: 92px;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+
+  .thumbnail {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid vars.$color-border-input;
+  }
+
+  .thumbnailWithOverlay {
+    filter: blur(2px);
+  }
+}
+
+.overlayCount {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(0 0 0 / 70%);
+  color: vars.$color-background;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: Roboto, sans-serif;
+  inline-size: 100%;
+  block-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.noThumbnail {
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: vars.$color-disabled;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: vars.$color-caption;
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  border: 1px dashed vars.$color-caption;
+  border-radius: 8px;
+}
+
+.noImages {
+  inline-size: 440px;
+  block-size: 324px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: vars.$color-disabled;
+  border-radius: 12px;
+  color: vars.$color-caption;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  border: 1px dashed vars.$color-caption;
+  font-weight: 400;
 }

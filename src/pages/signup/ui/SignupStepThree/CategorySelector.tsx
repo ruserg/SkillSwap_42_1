@@ -109,7 +109,18 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
             aria-expanded={isOpen}
             aria-haspopup="listbox"
           >
-            <span className={styles.selectorTitle}>{getDisplayText()}</span>
+            <span
+              className={styles.selectorTitle}
+              style={{
+                color:
+                  selectedIds.length === 0
+                    ? "var(--color-caption)"
+                    : "var(--color-text)",
+              }}
+            >
+              {" "}
+              {getDisplayText()}
+            </span>
             {!disabled && (
               <img
                 src={chevronDown}

@@ -1,108 +1,137 @@
+import React, { useState, useCallback } from "react";
 import styles from "./imagesCarousel.module.scss";
 import clsx from "clsx";
-import { useState } from "react";
 
-/*временные мок карточки*/
-export const images = [
-  {
-    url: "https://i.pinimg.com/1200x/fc/7e/9b/fc7e9b55365f34214c4e7d6307e4d2f5.jpg",
-    description: "MaoMao & Frieren",
-  },
-  {
-    url: "https://i.pinimg.com/1200x/5a/79/ab/5a79abcb9628199323e08cc29b697910.jpg",
-    description: "MaoMao & Frieren",
-  },
-  {
-    url: "https://i.pinimg.com/1200x/a7/09/e4/a709e4fa3f27392989ca46f65aad6771.jpg",
-    description: "MaoMao & Frieren",
-  },
-  {
-    url: "https://i.pinimg.com/736x/19/6c/05/196c0594228cf909e0877b525c8c6602.jpg",
-    description: "MaoMao & Frieren",
-  },
-  {
-    url: "https://i.pinimg.com/1200x/bd/8b/1c/bd8b1cff3658ce3d9016650385f0ff36.jpg",
-    description: "MaoMao & Frieren",
-  },
-  {
-    url: "https://i.pinimg.com/736x/2b/c8/f2/2bc8f287a5668b6cd4e786f088b9f09a.jpg",
-    description: "MaoMao & Frieren",
-  },
-  {
-    url: "https://i.pinimg.com/736x/2b/c8/f2/2bc8f287a5668b6cd4e786f088b9f09a.jpg",
-    description: "MaoMao & Frieren",
-  },
-  {
-    url: "https://i.pinimg.com/736x/2b/c8/f2/2bc8f287a5668b6cd4e786f088b9f09a.jpg",
-    description: "MaoMao & Frieren",
-  },
-];
-/*временные мок карточки*/
+interface ImagesCarouselProps {
+  images?: string[];
+  visibleCount?: number;
+  onImageClick?: (index: number) => void;
+}
 
-export const ImagesCarousel = () => {
-  const visible = 4;
+export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
+  images = [],
+  visibleCount = 4,
+  onImageClick,
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const [visibleCards, setVisibleCards] = useState(images.slice(0, visible));
+  const getVisibleImages = useCallback(() => {
+    if (images.length === 0) return [];
 
-  const mainCard = visibleCards[0];
-  const otherCards = visibleCards.slice(1);
+    const result = [];
+    for (let i = 0; i < Math.min(visibleCount, images.length); i++) {
+      const index = (currentIndex + i) % images.length;
+      result.push({
+        url: images[index],
+        index: index,
+        isMain: i === 0,
+      });
+    }
+    return result;
+  }, [images, currentIndex, visibleCount]);
 
-  const handleSwapRight = () => {
-    setVisibleCards((prev) => [...prev.slice(1), prev[0]]);
+  const visibleImages = getVisibleImages();
+  const hasImages = images.length > 0;
+  const canNavigate = images.length > visibleCount;
+
+  const handleNext = () => {
+    if (!canNavigate) return;
+    setCurrentIndex((prev) => (prev + 1) % images.length);
   };
 
-  const handleSwapLeft = () => {
-    setVisibleCards((prev) => [
-      prev[prev.length - 1],
-      ...prev.slice(0, prev.length - 1),
-    ]);
+  const handlePrev = () => {
+    if (!canNavigate) return;
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
+
+  const handleImageClick = (index: number) => {
+    if (onImageClick) {
+      onImageClick(index);
+    }
+  };
+
+  if (!hasImages) {
+    return (
+      <div className={styles.cardsContainer}>
+        <div className={styles.noImages}>Нет загруженных изображений</div>
+      </div>
+    );
+  }
+
+  const mainImage = visibleImages[0];
+  const otherImages = visibleImages.slice(1);
+  const hiddenCount = Math.max(0, images.length - visibleCount);
 
   return (
-    <>
-      <div className={clsx(styles.cardsContainer)}>
-        <div className={styles.cardsSwiper}>
+    <div className={styles.cardsContainer}>
+      <div className={styles.cardsSwiper}>
+        {canNavigate && (
           <button
             className={clsx(styles.buttonSwap, styles.left)}
-            onClick={handleSwapLeft}
-          ></button>
+            onClick={handlePrev}
+            aria-label="Предыдущее изображение"
+          />
+        )}
 
-          {mainCard && (
+        {mainImage && (
+          <div
+            className={styles.mainImageContainer}
+            onClick={() => handleImageClick(mainImage.index)}
+          >
             <img
-              src={mainCard.url}
+              src={mainImage.url}
               className={styles.mainCard}
-              alt={mainCard.description}
+              alt="Главное изображение"
+              loading="lazy"
             />
-          )}
-          {otherCards.map((card, index) => {
-            const isLast = index === otherCards.length - 1;
-            const hiddenCount = images.length - visibleCards.length;
+          </div>
+        )}
+
+        <div className={styles.thumbnailsContainer}>
+          {otherImages.map((img, idx) => {
+            const isLastThumbnail =
+              idx === otherImages.length - 1 && hiddenCount > 0;
 
             return (
-              <div className={styles.wrapperCards} key={index}>
+              <div
+                className={styles.thumbnailWrapper}
+                key={idx}
+                onClick={() => handleImageClick(img.index)}
+              >
                 <img
-                  src={card.url}
+                  src={img.url}
                   className={clsx(
-                    styles.otherCard,
-                    isLast && styles.overlayCard,
+                    styles.thumbnail,
+                    isLastThumbnail && styles.thumbnailWithOverlay,
                   )}
-                  alt={card.description}
+                  alt={`Изображение ${idx + 2}`}
+                  loading="lazy"
                 />
-                {isLast && hiddenCount > 0 && (
-                  <div className={styles.overlayCount}>
-                    +{hiddenCount}{" "}
-                    {/*показывает постоянное число не видных карточек на странице*/}
-                  </div>
+                {isLastThumbnail && hiddenCount > 0 && (
+                  <div className={styles.overlayCount}>+{hiddenCount}</div>
                 )}
               </div>
-            ); // Когда будут готовы мокки, поменять key
+            );
           })}
+
+          {visibleImages.length < visibleCount &&
+            Array.from({ length: visibleCount - visibleImages.length }).map(
+              (_, idx) => (
+                <div className={styles.thumbnailWrapper} key={`empty-${idx}`}>
+                  <div className={styles.noThumbnail}>Пусто</div>
+                </div>
+              ),
+            )}
+        </div>
+
+        {canNavigate && (
           <button
             className={clsx(styles.buttonSwap, styles.right)}
-            onClick={handleSwapRight}
-          ></button>
-        </div>
+            onClick={handleNext}
+            aria-label="Следующее изображение"
+          />
+        )}
       </div>
-    </>
+    </div>
   );
 };
