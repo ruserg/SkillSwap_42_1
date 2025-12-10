@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import type { z } from "zod";
 import type { SignupStep1Data } from "@shared/lib/zod/types";
 import { signupStep1Schema } from "@shared/lib/zod/schemas/userAuthSchema";
+import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection.tsx";
 
 export const SignupStepOne = () => {
   const [formData, setFormData] = useState<SignupStep1Data>({
@@ -124,23 +125,14 @@ export const SignupStepOne = () => {
             <Button disabled={!isFormValid}>Далее</Button>
           </form>
         </div>
-        <div className={styles.welcomeContainer}>
-          <img
-            className={styles.lightBulb}
-            src={lightBulb}
-            alt="Картинка с нарисованной лампочкой"
-            width="300"
-            height="300"
-            loading="lazy"
-          />
-          <div className={styles.descriptionContainer}>
-            <h3 className={styles.title}>Добро пожаловать в SkillSwap!</h3>
-            <p className={styles.description}>
-              Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с
-              другими людьми
-            </p>
-          </div>
-        </div>
+        <WelcomeSection
+          src={lightBulb}
+          alt={"Картинка с нарисованной лампочкой"}
+          title={"Добро пожаловать в SkillSwap!"}
+          description={
+            "Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми"
+          }
+        />
       </section>
     </>
   );

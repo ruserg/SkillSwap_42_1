@@ -25,6 +25,7 @@ import type { Category, Subcategory } from "./types";
 
 // Импортируем кастомный компонент
 import { OfferPreviewFormData } from "../signupStepThreePreviewForm/OfferPreviewFormData";
+import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection.tsx";
 
 export const SignupStepThree = () => {
   const navigate = useNavigate();
@@ -539,32 +540,14 @@ export const SignupStepThree = () => {
             </div>
           </form>
         </div>
-
-        <div className={styles.infoContainer}>
-          <div className={styles.imageWrapper}>
-            {schoolBoard ? (
-              <img
-                src={schoolBoard}
-                alt="Иллюстрация"
-                className={styles.infoImage}
-              />
-            ) : (
-              <div className={styles.imagePlaceholder}>
-                <div className={styles.placeholderIcon}>💡</div>
-              </div>
-            )}
-          </div>
-
-          <div className={styles.infoText}>
-            <h3 className={styles.infoTitle}>
-              Укажите, чем вы готовы поделиться
-            </h3>
-            <p className={styles.infoDescription}>
-              Так другие люди смогут увидеть ваши предложения и предложить вам
-              обмен
-            </p>
-          </div>
-        </div>
+        <WelcomeSection
+          src={schoolBoard}
+          alt={"Иллюстрация"}
+          title={"Укажите, чем вы готовы поделиться"}
+          description={
+            "Так другие люди смогут увидеть ваши предложения и предложить вам обмен"
+          }
+        />
       </section>
 
       {/* Модальное окно подтверждения с данными из формы */}
