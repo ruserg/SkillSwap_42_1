@@ -1,4 +1,4 @@
-import styles from "@pages/Login/login.module.scss";
+import styles from "./welcomeSection.module.scss";
 import type { IWelcomeSectionProps } from "@shared/ui/WelcomeSection/types";
 
 export const WelcomeSection = (props: IWelcomeSectionProps) => {

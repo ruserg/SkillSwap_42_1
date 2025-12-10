@@ -14,6 +14,7 @@ import type { z } from "zod";
 import type { SignupStep1Data } from "@shared/lib/zod/types";
 import { signupStep1Schema } from "@shared/lib/zod/schemas/userAuthSchema";
 import styles from "./login.module.scss";
+import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection.tsx";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -191,24 +192,14 @@ export const Login = () => {
             </div>
           </form>
         </div>
-
-        <div className={styles.welcomeContainer}>
-          <img
-            className={styles.lightBulb}
-            src={lightBulb}
-            alt="Картинка с нарисованной лампочкой"
-            width="300"
-            height="300"
-            loading="lazy"
-          />
-          <div className={styles.descriptionContainer}>
-            <h3 className={styles.welcomeTitle}>Добро пожаловать обратно!</h3>
-            <p className={styles.description}>
-              Войдите в свой аккаунт, чтобы продолжить обмен навыками с другими
-              пользователями
-            </p>
-          </div>
-        </div>
+        <WelcomeSection
+          src={lightBulb}
+          alt={"Картинка с нарисованной лампочкой"}
+          title={"Добро пожаловать обратно!"}
+          description={
+            "Войдите в свой аккаунт, чтобы продолжить обмен навыками с другими пользователями"
+          }
+        />
       </section>
     </div>
   );
