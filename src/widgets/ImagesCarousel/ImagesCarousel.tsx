@@ -37,7 +37,7 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
 
     setProcessedImages(validImages);
     setCurrentIndex(0);
-  }, [imagesKey]);  // Получаем видимые изображения
+  }, [imagesKey]); // Получаем видимые изображения
   const getVisibleImages = () => {
     if (processedImages.length === 0) return [];
 
