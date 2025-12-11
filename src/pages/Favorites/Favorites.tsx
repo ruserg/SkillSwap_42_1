@@ -15,7 +15,7 @@ export const Favorites = () => {
   const dispatch = useAppDispatch();
   const { users, isLoading } = useAppSelector(selectUsersData);
   const { cities } = useAppSelector(selectCities);
-  const { skills } = useAppSelector(selectSkillsData);
+  const { skills, isLoading: skillsLoading } = useAppSelector(selectSkillsData);
 
   // Загружаем данные при монтировании
   useEffect(() => {
@@ -25,10 +25,17 @@ export const Favorites = () => {
     if (cities.length === 0) {
       dispatch(fetchCities());
     }
-    if (skills.length === 0) {
+    if (skills.length === 0 && !skillsLoading) {
       dispatch(fetchSkillsData());
     }
-  }, [dispatch, users.length, isLoading, cities.length]);
+  }, [
+    dispatch,
+    users.length,
+    isLoading,
+    cities.length,
+    skillsLoading,
+    skills.length,
+  ]);
 
   // Фильтруем только лайкнутых пользователей
   const likedUsers = useMemo(() => {
