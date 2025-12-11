@@ -771,3 +771,10 @@
   block-size: 96px;
   border-radius: vars.$input-border-radius;
 }
+
+.errorText {
+  display: block;
+  min-block-size: 13px;
+  font-size: 12px;
+  color: vars.$color-error;
+}

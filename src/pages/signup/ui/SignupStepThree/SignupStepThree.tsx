@@ -25,10 +25,14 @@ import {
   fetchCategories,
   selectCategoryData,
 } from "@entities/category/model/slice";
-
+import {
+  signupStep3Schema,
+  type SignupStep3Data,
+} from "@/shared/lib/zod/schemas/skillSchema";
 import { OfferPreview } from "@widgets/OfferPreview/OfferPreview";
 import { CategorySelector } from "./CategorySelector";
 import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection";
+import type z from "zod";
 
 interface ImageFile {
   id: string;
@@ -55,6 +59,27 @@ export const SignupStepThree = () => {
     isLoading,
   } = useAppSelector(selectCategoryData);
 
+  const [formData, setFormData] = useState<SignupStep3Data>({
+    title: "",
+    description: "",
+    category: [],
+    subcategory: [],
+    images: [],
+  });
+
+  const [touched, setTouched] = useState({
+    title: false,
+    description: false,
+    category: false,
+    subcategory: false,
+    images: false,
+  });
+
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof SignupStep3Data, string>>
+  >({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const [localSkillName, setLocalSkillName] = useState(skillName);
   const [localDescription, setLocalDescription] = useState(description);
   const [localImages, setLocalImages] = useState<ImageFile[]>(() => {
@@ -75,6 +100,51 @@ export const SignupStepThree = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragAreaRef = useRef<HTMLDivElement>(null);
+
+  // Инициализация формы данными из Redux
+  useEffect(() => {
+    setFormData({
+      title: skillName || "",
+      description: description || "",
+      category: teachCategories || [],
+      subcategory: teachSubcategories || [],
+      images: images || [],
+    });
+  }, [skillName, description, teachCategories, teachSubcategories, images]);
+
+  // Валидация формы при изменении данных
+  useEffect(() => {
+    const result = signupStep3Schema.safeParse(formData);
+
+    if (result.success) {
+      setErrors({});
+      setIsFormValid(true);
+    } else {
+      const newErrors: Partial<Record<keyof SignupStep3Data, string>> = {};
+
+      result.error.issues.forEach((issue: z.ZodIssue) => {
+        const field = issue.path[0] as keyof SignupStep3Data;
+        if (field && touched[field]) {
+          newErrors[field] = issue.message;
+        }
+      });
+
+      setErrors(newErrors);
+      setIsFormValid(false);
+    }
+  }, [formData, touched]);
+
+  // Синхронизация состояния формы с Redux
+  useEffect(() => {
+    setLocalSkillName(formData.title);
+    setLocalDescription(formData.description);
+  }, [formData.title, formData.description]);
+
+  // Синхронизация изображений
+  useEffect(() => {
+    const currentImageUrls = localImages.map((img) => img.dataUrl);
+    setFormData((prev) => ({ ...prev, images: currentImageUrls }));
+  }, [localImages]);
 
   const handleGoToHome = useCallback(() => {
     dispatch(clearSignupData());
@@ -157,6 +227,32 @@ export const SignupStepThree = () => {
     }
   }, [teachCategories, dispatch]);
 
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFormData((prev) => ({ ...prev, title: value }));
+    setTouched((prev) => ({ ...prev, title: true }));
+    setLocalSkillName(value);
+  };
+
+  const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setFormData((prev) => ({ ...prev, description: value }));
+    setTouched((prev) => ({ ...prev, description: true }));
+    setLocalDescription(value);
+  };
+
+  const handleCategoryChange = (selectedIds: string[]) => {
+    setFormData((prev) => ({ ...prev, category: selectedIds }));
+    setTouched((prev) => ({ ...prev, category: true }));
+    dispatch(setCategories(selectedIds));
+  };
+
+  const handleSubcategoryChange = (selectedIds: string[]) => {
+    setFormData((prev) => ({ ...prev, subcategory: selectedIds }));
+    setTouched((prev) => ({ ...prev, subcategory: true }));
+    dispatch(setSubcategories(selectedIds));
+  };
+
   const handleFileSelect = () => {
     fileInputRef.current?.click();
   };
@@ -166,16 +262,6 @@ export const SignupStepThree = () => {
     if (!files) return;
 
     Array.from(files).forEach((file) => {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("Файл слишком большой. Максимальный размер - 2 МБ");
-        return;
-      }
-
-      if (!file.type.match("image.*")) {
-        alert("Пожалуйста, выберите только изображения");
-        return;
-      }
-
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result as string;
@@ -186,6 +272,7 @@ export const SignupStepThree = () => {
           dataUrl: result,
         };
         setLocalImages((prev) => [...prev, newImage]);
+        setTouched((prev) => ({ ...prev, images: true }));
         dispatch(addImage(result));
       };
       reader.readAsDataURL(file);
@@ -217,16 +304,6 @@ export const SignupStepThree = () => {
       const files = e.dataTransfer.files;
       if (files.length > 0) {
         Array.from(files).forEach((file) => {
-          if (file.size > 2 * 1024 * 1024) {
-            alert("Файл слишком большой. Максимальный размер - 2 МБ");
-            return;
-          }
-
-          if (!file.type.match("image.*")) {
-            alert("Пожалуйста, перетащите только изображения");
-            return;
-          }
-
           const reader = new FileReader();
           reader.onloadend = () => {
             const result = reader.result as string;
@@ -237,6 +314,7 @@ export const SignupStepThree = () => {
               dataUrl: result,
             };
             setLocalImages((prev) => [...prev, newImage]);
+            setTouched((prev) => ({ ...prev, images: true }));
             dispatch(addImage(result));
           };
           reader.readAsDataURL(file);
@@ -250,36 +328,43 @@ export const SignupStepThree = () => {
     const imageIndex = localImages.findIndex((img) => img.id === id);
     if (imageIndex !== -1) {
       setLocalImages((prev) => prev.filter((img) => img.id !== id));
+      setTouched((prev) => ({ ...prev, images: true }));
       dispatch(removeImage(imageIndex));
     }
   };
 
-  const handleContinue = () => {
-    // Валидация для шага 3
-    if (!localSkillName.trim()) {
-      alert("Пожалуйста, введите название навыка, которому хотите научить");
+  const handleContinue = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    // Помечаем все поля как "затронутые" для показа всех ошибок
+    const allTouched = {
+      title: true,
+      description: true,
+      category: true,
+      subcategory: true,
+      images: true,
+    };
+    setTouched(allTouched);
+
+    // Проверяем валидность всей формы
+    const validationResult = signupStep3Schema.safeParse(formData);
+
+    if (!validationResult.success) {
+      // Собираем все ошибки
+      const validationErrors: Partial<Record<keyof SignupStep3Data, string>> =
+        {};
+
+      validationResult.error.issues.forEach((issue: z.ZodIssue) => {
+        const field = issue.path[0] as keyof SignupStep3Data;
+        if (field) {
+          validationErrors[field] = issue.message;
+        }
+      });
+
+      setErrors(validationErrors);
+
       return;
     }
-
-    if (teachCategories.length === 0) {
-      alert(
-        "Пожалуйста, выберите хотя бы одну категорию навыка, которому хотите научить",
-      );
-      return;
-    }
-
-    if (teachSubcategories.length === 0) {
-      alert(
-        "Пожалуйста, выберите хотя бы одну подкатегорию навыка, которому хотите научить",
-      );
-      return;
-    }
-
-    if (!localDescription.trim()) {
-      alert("Пожалуйста, добавьте описание навыка");
-      return;
-    }
-
     setIsOfferModalOpen(true);
   };
 
@@ -288,9 +373,9 @@ export const SignupStepThree = () => {
       // Сохраняем данные в Redux перед отправкой
       dispatch(
         updateStep3({
-          skillName: localSkillName,
-          description: localDescription,
-          images: localImages.map((img) => img.dataUrl),
+          skillName: formData.title,
+          description: formData.description,
+          images: formData.images,
         }),
       );
 
@@ -331,7 +416,7 @@ export const SignupStepThree = () => {
 
       <section className={styles.section}>
         <div className={styles.formContainer}>
-          <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+          <form className={styles.form} onSubmit={handleContinue}>
             {/* Название навыка */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="skillName">
@@ -340,16 +425,21 @@ export const SignupStepThree = () => {
               {isLoading ? (
                 <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
               ) : (
-                <input
-                  id="skillName"
-                  name="skillName"
-                  className={styles.skillNameInput}
-                  type="text"
-                  placeholder="Введите название вашего навыка"
-                  value={localSkillName}
-                  onChange={(e) => setLocalSkillName(e.target.value)}
-                  required
-                />
+                <>
+                  <input
+                    id="skillName"
+                    name="skillName"
+                    className={styles.skillNameInput}
+                    type="text"
+                    placeholder="Введите название вашего навыка"
+                    value={formData.title}
+                    onChange={handleTitleChange}
+                    required
+                  />
+                  {errors.title && touched.title && (
+                    <span className={styles.errorText}>{errors.title}</span>
+                  )}
+                </>
               )}
             </div>
 
@@ -361,16 +451,21 @@ export const SignupStepThree = () => {
                 />
               </div>
             ) : (
-              <CategorySelector
-                label="Категория навыка"
-                options={categoriesData.map((cat) => ({
-                  id: cat.id.toString(),
-                  name: cat.name,
-                }))}
-                selectedIds={teachCategories}
-                onChange={(selectedIds) => dispatch(setCategories(selectedIds))}
-                placeholder="Выберите категории навыка"
-              />
+              <>
+                <CategorySelector
+                  label="Категория навыка"
+                  options={categoriesData.map((cat) => ({
+                    id: cat.id.toString(),
+                    name: cat.name,
+                  }))}
+                  selectedIds={formData.category}
+                  onChange={handleCategoryChange}
+                  placeholder="Выберите категории навыка"
+                />
+                {errors.category && touched.category && (
+                  <span className={styles.errorText}>{errors.category}</span>
+                )}
+              </>
             )}
 
             {/* Подкатегория */}
@@ -381,19 +476,22 @@ export const SignupStepThree = () => {
                 />
               </div>
             ) : (
-              <CategorySelector
-                label="Подкатегория"
-                options={getFilteredSubcategories().map((sub) => ({
-                  id: sub.id.toString(),
-                  name: sub.name,
-                }))}
-                selectedIds={teachSubcategories}
-                onChange={(selectedIds) =>
-                  dispatch(setSubcategories(selectedIds))
-                }
-                placeholder="Выберите подкатегории"
-                disabled={teachCategories.length === 0}
-              />
+              <>
+                <CategorySelector
+                  label="Подкатегория"
+                  options={getFilteredSubcategories().map((sub) => ({
+                    id: sub.id.toString(),
+                    name: sub.name,
+                  }))}
+                  selectedIds={formData.subcategory}
+                  onChange={handleSubcategoryChange}
+                  placeholder="Выберите подкатегории"
+                  disabled={formData.category.length === 0}
+                />
+                {errors.subcategory && touched.subcategory && (
+                  <span className={styles.errorText}>{errors.subcategory}</span>
+                )}
+              </>
             )}
 
             {/* Описание */}
@@ -406,18 +504,25 @@ export const SignupStepThree = () => {
                   className={`${styles.skeleton} ${styles.skeletonTextarea}`}
                 />
               ) : (
-                <textarea
-                  id="description"
-                  name="description"
-                  className={styles.descriptionTextarea}
-                  placeholder="Коротко опишите, чему можете научить"
-                  rows={4}
-                  value={localDescription}
-                  onChange={(e) => setLocalDescription(e.target.value)}
-                  required
-                  maxLength={500}
-                  minLength={10}
-                />
+                <>
+                  <textarea
+                    id="description"
+                    name="description"
+                    className={styles.descriptionTextarea}
+                    placeholder="Коротко опишите, чему можете научить"
+                    rows={4}
+                    value={formData.description}
+                    onChange={handleDescriptionChange}
+                    required
+                    maxLength={500}
+                    minLength={10}
+                  />
+                  {errors.description && touched.description && (
+                    <span className={styles.errorText}>
+                      {errors.description}
+                    </span>
+                  )}
+                </>
               )}
             </div>
 
@@ -468,6 +573,10 @@ export const SignupStepThree = () => {
                     />
                   </div>
 
+                  {errors.images && touched.images && (
+                    <span className={styles.errorText}>{errors.images}</span>
+                  )}
+
                   {localImages.length > 0 && (
                     <div className={styles.fileItems}>
                       {localImages.map((img) => (
@@ -516,11 +625,11 @@ export const SignupStepThree = () => {
           <div className={styles.modalPreviewContainer}>
             <OfferPreview
               variant="modalOffer"
-              skillName={localSkillName}
+              skillName={formData.title}
               categoryName={getSelectedCategoryNames()}
               subcategoryName={getSelectedSubcategoryNames()}
-              description={localDescription}
-              images={localImages.map((img) => img.dataUrl)}
+              description={formData.description}
+              images={formData.images}
               onEdit={() => {
                 setIsOfferModalOpen(false);
               }}

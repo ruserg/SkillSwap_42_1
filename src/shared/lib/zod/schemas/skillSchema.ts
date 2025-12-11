@@ -11,25 +11,32 @@ export const skillTitleSchema = z
 
 export const skillDescriptionSchema = z
   .string()
+  .min(10, { message: "Описание должно быть не менее 10 символов" })
   .max(500, { message: "Описание не должно превышать 500 символов" })
-  .optional();
+  .min(1, { message: "Введите описание навыка" });
 
 export const skillCategorySchema = z
-  .string()
-  .min(1, { message: "Выберите категорию" });
+  .array(z.string())
+  .min(1, { message: "Выберите хотя бы одну категорию" });
 
 export const skillSubcategorySchema = z
-  .string()
-  .min(1, { message: "Выберите подкатегорию" });
+  .array(z.string())
+  .min(1, { message: "Выберите хотя бы одну подкатегорию" })
+  .max(5, { message: "Максимум 5 подкатегорий" });
 
-export const skillImageSchema = z
+export const skillImageFileSchema = z
   .instanceof(File)
   .refine(
     (file) => {
-      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/webp",
+      ];
       return allowedTypes.includes(file.type);
     },
-    { message: "Поддерживаются только JPEG и PNG изображения" },
+    { message: "Поддерживаются только JPEG, PNG и WebP изображения" },
   )
   .refine(
     (file) => {
@@ -39,19 +46,19 @@ export const skillImageSchema = z
     { message: "Размер изображения не должен превышать 2MB" },
   );
 
-//Это поле взято из документации
-export const skillTagsSchema = z
+export const skillImagesArraySchema = z
   .array(z.string())
-  .max(5, { message: "Максимум 5 тегов" });
+  .min(1, { message: "Добавьте хотя бы одно изображение" })
+  .max(5, { message: "Максимум 5 изображений" });
 
-// Полная схема создания навыка
-export const createSkillSchema = z.object({
+export const signupStep3Schema = z.object({
   title: skillTitleSchema,
   description: skillDescriptionSchema,
   category: skillCategorySchema,
   subcategory: skillSubcategorySchema,
-  image: skillImageSchema,
-  tags: skillTagsSchema,
+  images: skillImagesArraySchema,
 });
 
-export const updateSkillSchema = createSkillSchema.partial();
+export const updateSkillSchema = signupStep3Schema.partial();
+
+export type SignupStep3Data = z.infer<typeof signupStep3Schema>;
