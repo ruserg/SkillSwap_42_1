@@ -99,6 +99,25 @@ export const SignupStepTwo = () => {
     isCitiesLoading,
   ]);
 
+  useEffect(() => {
+    const handleClickOutsideCity = (event: MouseEvent) => {
+      // Если открыт селектор города
+      if (openSelectorId === "city") {
+        // Проверяем, был ли клик вне самого селектора
+        const cityElement = document.getElementById("city-selector-container");
+        if (cityElement && !cityElement.contains(event.target as Node)) {
+          setOpenSelectorId(null);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutsideCity);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideCity);
+    };
+  }, [openSelectorId]);
+
   const selectedCityName =
     location && citiesData.length > 0
       ? citiesData.find((city) => city.id.toString() === location)?.name || ""
@@ -413,6 +432,7 @@ export const SignupStepTwo = () => {
                           <Calendar
                             value={selectedDate}
                             onChange={handleDateOfBirthChange}
+                            placeholder="дд.мм.гггг"
                           />
                         </div>
                       </div>
@@ -447,7 +467,10 @@ export const SignupStepTwo = () => {
             </div>
 
             {/* Город */}
-            <div className={clsx(styles.container)}>
+            <div
+              className={clsx(styles.container)}
+              id="city-selector-container"
+            >
               {isLoading ? (
                 <SkeletonField type="select" count={1} />
               ) : (
