@@ -19,6 +19,7 @@ export const Selector: FC<TSelectorProps> = memo(
     selectionOptions,
     selectorType,
     enableSearch = false,
+    onChange,
   }) => {
     const [selectedOptions, setSelectedOptions] = useState<TOption[]>([]);
     const [searchValue, setSearchValue] = useState("");
@@ -45,6 +46,10 @@ export const Selector: FC<TSelectorProps> = memo(
         newSelected = [option];
         if (enableSearch) {
           setSearchValue(option);
+        }
+        // Вызываем onChange если передан для синхронизации с внешним состоянием
+        if (onChange) {
+          onChange(option);
         }
         onToggle(id);
       }

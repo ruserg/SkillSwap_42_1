@@ -2,56 +2,140 @@ import { Input } from "@/shared/ui/Input/Input";
 import { Button } from "@/shared/ui/Button/Button";
 import { Calendar } from "@shared/ui/Calendar/Calendar";
 import editIcon from "@images/icons/edit.svg?url";
-import chevronDownIcon from "@images/icons/chevron-down.svg?url";
 import editPhotoIcon from "@images/icons/edit-photo.svg";
 import styles from "./profilePage.module.scss";
-import { useAppSelector } from "@app/store/hooks";
+import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { selectUser } from "@/features/auth/model/slice";
+import { Selector } from "@/shared/ui/Selector/Selector";
+import { useEffect, useRef, useState, type SyntheticEvent } from "react";
+import { updateUserInState } from "@/entities/user/model/slice";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 export const ProfileForm = () => {
   const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
+  if (!user) return <Loader />;
+
+  const [userData, setUserData] = useState({
+    name: user?.name ?? "",
+    email: user?.email ?? "",
+    avatar: user?.avatarUrl ?? "",
+  });
+
+  useEffect(() => {
+    setUserData((prevState) => ({
+      ...prevState,
+      name: user?.name || "",
+      email: user?.email || "",
+      avatar: user?.avatarUrl || "",
+    })); // TODO: дата, пол, город, о себе - добавить
+  }, [user]);
+
+  const [editing, setEditing] = useState({
+    email: false,
+    name: false,
+    about: false,
+  });
+
+  const [openSelectorId, setOpenSelectorId] = useState<string | null>(null);
+  const selectorsRef = useRef<HTMLFormElement | null>(null);
+
+  // Для закрытия выпадающего списка при открытии другого
+  const handleToggle = (id: string) => {
+    setOpenSelectorId((prev) => (prev === id ? null : id));
+  };
+
+  // Закрытие выпадающих списков при клике вне
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        openSelectorId &&
+        selectorsRef.current &&
+        !selectorsRef.current.contains(event.target as Node)
+      ) {
+        setOpenSelectorId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openSelectorId]);
+
+  // Изменение поля
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  // Сохранение изменений
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    dispatch(updateUserInState(user.id, userData)); // TODO: правильно передать данные на сервер
+  };
+
+  // Активация функции редактирования поля
+  const handleEditClick = (field: string) => {
+    setEditing((prev) => ({
+      ...prev,
+      [field]: true,
+    }));
+  };
+
+  // Изменение аватара
+  const handleAvatarChange = () => {};
 
   return (
     <section className={styles.content}>
       <div className={styles.profileBackground}>
         <div className={styles.grid}>
-          {/* тут используются инпут, что сделали ранее */}
           <div className={styles.fields}>
             <div className={styles.field}>
               <label className={styles.label}>Почта</label>
               <div className={styles.inputWrapper}>
                 <Input
                   type="text"
-                  value="Mariia@gmail.com"
+                  placeholder="Mariia@gmail.com"
                   aria-label="Email пользователя"
+                  onChange={handleInputChange}
+                  value={userData.email}
+                  name={"email"}
+                  readOnly={!editing.email}
                 />
                 <img
                   src={editIcon}
                   alt="Редактировать"
                   className={styles.inputChildrenIcon}
+                  onClick={() => handleEditClick("email")}
                 />
               </div>
               <button className={styles.changePassword}>Изменить пароль</button>
             </div>
 
-            {/* и тут используются инпут */}
             <div className={styles.field}>
               <label className={styles.label}>Имя</label>
               <div className={styles.inputWrapper}>
                 <Input
                   type="text"
-                  value="Мария"
+                  placeholder="Мария"
                   aria-label="Имя пользователя"
+                  value={userData.name}
+                  onChange={handleInputChange}
+                  name={"name"}
+                  readOnly={!editing.name}
                 />
                 <img
                   src={editIcon}
                   alt="Редактировать"
                   className={styles.inputChildrenIcon}
+                  onClick={() => handleEditClick("name")}
                 />
               </div>
             </div>
 
-            {/* здесь использую календарь, что сделали тоже - проверь шрифты у него */}
             <div className={styles.birthGender}>
               <div className={styles.field}>
                 <label className={styles.label}>Дата рождения</label>
@@ -63,61 +147,59 @@ export const ProfileForm = () => {
                 </div>
               </div>
 
-              {/* ниже в коментах я указала свою реализацию выбора пола, но я надеюсь,
-              что его уже сделали и можно будет просто вставить сюда */}
+              {/* // TODO: поменять в выборе пола и города цвет текста */}
               <div className={styles.field}>
-                <label className={styles.label}>Пол</label>
-                <div className={styles.genderWrapper}>
-                  <button className={styles.genderTrigger} disabled>
-                    Выбор пола
-                    <img
-                      src={chevronDownIcon}
-                      alt="Открыть меню"
-                      className={styles.genderArrowIcon}
-                    />
-                  </button>
+                <div
+                  className={`${styles.genderWrapper} ${styles.commonWrapper}`}
+                >
+                  <Selector
+                    id="gender"
+                    isOpen={openSelectorId === "gender"}
+                    onToggle={handleToggle}
+                    selectionTitle={"Пол"}
+                    selectionPlaceholder={"Женский"}
+                    selectionOptions={["Не указан", "Мужской", "Женский"]}
+                    selectorType={"radio"}
+                  />
                 </div>
               </div>
             </div>
 
-            {/* точно так же и с городом, этот компонент уже должен быть, его тоже надо
-            сюда просто вставить */}
+            {/* // TODO: поменять selectionOptions на нужные опции */}
             <div className={styles.field}>
-              <label className={styles.label}>Город</label>
-              <div className={styles.cityWrapper}>
-                <button className={styles.cityTrigger} disabled>
-                  Москва
-                  <img
-                    src={chevronDownIcon}
-                    alt="Открыть меню"
-                    className={styles.genderArrowIcon}
-                  />
-                </button>
+              <div className={`${styles.cityWrapper} ${styles.commonWrapper}`}>
+                <Selector
+                  id="city"
+                  isOpen={openSelectorId === "city"}
+                  onToggle={handleToggle}
+                  selectionTitle={"Город"}
+                  selectionPlaceholder={"Москва"}
+                  selectionOptions={["Санкт-Петербург", "Самара", "Москва"]}
+                  selectorType={"radio"}
+                  enableSearch={true}
+                />
               </div>
             </div>
 
-            {/* тут я решила сделать textarea - так можно писать текст в несколько строк */}
             <div className={styles.field}>
               <label className={styles.label}>О себе</label>
               <div className={styles.textareaWrapper}>
                 <textarea
                   value="Люблю учиться новому, особенно если это можно делать за чаем и в пижаме. Всегда готова пообщаться и обменяться чем‑то интересным!"
                   aria-label="О себе"
+                  readOnly={!editing.about}
                 />
                 <img
                   src={editIcon}
                   alt="Редактировать"
                   className={styles.inputChildrenIcon}
+                  onClick={() => handleEditClick("about")}
                 />
               </div>
             </div>
 
-            {/* кнопка - ну она уже сделана, нужно добавить там ховеры если надо
-            активна кнопка, неактивна - все это надо сделать */}
             <div className={styles.buttonSave}>
-              <Button onClick={() => console.log("Сохраняем данные")}>
-                Сохранить
-              </Button>
+              <Button onClick={handleSubmit}>Сохранить</Button>
             </div>
           </div>
 
@@ -134,6 +216,7 @@ export const ProfileForm = () => {
                 src={editPhotoIcon}
                 alt="Редактировать фото"
                 className={styles.avatarEditIcon}
+                onClick={handleAvatarChange}
               />
             </div>
           </div>
@@ -142,59 +225,3 @@ export const ProfileForm = () => {
     </section>
   );
 };
-
-//я реализовала выбор гендера, но, раз уж у нас уже должен быть готовый компонент -
-//просто вставь то, что сделают
-//если же нет, юзай вот этот - он рабочий
-
-// import { DropDown } from "@/shared/ui/DropDown/DropDown";
-
-// const [gender, setGender] = useState("Женский");
-// const [genderOpen, setGenderOpen] = useState(false);
-
-{
-  /* <div className={styles.field}>
-  <label className={styles.label}>Пол</label>
-
-  <div className={styles.genderWrapper}>
-    <button
-      className={styles.genderTrigger}
-      onClick={() => setGenderOpen((prev) => !prev)}
-    >
-      {gender}
-      <img
-        src={chevronDownIcon}
-        alt="Открыть меню"
-        className={styles.genderArrowIcon}
-      />
-    </button>
-
-    <DropDown
-      isOpen={genderOpen}
-      onClose={() => setGenderOpen(false)}
-      triggerGroupe="gender"
-      role="listbox"
-      ariaLabel="Выбор пола"
-      top="100%" // появляется сразу под кнопкой
-      left="0" // выравнивание по левому краю кнопки
-    >
-      <ul className={styles.genderMenu}>
-        {["Не указан", "Мужской", "Женский"].map((item) => (
-          <li
-            key={item}
-            onClick={() => {
-              setGender(item);
-              setGenderOpen(false);
-            }}
-            className={styles.genderItem}
-            role="option"
-            aria-selected={gender === item}
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    </DropDown>
-  </div>
-</div>; */
-}

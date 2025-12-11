@@ -11,12 +11,11 @@ export interface RegisterRequest {
   email: string;
   password: string;
   name: string;
-  avatar: File; // обязательный файл аватара
-  firstName?: string; // имя (из step2)
-  lastName?: string; // фамилия (из step2)
+  avatar?: File; // файл аватара (опционально)
   dateOfBirth?: string; // дата рождения в формате ISO (из step2)
   gender?: "M" | "F"; // пол (из step2)
   cityId?: number; // ID города (из step2)
+  desiredCategories?: number[]; // желаемые категории (из step2)
 }
 ```
 
@@ -86,12 +85,11 @@ const registerData: RegisterRequest = {
   email: "user@example.com",
   password: "SecurePass123!",
   name: "Иван Иванов",
-  avatar: avatarFile, // File объект
-  firstName: "Иван",
-  lastName: "Иванов",
+  avatar: avatarFile, // File объект (опционально)
   dateOfBirth: "1990-01-01",
   gender: "M",
   cityId: 1,
+  desiredCategories: [1, 2, 3],
 };
 
 const loginData: LoginRequest = {

@@ -31,6 +31,8 @@ interface SignupState {
   };
   isSubmitting: boolean;
   submitError: string | null;
+  isRegistering: boolean;
+  registerError: string | null;
 }
 
 let avatarFileStorage: File | null = null;
@@ -42,59 +44,6 @@ export const setAvatarFile = (file: File | null) => {
 };
 export const clearAvatarFile = () => {
   avatarFileStorage = null;
-};
-
-// Загрузка состояния из localStorage
-const loadStateFromStorage = (): SignupState => {
-  try {
-    const serializedState = localStorage.getItem("signupState");
-    if (!serializedState) return getInitialState();
-
-    const parsed = JSON.parse(serializedState);
-    if (parsed.step3?.category && !parsed.step2?.learnCategory) {
-      parsed.step2 = {
-        ...parsed.step2,
-        learnCategory: parsed.step3.category || [],
-        learnSubcategory: parsed.step3.subcategory || [],
-      };
-
-      parsed.step3.teachCategory = parsed.step3.category || [];
-      parsed.step3.teachSubcategory = parsed.step3.subcategory || [];
-
-      delete parsed.step3.category;
-      delete parsed.step3.subcategory;
-    }
-
-    if (typeof parsed.step3?.teachCategory === "string") {
-      parsed.step3.teachCategory = parsed.step3.teachCategory
-        ? [parsed.step3.teachCategory]
-        : [];
-    }
-    if (typeof parsed.step3?.teachSubcategory === "string") {
-      parsed.step3.teachSubcategory = parsed.step3.teachSubcategory
-        ? [parsed.step3.teachSubcategory]
-        : [];
-    }
-
-    if (!parsed.step2?.avatar) {
-      parsed.step2 = { ...parsed.step2, avatar: "" };
-    }
-
-    if (!parsed.step2?.gender) {
-      parsed.step2.gender = "";
-    }
-
-    if (!parsed.step2?.learnCategory) {
-      parsed.step2.learnCategory = [];
-    }
-    if (!parsed.step2?.learnSubcategory) {
-      parsed.step2.learnSubcategory = [];
-    }
-
-    return parsed;
-  } catch {
-    return getInitialState();
-  }
 };
 
 const getInitialState = (): SignupState => ({
@@ -117,24 +66,18 @@ const getInitialState = (): SignupState => ({
   },
   isSubmitting: false,
   submitError: null,
+  isRegistering: false,
+  registerError: null,
 });
 
-// Сохранение состояния в localStorage
-const saveStateToStorage = (state: SignupState) => {
-  try {
-    localStorage.setItem("signupState", JSON.stringify(state));
-  } catch (error) {
-    console.error("Ошибка сохранения в localStorage:", error);
-  }
-};
+const initialState: SignupState = getInitialState();
 
-const initialState: SignupState = loadStateFromStorage();
-
-export const submitSignup = createAsyncThunk<
+// Регистрация пользователя после второго шага
+export const registerUserAfterStep2 = createAsyncThunk<
   void,
   void,
   { dispatch: AppDispatch; state: RootState }
->("signup/submit", async (_, { dispatch, getState, rejectWithValue }) => {
+>("signup/registerUser", async (_, { dispatch, getState, rejectWithValue }) => {
   try {
     const state = getState().signup;
 
@@ -145,25 +88,36 @@ export const submitSignup = createAsyncThunk<
     if (!state.step2.firstName) {
       return rejectWithValue("Имя обязательно");
     }
+    if (!state.step2.location) {
+      return rejectWithValue("Город обязателен");
+    }
 
     const avatarFile = getAvatarFile();
+
+    // Бэкенд требует аватар, проверяем что он загружен
+    if (!avatarFile) {
+      return rejectWithValue("Аватар обязателен для загрузки");
+    }
 
     let genderValue: "M" | "F" | undefined;
     if (state.step2.gender === "Мужской") genderValue = "M";
     if (state.step2.gender === "Женский") genderValue = "F";
 
+    // Бэкенд требует gender, проверяем что он выбран
+    if (!genderValue) {
+      return rejectWithValue("Пол обязателен");
+    }
+
     const registerData = {
       email: state.step1.email,
       password: state.step1.password,
       name: state.step2.firstName.trim(),
-      firstName: state.step2.firstName.trim(),
       ...(avatarFile && { avatar: avatarFile }),
       ...(state.step2.dateOfBirth && { dateOfBirth: state.step2.dateOfBirth }),
       ...(genderValue && { gender: genderValue }),
       ...(state.step2.location && {
         cityId: parseInt(state.step2.location, 10),
       }),
-
       ...(state.step2.learnSubcategory.length > 0 && {
         desiredCategories: state.step2.learnSubcategory.map((id) =>
           parseInt(id, 10),
@@ -174,7 +128,22 @@ export const submitSignup = createAsyncThunk<
     // @ts-ignore
     await dispatch(register(registerData)).unwrap();
 
-    // 2. Создание навыков (шаг 3)
+    return;
+  } catch (error: any) {
+    console.error("Ошибка регистрации:", error);
+    return rejectWithValue(error?.message || "Ошибка регистрации");
+  }
+});
+
+export const createSkills = createAsyncThunk<
+  void,
+  void,
+  { dispatch: AppDispatch; state: RootState }
+>("signup/createSkills", async (_, { getState, rejectWithValue }) => {
+  try {
+    const state = getState().signup;
+
+    // Создание навыков (шаг 3) - регистрация уже выполнена на шаге 2
     if (state.step3.skillName && state.step3.teachSubcategory.length > 0) {
       const skillPromises = state.step3.teachSubcategory.map(
         async (subcatId) => {
@@ -197,8 +166,8 @@ export const submitSignup = createAsyncThunk<
 
     return;
   } catch (error: any) {
-    console.error("Ошибка регистрации:", error);
-    return rejectWithValue(error?.message || "Ошибка регистрации");
+    console.error("Ошибка создания навыков:", error);
+    return rejectWithValue(error?.message || "Ошибка создания навыков");
   }
 });
 
@@ -212,7 +181,6 @@ const signupSlice = createSlice({
       action: PayloadAction<Partial<SignupState["step1"]>>,
     ) => {
       state.step1 = { ...state.step1, ...action.payload };
-      saveStateToStorage(state);
     },
 
     // Шаг 2
@@ -221,50 +189,39 @@ const signupSlice = createSlice({
       action: PayloadAction<Partial<SignupState["step2"]>>,
     ) => {
       state.step2 = { ...state.step2, ...action.payload };
-      saveStateToStorage(state);
     },
 
     updateFirstName: (state, action: PayloadAction<string>) => {
       state.step2.firstName = action.payload;
-      saveStateToStorage(state);
     },
 
     updateCity: (state, action: PayloadAction<string>) => {
       state.step2.location = action.payload;
-      // Добавляем небольшой таймаут для избежания race condition
-      setTimeout(() => saveStateToStorage(state), 0);
     },
 
     updateGender: (state, action: PayloadAction<string>) => {
       state.step2.gender = action.payload;
-      // Добавляем небольшой таймаут для избежания race condition
-      setTimeout(() => saveStateToStorage(state), 0);
     },
 
     updateDateOfBirth: (state, action: PayloadAction<string>) => {
       state.step2.dateOfBirth = action.payload;
-      saveStateToStorage(state);
     },
 
     updateAvatar: (state, action: PayloadAction<string>) => {
       state.step2.avatar = action.payload;
-      saveStateToStorage(state);
     },
 
     clearAvatar: (state) => {
       state.step2.avatar = "";
-      saveStateToStorage(state);
       clearAvatarFile();
     },
 
     setLearnCategories: (state, action: PayloadAction<string[]>) => {
       state.step2.learnCategory = action.payload;
-      saveStateToStorage(state);
     },
 
     setLearnSubcategories: (state, action: PayloadAction<string[]>) => {
       state.step2.learnSubcategory = action.payload;
-      saveStateToStorage(state);
     },
 
     // Шаг 3
@@ -273,55 +230,57 @@ const signupSlice = createSlice({
       action: PayloadAction<Partial<SignupState["step3"]>>,
     ) => {
       state.step3 = { ...state.step3, ...action.payload };
-      saveStateToStorage(state);
     },
 
     setCategories: (state, action: PayloadAction<string[]>) => {
       state.step3.teachCategory = action.payload;
-      saveStateToStorage(state);
     },
 
     setSubcategories: (state, action: PayloadAction<string[]>) => {
       state.step3.teachSubcategory = action.payload;
-      saveStateToStorage(state);
     },
 
     addImage: (state, action: PayloadAction<string>) => {
       state.step3.images.push(action.payload);
-      saveStateToStorage(state);
     },
 
     removeImage: (state, action: PayloadAction<number>) => {
       state.step3.images.splice(action.payload, 1);
-      saveStateToStorage(state);
     },
 
     // Очистка
     clearSignupData: (state) => {
       Object.assign(state, getInitialState());
       clearAvatarFile();
-      localStorage.removeItem("signupState");
-    },
-
-    saveSignupState: (state) => {
-      saveStateToStorage(state);
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(submitSignup.pending, (state) => {
+      .addCase(createSkills.pending, (state) => {
         state.isSubmitting = true;
         state.submitError = null;
       })
-      .addCase(submitSignup.fulfilled, (state) => {
+      .addCase(createSkills.fulfilled, (state) => {
         state.isSubmitting = false;
         Object.assign(state, getInitialState());
         clearAvatarFile();
-        localStorage.removeItem("signupState");
       })
-      .addCase(submitSignup.rejected, (state, action) => {
+      .addCase(createSkills.rejected, (state, action) => {
         state.isSubmitting = false;
         state.submitError = action.payload as string;
+      })
+      // registerUserAfterStep2
+      .addCase(registerUserAfterStep2.pending, (state) => {
+        state.isRegistering = true;
+        state.registerError = null;
+      })
+      .addCase(registerUserAfterStep2.fulfilled, (state) => {
+        state.isRegistering = false;
+        state.registerError = null;
+      })
+      .addCase(registerUserAfterStep2.rejected, (state, action) => {
+        state.isRegistering = false;
+        state.registerError = action.payload as string;
       });
   },
 });
@@ -343,7 +302,6 @@ export const {
   addImage,
   removeImage,
   clearSignupData,
-  saveSignupState,
 } = signupSlice.actions;
 
 // Селекторы
@@ -351,6 +309,10 @@ export const selectSignup = (state: RootState) => state.signup;
 export const selectIsSubmitting = (state: RootState) =>
   state.signup.isSubmitting;
 export const selectSubmitError = (state: RootState) => state.signup.submitError;
+export const selectIsRegistering = (state: RootState) =>
+  state.signup.isRegistering;
+export const selectRegisterError = (state: RootState) =>
+  state.signup.registerError;
 
 // Селекторы для шага 2
 export const selectFirstName = (state: RootState) =>

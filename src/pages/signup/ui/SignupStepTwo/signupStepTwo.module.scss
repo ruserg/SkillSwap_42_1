@@ -1,5 +1,13 @@
-@use "@styles/variables.scss" as vars;
-@use "@styles/mixins.scss" as *;
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.pageWrapper {
+  padding-block: 20px 40px;
+  padding-inline: 36px;
+  max-inline-size: 1440px;
+  block-size: 100vh;
+  margin: 0 auto;
+}
 
 .logo {
   @include flex(row, space-between, flex-end);
@@ -19,6 +27,7 @@
   @include flex(row, center, stretch, 24px);
   background-color: vars.$color-background;
   font-family: Roboto, sans-serif;
+  margin-block-start: 32px;
 }
 
 .registerContainer {

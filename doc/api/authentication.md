@@ -76,8 +76,6 @@ formData.append("email", "user@example.com");
 formData.append("password", "password123");
 formData.append("name", "Иван Иванов");
 formData.append("avatar", avatarFile); // File объект
-formData.append("firstName", "Иван");
-formData.append("lastName", "Иванов");
 formData.append("dateOfBirth", "1990-01-01");
 formData.append("gender", "M");
 formData.append("cityId", "1");

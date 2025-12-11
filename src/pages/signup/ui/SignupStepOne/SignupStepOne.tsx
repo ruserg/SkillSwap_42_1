@@ -89,7 +89,7 @@ export const SignupStepOne = () => {
   };
 
   return (
-    <>
+    <div className={styles.pageWrapper}>
       <div className={styles.logo}>
         <Logo />
         <div className={styles.backButtonContainer}>
@@ -154,6 +154,6 @@ export const SignupStepOne = () => {
           }
         />
       </section>
-    </>
+    </div>
   );
 };

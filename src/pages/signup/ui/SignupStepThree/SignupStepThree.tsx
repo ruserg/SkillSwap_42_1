@@ -15,6 +15,9 @@ import {
   setSubcategories,
   selectTeachCategories,
   selectTeachSubcategories,
+  createSkills,
+  selectIsSubmitting,
+  selectSubmitError,
 } from "@features/signup/model/slice";
 import { ModalUI } from "@shared/ui/Modal/Modal";
 import galleryAddIcon from "@images/icons/gallery-add.svg";
@@ -27,6 +30,7 @@ import {
 
 import { OfferPreview } from "@widgets/OfferPreview/OfferPreview";
 import { CategorySelector } from "./CategorySelector";
+import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection";
 
 interface ImageFile {
   id: string;
@@ -41,11 +45,13 @@ export const SignupStepThree = () => {
 
   const teachCategories = useAppSelector(selectTeachCategories);
   const teachSubcategories = useAppSelector(selectTeachSubcategories);
+  const isSubmitting = useAppSelector(selectIsSubmitting);
+  const submitError = useAppSelector(selectSubmitError);
 
   const { step3 } = useAppSelector((state) => state.signup);
-  const skillName = step3.skillName;
-  const description = step3.description;
-  const images = step3.images;
+  const skillName = step3?.skillName || "";
+  const description = step3?.description || "";
+  const images = step3?.images || [];
 
   const {
     categories: categoriesData,
@@ -56,6 +62,9 @@ export const SignupStepThree = () => {
   const [localSkillName, setLocalSkillName] = useState(skillName);
   const [localDescription, setLocalDescription] = useState(description);
   const [localImages, setLocalImages] = useState<ImageFile[]>(() => {
+    if (!images || !Array.isArray(images)) {
+      return [];
+    }
     return images.map((img, index) => ({
       id: `image-${index}-${Date.now()}`,
       name: `image-${index}.jpg`,
@@ -84,6 +93,14 @@ export const SignupStepThree = () => {
   }, [dispatch, categoriesData.length, isLoading]);
 
   const getSelectedCategoryNames = () => {
+    if (
+      !teachCategories ||
+      !Array.isArray(teachCategories) ||
+      !categoriesData ||
+      !Array.isArray(categoriesData)
+    ) {
+      return "";
+    }
     return teachCategories
       .map((id) => {
         const cat = categoriesData.find((c) => c.id.toString() === id);
@@ -94,6 +111,14 @@ export const SignupStepThree = () => {
   };
 
   const getSelectedSubcategoryNames = () => {
+    if (
+      !teachSubcategories ||
+      !Array.isArray(teachSubcategories) ||
+      !subcategoriesData ||
+      !Array.isArray(subcategoriesData)
+    ) {
+      return "";
+    }
     return teachSubcategories
       .map((id) => {
         const sub = subcategoriesData.find((s) => s.id.toString() === id);
@@ -104,7 +129,16 @@ export const SignupStepThree = () => {
   };
 
   const getFilteredSubcategories = () => {
-    if (teachCategories.length === 0) return [];
+    if (
+      !teachCategories ||
+      !Array.isArray(teachCategories) ||
+      teachCategories.length === 0
+    ) {
+      return [];
+    }
+    if (!subcategoriesData || !Array.isArray(subcategoriesData)) {
+      return [];
+    }
     return subcategoriesData.filter((sub) =>
       teachCategories.includes(sub.categoryId.toString()),
     );
@@ -253,62 +287,21 @@ export const SignupStepThree = () => {
     setIsOfferModalOpen(true);
   };
 
-  const saveUserOffer = useCallback(() => {
+  const handleConfirmOffer = async () => {
     try {
-      const userData = JSON.parse(localStorage.getItem("signupData") || "{}");
+      // Сохраняем данные в Redux перед отправкой
+      dispatch(
+        updateStep3({
+          skillName: localSkillName,
+          description: localDescription,
+          images: localImages.map((img) => img.dataUrl),
+        }),
+      );
 
-      const offerData = {
-        id: `offer-${Date.now()}`,
-        skillName: localSkillName,
-        categoryName: getSelectedCategoryNames(),
-        subcategoryName: getSelectedSubcategoryNames(),
-        description: localDescription,
-        images: localImages.map((img) => img.dataUrl),
-        createdAt: new Date().toISOString(),
+      // Отправляем данные на сервер через API
+      await dispatch(createSkills()).unwrap();
 
-        userInfo: {
-          firstName: userData.step2?.firstName || "",
-          city: userData.step2?.city || "",
-          gender: userData.step2?.gender || "",
-          dateOfBirth: userData.step2?.dateOfBirth || "",
-          avatar: userData.step2?.avatar || "",
-        },
-      };
-
-      const userOffers = JSON.parse(localStorage.getItem("userOffers") || "[]");
-
-      const updatedOffers = [...userOffers, offerData];
-
-      localStorage.setItem("userOffers", JSON.stringify(updatedOffers));
-
-      if (!localStorage.getItem("userProfile")) {
-        localStorage.setItem(
-          "userProfile",
-          JSON.stringify({
-            ...userData.step2,
-            email: userData.step1?.email || "",
-            offers: updatedOffers,
-          }),
-        );
-      }
-
-      return offerData;
-    } catch (error) {
-      console.error("Ошибка при сохранении предложения:", error);
-      return null;
-    }
-  }, [
-    localSkillName,
-    localDescription,
-    localImages,
-    categoriesData,
-    subcategoriesData,
-  ]);
-
-  const handleConfirmOffer = () => {
-    const savedOffer = saveUserOffer();
-
-    if (savedOffer) {
+      // Если успешно, показываем модальное окно успеха
       setIsOfferModalOpen(false);
       setIsSuccessModalOpen(true);
 
@@ -317,8 +310,9 @@ export const SignupStepThree = () => {
       setLocalImages([]);
       dispatch(setCategories([]));
       dispatch(setSubcategories([]));
-    } else {
-      alert("Не удалось сохранить предложение. Попробуйте еще раз.");
+    } catch (error) {
+      console.error("Ошибка при создании навыка:", error);
+      alert("Не удалось создать предложение. Попробуйте еще раз.");
     }
   };
 
@@ -329,7 +323,7 @@ export const SignupStepThree = () => {
   }, [dispatch, navigate]);
 
   return (
-    <>
+    <div className={styles.pageWrapper}>
       <div className={styles.header}>
         <div className={styles.logo}>
           <Logo />
@@ -558,6 +552,6 @@ export const SignupStepThree = () => {
           </div>
         </ModalUI>
       )}
-    </>
+    </div>
   );
 };

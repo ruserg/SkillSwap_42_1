@@ -13,12 +13,11 @@ export interface RegisterRequest {
   email: string;
   password: string;
   name: string;
-  avatar: File; // обязательный файл аватара
-  firstName?: string; // имя (из step2)
-  lastName?: string; // фамилия (из step2)
+  avatar?: File; // файл аватара (опционально)
   dateOfBirth?: string; // дата рождения в формате ISO (из step2)
   gender?: "M" | "F"; // пол (из step2)
   cityId?: number; // ID города (из step2)
+  desiredCategories?: number[]; // желаемые категории (из step2)
 }
 ```
 
@@ -34,12 +33,13 @@ const formData = new FormData();
 formData.append("email", "user@example.com");
 formData.append("password", "password123");
 formData.append("name", "Иван Иванов");
-formData.append("avatar", avatarFile); // File объект
-formData.append("firstName", "Иван");
-formData.append("lastName", "Иванов");
+if (avatarFile) formData.append("avatar", avatarFile); // File объект (опционально)
 formData.append("dateOfBirth", "1990-01-01");
 formData.append("gender", "M");
 formData.append("cityId", "1");
+desiredCategories.forEach((id) => {
+  formData.append("desiredCategories[]", id.toString());
+});
 
 await api.register(formData);
 ```

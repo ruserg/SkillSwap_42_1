@@ -28,7 +28,11 @@ import {
   selectLearnCategories,
   selectLearnSubcategories,
   updateStep2,
+  registerUserAfterStep2,
+  selectIsRegistering,
+  selectRegisterError,
 } from "@features/signup/model/slice";
+import { setAvatarFile } from "@features/signup/model/slice";
 import {
   fetchCategories,
   selectCategoryData,
@@ -37,6 +41,7 @@ import { fetchCities, selectCities } from "@entities/city/model/slice";
 import { CategorySelector } from "@pages/signup/ui/SignupStepThree/CategorySelector";
 import { SkeletonField } from "@pages/signup/ui/SignupStepThree/SkeletonField";
 import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection";
+import { ErrorMessage } from "@shared/ui/ErrorMessage/ErrorMessage";
 
 export const SignupStepTwo = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +54,8 @@ export const SignupStepTwo = () => {
   const avatar = useAppSelector(selectAvatar);
   const learnCategories = useAppSelector(selectLearnCategories);
   const learnSubcategories = useAppSelector(selectLearnSubcategories);
+  const isRegistering = useAppSelector(selectIsRegistering);
+  const registerError = useAppSelector(selectRegisterError);
 
   const {
     categories: categoriesData,
@@ -204,6 +211,9 @@ export const SignupStepTwo = () => {
         return;
       }
 
+      // Сохраняем File объект для отправки в API
+      setAvatarFile(file);
+
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result as string;
@@ -240,7 +250,7 @@ export const SignupStepTwo = () => {
     );
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (!firstName.trim()) {
       alert("Пожалуйста, введите имя");
       return;
@@ -260,7 +270,15 @@ export const SignupStepTwo = () => {
       return;
     }
 
-    navigate("/registration/step3");
+    // Регистрируем пользователя перед переходом на шаг 3
+    try {
+      await dispatch(registerUserAfterStep2()).unwrap();
+      // Если регистрация успешна, переходим на шаг 3
+      navigate("/registration/step3");
+    } catch (error) {
+      // Ошибка уже обработана в slice, можно показать дополнительное сообщение
+      console.error("Ошибка регистрации:", error);
+    }
   };
 
   const handleBack = () => {
@@ -269,12 +287,10 @@ export const SignupStepTwo = () => {
 
   const cityOptions = citiesData.map((city) => city.name);
 
-  const isLoading = isCategoriesLoading || isCitiesLoading;
-
-  const genderValue = gender || "Не указан";
+  const isLoading = isCategoriesLoading || isCitiesLoading || isRegistering;
 
   return (
-    <>
+    <div className={clsx(styles.pageWrapper)}>
       <div className={clsx(styles.logo)}>
         <Logo />
       </div>
@@ -399,7 +415,6 @@ export const SignupStepTwo = () => {
                         selectionOptions={["Не указан", "Мужской", "Женский"]}
                         selectorType={"radio"}
                         onChange={handleGenderChange}
-                        selectedValue={genderValue}
                       />
                     </div>
                   </>
@@ -416,6 +431,7 @@ export const SignupStepTwo = () => {
                   <label>Город</label>
                   <div className={styles.selectorWrapper}>
                     <Selector
+                      key={`city-${selectedCityName || "empty"}`}
                       id="city"
                       isOpen={openSelectorId === "city"}
                       onToggle={handleToggle}
@@ -425,7 +441,6 @@ export const SignupStepTwo = () => {
                       selectorType={"radio"}
                       enableSearch={true}
                       onChange={handleCityChange}
-                      selectedValue={selectedCityName}
                     />
                   </div>
                 </>
@@ -476,10 +491,15 @@ export const SignupStepTwo = () => {
               )}
             </div>
 
+            {registerError && <ErrorMessage>{registerError}</ErrorMessage>}
             <div
               className={clsx(styles.containerWrapper, styles.butttonWrapper)}
             >
-              <Button variant="secondary" onClick={handleBack}>
+              <Button
+                variant="secondary"
+                onClick={handleBack}
+                disabled={isLoading}
+              >
                 Назад
               </Button>
               <Button onClick={handleContinue} disabled={isLoading}>
@@ -497,6 +517,6 @@ export const SignupStepTwo = () => {
           }
         />
       </section>
-    </>
+    </div>
   );
 };

@@ -43,9 +43,13 @@ async function fetchApi<T>(
 ): Promise<T> {
   const token = getToken();
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
     ...(options.headers as Record<string, string>),
   };
+
+  // Для FormData не устанавливаем Content-Type - браузер сам установит с boundary
+  if (!(options.body instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
 
   if (token) {
     headers["authorization"] = `Bearer ${token}`;
@@ -98,16 +102,28 @@ async function fetchApi<T>(
       const contentType = res.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
         errorData = await res.json();
+        console.error("Ошибка API:", {
+          status: res.status,
+          statusText: res.statusText,
+          errorData,
+        });
         if (
           errorData &&
           typeof errorData === "object" &&
           "error" in errorData
         ) {
           errorMessage = (errorData as { error: string }).error;
+        } else if (
+          errorData &&
+          typeof errorData === "object" &&
+          "message" in errorData
+        ) {
+          errorMessage = (errorData as { message: string }).message;
         }
       }
     } catch {
       // Если не удалось распарсить JSON, используем statusText
+      console.error("Ошибка парсинга ответа:", res.status, res.statusText);
     }
 
     throw new ApiError(errorMessage, res.status, errorData);
@@ -136,12 +152,28 @@ export const api = {
     formData.append("email", body.email);
     formData.append("password", body.password);
     formData.append("name", body.name);
-    formData.append("avatar", body.avatar);
-    if (body.firstName) formData.append("firstName", body.firstName);
-    if (body.lastName) formData.append("lastName", body.lastName);
+
+    // Аватар обязателен на бэкенде
+    if (body.avatar) {
+      formData.append("avatar", body.avatar);
+    }
     if (body.dateOfBirth) formData.append("dateOfBirth", body.dateOfBirth);
-    if (body.gender) formData.append("gender", body.gender);
-    if (body.cityId) formData.append("cityId", body.cityId.toString());
+    // gender обязателен на бэкенде, должен быть "M" или "F"
+    // Если не указан, отправляем пустую строку (бэкенд должен обработать это)
+    formData.append(
+      "gender",
+      body.gender === "M" || body.gender === "F" ? body.gender : "",
+    );
+    // cityId обязателен на бэкенде и должен быть строкой
+    // Если не указан, отправляем пустую строку
+    formData.append("cityId", body.cityId ? body.cityId.toString() : "");
+    if (body.desiredCategories && body.desiredCategories.length > 0) {
+      // Отправляем массив как JSON строку или как отдельные поля
+      // Проверяем, что ожидает бэкенд - обычно для FormData массивы отправляются как отдельные поля
+      body.desiredCategories.forEach((categoryId) => {
+        formData.append("desiredCategories[]", categoryId.toString());
+      });
+    }
 
     return fetchApi<AuthResponse>("/api/auth/register", {
       method: "POST",

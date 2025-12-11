@@ -22,8 +22,6 @@ formData.append("email", "user@example.com");
 formData.append("password", "password123");
 formData.append("name", "Иван Иванов");
 formData.append("avatar", avatarFile); // File объект (обязательно)
-formData.append("firstName", "Иван"); // опционально
-formData.append("lastName", "Иванов"); // опционально
 formData.append("dateOfBirth", "1990-01-01"); // опционально, ISO format
 formData.append("gender", "M"); // опционально, "M" | "F"
 formData.append("cityId", "1"); // опционально
