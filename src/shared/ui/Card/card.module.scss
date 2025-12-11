@@ -1,6 +1,3 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
-
 .container {
   background: $color-card;
   border-radius: 16px;
@@ -20,9 +17,11 @@
   // Вариант для страницы профиля
   &.profile {
     max-width: 400px;
-    inline-size: 100%;
+
+    // inline-size: 100%;
     padding: 32px;
-    block-size: 444px;
+
+    // block-size: 444px;
 
     .avatar {
       inline-size: 100px;
@@ -39,9 +38,10 @@
     }
 
     .description {
-      padding: 20px;
+      // padding: 20px;
       background: rgba($color-disabled, 0.3);
       border-radius: 12px;
+      margin-block-end: 24px;
 
       p {
         font: {

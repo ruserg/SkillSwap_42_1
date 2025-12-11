@@ -23,7 +23,6 @@ interface SimiliarProposalsProps {
 export const SimiliarProposals: React.FC<SimiliarProposalsProps> = ({
   users,
   cities,
-  isAuthenticated = false,
   isLoading = false,
   cardsPerSlide = 4,
   maxUsers = 12,

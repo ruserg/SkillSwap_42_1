@@ -347,86 +347,59 @@ export const UserPage: React.FC = () => {
 
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <div className={styles.container}>
-          {/* Кнопка назад */}
-          <div className={styles.backButton}>
-            <Button
-              variant="secondary"
-              leftIcon={<ArrowLeftIcon />}
-              onClick={handleBackClick}
-            >
-              Назад
-            </Button>
-          </div>
+      <div className={styles.container}>
+        {/* Верхний ряд: профиль + OfferPreview */}
+        <div className={styles.topRow}>
+          {/* Левая колонка - профиль пользователя */}
+          <Card
+            user={currentUser}
+            cities={cities}
+            variant="profile"
+            description={currentUser.about || ""}
+          />
 
-          {/* Верхний ряд: профиль + OfferPreview */}
-          <div className={styles.topRow}>
-            {/* Левая колонка - профиль пользователя */}
-            <div className={styles.profileColumn}>
-              <div className={styles.profileCardWrapper}>
-                <Card
-                  user={currentUser}
-                  cities={cities}
-                  variant="profile"
-                  description={currentUser.about || ""}
-                />
-              </div>
+          {/* Правая колонка - предложение */}
+          {offerData ? (
+            <OfferPreview
+              variant="userProfileOffer"
+              skillName={offerData.skillName}
+              categoryName={offerData.categoryName}
+              subcategoryName={offerData.subcategoryName}
+              description={offerData.description}
+              images={offerData.images}
+              onExchange={handleExchangeClick}
+              isExchangeProposed={
+                currentExchange?.status === "accepted" ||
+                currentExchange?.status === "pending"
+              }
+              exchangeStatus={currentExchange?.status}
+            />
+          ) : (
+            <div className={styles.noOffer}>
+              <p>У пользователя пока нет предложений</p>
             </div>
+          )}
+        </div>
 
-            {/* Правая колонка - предложение */}
-            <div className={styles.offerColumn}>
-              <div className={styles.offerSection}>
-                <div className={styles.offerPreviewContainer}>
-                  {offerData ? (
-                    <OfferPreview
-                      variant="userProfileOffer"
-                      skillName={offerData.skillName}
-                      categoryName={offerData.categoryName}
-                      subcategoryName={offerData.subcategoryName}
-                      description={offerData.description}
-                      images={offerData.images}
-                      onExchange={handleExchangeClick}
-                      isExchangeProposed={
-                        currentExchange?.status === "accepted" ||
-                        currentExchange?.status === "pending"
-                      }
-                      exchangeStatus={currentExchange?.status}
-                    />
-                  ) : (
-                    <div className={styles.noOffer}>
-                      <p>У пользователя пока нет предложений</p>
-                    </div>
-                  )}
+        {/* Нижний ряд: похожие предложения на всю ширину */}
+        <div className={styles.similarSection}>
+          <h2 className={styles.similarTitle}>Похожие предложения</h2>
+          <div className={styles.similarCards}>
+            {similarUsers.length > 0 ? (
+              similarUsers.map((user) => <Card user={user} cities={cities} />)
+            ) : (
+              <div className={styles.noSimilar}>
+                <p>Нет похожих предложений</p>
+                <div className={styles.exploreButtonWrapper}>
+                  <Button variant="secondary" onClick={handleBackClick}>
+                    На главную
+                  </Button>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Нижний ряд: похожие предложения на всю ширину */}
-          <div className={styles.similarSection}>
-            <h2 className={styles.similarTitle}>Похожие предложения</h2>
-            <div className={styles.similarCards}>
-              {similarUsers.length > 0 ? (
-                similarUsers.map((user) => (
-                  <div key={user.id} className={styles.similarCard}>
-                    <Card user={user} cities={cities} />
-                  </div>
-                ))
-              ) : (
-                <div className={styles.noSimilar}>
-                  <p>Нет похожих предложений</p>
-                  <div className={styles.exploreButtonWrapper}>
-                    <Button variant="secondary" onClick={handleBackClick}>
-                      На главную
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

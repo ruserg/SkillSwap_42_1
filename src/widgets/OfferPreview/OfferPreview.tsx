@@ -90,9 +90,9 @@ export const OfferPreview = (props: TOfferProps) => {
           <div className={clsx(styles.cardsContainer)}>
             {variant === "userProfileOffer" && (
               <div className={styles.containerDecorButtons}>
-                <DecoratedButton variant={"heart"} />
-                <DecoratedButton variant={"share"} />
-                <DecoratedButton variant={"parameters"} />
+                <DecoratedButton variant="heart" />
+                <DecoratedButton variant="share" />
+                <DecoratedButton variant="parameters" />
               </div>
             )}
             <ImagesCarousel images={images} />

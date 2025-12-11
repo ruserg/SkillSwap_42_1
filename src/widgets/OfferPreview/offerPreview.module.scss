@@ -11,6 +11,7 @@
   width: 100%;
   max-width: 1020px;
   margin: 0 auto;
+  background-color: red;
 }
 
 .contentContainer {
@@ -22,13 +23,16 @@
   );
 
   width: 100%;
-  max-width: 1020px;
-  min-height: 444px;
+
+  // max-width: 1020px;
+  // min-height: 444px;
   background: vars.$color-card;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgb(0 0 0 / 4%);
   padding: 40px;
-  box-sizing: border-box;
+
+  // box-sizing: border-box;
+  block-size: 100%;
 
   @media (width <= 1200px) {
     flex-direction: column;
@@ -166,4 +170,8 @@
     max-width: 440px;
     margin: 0 auto;
   }
+}
+
+.cardsContainer {
+  @include flex(column);
 }

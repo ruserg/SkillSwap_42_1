@@ -1,26 +1,14 @@
-@use "../../styles/variables" as *;
-@use "../../styles/mixins" as *;
-
 .page {
-  min-block-size: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: $color-input;
-}
-
-.main {
-  flex: 1;
-  padding: 24px 36px 60px;
-
-  @media (width <= 768px) {
-    padding: 16px 20px 40px;
-  }
+  inline-size: 100%;
+  block-size: 100%;
+  @include flex;
 }
 
 .container {
-  max-inline-size: 1400px;
-  margin: 0 auto;
+  max-inline-size: 1440px;
   inline-size: 100%;
+  @include flex(column, flex-start, center, 60px);
+  padding: 32px 36px;
 }
 
 .backButton {
@@ -29,16 +17,19 @@
 
 /* Верхний ряд: профиль + OfferPreview */
 .topRow {
-  display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 24px;
-  margin-block-end: 60px;
-  align-items: stretch;
+  inline-size: 100%;
+  @include flex(row, center, stretch, 24px);
 
-  @media (width <= 1200px) {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
+  // display: grid;
+  // grid-template-columns: 400px 1fr;
+  // gap: 24px;
+  // margin-block-end: 60px;
+  // align-items: stretch;
+
+  // @media (width <= 1200px) {
+  //   grid-template-columns: 1fr;
+  //   gap: 32px;
+  // }
 }
 
 .profileColumn {
@@ -160,6 +151,7 @@
 /* Нижний ряд: похожие предложения */
 .similarSection {
   inline-size: 100%;
+  @include flex(column, flex-start, stretch, 32px);
 }
 
 .similarTitle {
@@ -169,7 +161,8 @@
     size: 28px;
   }
   color: $color-text;
-  margin-block-end: 32px;
+
+  // margin-block-end: 32px;
   text-align: inline-start;
 
   @media (width <= 768px) {
