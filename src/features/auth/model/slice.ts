@@ -3,7 +3,12 @@ import { api } from "@shared/api/api";
 import type { User } from "@entities/user/types";
 import type { RootState } from "@app/store/store";
 import { getCookie, setCookie, removeCookie } from "@shared/lib/cookies";
-import type { LoginRequest, RegisterRequest } from "@shared/lib/types/api";
+import type {
+  LoginRequest,
+  RegisterRequest,
+  UpdateUserRequest,
+  ChangePasswordRequest,
+} from "@shared/lib/types/api";
 
 type AuthState = {
   user: User | null;
@@ -24,7 +29,7 @@ export const fetchUser = createAsyncThunk(
   "auth/fetchUser",
   async (_, { rejectWithValue }) => {
     try {
-      const user = await api.getMe();
+      const user = await api.getCurrentUser();
       return user;
     } catch (error) {
       return rejectWithValue(
@@ -86,6 +91,36 @@ export const logout = createAsyncThunk(
       localStorage.removeItem("refreshToken");
       return rejectWithValue(
         error instanceof Error ? error.message : "Ошибка выхода",
+      );
+    }
+  },
+);
+
+// Обновление данных текущего пользователя
+export const updateCurrentUser = createAsyncThunk(
+  "auth/updateCurrentUser",
+  async (data: UpdateUserRequest | FormData, { rejectWithValue }) => {
+    try {
+      const updatedUser = await api.updateCurrentUser(data);
+      return updatedUser;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Ошибка обновления профиля",
+      );
+    }
+  },
+);
+
+// Изменение пароля
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async (data: ChangePasswordRequest, { rejectWithValue }) => {
+    try {
+      const response = await api.changePassword(data);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Ошибка изменения пароля",
       );
     }
   },
@@ -171,6 +206,37 @@ const authSlice = createSlice({
         // Все равно очищаем состояние при ошибке
         state.user = null;
         state.refreshToken = null;
+      });
+
+    // updateCurrentUser
+    builder
+      .addCase(updateCurrentUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(updateCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
+
+    // changePassword
+    builder
+      .addCase(changePassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(changePassword.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });

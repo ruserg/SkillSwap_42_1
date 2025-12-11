@@ -1,4 +1,4 @@
-import { type FC, memo, useState } from "react";
+import { type FC, memo, useEffect, useState } from "react";
 import type { TSelectorProps } from "@shared/ui/Selector/types";
 import styles from "./selector.module.scss";
 import clsx from "clsx";
@@ -20,47 +20,42 @@ export const Selector: FC<TSelectorProps> = memo(
     selectorType,
     enableSearch = false,
     onChange,
+    value,
   }) => {
     const [selectedOptions, setSelectedOptions] = useState<TOption[]>([]);
     const [searchValue, setSearchValue] = useState("");
-    const [subTitle, setSubTitle] = useState(selectionPlaceholder);
+    const [subTitle, setSubTitle] = useState(value || selectionPlaceholder);
 
     const listboxId = `selector-listbox-${id}`;
     const labelId = `selector-label-${id}`;
 
-    const toggleOption = (option: TOption) => {
-      let newSelected: TOption[] = [];
+    useEffect(() => {
+      if (selectorType === "radio") {
+        setSubTitle(value || selectionPlaceholder);
+        if (enableSearch) {
+          setSearchValue(value || "");
+        }
+      }
+    }, [value, selectionPlaceholder, selectorType, enableSearch]);
 
+    const toggleOption = (option: TOption) => {
       if (selectorType === "checkbox") {
+        let newSelected: TOption[] = [];
         if (selectedOptions.includes(option)) {
-          setSelectedOptions(
-            selectedOptions.filter((opt: TOption) => opt !== option),
-          );
           newSelected = selectedOptions.filter((opt) => opt !== option);
         } else {
-          setSelectedOptions([...selectedOptions, option]);
           newSelected = [...selectedOptions, option];
         }
-      } else {
-        setSelectedOptions([option]);
-        newSelected = [option];
-        if (enableSearch) {
-          setSearchValue(option);
-        }
-        // Вызываем onChange если передан для синхронизации с внешним состоянием
-        if (onChange) {
-          onChange(option);
-        }
-        onToggle(id);
-      }
-
-      // Обновление subTitle
-      if (selectorType === "checkbox") {
+        setSelectedOptions(newSelected);
         setSubTitle(
           newSelected.length ? newSelected.join(", ") : selectionPlaceholder,
         );
+        onChange?.(newSelected);
       } else {
-        setSubTitle(newSelected[0] || selectionPlaceholder);
+        setSelectedOptions([option]);
+        if (enableSearch) setSearchValue(option);
+        onChange?.(option);
+        onToggle(id);
       }
     };
 
@@ -69,7 +64,6 @@ export const Selector: FC<TSelectorProps> = memo(
       e.stopPropagation();
       setSearchValue("");
       setSelectedOptions([]);
-      onToggle(id);
     };
 
     // Показ знака очистки строки поиска
@@ -126,6 +120,8 @@ export const Selector: FC<TSelectorProps> = memo(
                   }
                 }}
               />
+            ) : selectorType === "radio" ? (
+              value || selectionPlaceholder
             ) : (
               subTitle
             )}

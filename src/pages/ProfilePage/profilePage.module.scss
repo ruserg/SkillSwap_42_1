@@ -105,28 +105,6 @@
   inline-size: 218px;
 }
 
-// .genderTrigger {
-//   position: relative;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   border: 1px solid vars.$color-border-input;
-//   border-radius: 12px;
-//   padding: 12px 20px;
-//   font-family: Roboto, sans-serif;
-//   font-weight: 400;
-//   font-size: 16px;
-//   cursor: pointer;
-//   inline-size: 218px;
-//   block-size: 48px;
-// }
-
-// .genderArrowIcon {
-//   flex-shrink: 0;
-//   inline-size: 24px;
-//   block-size: 24px;
-// }
-
 .commonWrapper {
   position: relative;
   font-family: Roboto, sans-serif;
@@ -135,10 +113,6 @@
   row-gap: 8px;
 }
 
-// .field .commonWrapper {
-//   color: #253017;
-// }
-
 .genderWrapper {
   inline-size: 218px;
 }
@@ -146,20 +120,6 @@
 .cityWrapper {
   inline-size: 460px;
 }
-
-// .cityTrigger {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   border: 1px solid vars.$color-border-input;
-//   border-radius: 12px;
-//   padding: 12px 20px;
-//   font-family: Roboto, sans-serif;
-//   font-size: 16px;
-//   cursor: pointer;
-//   inline-size: 100%;
-//   block-size: 48px;
-// }
 
 .changePassword {
   padding-top: 10px;
@@ -187,7 +147,7 @@
     box-sizing: border-box;
     border: 1px solid vars.$color-border-input;
     border-radius: 12px;
-    padding: 12px 20px;
+    padding: 12px 40px 12px 20px;
     vertical-align: top;
     font-family: Roboto, sans-serif;
     font-size: 16px;
@@ -226,18 +186,42 @@
   block-size: 56px;
 }
 
-// .genderMenu {
-//   inline-size: 100%;
-//   font-family: Roboto, sans-serif;
-//   color: vars.$color-text;
-//   font-size: 16px;
-//   line-height: 150%;
-//   letter-spacing: 0.02em;
-//   inline-size: 218px;
-//   padding: 4px 0;
-// }
+.avatarEditLabel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  inline-size: 56px;
+  block-size: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-// .genderItem {
-//   padding: 8px 12px;
-//   cursor: pointer;
-// }
+.passwordModal {
+  padding: 24px;
+  min-inline-size: 400px;
+
+  h2 {
+    margin-bottom: 24px;
+    font-family: Roboto, sans-serif;
+    font-size: 24px;
+    color: vars.$color-text;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.modalButtons {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.inputEditing {
+  background-color: vars.$color-toast-background;
+}

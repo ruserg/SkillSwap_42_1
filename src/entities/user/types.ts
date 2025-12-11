@@ -30,7 +30,11 @@ export interface User {
   id: number;
   email: string;
   name: string;
+  dateOfBirth: string;
+  gender: "M" | "F";
+  cityId: number;
   avatarUrl: string; // URL загруженного аватара
+  about: string; // текст "О себе"
   dateOfRegistration: string;
   lastLoginDatetime: string;
 }

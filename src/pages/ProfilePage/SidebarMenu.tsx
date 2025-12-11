@@ -12,11 +12,11 @@ export const SidebarMenu = () => {
     <aside>
       <div className={styles.sidebarBackground}>
         <nav className={styles.menu} role="navigation">
-          <a className={styles.menuItem}>
+          <a href="#0" className={styles.menuItem}>
             <img src={requestIcon} alt="Заявки" width={24} height={24} />
             Заявки
           </a>
-          <a className={styles.menuItem}>
+          <a href="#0" className={styles.menuItem}>
             <img
               src={messageTextIcon}
               alt="Мои обмены"
@@ -25,15 +25,16 @@ export const SidebarMenu = () => {
             />
             Мои обмены
           </a>
-          <a className={styles.menuItem}>
+          <a href="/favorites" className={styles.menuItem}>
             <img src={likeIcon} alt="Избранное" width={24} height={24} />
             Избранное
           </a>
-          <a className={styles.menuItem}>
+          {/* TODO: куда ссылка "Мои навыки" */}
+          <a href="/#0" className={styles.menuItem}>
             <img src={ideaIcon} alt="Мои навыки" width={24} height={24} />
             Мои навыки
           </a>
-          <a className={styles.menuItemActive}>
+          <a href="/profile" className={styles.menuItemActive}>
             <img src={userIcon} alt="Личные данные" width={24} height={24} />
             Личные данные
           </a>

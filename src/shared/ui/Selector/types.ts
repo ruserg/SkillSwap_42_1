@@ -11,5 +11,6 @@ export type TSelectorProps = {
   selectionOptions: TOption[];
   selectorType: TSelector;
   enableSearch?: boolean;
-  onChange?: (selectedValue: string) => void; // Опциональный callback для синхронизации с внешним состоянием
+  onChange?: (value: string | string[]) => void;
+  value?: string;
 };

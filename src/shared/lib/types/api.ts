@@ -29,3 +29,22 @@ export interface RefreshTokenResponse {
   accessToken: string;
   refreshToken?: string; // Опционально, если сервер использует rotation refresh tokens
 }
+
+// Типы для обновления пользователя
+export interface UpdateUserRequest {
+  email?: string;
+  name?: string;
+  dateOfBirth?: string;
+  gender?: "M" | "F";
+  cityId?: number;
+  about?: string;
+}
+
+// Типы для смены пароля
+export interface ChangePasswordRequest {
+  newPassword: string;
+}
+
+export interface ChangePasswordResponse {
+  message: string;
+}

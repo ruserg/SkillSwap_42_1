@@ -42,7 +42,10 @@ async function fetchApi<T>(
   isRetry = false,
 ): Promise<T> {
   const token = getToken();
+  const isFormData = options.body instanceof FormData;
   const headers: Record<string, string> = {
+    // Для FormData не устанавливаем Content-Type - браузер установит автоматически с boundary
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
     ...(options.headers as Record<string, string>),
   };
 
@@ -207,10 +210,37 @@ export const api = {
       body: JSON.stringify(body),
     }),
 
+  // Изменить пароль текущего пользователя
+  changePassword: (
+    body: import("@shared/lib/types/api").ChangePasswordRequest,
+  ): Promise<import("@shared/lib/types/api").ChangePasswordResponse> =>
+    fetchApi<import("@shared/lib/types/api").ChangePasswordResponse>(
+      "/api/auth/password",
+      {
+        method: "PUT",
+        body: JSON.stringify(body),
+      },
+    ),
+
   // ========== ПОЛЬЗОВАТЕЛИ ==========
   getUsers: (): Promise<TUser[]> => fetchApi<TUser[]>("/api/users"),
 
   getUser: (id: number): Promise<TUser> => fetchApi<TUser>(`/api/users/${id}`),
+
+  // Получить данные текущего авторизованного пользователя
+  getCurrentUser: (): Promise<User> => fetchApi<User>("/api/users/me"),
+
+  // Обновить данные текущего авторизованного пользователя
+  // Может принимать как JSON (UpdateUserRequest), так и FormData (для загрузки аватара)
+  updateCurrentUser: (
+    data: import("@shared/lib/types/api").UpdateUserRequest | FormData,
+  ): Promise<User> => {
+    const isFormData = data instanceof FormData;
+    return fetchApi<User>("/api/users/me", {
+      method: "PUT",
+      body: isFormData ? data : JSON.stringify(data),
+    });
+  },
 
   updateUser: (id: number, data: Partial<TUser>): Promise<TUser> =>
     fetchApi<TUser>(`/api/users/${id}`, {
