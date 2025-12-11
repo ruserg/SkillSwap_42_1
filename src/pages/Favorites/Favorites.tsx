@@ -10,31 +10,43 @@ import {
   fetchSkillsData,
   selectSkillsData,
 } from "@/entities/skill/model/slice";
+import {
+  fetchCategories,
+  selectCategoryData,
+} from "@/entities/category/model/slice";
 
 export const Favorites = () => {
   const dispatch = useAppDispatch();
   const { users, isLoading } = useAppSelector(selectUsersData);
-  const { cities } = useAppSelector(selectCities);
+  const { cities, isLoading: citiesLoading } = useAppSelector(selectCities);
   const { skills, isLoading: skillsLoading } = useAppSelector(selectSkillsData);
+  const { subcategories, isLoading: subcategoriesLoading } =
+    useAppSelector(selectCategoryData);
 
   // Загружаем данные при монтировании
   useEffect(() => {
     if (users.length === 0 && !isLoading) {
       dispatch(fetchUsersData());
     }
-    if (cities.length === 0) {
+    if (cities.length === 0 && !citiesLoading) {
       dispatch(fetchCities());
     }
     if (skills.length === 0 && !skillsLoading) {
       dispatch(fetchSkillsData());
     }
+    if (subcategories.length === 0 && !subcategoriesLoading) {
+      dispatch(fetchCategories());
+    }
   }, [
     dispatch,
     users.length,
     isLoading,
+    citiesLoading,
     cities.length,
     skillsLoading,
     skills.length,
+    subcategoriesLoading,
+    subcategories.length,
   ]);
 
   // Фильтруем только лайкнутых пользователей
