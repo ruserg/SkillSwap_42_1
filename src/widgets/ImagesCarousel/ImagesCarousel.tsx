@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./imagesCarousel.module.scss";
 import clsx from "clsx";
 
@@ -16,29 +16,29 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [processedImages, setProcessedImages] = useState<string[]>([]);
 
+  const imagesKey = JSON.stringify(images);
+
   // Обрабатываем изображения (фильтруем невалидные)
   useEffect(() => {
-    if (!images || images.length === 0) {
-      setProcessedImages([]);
-      return;
+    let validImages: string[] = [];
+
+    if (images && images.length > 0) {
+      // Фильтруем пустые строки и null/undefined
+      validImages = images.filter(
+        (img) =>
+          img &&
+          typeof img === "string" &&
+          (img.startsWith("http") ||
+            img.startsWith("data:image") ||
+            img.startsWith("https") ||
+            img.trim() !== ""),
+      );
     }
 
-    // Фильтруем пустые строки и null/undefined
-    const validImages = images.filter(
-      (img) =>
-        img &&
-        typeof img === "string" &&
-        (img.startsWith("http") ||
-          img.startsWith("data:image") ||
-          img.startsWith("https") ||
-          img.trim() !== ""),
-    );
-
     setProcessedImages(validImages);
-  }, [images]);
-
-  // Получаем видимые изображения
-  const getVisibleImages = useCallback(() => {
+    setCurrentIndex(0);
+  }, [imagesKey]);  // Получаем видимые изображения
+  const getVisibleImages = () => {
     if (processedImages.length === 0) return [];
 
     const result = [];
@@ -51,7 +51,7 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
       });
     }
     return result;
-  }, [processedImages, currentIndex, visibleCount]);
+  };
 
   const visibleImages = getVisibleImages();
   const hasImages = processedImages.length > 0;

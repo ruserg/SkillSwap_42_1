@@ -2,8 +2,6 @@ import React, { useEffect, useMemo, useCallback, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "@shared/ui/Card/Card";
 import { OfferPreview } from "@widgets/OfferPreview/OfferPreview";
-import { Footer } from "@widgets/Footer/Footer";
-import { Header } from "@widgets/Header/Header";
 import { Button } from "@shared/ui/Button/Button";
 import { ArrowLeftIcon } from "@shared/ui/Icons/ArrowLeftIcon";
 import type { UserWithLikes } from "@entities/user/types";
@@ -173,9 +171,7 @@ export const UserPage: React.FC = () => {
   if (isLoading) {
     return (
       <div className={styles.page}>
-        <Header />
         <div className={styles.loading}>Загрузка...</div>
-        <Footer />
       </div>
     );
   }
@@ -183,7 +179,6 @@ export const UserPage: React.FC = () => {
   if (!currentUser) {
     return (
       <div className={styles.page}>
-        <Header />
         <div className={styles.error}>
           <h2>Ошибка</h2>
           <p>Пользователь не найден</p>
@@ -191,15 +186,12 @@ export const UserPage: React.FC = () => {
             Назад
           </Button>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className={styles.page}>
-      <Header />
-
       <main className={styles.main}>
         <div className={styles.container}>
           {/* Кнопка назад */}
@@ -277,8 +269,6 @@ export const UserPage: React.FC = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };
