@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { updateStep1, selectSignup } from "@features/signup/model/slice";
 import { useNavigate } from "react-router-dom";
 import styles from "./signupStepOne.module.scss";
+import formStyles from "@shared/ui/Form/form.module.scss";
 import { Button } from "@shared/ui/Button/Button";
 import { Input } from "@shared/ui/Input/Input";
 import { Logo } from "@shared/ui/Logo/Logo";
@@ -90,9 +91,9 @@ export const SignupStepOne = () => {
 
   return (
     <div className={styles.pageWrapper}>
-      <div className={styles.logo}>
+      <div className={formStyles.logo}>
         <Logo />
-        <div className={styles.backButtonContainer}>
+        <div className={formStyles.backButtonContainer}>
           <Button to="/" variant={"tertiary"} leftIcon={<ArrowLeftIcon />}>
             Назад
           </Button>
@@ -111,7 +112,7 @@ export const SignupStepOne = () => {
               handleSubmit();
             }}
           >
-            <div className={styles.emailContainer}>
+            <div className={formStyles.emailContainer}>
               <label htmlFor="email">Email</label>
               <Input
                 type="email"
@@ -121,11 +122,11 @@ export const SignupStepOne = () => {
                 onChange={handleInputChange}
               />
               {errors.email && (
-                <span className={styles.errorText}>{errors.email}</span>
+                <span className={formStyles.errorText}>{errors.email}</span>
               )}
             </div>
 
-            <div className={styles.passwordContainer}>
+            <div className={formStyles.passwordContainer}>
               <label htmlFor="password">Пароль</label>
               {/* // TODO: в компоненте инпута нужно сделать кнопку "показать пароль" */}
               <Input
@@ -136,7 +137,7 @@ export const SignupStepOne = () => {
                 onChange={handleInputChange}
               />
               {errors.password && (
-                <span className={styles.errorText}>{errors.password}</span>
+                <span className={formStyles.errorText}>{errors.password}</span>
               )}
             </div>
 

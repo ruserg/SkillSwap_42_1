@@ -1,0 +1,51 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.logo {
+  @include flex(row, space-between, flex-end);
+  block-size: 60px;
+}
+
+.backButtonContainer {
+  inline-size: 147px;
+}
+
+.welcomeContainer {
+  @include flex(column, center, center);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 122px;
+  background-color: vars.$color-input;
+  border-radius: $input-border-radius;
+}
+
+.descriptionContainer {
+  @include flex(column, center, center, 12px);
+}
+
+.emailContainer,
+.passwordContainer {
+  @include flex(column, center, start, 5px);
+  inline-size: 100%;
+}
+
+.emailContainer {
+  margin-block: 5px 16px;
+}
+
+.passwordContainer {
+  margin-block-end: 20px;
+}
+
+.errorText {
+  display: block;
+  min-block-size: 13px;
+  font-size: 12px;
+  color: vars.$color-error;
+}
+
+.form {
+  inline-size: 100%;
+  @include flex(column, center, center, 12px);
+  padding-block-start: 8px;
+}

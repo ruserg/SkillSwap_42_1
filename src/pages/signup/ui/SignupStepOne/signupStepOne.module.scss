@@ -8,15 +8,6 @@
   margin: 0 auto;
 }
 
-.logo {
-  @include flex(row, space-between, flex-end);
-  block-size: 60px;
-}
-
-.backButtonContainer {
-  inline-size: 147px;
-}
-
 .steps {
   @include flex(row, center, center);
   margin-block-end: 35px;
@@ -38,37 +29,8 @@
   border-radius: $input-border-radius;
 }
 
-.welcomeContainer {
-  @include flex(column, center, center);
-  inline-size: 556px;
-  padding-inline: 60px;
-  padding-block: 122px;
-  background-color: vars.$color-input;
-  border-radius: $input-border-radius;
-}
-
 .form {
   inline-size: 100%;
-}
-
-.emailContainer,
-.passwordContainer {
-  @include flex(column, center, start, 5px);
-}
-
-.emailContainer {
-  margin-block: 5px 16px;
-}
-
-.passwordContainer {
-  margin-block-end: 35px;
-}
-
-.errorText {
-  display: block;
-  min-block-size: 13px;
-  font-size: 12px;
-  color: vars.$color-error;
 }
 
 .lightBulb {
@@ -76,10 +38,6 @@
   inline-size: 300px;
   object-fit: cover;
   margin-block-end: 40px;
-}
-
-.descriptionContainer {
-  @include flex(column, center, center, 12px);
 }
 
 .title {

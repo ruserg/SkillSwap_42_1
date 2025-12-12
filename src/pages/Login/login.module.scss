@@ -8,15 +8,6 @@
   margin: 0 auto;
 }
 
-.logo {
-  @include flex(row, space-between, flex-end);
-  block-size: 60px;
-}
-
-.backButtonContainer {
-  inline-size: 147px;
-}
-
 .section {
   @include flex(row, center, stretch, 24px);
   background-color: vars.$color-background;
@@ -33,48 +24,12 @@
   border-radius: $input-border-radius;
 }
 
-.welcomeContainer {
-  @include flex(column, center, center);
-  inline-size: 556px;
-  padding-inline: 60px;
-  padding-block: 122px;
-  background-color: vars.$color-input;
-  border-radius: $input-border-radius;
-}
-
 .title {
   font-family: Jost, sans-serif;
   font-size: 24px;
   font-weight: 600;
   margin-block-end: 20px;
   text-align: center;
-}
-
-.form {
-  inline-size: 100%;
-  @include flex(column, center, center, 12px);
-  padding-block-start: 8px;
-}
-
-.emailContainer,
-.passwordContainer {
-  @include flex(column, center, start, 5px);
-  inline-size: 100%;
-}
-
-.emailContainer {
-  margin-block: 5px 16px;
-}
-
-.passwordContainer {
-  margin-block-end: 20px;
-}
-
-.errorText {
-  display: block;
-  min-block-size: 13px;
-  font-size: 12px;
-  color: vars.$color-error;
 }
 
 .errorMessage {
@@ -92,10 +47,6 @@
   inline-size: 300px;
   object-fit: cover;
   margin-block-end: 40px;
-}
-
-.descriptionContainer {
-  @include flex(column, center, center, 12px);
 }
 
 .welcomeTitle {

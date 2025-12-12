@@ -11,6 +11,7 @@ import type { z } from "zod";
 import type { SignupStep1Data } from "@shared/lib/zod/types";
 import { signupStep1Schema } from "@shared/lib/zod/schemas/userAuthSchema";
 import styles from "./login.module.scss";
+import formStyles from "@shared/ui/Form/form.module.scss";
 import { ExternalLogIn } from "@/widgets/ExternalLogIn/ExternalLogIn";
 
 export const Login = () => {
@@ -103,9 +104,9 @@ export const Login = () => {
 
   return (
     <div className={styles.pageWrapper}>
-      <div className={styles.logo}>
+      <div className={formStyles.logo}>
         <Logo />
-        <div className={styles.backButtonContainer}>
+        <div className={formStyles.backButtonContainer}>
           <Button to="/" variant="tertiary" leftIcon={<ArrowLeftIcon />}>
             Назад
           </Button>
@@ -118,8 +119,8 @@ export const Login = () => {
         <div className={styles.loginContainer}>
           <ExternalLogIn />
 
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.emailContainer}>
+          <form className={formStyles.form} onSubmit={handleSubmit}>
+            <div className={formStyles.emailContainer}>
               <label htmlFor="email">Email</label>
               <Input
                 type="email"
@@ -130,11 +131,11 @@ export const Login = () => {
                 disabled={isLoading}
               />
               {errors.email && (
-                <span className={styles.errorText}>{errors.email}</span>
+                <span className={formStyles.errorText}>{errors.email}</span>
               )}
             </div>
 
-            <div className={styles.passwordContainer}>
+            <div className={formStyles.passwordContainer}>
               <label htmlFor="password">Пароль</label>
               <Input
                 type="password"
@@ -145,7 +146,7 @@ export const Login = () => {
                 disabled={isLoading}
               />
               {errors.password && (
-                <span className={styles.errorText}>{errors.password}</span>
+                <span className={formStyles.errorText}>{errors.password}</span>
               )}
             </div>
 
@@ -175,7 +176,7 @@ export const Login = () => {
           </form>
         </div>
 
-        <div className={styles.welcomeContainer}>
+        <div className={formStyles.welcomeContainer}>
           <img
             className={styles.lightBulb}
             src={lightBulb}
@@ -184,7 +185,7 @@ export const Login = () => {
             height="300"
             loading="lazy"
           />
-          <div className={styles.descriptionContainer}>
+          <div className={formStyles.descriptionContainer}>
             <h3 className={styles.welcomeTitle}>С возвращением в SkillSwap!</h3>
             <p className={styles.description}>
               Обменивайтесь знаниями и навыками с другими людьми

@@ -1,24 +1,11 @@
 @use "../../../styles/variables" as vars;
 @use "../../../styles/mixins" as *;
 
-.welcomeContainer {
-  @include flex(column, center, center);
-  inline-size: 556px;
-  padding-inline: 60px;
-  padding-block: 122px;
-  background-color: vars.$color-input;
-  border-radius: $input-border-radius;
-}
-
 .lightBulb {
   block-size: 300px;
   inline-size: 300px;
   object-fit: cover;
   margin-block-end: 40px;
-}
-
-.descriptionContainer {
-  @include flex(column, center, center, 12px);
 }
 
 .welcomeTitle {
