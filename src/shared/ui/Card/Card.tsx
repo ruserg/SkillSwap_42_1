@@ -1,7 +1,7 @@
 import React, { memo, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@shared/ui/Button/Button";
-import type { CardProps, CardVariant } from "./types";
+import type { CardProps } from "./types";
 import type { TSkill } from "@entities/skill/types";
 import styles from "./card.module.scss";
 import { calculateAge } from "@shared/lib/utils/ageCalculator";
@@ -35,6 +35,9 @@ export const Card: React.FC<CardProps> = memo(
     // Получаем статус авторизации ТОЛЬКО из Redux
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
+    // Генерируем уникальный ID для заголовка, он нужен для aria-labelledby
+    const titleId = useMemo(() => `card-title-${user.id}`, [user.id]);
+
     const handleDetailsClick = useCallback(() => {
       if (isLoading) return;
       // Если авторизован - переход на страницу пользователя
@@ -66,7 +69,11 @@ export const Card: React.FC<CardProps> = memo(
     const renderTeachTags = useCallback(() => {
       if (canTeachSkills.length === 0) {
         return (
-          <div className={`${styles.tag} ${styles.default}`}>
+          <div
+            className={`${styles.tag} ${styles.default}`}
+            role="listitem" //это элемент списка для скринридеров
+            aria-label="Навыки не указаны" //описание для скринридеров, когда нет навыков
+          >
             Навыки не указаны
           </div>
         );
@@ -90,6 +97,8 @@ export const Card: React.FC<CardProps> = memo(
                 key={skill.id}
                 className={`${styles.tag} ${tagClassName}`}
                 title={skill.name}
+                role="listitem" //это элемент списка для скринридеров
+                aria-label={`Навык: ${skill.name}`} //описание навыка для скринридеров
               >
                 {skill.name}
               </div>
@@ -97,7 +106,11 @@ export const Card: React.FC<CardProps> = memo(
           })}
 
           {hasAdditional && (
-            <div className={`${styles.tag} ${styles.additional}`}>
+            <div
+              className={`${styles.tag} ${styles.additional}`}
+              role="listitem" //это элемент списка для скринридеров
+              aria-label={`Ещё ${canTeachSkills.length - visibleCount} навыков`} //скринридер прочитает, что еще столько-то навыков
+            >
               +{canTeachSkills.length - visibleCount}
             </div>
           )}
@@ -109,7 +122,11 @@ export const Card: React.FC<CardProps> = memo(
     const renderLearnTags = useCallback(() => {
       if (wantToLearnSkills.length === 0) {
         return (
-          <div className={`${styles.learnTag} ${styles.default}`}>
+          <div
+            className={`${styles.learnTag} ${styles.default}`}
+            role="listitem" //это элемент списка для скринридеров
+            aria-label="Навыки не указаны" //описане для скринридеров, когда навыки не указаны
+          >
             Навыки не указаны
           </div>
         );
@@ -133,6 +150,8 @@ export const Card: React.FC<CardProps> = memo(
                 key={skill.id}
                 className={`${styles.learnTag} ${tagClassName}`}
                 title={skill.name}
+                role="listitem" //это элемент списка для скринридеров
+                aria-label={`Навык: ${skill.name}`} //описане навыка для скринридеров
               >
                 {skill.name}
               </div>
@@ -140,7 +159,11 @@ export const Card: React.FC<CardProps> = memo(
           })}
 
           {hasAdditional && (
-            <div className={`${styles.learnTag} ${styles.additional}`}>
+            <div
+              className={`${styles.learnTag} ${styles.additional}`}
+              role="listitem" //это элемент списка для скринридеров
+              aria-label={`Ещё ${wantToLearnSkills.length - visibleCount} навыков`} //скринридер прочитает, что еще столько-то навыков
+            >
               +{wantToLearnSkills.length - visibleCount}
             </div>
           )}
@@ -149,10 +172,13 @@ export const Card: React.FC<CardProps> = memo(
     }, [wantToLearnSkills, subcategories, getVisibleSkillsCount]);
 
     return (
-      <div
+      <article
         className={`${styles.container} ${className} ${
           isLoading ? styles.loading : ""
         } ${styles[variant]}`}
+        aria-labelledby={titleId} // связываем карточку с заголовком для скринридера
+        aria-busy={isLoading} // состояние загрузки для скринридеров
+        aria-live={isLoading ? "polite" : "off"} // объявляем изменения при загрузке
       >
         {/* Заголовок карточки с аватаром и информацией о пользователе */}
         <div className={styles.header}>
@@ -177,9 +203,13 @@ export const Card: React.FC<CardProps> = memo(
               onLikeToggle={() => {}}
             />
             {variant === "profile" ? (
-              <h1 className={styles.name}>{user.name}</h1>
+              <h1 id={titleId} className={styles.name}>
+                {user.name}{" "}
+              </h1>
             ) : (
-              <h3 className={styles.name}>{user.name}</h3>
+              <h3 id={titleId} className={styles.name}>
+                {user.name}
+              </h3>
             )}
             <p className={styles.details}>
               {getCityNameById(user.cityId, cities)},{" "}
@@ -198,13 +228,17 @@ export const Card: React.FC<CardProps> = memo(
         {/* Навык, которому может научить */}
         <div className={styles.section}>
           <div className={styles.sectionTitle}>Может научить:</div>
-          <div className={styles.tags}>{renderTeachTags()}</div>
+          <div className={styles.tags} role="list">
+            {renderTeachTags()}
+          </div>
         </div>
 
         {/* Навыки, которым хочет научиться */}
         <div className={styles.section}>
           <div className={styles.sectionTitle}>Хочет научиться:</div>
-          <div className={styles.learnTags}>{renderLearnTags()}</div>
+          <div className={styles.learnTags} role="list">
+            {renderLearnTags()}
+          </div>
         </div>
 
         {/* кнопка "Подробнее" (не показываем для variant="profile") */}
@@ -215,13 +249,14 @@ export const Card: React.FC<CardProps> = memo(
                 variant="primary"
                 disabled={isLoading}
                 onClick={handleDetailsClick}
+                aria-label={`Подробнее о пользователе ${user.name}`}
               >
                 Подробнее
               </Button>
             </div>
           </div>
         )}
-      </div>
+      </article>
     );
   },
   // Функция сравнения пропсов для memo
