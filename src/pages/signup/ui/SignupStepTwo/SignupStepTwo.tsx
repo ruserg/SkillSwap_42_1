@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import styles from "./signupStepTwo.module.scss";
+import formStyles from "@shared/ui/Form/form.module.scss";
 import { Button } from "@shared/ui/Button/Button";
 import { Input } from "@shared/ui/Input/Input";
 import { Logo } from "@shared/ui/Logo/Logo";
@@ -413,7 +414,7 @@ export const SignupStepTwo = () => {
 
   return (
     <div className={clsx(styles.pageWrapper)}>
-      <div className={clsx(styles.logo)}>
+      <div className={clsx(formStyles.logo)}>
         <Logo />
       </div>
       <div className={clsx(styles.steps)}>
@@ -482,7 +483,7 @@ export const SignupStepTwo = () => {
 
           {errors.avatar && touched.avatar && (
             <div className={clsx(styles.container)}>
-              <span className={styles.errorText}>{errors.avatar}</span>
+              <span className={formStyles.errorText}>{errors.avatar}</span>
             </div>
           )}
 
@@ -507,7 +508,7 @@ export const SignupStepTwo = () => {
                     required
                   />
                   {errors.name && touched.name && (
-                    <span className={styles.errorText}>{errors.name}</span>
+                    <span className={formStyles.errorText}>{errors.name}</span>
                   )}
                 </>
               )}
@@ -531,7 +532,7 @@ export const SignupStepTwo = () => {
                           />
                         </div>
                         {errors.dateOfBirth && touched.dateOfBirth && (
-                          <span className={styles.errorText}>
+                          <span className={formStyles.errorText}>
                             {errors.dateOfBirth}
                           </span>
                         )}
@@ -562,7 +563,7 @@ export const SignupStepTwo = () => {
                       />
                     </div>
                     {errors.sex && touched.sex && (
-                      <span className={styles.errorText}>{errors.sex}</span>
+                      <span className={formStyles.errorText}>{errors.sex}</span>
                     )}
                   </>
                 )}
@@ -594,7 +595,7 @@ export const SignupStepTwo = () => {
                     />
                   </div>
                   {errors.city && touched.city && (
-                    <span className={styles.errorText}>{errors.city}</span>
+                    <span className={formStyles.errorText}>{errors.city}</span>
                   )}
                 </>
               )}
@@ -619,7 +620,9 @@ export const SignupStepTwo = () => {
                     isLoading={isLoading}
                   />
                   {errors.category && touched.category && (
-                    <span className={styles.errorText}>{errors.category}</span>
+                    <span className={formStyles.errorText}>
+                      {errors.category}
+                    </span>
                   )}
                 </div>
               )}
@@ -644,7 +647,7 @@ export const SignupStepTwo = () => {
                     isLoading={isLoading}
                   />
                   {errors.subcategory && touched.subcategory && (
-                    <span className={styles.errorText}>
+                    <span className={formStyles.errorText}>
                       {errors.subcategory}
                     </span>
                   )}
