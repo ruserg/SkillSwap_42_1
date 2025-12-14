@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Card } from "@shared/ui/Card/Card";
-import { CardSkeleton } from "@shared/ui/CardSkeleton/CardSkeleton";
+import { CardsSection } from "@shared/ui/CardsSection/CardsSection";
+import { UserCardsList } from "@shared/ui/UserCardsList/UserCardsList";
 import type { UserWithLikes } from "@entities/user/types";
 import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { fetchUsersData, selectUsersData } from "@entities/user/model/slice";
@@ -10,7 +10,6 @@ import { fetchSkillsData, selectSkillsData } from "@entities/skill/model/slice";
 import { useFilteredUsers } from "@features/filter-users/model/useFilteredUsers";
 import type { TFilterState } from "@features/filter-users/types";
 import { ActiveFilters } from "@widgets/ActiveFilters/ActiveFilters";
-import { ViewAllButton } from "@shared/ui/ViewAllButton/ViewAllButton";
 import styles from "./userCardsSection.module.scss";
 import { Button } from "@/shared/ui/Button/Button";
 import { useInfinityScroll } from "@/shared/hooks/useInfinityScroll";
@@ -38,7 +37,6 @@ export const UserCardsSection = ({
   const newSentinelRef = useRef<HTMLDivElement | null>(null);
   const recommendationsSentinelRef = useRef<HTMLDivElement | null>(null);
 
-  // Состояния для отслеживания, сколько элементов показывать (по умолчанию 3)
   const [popularCount, setPopularCount] = useState(3);
   const [newCount, setNewCount] = useState(3);
   const [recommendationsCount, setRecommendationsCount] = useState(3);
@@ -46,12 +44,10 @@ export const UserCardsSection = ({
     popular: false,
     new: false,
   });
-
   const [sortByDate, setSortByDate] = useState(false);
 
-  // Загрузка данных при монтировании компонента
+  // Загрузка данных
   useEffect(() => {
-    // Загружаем данные только если они еще не загружены
     if (users.length === 0 && !usersLoading) {
       dispatch(fetchUsersData());
     }
@@ -70,20 +66,11 @@ export const UserCardsSection = ({
     cities.length,
   ]);
 
-  // Пользователи уже приходят с информацией о лайках из API
-  const usersWithLikes = users;
-
-  // Все популярные пользователи (по количеству лайков)
+  // Все популярные пользователи
   const allPopularUsers = useMemo(() => {
-    return [...usersWithLikes].sort((a, b) => b.likesCount - a.likesCount);
-  }, [usersWithLikes]);
+    return [...users].sort((a, b) => b.likesCount - a.likesCount);
+  }, [users]);
 
-  // Популярные пользователи для отображения
-  const popularUsers = useMemo(() => {
-    return allPopularUsers.slice(0, popularCount);
-  }, [allPopularUsers, popularCount]);
-
-  // Все новые пользователи (по дате регистрации)
   const allNewUsers = useMemo(() => {
     return [...users].sort(
       (a, b) =>
@@ -92,17 +79,19 @@ export const UserCardsSection = ({
     );
   }, [users]);
 
-  // Новые пользователи для отображения
+  const popularUsers = useMemo(() => {
+    return allPopularUsers.slice(0, popularCount);
+  }, [allPopularUsers, popularCount]);
+
   const newUsers = useMemo(() => {
     return allNewUsers.slice(0, newCount);
   }, [allNewUsers, newCount]);
 
-  // Рекомендуемые пользователи для отображения
   const recommendedUsers = useMemo(() => {
     return [...users].slice(0, recommendationsCount);
   }, [users, recommendationsCount]);
 
-  // Бесконечный скролл для популярных пользователей
+  // Бесконечный скролл
   const { loadMoreList: loadMorePopular, hideMoreList: hideMorePopular } =
     useInfinityScroll({
       triggerArray: allPopularUsers,
@@ -114,7 +103,6 @@ export const UserCardsSection = ({
       sentinelRef: popularSentinelRef,
     });
 
-  //Бесконечный скролл для новых пользователей
   const { loadMoreList: loadMoreNew, hideMoreList: hideMoreNew } =
     useInfinityScroll({
       triggerArray: allNewUsers,
@@ -126,7 +114,6 @@ export const UserCardsSection = ({
       sentinelRef: newSentinelRef,
     });
 
-  // Бесконечный скролл для рекомендаций
   useInfinityScroll({
     triggerArray: users,
     nextNumber: 6,
@@ -136,236 +123,163 @@ export const UserCardsSection = ({
     currentCount: recommendationsCount,
   });
 
-  // Используем хук для фильтрации пользователей
   const { filteredOffers, sortedUsers, hasActiveFilters } = useFilteredUsers({
     filters,
-    usersWithLikes,
+    usersWithLikes: users,
     skills,
     sortByDate,
   });
 
-  const hideAllSection = (count: number) => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    hideMorePopular(count);
-    hideMoreNew(count);
-    setRecommendationsCount(count);
+  const handleHideAll = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    hideMorePopular(3);
+    hideMoreNew(3);
+    setRecommendationsCount(3);
   };
 
-  const handleDetailsClick = (user: UserWithLikes) => {
+  const handleUserClick = (user: UserWithLikes) => {
     console.log("User details clicked:", user);
-    // TODO: Реализовать навигацию к детальной странице пользователя
   };
 
   if (isLoading) {
     return (
       <div className={styles.container}>
         {hasActiveFilters ? (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Подходящие предложения: 0</h2>
-            <div className={styles.cardsGrid}>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <CardSkeleton key={index} />
-              ))}
-            </div>
-          </section>
+          <CardsSection title={`Подходящие предложения: 0`}>
+            <UserCardsList
+              users={[]}
+              cities={cities}
+              isLoading={true}
+              emptyMessage=""
+            />
+          </CardsSection>
         ) : (
           <>
-            {/* Скелетоны для секции "Популярное" */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Популярное</h2>
-              <div className={styles.cardsGrid}>
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <CardSkeleton key={index} />
-                ))}
-              </div>
-            </section>
-
-            {/* Скелетоны для секции "Новое" */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Новое</h2>
-              <div className={styles.cardsGrid}>
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <CardSkeleton key={index} />
-                ))}
-              </div>
-            </section>
-
-            {/* Скелетоны для секции "Рекомендуем" */}
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Рекомендуем</h2>
-              <div className={styles.cardsGrid}>
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <CardSkeleton key={index} />
-                ))}
-              </div>
-            </section>
+            <CardsSection title="Популярное">
+              <UserCardsList users={[]} cities={cities} isLoading={true} />
+            </CardsSection>
+            <CardsSection title="Новое">
+              <UserCardsList users={[]} cities={cities} isLoading={true} />
+            </CardsSection>
+            <CardsSection title="Рекомендуем">
+              <UserCardsList users={[]} cities={cities} isLoading={true} />
+            </CardsSection>
           </>
         )}
       </div>
     );
   }
 
-  // Если есть активные фильтры, показываем отфильтрованные предложения
   if (hasActiveFilters) {
+    const sortButton = (
+      <Button
+        variant={sortByDate ? "primary" : "tertiary"}
+        otherClassNames={styles.buttonSort}
+        onClick={() => setSortByDate(!sortByDate)}
+      >
+        <SortSvg
+          aria-label={sortByDate ? "Без сортировки" : "Сначала новые"}
+          aria-hidden="true"
+        />
+        {sortByDate ? "Без сортировки" : "Сначала новые"}
+      </Button>
+    );
+
+    const headerContent = (
+      <>
+        <div className={styles.sectionTitleWrapper}>
+          <h2 className={styles.sectionTitle}>
+            Подходящие предложения: {filteredOffers.length}
+          </h2>
+          {sortButton}
+        </div>
+        <ActiveFilters
+          filters={filters}
+          subcategories={subcategories}
+          cities={cities}
+          onFiltersChange={onFiltersChange}
+        />
+      </>
+    );
+
     return (
       <div className={styles.container}>
-        <section className={styles.section}>
-          <div className={styles.sectionHeader}>
-            <div className={styles.sectionTitleWrapper}>
-              <h2 className={styles.sectionTitle}>
-                Подходящие предложения: {filteredOffers.length}
-              </h2>
-              <Button
-                variant={sortByDate ? "primary" : "tertiary"}
-                otherClassNames={styles.buttonSort}
-                onClick={() => setSortByDate(!sortByDate)}
-              >
-                <SortSvg
-                  aria-label={sortByDate ? "Без сортировки" : "Сначала новые"}
-                  aria-hidden="true"
-                />
-                {sortByDate ? "Без сортировки" : "Сначала новые"}
-              </Button>
-            </div>
-            <ActiveFilters
-              filters={filters}
-              subcategories={subcategories}
-              cities={cities}
-              onFiltersChange={onFiltersChange}
-            />
-          </div>
-          <div className={styles.cardsGrid}>
-            {sortedUsers.length > 0 ? (
-              sortedUsers.map((user) => (
-                <Card
-                  key={user.id}
-                  user={user}
-                  cities={cities}
-                  onDetailsClick={handleDetailsClick}
-                  isLoading={isLoading}
-                />
-              ))
-            ) : (
-              <p className={styles.noResults}>
-                По выбранным фильтрам ничего не найдено
-              </p>
-            )}
-          </div>
-        </section>
+        <CardsSection headerContent={headerContent}>
+          <UserCardsList
+            users={sortedUsers}
+            cities={cities}
+            emptyMessage="По выбранным фильтрам ничего не найдено"
+            onUserClick={handleUserClick}
+          />
+        </CardsSection>
       </div>
     );
   }
 
-  // Если фильтров нет, показываем стандартные секции
   return (
-    <div
-      className={styles.container}
-      onScroll={(e) => {
-        console.log(e.target);
-      }}
-    >
+    <div className={styles.container}>
       {/* Секция "Популярное" */}
-      <section className={styles.section}>
-        <div className={styles.sectionTitleRow}>
-          <h2 className={styles.sectionTitle}>Популярное</h2>
-          <ViewAllButton
-            behavior="hide"
-            initialCount={3}
-            currentCount={popularCount}
-            totalCount={allPopularUsers.length}
-            onLoadMore={loadMorePopular}
-          />
-        </div>
-        <div className={styles.cardsGrid}>
-          {popularUsers.map((user) => (
-            <Card
-              key={user.id}
-              user={user}
-              cities={cities}
-              onDetailsClick={handleDetailsClick}
-              isLoading={isLoading}
-            />
-          ))}
-        </div>
-        {isInfinityScrollActivated.popular && (
-          <>
-            <div ref={popularSentinelRef} className={styles.sentinel}></div>
-            <ViewAllButton
-              behavior="2-way"
-              initialCount={3}
-              currentCount={popularCount}
-              totalCount={allPopularUsers.length}
-              onLoadMore={hideMorePopular}
-            />
-          </>
-        )}
-      </section>
+      <CardsSection
+        title="Популярное"
+        showViewAll
+        viewAllProps={{
+          behavior: "hide",
+          initialCount: 3,
+          currentCount: popularCount,
+          totalCount: allPopularUsers.length,
+          onLoadMore: loadMorePopular,
+        }}
+        sentinelRef={
+          isInfinityScrollActivated.popular ? popularSentinelRef : undefined
+        }
+      >
+        <UserCardsList
+          users={popularUsers}
+          cities={cities}
+          onUserClick={handleUserClick}
+        />
+      </CardsSection>
 
       {/* Секция "Новое" */}
-      <section className={styles.section}>
-        <div className={styles.sectionTitleRow}>
-          <h2 className={styles.sectionTitle}>Новое</h2>
-          <ViewAllButton
-            behavior="hide"
-            initialCount={3}
-            currentCount={newCount}
-            totalCount={allNewUsers.length}
-            onLoadMore={loadMoreNew}
-          />
-        </div>
-        <div className={styles.cardsGrid}>
-          {newUsers.map((user) => (
-            <Card
-              key={user.id}
-              user={user}
-              cities={cities}
-              onDetailsClick={handleDetailsClick}
-              isLoading={isLoading}
-            />
-          ))}
-        </div>
-        {isInfinityScrollActivated.new && (
-          <>
-            <div ref={newSentinelRef} className={styles.sentinel}></div>
-            <ViewAllButton
-              behavior="2-way"
-              initialCount={3}
-              currentCount={newCount}
-              totalCount={allNewUsers.length}
-              onLoadMore={hideMoreNew}
-            />
-          </>
-        )}
-      </section>
+      <CardsSection
+        title="Новое"
+        showViewAll
+        viewAllProps={{
+          behavior: "hide",
+          initialCount: 3,
+          currentCount: newCount,
+          totalCount: allNewUsers.length,
+          onLoadMore: loadMoreNew,
+        }}
+        sentinelRef={isInfinityScrollActivated.new ? newSentinelRef : undefined}
+      >
+        <UserCardsList
+          users={newUsers}
+          cities={cities}
+          onUserClick={handleUserClick}
+        />
+      </CardsSection>
 
       {/* Секция "Рекомендуем" */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Рекомендуем</h2>
-        <div className={styles.cardsGrid}>
-          {recommendedUsers.map((user) => (
-            <Card
-              key={user.id}
-              user={user}
-              cities={cities}
-              onDetailsClick={handleDetailsClick}
-              isLoading={isLoading}
-            />
-          ))}
-          <div
-            ref={recommendationsSentinelRef}
-            className={styles.sentinel}
-          ></div>
-        </div>
-        {recommendationsCount >= users.length && (
-          <Button variant="secondary" onClick={() => hideAllSection(3)}>
+      <CardsSection
+        title="Рекомендуем"
+        sentinelRef={recommendationsSentinelRef}
+      >
+        <UserCardsList
+          users={recommendedUsers}
+          cities={cities}
+          onUserClick={handleUserClick}
+        />
+      </CardsSection>
+
+      {recommendationsCount >= users.length && (
+        <div className={styles.backToTop}>
+          <Button variant="secondary" onClick={handleHideAll}>
             К началу страницы
             <Arrow isOpen={true} />
           </Button>
-        )}
-      </section>
+        </div>
+      )}
     </div>
   );
 };
