@@ -80,14 +80,10 @@ export const SkillEditForm = () => {
       setIsLoading(true);
       try {
         const skill = await api.getSkill(parseInt(skillId, 10));
-
-        console.log("Загруженный навык:", skill);
-        console.log("subcategoryId:", skill.subcategoryId);
-
         // Устанавливаем базовые данные
         setFormData((prev) => ({
           ...prev,
-          title: skill.title || "",
+          title: skill.title || skill.name || "",
           description: skill.description || "",
           subcategory: skill.subcategoryId
             ? [skill.subcategoryId.toString()]
@@ -120,9 +116,6 @@ export const SkillEditForm = () => {
       const subcategory = subcategoriesData.find(
         (sub) => sub.id.toString() === formData.subcategory[0],
       );
-
-      console.log("Найдена подкатегория:", subcategory);
-      console.log("Все подкатегории:", subcategoriesData);
 
       if (subcategory && formData.category.length === 0) {
         setFormData((prev) => ({
@@ -363,12 +356,8 @@ export const SkillEditForm = () => {
   return (
     <div className={styles.pageWrapper}>
       {isSubmitting && <Loader />}
-
-      <div className={styles.header}>
-        <h1 className={styles.title}>Редактирование навыка</h1>
-      </div>
-
       <div className={styles.formContainer}>
+        <h1 className={styles.title}>Редактирование навыка</h1>
         <form className={styles.form} onSubmit={handleSaveChanges}>
           {/* Название навыка */}
           <div className={styles.fieldGroup}>

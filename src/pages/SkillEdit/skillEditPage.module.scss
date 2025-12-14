@@ -15,7 +15,6 @@
 }
 
 .pageWrapper {
-  padding-block: 20px 40px;
   padding-inline: 36px;
   max-inline-size: 1440px;
   margin: 0 auto;
@@ -52,7 +51,7 @@
 
 .formContainer {
   @include flex(column, flex-start, center, 20px);
-  inline-size: 556px;
+  inline-size: 1020px;
   padding-inline: 60px;
   padding-block: 40px;
   background-color: vars.$color-input;
@@ -135,10 +134,12 @@
 
 .form {
   inline-size: 100%;
+  font-family: Roboto, sans-serif;
 }
 
 .fieldGroup {
   @include flex(column, center, start, 5px);
+  inline-size: 100%;
 }
 
 .label {
@@ -264,7 +265,7 @@
 }
 
 .uploadArea {
-  inline-size: 436px;
+  inline-size: 100%;
   block-size: auto;
   min-block-size: 96px;
   border: 1px dashed vars.$color-caption;
@@ -477,14 +478,14 @@
 }
 
 .selectorWrapper {
-  inline-size: 100%;
+  min-inline-size: 100%;
   position: relative;
 
   .selectorHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    inline-size: 100%;
+    min-inline-size: 100%;
     padding: 12px 16px;
     border: 1px solid vars.$color-border-input;
     border-radius: vars.$input-border-radius;

@@ -133,6 +133,7 @@
 
 .fieldGroup {
   @include flex(column, center, start, 5px);
+  inline-size: 100%;
 }
 
 .label {

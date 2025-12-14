@@ -96,6 +96,7 @@ export const MySkills = () => {
         <h1 className={styles.title}>Мои навыки</h1>
         <Button
           variant="primary"
+          style={{ inlineSize: "50%" }}
           onClick={handleAddSkill}
           aria-label="Добавить новый навык"
         >
