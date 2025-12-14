@@ -15,7 +15,6 @@
 }
 
 .pageWrapper {
-  padding-inline: 36px;
   max-inline-size: 1440px;
   margin: 0 auto;
 }
@@ -727,8 +726,6 @@
     var(--color-disabled-light) 50%,
     var(--color-disabled) 75%
   );
-  background-size: 200% 100%;
-  animation: loading 1.5s ease-in-out infinite;
   border-radius: 8px;
 }
 
@@ -745,24 +742,23 @@
 // Скелетон для поля ввода
 .skeletonInput {
   inline-size: 100%;
-  block-size: 45px;
-  padding: 12px 16px;
+  block-size: 48px;
+  border: 1px solid transparent;
   border-radius: vars.$input-border-radius;
 }
 
 // Скелетон для выпадающего списка
 .skeletonSelect {
   inline-size: 100%;
-  block-size: 45px;
-  padding: 12px 16px;
+  block-size: 48px;
+  border: 1px solid transparent;
   border-radius: vars.$input-border-radius;
 }
 
 // Скелетон для текстовой области (описание)
 .skeletonTextarea {
   inline-size: 100%;
-  min-block-size: 98px;
-  padding: 12px 16px;
+  min-block-size: 120px;
   border-radius: vars.$input-border-radius;
 }
 

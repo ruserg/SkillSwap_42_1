@@ -348,7 +348,7 @@ export const SkillEditForm = () => {
   };
 
   const handleCancel = () => {
-    navigate("/profile/skills");
+    navigate("/skills");
   };
 
   const showSkeletons = categoriesLoading || isLoading;
