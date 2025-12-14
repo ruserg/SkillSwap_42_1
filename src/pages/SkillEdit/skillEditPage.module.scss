@@ -57,7 +57,6 @@
   padding-block: 40px;
   background-color: vars.$color-input;
   border-radius: vars.$input-border-radius;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
   position: relative;
   z-index: 2;
   min-block-size: 680px;
@@ -70,7 +69,6 @@
   padding-block: 40px;
   background-color: vars.$color-input;
   border-radius: vars.$input-border-radius;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
   position: relative;
   z-index: 2;
   min-block-size: 680px;
@@ -425,8 +423,8 @@
   color: vars.$color-error;
   cursor: pointer;
   @include text-style($weight: 500, $size: 18px, $line: normal);
-  width: 24px;
-  height: 24px;
+  inline-size: 24px;
+  block-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -585,7 +583,7 @@
     scrollbar-color: vars.$color-caption vars.$color-input;
 
     &::-webkit-scrollbar {
-      width: 6px;
+      inline-size: 6px;
     }
 
     &::-webkit-scrollbar-track {

@@ -5,7 +5,7 @@
   font-size: 32px;
   font-weight: 600;
   line-height: 150%;
-  color: $color-text;
+  color: vars.$color-text;
   margin-block-end: 16px;
 }
 
@@ -32,16 +32,16 @@
 }
 
 .userSummary {
-  border-top: 1px solid #f0f0f0;
-  padding-top: 20px;
-  margin-top: 20px;
+  border-block-start: 1px solid vars.$color-border-input;
+  padding-block-start: 20px;
+  margin-block-start: 20px;
 }
 
 .summaryTitle {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
-  margin-bottom: 16px;
+  color: vars.$color-text;
+  margin-block-end: 16px;
 }
 
 .emptyState {
@@ -52,33 +52,33 @@
   justify-content: center;
   padding: 40px 20px;
   text-align: center;
-  color: #666;
-  background: #fafafa;
+  color: vars.$color-caption;
+  background: vars.$color-input;
   border-radius: 8px;
-  border: 1px solid $color-border-input;
+  border: 1px solid vars.$color-border-input;
 
   p {
     margin-bottom: 20px;
     font-size: 16px;
-    max-width: 300px;
+    max-inline-size: 300px;
   }
 }
 
 // Скелетоны загрузки
 .skillSkeleton {
-  border: 1px solid #e8e8e8;
+  border: 1px solid vars.$color-border-input;
   border-radius: 8px;
   padding: 20px;
-  height: 180px;
+  block-size: 180px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .skeletonHeader {
-  width: 60%;
-  height: 24px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  inline-size: 60%;
+  block-size: 24px;
+  background: vars.$color-disabled;
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
   border-radius: 6px;
@@ -86,16 +86,16 @@
 
 .skeletonDescription {
   flex: 1;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: vars.$color-disabled-text;
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
   border-radius: 6px;
 }
 
 .skeletonImage {
-  width: 120px;
-  height: 80px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  inline-size: 120px;
+  block-size: 80px;
+  background: vars.$color-disabled;
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
   border-radius: 6px;
