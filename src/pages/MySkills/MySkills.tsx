@@ -62,7 +62,7 @@ export const MySkills = () => {
 
         return {
           id: skill.id,
-          skillName: skill.title,
+          skillName: skill.name,
           categoryName,
           subcategoryName: subcategory?.name || "",
           description: skill.description,
