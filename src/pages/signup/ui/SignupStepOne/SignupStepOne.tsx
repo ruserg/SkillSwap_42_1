@@ -14,12 +14,13 @@ import lightBulb from "@images/png/light/light-bulb.png";
 import { SignupSteps } from "@shared/ui/SignupSteps/SignupSteps";
 import { ArrowLeftIcon } from "@shared/ui/Icons/ArrowLeftIcon";
 import { useEffect, useState } from "react";
-import type { z } from "zod";
 import type { SignupStep1Data } from "@shared/lib/zod/types";
 import { signupStep1Schema } from "@shared/lib/zod/schemas/userAuthSchema";
 import { ExternalLogIn } from "@/widgets/ExternalLogIn/ExternalLogIn";
 import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection.tsx";
 import { Loader } from "@/shared/ui/Loader/Loader";
+import { useDebounce } from "@shared/hooks/useDebounce";
+import { api, ApiError } from "@shared/api/api";
 
 export const SignupStepOne = () => {
   const navigate = useNavigate();
@@ -46,32 +47,80 @@ export const SignupStepOne = () => {
   }>({});
 
   const [isFormValid, setIsFormValid] = useState(false);
+  const [emailAvailability, setEmailAvailability] = useState<boolean | null>(
+    null,
+  );
+
+  // Debounce email для проверки на сервере
+  const debouncedEmail = useDebounce(formData.email, 500);
+
+  // Проверка email на сервере
+  useEffect(() => {
+    if (
+      debouncedEmail &&
+      touched.email &&
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(debouncedEmail)
+    ) {
+      api
+        .checkEmail(debouncedEmail)
+        .then((response) => {
+          setEmailAvailability(response.available);
+        })
+        .catch((error) => {
+          if (error instanceof ApiError && error.status >= 500) {
+            console.error("Ошибка проверки email:", error);
+          }
+          setEmailAvailability(null);
+        });
+    } else {
+      setEmailAvailability(null);
+    }
+  }, [debouncedEmail, touched.email]);
 
   // Валидация при каждом изменении формы
   useEffect(() => {
     const result = signupStep1Schema.safeParse(formData);
+    const newErrors: { email?: string; password?: string } = {};
 
-    if (result.success) {
-      setErrors({});
-      setIsFormValid(true);
-    } else {
-      const newErrors: { email?: string; password?: string } = {};
-
-      result.error.issues.forEach((issue: z.ZodIssue) => {
-        const field = issue.path[0] as keyof SignupStep1Data;
-        if (
-          field &&
-          touched[field as keyof typeof touched] &&
-          (field === "email" || field === "password")
-        ) {
-          newErrors[field] = issue.message;
-        }
-      });
-
-      setErrors(newErrors);
-      setIsFormValid(false);
+    // Шаг 1: Проверяем формат email
+    if (touched.email) {
+      const emailIssue = result.error?.issues.find(
+        (issue) => issue.path[0] === "email",
+      );
+      if (emailIssue) {
+        // Формат невалиден - показываем ошибку формата
+        newErrors.email = emailIssue.message;
+      } else if (emailAvailability === false) {
+        // Шаг 2: Формат валиден, но email занят
+        newErrors.email = "Email уже занят";
+      }
+      // Если emailAvailability === null - значит проверка идет, не показываем ошибку
+      // Если emailAvailability === true - email свободен, ошибки нет
     }
-  }, [formData, touched]);
+
+    // Шаг 3: Проверяем пароль ТОЛЬКО если email полностью валиден (формат + свободен)
+    if (touched.password) {
+      const emailIssue = result.error?.issues.find(
+        (issue) => issue.path[0] === "email",
+      );
+      // Пароль проверяем только если email валиден по формату И свободен
+      const isEmailFullyValid = !emailIssue && emailAvailability === true;
+
+      if (isEmailFullyValid) {
+        const passwordIssue = result.error?.issues.find(
+          (issue) => issue.path[0] === "password",
+        );
+        if (passwordIssue) {
+          newErrors.password = passwordIssue.message;
+        }
+      }
+    }
+
+    setErrors(newErrors);
+
+    // Форма валидна только если схема валидна и email доступен
+    setIsFormValid(result.success && emailAvailability === true);
+  }, [formData, touched, emailAvailability]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -81,6 +130,11 @@ export const SignupStepOne = () => {
     }));
 
     setTouched((prev) => ({ ...prev, [id]: true }));
+
+    // Сбрасываем доступность email при изменении, чтобы не показывать старый результат
+    if (id === "email") {
+      setEmailAvailability(null);
+    }
   };
 
   const handleSubmit = () => {

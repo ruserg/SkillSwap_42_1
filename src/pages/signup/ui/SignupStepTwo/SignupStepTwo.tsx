@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import clsx from "clsx";
 import styles from "./signupStepTwo.module.scss";
 import formStyles from "@shared/ui/Form/form.module.scss";
@@ -34,6 +34,7 @@ import {
   selectRegisterError,
   selectIsSubmitting,
   updateStep1,
+  selectSignup,
 } from "@features/signup/model/slice";
 import { setAvatarFile } from "@features/signup/model/slice";
 import {
@@ -54,6 +55,7 @@ export const SignupStepTwo = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const signupState = useAppSelector(selectSignup);
   const firstName = useAppSelector(selectFirstName);
   const location = useAppSelector(selectLocation);
   const gender = useAppSelector(selectGender);
@@ -64,6 +66,12 @@ export const SignupStepTwo = () => {
   const isRegistering = useAppSelector(selectIsRegistering);
   const registerError = useAppSelector(selectRegisterError);
   const isSubmitting = useAppSelector(selectIsSubmitting);
+
+  // Проверка, что шаг 1 пройден (есть email и password)
+  // Данные восстанавливаются из localStorage при инициализации Redux store
+  if (!signupState.step1.email || !signupState.step1.password) {
+    return <Navigate to="/registration/step1" replace />;
+  }
 
   const {
     categories: categoriesData,
@@ -694,7 +702,7 @@ export const SignupStepTwo = () => {
               </Button>
               <Button
                 onClick={handleContinue}
-                disabled={isLoading}
+                disabled={isLoading || !isFormValid}
                 type="submit"
               >
                 {isLoading ? "Загрузка..." : "Продолжить"}

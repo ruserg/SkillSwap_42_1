@@ -59,10 +59,31 @@ export const AppRoutes = () => (
       <Route path="500" element={<ErrorPage statusCode="500" />} />
       <Route path="*" element={<ErrorPage statusCode="404" />} />
     </Route>
-    <Route path="login" element={<Login />} />
+    <Route
+      path="login"
+      element={
+        <ProtectedRoute requireAuth={false}>
+          <Login />
+        </ProtectedRoute>
+      }
+    />
     <Route path="registration">
-      <Route index element={<Navigate to="step1" replace />} />
-      <Route path="step1" element={<SignupStepOne />} />
+      <Route
+        index
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <Navigate to="step1" replace />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="step1"
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <SignupStepOne />
+          </ProtectedRoute>
+        }
+      />
       <Route path="step2" element={<SignupStepTwo />} />
       <Route path="step3" element={<SignupStepThree />} />
     </Route>

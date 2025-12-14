@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import type { ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import styles from "./signupStepThree.module.scss";
 import { SignupSteps } from "@shared/ui/SignupSteps/SignupSteps";
 import { Button } from "@shared/ui/Button/Button";
@@ -17,7 +17,9 @@ import {
   selectTeachSubcategories,
   createSkills,
   selectIsSubmitting,
+  selectSignup,
 } from "@features/signup/model/slice";
+import { selectIsAuthenticated } from "@features/auth/model/slice";
 import { ModalUI } from "@shared/ui/Modal/Modal";
 import galleryAddIcon from "@images/icons/gallery-add.svg";
 import schoolBoard from "@images/png/light/school-board.png";
@@ -49,11 +51,42 @@ export const SignupStepThree = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const signupState = useAppSelector(selectSignup);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const teachCategories = useAppSelector(selectTeachCategories);
   const teachSubcategories = useAppSelector(selectTeachSubcategories);
   const isSubmitting = useAppSelector(selectIsSubmitting);
 
-  const { step3 } = useAppSelector((state) => state.signup);
+  const { step3 } = signupState;
+
+  // Проверка, что шаги 1 и 2 пройдены
+  // Данные восстанавливаются из localStorage при инициализации Redux store
+  // Если пользователь уже залогинен (зарегистрирован), но нет данных шага 2,
+  // значит регистрация уже завершена, редиректим на главную
+  if (isAuthenticated) {
+    if (
+      !signupState.step2.firstName ||
+      !signupState.step2.location ||
+      !signupState.step2.avatar ||
+      !signupState.step2.gender
+    ) {
+      return <Navigate to="/" replace />;
+    }
+  } else {
+    // Если пользователь не залогинен, проверяем наличие данных предыдущих шагов
+    // Если нет данных шага 1, редиректим на шаг 1
+    if (!signupState.step1.email || !signupState.step1.password) {
+      return <Navigate to="/registration/step1" replace />;
+    }
+    if (
+      !signupState.step2.firstName ||
+      !signupState.step2.location ||
+      !signupState.step2.avatar ||
+      !signupState.step2.gender
+    ) {
+      return <Navigate to="/registration/step2" replace />;
+    }
+  }
   const skillName = step3?.skillName || "";
   const description = step3?.description || "";
   const images = step3?.images || [];
@@ -608,7 +641,10 @@ export const SignupStepThree = () => {
               <Button to="/registration/step2" variant="secondary">
                 Назад
               </Button>
-              <Button onClick={handleContinue} disabled={isLoading}>
+              <Button
+                onClick={handleContinue}
+                disabled={isLoading || !isFormValid}
+              >
                 {isLoading ? "Загрузка..." : "Продолжить"}
               </Button>
             </div>

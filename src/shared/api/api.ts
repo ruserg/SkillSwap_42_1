@@ -204,6 +204,19 @@ export const api = {
       body: JSON.stringify(body),
     }),
 
+  // Проверка доступности email
+  checkEmail: async (
+    email: string,
+  ): Promise<import("@shared/lib/types/api").CheckEmailResponse> => {
+    // Используем GET запрос с query параметром
+    return fetchApi<import("@shared/lib/types/api").CheckEmailResponse>(
+      `/api/auth/check-email?email=${encodeURIComponent(email)}`,
+      {
+        method: "GET",
+      },
+    );
+  },
+
   // Изменить пароль текущего пользователя
   changePassword: (
     body: import("@shared/lib/types/api").ChangePasswordRequest,
