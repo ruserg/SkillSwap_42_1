@@ -83,7 +83,7 @@ export const SkillEditForm = () => {
         // Устанавливаем базовые данные
         setFormData((prev) => ({
           ...prev,
-          title: skill.title || skill.name || "",
+          title: skill.name || skill.name || "",
           description: skill.description || "",
           subcategory: skill.subcategoryId
             ? [skill.subcategoryId.toString()]
