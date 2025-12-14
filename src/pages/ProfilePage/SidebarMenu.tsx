@@ -46,7 +46,6 @@ export const SidebarMenu = () => {
             to="/skills"
             className={isSkills ? styles.menuItemActive : styles.menuItem}
           >
-          
             <IdeaLK />
             Мои навыки
           </Link>
