@@ -22,4 +22,5 @@ export type TOfferProps = {
   currentUserId?: string;
   ownerId?: string;
   ownerName?: string;
+  isEmpty?: boolean;
 };

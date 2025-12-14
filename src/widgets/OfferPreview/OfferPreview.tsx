@@ -11,6 +11,7 @@ import type { TOfferProps } from "@widgets/OfferPreview/types";
 export const OfferPreview = (props: TOfferProps) => {
   const {
     variant = "userProfileOffer",
+    isEmpty = false,
     skillName = "",
     categoryName = "",
     subcategoryName = "",
@@ -22,6 +23,42 @@ export const OfferPreview = (props: TOfferProps) => {
     isExchangeProposed = false,
     exchangeStatus,
   } = props;
+
+  //EMPTY STATE
+  if (variant === "userProfileOffer" && isEmpty) {
+    return (
+      <div className={stylesModal.wrapper}>
+        <div className={styles.contentContainer}>
+          <div className={styles.previewDescription}>
+            <h2 className={styles.contentTittle}>Навык не указан</h2>
+
+            <p className={styles.contentDescription}>
+              Пользователь пока не добавил предложения
+            </p>
+
+            <div className={styles.btnClamp}>
+              <Button disabled>Предложить обмен</Button>
+            </div>
+          </div>
+
+          <div className={styles.cardsContainer}>
+            <div className={styles.containerDecorButtons}>
+              <DecoratedButton variant="heart" />
+              <DecoratedButton variant="share" />
+              <DecoratedButton variant="parameters" />
+            </div>
+
+            <div className={styles.noImages}>
+              Нет загруженных изображений
+              <p className={styles.noImagesHint}>
+                Добавьте изображения, чтобы показать ваш навык
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

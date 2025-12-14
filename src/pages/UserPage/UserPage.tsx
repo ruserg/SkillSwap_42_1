@@ -362,26 +362,21 @@ export const UserPage: React.FC = () => {
           />
 
           {/* Правая колонка - предложение */}
-          {offerData ? (
-            <OfferPreview
-              variant="userProfileOffer"
-              skillName={offerData.skillName}
-              categoryName={offerData.categoryName}
-              subcategoryName={offerData.subcategoryName}
-              description={offerData.description}
-              images={offerData.images}
-              onExchange={handleExchangeClick}
-              isExchangeProposed={
-                currentExchange?.status === "accepted" ||
-                currentExchange?.status === "pending"
-              }
-              exchangeStatus={currentExchange?.status}
-            />
-          ) : (
-            <div className={styles.noOffer}>
-              <p>У пользователя пока нет предложений</p>
-            </div>
-          )}
+          <OfferPreview
+            variant="userProfileOffer"
+            isEmpty={!offerData}
+            skillName={offerData?.skillName}
+            categoryName={offerData?.categoryName}
+            subcategoryName={offerData?.subcategoryName}
+            description={offerData?.description}
+            images={offerData?.images}
+            onExchange={handleExchangeClick}
+            isExchangeProposed={
+              currentExchange?.status === "accepted" ||
+              currentExchange?.status === "pending"
+            }
+            exchangeStatus={currentExchange?.status}
+          />
         </div>
 
         {/* Нижний ряд: похожие предложения на всю ширину */}
