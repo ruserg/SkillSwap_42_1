@@ -4,7 +4,6 @@ import { fetchUsersData, selectUsersData } from "@entities/user/model/slice";
 import { selectCities, fetchCities } from "@entities/city/model/slice";
 import { Card } from "@shared/ui/Card/Card";
 import { CardSkeleton } from "@shared/ui/CardSkeleton/CardSkeleton";
-import type { UserWithLikes } from "@entities/user/types";
 import styles from "./favorites.module.scss";
 import {
   fetchSkillsData,
@@ -61,11 +60,6 @@ export const Favorites = () => {
     );
   }, [likedUsers]);
 
-  // Обработчик клика на карточку (переход на детальную страницу)
-  const handleDetailsClick = (user: UserWithLikes) => {
-    console.log("User details clicked:", user);
-  };
-
   if (isLoading) {
     return (
       <>
@@ -104,7 +98,6 @@ export const Favorites = () => {
             key={user.id}
             user={user}
             cities={cities}
-            onDetailsClick={handleDetailsClick}
             isLoading={isLoading}
           />
         ))}
