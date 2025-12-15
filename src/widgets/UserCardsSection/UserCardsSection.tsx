@@ -16,6 +16,7 @@ import { Button } from "@/shared/ui/Button/Button";
 import { useInfinityScroll } from "@/shared/hooks/useInfinityScroll";
 import { Arrow } from "@/shared/ui/Arrow/Arrow";
 import { SortSvg } from "./svg/SortSvg";
+import { selectUser as selectAuthUser } from "@features/auth/model/slice";
 
 interface UserCardsSectionProps {
   filters: TFilterState;
@@ -48,6 +49,9 @@ export const UserCardsSection = ({
 
   const [sortByDate, setSortByDate] = useState(false);
 
+  //добавляем селектор, чтобы автор не попадал в списки
+  const authUser = useAppSelector(selectAuthUser);
+
   useEffect(() => {
     if (users.length === 0 && !usersLoading) {
       dispatch(fetchUsersData());
@@ -67,7 +71,12 @@ export const UserCardsSection = ({
     cities.length,
   ]);
 
-  const usersWithLikes = users;
+  // const usersWithLikes = users;
+  const usersWithLikes = useMemo(() => {
+    if (!authUser) return users;
+
+    return users.filter((user) => user.id !== authUser.id);
+  }, [users, authUser]);
 
   // Все популярные пользователи (по количеству лайков)
   const allPopularUsers = useMemo(() => {
@@ -80,20 +89,20 @@ export const UserCardsSection = ({
 
   // Все новые пользователи (по дате регистрации)
   const allNewUsers = useMemo(() => {
-    return [...users].sort(
+    return [...usersWithLikes].sort(
       (a, b) =>
         new Date(b.dateOfRegistration).getTime() -
         new Date(a.dateOfRegistration).getTime(),
     );
-  }, [users]);
+  }, [usersWithLikes]);
 
   const newUsers = useMemo(() => {
     return allNewUsers.slice(0, newCount);
   }, [allNewUsers, newCount]);
 
   const recommendedUsers = useMemo(() => {
-    return [...users].slice(0, recommendationsCount);
-  }, [users, recommendationsCount]);
+    return [...usersWithLikes].slice(0, recommendationsCount);
+  }, [usersWithLikes, recommendationsCount]);
 
   // Бесконечный скролл для популярных пользователей
   const { loadMoreList: loadMorePopular, hideMoreList: hideMorePopular } =
@@ -121,7 +130,7 @@ export const UserCardsSection = ({
 
   // Бесконечный скролл для рекомендаций
   useInfinityScroll({
-    triggerArray: users,
+    triggerArray: usersWithLikes,
     nextNumber: 21,
     setCountState: setRecommendationsCount,
     sentinelRef: recommendationsSentinelRef,
@@ -299,7 +308,7 @@ export const UserCardsSection = ({
       </CardsSection>
 
       {/* Кнопка "К началу страницы" (для секции "Рекомендуем") */}
-      {recommendationsCount >= users.length && (
+      {recommendationsCount >= usersWithLikes.length && (
         <div className={styles.backToTop}>
           <Button variant="secondary" onClick={() => hideAllSection(3)}>
             К началу страницы
