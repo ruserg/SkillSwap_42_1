@@ -21,6 +21,7 @@ import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection.tsx";
 import { Loader } from "@/shared/ui/Loader/Loader";
 import { useDebounce } from "@shared/hooks/useDebounce";
 import { api, ApiError } from "@shared/api/api";
+import { FormField } from "@/shared/ui/FormField/FormField";
 
 export const SignupStepOne = () => {
   const navigate = useNavigate();
@@ -197,35 +198,25 @@ export const SignupStepOne = () => {
               handleSubmit();
             }}
           >
-            <div className={formStyles.emailContainer}>
-              <label htmlFor="email">Email</label>
-              <Input
-                type="email"
-                id="email"
-                placeholder="Введите email"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-              {errors.email && (
-                <span className={formStyles.errorText}>{errors.email}</span>
-              )}
-            </div>
-
-            <div className={formStyles.passwordContainer}>
-              <label htmlFor="password">Пароль</label>
-              {/* // TODO: в компоненте инпута нужно сделать кнопку "показать пароль" */}
-              <Input
-                type="password"
-                id="password"
-                placeholder="Придумайте надёжный пароль"
-                value={formData.password}
-                onChange={handleInputChange}
-              />
-              {errors.password && (
-                <span className={formStyles.errorText}>{errors.password}</span>
-              )}
-            </div>
-
+            <FormField
+              label="Email"
+              id="email"
+              type="email"
+              placeholder="Введите email"
+              value={formData.email}
+              onChange={handleInputChange}
+              error={errors.email}
+            />
+            {/* // TODO: в компоненте инпута нужно сделать кнопку "показать пароль" */}
+            <FormField
+              label="Пароль"
+              id="password"
+              type="password"
+              placeholder="Придумайте надёжный пароль"
+              value={formData.password}
+              onChange={handleInputChange}
+              error={errors.password}
+            />
             <Button onClick={handleSubmit} disabled={!isFormValid}>
               Далее
             </Button>

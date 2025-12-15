@@ -3,7 +3,6 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { login, selectAuth, clearError } from "@features/auth/model/slice";
 import { Button } from "@shared/ui/Button/Button";
-import { Input } from "@shared/ui/Input/Input";
 import { Logo } from "@shared/ui/Logo/Logo";
 import { ArrowLeftIcon } from "@shared/ui/Icons/ArrowLeftIcon";
 import type { z } from "zod";
@@ -13,9 +12,9 @@ import styles from "./login.module.scss";
 import formStyles from "@shared/ui/Form/form.module.scss";
 import { ExternalLogIn } from "@/widgets/ExternalLogIn/ExternalLogIn";
 import { Loader } from "@/shared/ui/Loader/Loader";
-
 import lightBulbLight from "@images/png/light/light-bulb.png";
 import lightBulbDark from "@images/png/dark/light-bulb.png";
+import { FormField } from "@/shared/ui/FormField/FormField";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -124,36 +123,26 @@ export const Login = () => {
           <ExternalLogIn />
 
           <form className={formStyles.form} onSubmit={handleSubmit}>
-            <div className={formStyles.emailContainer}>
-              <label htmlFor="email">Email</label>
-              <Input
-                type="email"
-                id="email"
-                placeholder="Введите email"
-                value={formData.email}
-                onChange={handleInputChange}
-                disabled={isLoading}
-              />
-              {errors.email && (
-                <span className={formStyles.errorText}>{errors.email}</span>
-              )}
-            </div>
-
-            <div className={formStyles.passwordContainer}>
-              <label htmlFor="password">Пароль</label>
-              <Input
-                type="password"
-                id="password"
-                placeholder="Введите ваш пароль"
-                value={formData.password}
-                onChange={handleInputChange}
-                disabled={isLoading}
-              />
-              {errors.password && (
-                <span className={formStyles.errorText}>{errors.password}</span>
-              )}
-            </div>
-
+            <FormField
+              label="Email"
+              id="email"
+              type="email"
+              placeholder="Введите email"
+              value={formData.email}
+              onChange={handleInputChange}
+              disabled={isLoading}
+              error={errors.email}
+            />
+            <FormField
+              label="Пароль"
+              id="password"
+              type="password"
+              placeholder="Введите ваш пароль"
+              value={formData.password}
+              onChange={handleInputChange}
+              disabled={isLoading}
+              error={errors.password}
+            />
             {error && (
               <div className={styles.errorMessage} role="alert">
                 {error}
