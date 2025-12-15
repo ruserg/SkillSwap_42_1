@@ -38,19 +38,19 @@ export const SidebarMenu = () => {
           </Link>
 
           <Link
-            to="/skills"
-            className={isSkills ? styles.menuItemActive : styles.menuItem}
-          >
-            <IdeaLK />
-            Мои навыки
-          </Link>
-
-          <Link
             to="/favorites"
             className={isFavorites ? styles.menuItemActive : styles.menuItem}
           >
             <Like />
             Избранное
+          </Link>
+
+          <Link
+            to="/skills"
+            className={isSkills ? styles.menuItemActive : styles.menuItem}
+          >
+            <IdeaLK />
+            Мои навыки
           </Link>
 
           <Link
