@@ -45,6 +45,14 @@ export const AppRoutes = () => (
         }
       />
       <Route
+        path="skills/create"
+        element={
+          <ProtectedRoute>
+            <SkillEditPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="profile/skills/edit/:skillId"
         element={
           <ProtectedRoute>

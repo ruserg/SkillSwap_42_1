@@ -1,98 +1,76 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card } from "@shared/ui/Card/Card";
 import type { UserWithLikes } from "@entities/user/types";
+import { useAppSelector } from "@app/store/hooks";
+import { selectUser as selectAuthUser } from "@features/auth/model/slice";
+import { api } from "@shared/api/api";
+import type { Exchange } from "@entities/exchange/types";
 import styles from "./exchangesPage.module.scss";
 
-//текущий пользователь
-const CURRENT_USER_ID = "user-1000";
-
-//моки пользователей
-const MOCK_USERS: UserWithLikes[] = [
-  {
-    id: 1001,
-    name: "Евгений",
-    username: "evgeniy95",
-    email: "evgeniy95@example.com",
-    avatarUrl: "https://i.pravatar.cc/150?img=24",
-    likes: 40,
-    likesCount: 40,
-    isLikedByCurrentUser: false,
-    cityId: 1,
-    dateOfBirth: new Date("1995-05-23"),
-    gender: "M",
-    dateOfRegistration: new Date("2025-01-01T12:00:00Z"),
-    lastLoginDatetime: new Date("2025-11-28T21:50:00Z"),
-  },
-  {
-    id: 1002,
-    name: "Иван",
-    username: "ivan89",
-    email: "ivan89@example.com",
-    avatarUrl: "https://i.pravatar.cc/150?img=51",
-    likes: 20,
-    likesCount: 20,
-    isLikedByCurrentUser: false,
-    cityId: 2,
-    dateOfBirth: new Date("1989-03-12"),
-    gender: "M",
-    dateOfRegistration: new Date("2025-02-15T12:00:00Z"),
-    lastLoginDatetime: new Date("2025-12-10T10:00:00Z"),
-  },
-  {
-    id: 1003,
-    name: "Мария",
-    username: "maria01",
-    email: "maria01@example.com",
-    avatarUrl: "https://i.pravatar.cc/150?img=26",
-    likes: 15,
-    likesCount: 15,
-    isLikedByCurrentUser: false,
-    cityId: 3,
-    dateOfBirth: new Date("1990-08-05"),
-    gender: "F",
-    dateOfRegistration: new Date("2025-03-20T12:00:00Z"),
-    lastLoginDatetime: new Date("2025-12-12T14:30:00Z"),
-  },
-];
-
-//моки активных обменов
-const MOCK_EXCHANGES = [
-  {
-    id: "ex-1",
-    fromUserId: "user-1000",
-    toUserId: "user-1002",
-    status: "pending",
-    offerTitle: "Обмен",
-  },
-  {
-    id: "ex-2",
-    fromUserId: "user-1003",
-    toUserId: "user-1000",
-    status: "accepted",
-    offerTitle: "Обмен",
-  },
-];
-
 export const Exchanges = () => {
-  const [users] = useState(MOCK_USERS);
-  const [exchanges, setExchanges] = useState(MOCK_EXCHANGES);
+  const authUser = useAppSelector(selectAuthUser);
+  const [exchanges, setExchanges] = useState<Exchange[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  //формируем список пользователей с активными обменами
+  useEffect(() => {
+    const loadExchanges = async () => {
+      if (!authUser?.id) return;
+
+      setIsLoading(true);
+      setError(null);
+      try {
+        // Получаем все завершенные обмены пользователя (и входящие, и исходящие)
+        // со статусом completed
+        const data = await api.getUserExchanges(authUser.id, {
+          status: "completed",
+          direction: "all",
+        });
+        setExchanges(data);
+      } catch (err: any) {
+        console.error("Ошибка загрузки обменов:", err);
+        setError(err?.message || "Не удалось загрузить обмены");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadExchanges();
+  }, [authUser?.id]);
+
+  // Формируем список пользователей с завершенными обменами
   const usersWithExchanges = useMemo(() => {
+    if (!authUser?.id) return [];
+
     return exchanges
       .map((ex) => {
-        const otherUserId =
-          ex.fromUserId === CURRENT_USER_ID ? ex.toUserId : ex.fromUserId;
-        const otherUserIdNum = parseInt(otherUserId.replace("user-", ""), 10);
+        // Определяем другого участника обмена
+        const otherUser =
+          ex.fromUserId === authUser.id ? ex.toUser : ex.fromUser;
+        if (!otherUser) return null;
 
-        const user = users.find((u) => u.id === otherUserIdNum);
-        if (!user) return null;
+        // Формируем описание обмена
+        const fromSkillName = ex.fromSkill?.name || "Навык";
+        const toSkillName = ex.toSkill?.name || "Навык";
+        const offerTitle = `${fromSkillName} ↔ ${toSkillName}`;
 
         return {
-          ...user,
-          exchangeId: ex.id,
+          id: otherUser.id,
+          name: otherUser.name,
+          username: "",
+          email: "",
+          avatarUrl: otherUser.avatarUrl || "",
+          likes: 0,
+          likesCount: 0,
+          isLikedByCurrentUser: false,
+          cityId: 0,
+          dateOfBirth: new Date(),
+          gender: "M",
+          dateOfRegistration: new Date(),
+          lastLoginDatetime: new Date(),
+          exchangeId: ex.id.toString(),
           exchangeStatus: ex.status,
-          offerTitle: ex.offerTitle,
+          offerTitle,
         } as UserWithLikes & {
           exchangeId: string;
           exchangeStatus: string;
@@ -108,27 +86,56 @@ export const Exchanges = () => {
           offerTitle: string;
         } => Boolean(u),
       );
-  }, [exchanges, users]);
+  }, [exchanges, authUser?.id]);
 
-  const handleAction = (exchangeId: string, status: string) => {
-    setExchanges((prev) =>
-      prev.map((ex) => {
-        if (ex.id !== exchangeId) return ex;
-        let newStatus: typeof ex.status = "pending";
-        if (status === "pending") newStatus = "accepted";
-        else if (status === "accepted") newStatus = "completed";
-        else if (status === "completed") newStatus = "pending";
-        return { ...ex, status: newStatus };
-      }),
-    );
+  const handleDeleteExchange = async (exchangeId: string) => {
+    if (!authUser?.id) return;
+
+    if (!confirm("Вы уверены, что хотите удалить этот обмен?")) {
+      return;
+    }
+
+    try {
+      await api.deleteExchange(parseInt(exchangeId, 10));
+
+      // Удаляем из списка
+      setExchanges((prev) =>
+        prev.filter((ex) => ex.id.toString() !== exchangeId),
+      );
+    } catch (err: any) {
+      console.error("Ошибка при удалении обмена:", err);
+      alert(err?.message || "Не удалось удалить обмен");
+    }
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <h1 className={styles.title}>Мои обмены</h1>
+        <div className={styles.emptyState}>
+          <p className={styles.emptyText}>Загрузка...</p>
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <h1 className={styles.title}>Мои обмены</h1>
+        <div className={styles.emptyState}>
+          <p className={styles.emptyText}>{error}</p>
+        </div>
+      </>
+    );
+  }
 
   if (usersWithExchanges.length === 0) {
     return (
       <>
         <h1 className={styles.title}>Мои обмены</h1>
         <div className={styles.emptyState}>
-          <p className={styles.emptyText}>У вас пока нет активных обменов</p>
+          <p className={styles.emptyText}>У вас пока нет завершенных обменов</p>
         </div>
       </>
     );
@@ -138,26 +145,18 @@ export const Exchanges = () => {
     <>
       <h1 className={styles.title}>Мои обмены</h1>
       <p className={styles.subtitle}>
-        Активных обменов: {usersWithExchanges.length}
+        Завершенных обменов: {usersWithExchanges.length}
       </p>
       <div className={styles.cardsGrid}>
         {usersWithExchanges.map((user) => {
-          let buttonText = "";
-          if (user.exchangeStatus === "pending") buttonText = "Принять";
-          else if (user.exchangeStatus === "accepted") buttonText = "Завершить";
-          else if (user.exchangeStatus === "completed")
-            buttonText = "Возобновить";
-
           return (
             <Card
-              key={user.id}
+              key={`${user.id}-${user.exchangeId}`}
               user={user}
               cities={[]}
               description={user.offerTitle}
-              buttonText={buttonText}
-              onDetailsClick={() =>
-                handleAction(user.exchangeId, user.exchangeStatus)
-              }
+              buttonDeleteText="Удалить"
+              onDeleteClick={() => handleDeleteExchange(user.exchangeId)}
             />
           );
         })}

@@ -6,11 +6,13 @@ export type CardVariant = "default" | "profile" | "compact";
 export type CardProps = {
   user: UserWithLikes;
   cities: TCity[];
-  onDetailsClick?: (user: UserWithLikes) => void;
+  onDetailsClick?: (user?: UserWithLikes) => void;
+  onDeleteClick?: (user?: UserWithLikes) => void;
   onExchangeClick?: (user: UserWithLikes) => void;
   className?: string;
   isLoading?: boolean;
   variant?: CardVariant;
   description?: string; // Описание для variant="profile"
   buttonText?: string;
+  buttonDeleteText?: string;
 };

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@shared/ui/Button/Button";
 import { OfferPreview } from "@widgets/OfferPreview/OfferPreview";
@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { selectUser as selectAuthUser } from "@features/auth/model/slice";
 import { fetchSkillsData } from "@entities/skill/model/slice";
 import { fetchCategories } from "@entities/category/model/slice";
+import { api } from "@shared/api/api";
 import styles from "./mySkills.module.scss";
 
 export const MySkills = () => {
@@ -81,11 +82,24 @@ export const MySkills = () => {
     navigate(`/profile/skills/edit/${skillId}`);
   };
 
-  // TODO: переделать страницу чтоб это был не 3 шаг регистрации
+  // Функция для удаления навыка
+  const handleDeleteSkill = async (skillId: number) => {
+    if (!confirm("Вы уверены, что хотите удалить этот навык?")) {
+      return;
+    }
+
+    try {
+      await api.deleteSkill(skillId);
+      // Перезагружаем список навыков
+      await dispatch(fetchSkillsData());
+    } catch (error: any) {
+      console.error("Ошибка при удалении навыка:", error);
+      alert(error?.message || "Не удалось удалить навык");
+    }
+  };
+
   const handleAddSkill = () => {
-    navigate("/registration/step3", {
-      state: { returnTo: "/profile" },
-    });
+    navigate("/skills/create");
   };
 
   const isLoading = skillsLoading || categoriesLoading;
@@ -133,6 +147,7 @@ export const MySkills = () => {
                         description={skill.description}
                         images={skill.images}
                         onEdit={() => handleEditSkill(skill.id.toString())}
+                        onDelete={() => handleDeleteSkill(skill.id)}
                       />
                     </div>
                   ))}

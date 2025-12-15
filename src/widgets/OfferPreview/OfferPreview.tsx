@@ -18,6 +18,7 @@ export const OfferPreview = (props: TOfferProps) => {
     description = "",
     images = [],
     onEdit,
+    onDelete,
     onConfirm,
     onExchange,
     isExchangeProposed = false,
@@ -113,9 +114,20 @@ export const OfferPreview = (props: TOfferProps) => {
               )}
 
               {variant === "mySkills" && (
-                <Button rightIcon={<EditIcon />} onClick={onEdit}>
-                  {"Редактировать"}
-                </Button>
+                <div className={styles.skillActions}>
+                  <Button rightIcon={<EditIcon />} onClick={onEdit}>
+                    {"Редактировать"}
+                  </Button>
+                  {onDelete && (
+                    <Button
+                      variant="secondary"
+                      onClick={onDelete}
+                      style={{ color: "var(--color-error)" }}
+                    >
+                      {"Удалить"}
+                    </Button>
+                  )}
+                </div>
               )}
 
               {variant === "userProfileOffer" && (
