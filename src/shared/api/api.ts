@@ -282,7 +282,7 @@ export const api = {
 
   createSkill: (body: {
     subcategoryId: number;
-    title: string;
+    name: string;
     description: string;
     type_of_proposal: "offer" | "request";
     images?: string[];
@@ -295,7 +295,7 @@ export const api = {
   updateSkill: (
     id: number,
     data: {
-      title?: string;
+      name?: string;
       description?: string;
       subcategoryId?: number;
       type_of_proposal?: "offer" | "request";
@@ -306,6 +306,26 @@ export const api = {
       method: "PUT",
       body: JSON.stringify(data),
     }),
+
+  // Загрузить изображения для навыка
+  uploadSkillImages: (
+    skillId: number,
+    images: File[],
+  ): Promise<{ skillId: number; images: string[] }> => {
+    const formData = new FormData();
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
+
+    return fetchApi<{ skillId: number; images: string[] }>(
+      `/api/skills/${skillId}/images`,
+      {
+        method: "POST",
+        body: formData,
+        // Не устанавливаем headers - fetchApi сам обработает FormData
+      },
+    );
+  },
 
   deleteSkill: (id: number): Promise<void> =>
     fetchApi<void>(`/api/skills/${id}`, {
@@ -453,7 +473,37 @@ export const api = {
       `/api/exchanges/${exchangeId}/status`,
     ),
 
-  // Получить все обмены пользователя
-  getUserExchanges: (userId: number): Promise<Exchange[]> =>
-    fetchApi<Exchange[]>(`/api/users/${userId}/exchanges`),
+  // Получить все обмены пользователя с фильтрацией
+  getUserExchanges: (
+    userId: number,
+    filters?: {
+      status?: "pending" | "accepted" | "rejected" | "completed" | "cancelled";
+      direction?: "incoming" | "outgoing" | "all";
+    },
+  ): Promise<Exchange[]> => {
+    const searchParams = new URLSearchParams();
+    if (filters?.status) searchParams.append("status", filters.status);
+    if (filters?.direction) searchParams.append("direction", filters.direction);
+
+    const query = searchParams.toString();
+    return fetchApi<Exchange[]>(
+      `/api/users/${userId}/exchanges${query ? `?${query}` : ""}`,
+    );
+  },
+
+  // Изменить статус обмена
+  updateExchangeStatus: (
+    exchangeId: number,
+    status: "accepted" | "rejected" | "completed" | "cancelled",
+  ): Promise<Exchange> =>
+    fetchApi<Exchange>(`/api/exchanges/${exchangeId}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
+
+  // Удалить обмен
+  deleteExchange: (exchangeId: number): Promise<void> =>
+    fetchApi<void>(`/api/exchanges/${exchangeId}`, {
+      method: "DELETE",
+    }),
 };

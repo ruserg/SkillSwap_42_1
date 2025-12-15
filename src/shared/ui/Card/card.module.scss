@@ -343,8 +343,28 @@
   justify-content: center;
 }
 
+.actionsRow {
+  display: flex;
+  gap: 12px;
+  inline-size: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .detailsButton {
-  inline-size: 284px;
+  flex: 1;
+  min-inline-size: 0;
+  block-size: 48px;
+
+  button {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+}
+
+.deleteButton {
+  flex: 1;
+  min-inline-size: 0;
   block-size: 48px;
 
   button {

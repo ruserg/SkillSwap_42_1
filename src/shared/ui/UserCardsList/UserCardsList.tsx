@@ -36,7 +36,7 @@ export const UserCardsList: React.FC<UserCardsListProps> = ({
         key={user.id}
         user={user}
         cities={cities}
-        onDetailsClick={() => onUserClick?.(user)}
+        onDetailsClick={onUserClick ? () => onUserClick(user) : undefined}
         isLoading={false}
       />
     ));

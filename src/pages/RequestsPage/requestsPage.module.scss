@@ -3,7 +3,8 @@
 .wrapper {
   display: flex;
   gap: 24px;
-  padding: 32px 0 60px;
+  padding-block: 32px 60px;
+  padding-inline: 0;
 }
 
 .content {
@@ -45,7 +46,8 @@
   align-items: center;
   justify-content: center;
   min-block-size: 400px;
-  padding: 60px 20px;
+  padding-block: 60px;
+  padding-inline: 20px;
 }
 
 .emptyText {
@@ -54,4 +56,38 @@
   line-height: 150%;
   color: $color-caption;
   text-align: center;
+}
+
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rejectButton {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 8px;
+}
+
+.rejectBtn {
+  padding-block: 8px;
+  padding-inline: 16px;
+  background: none;
+  border: 1px solid $color-error;
+  border-radius: 8px;
+  color: $color-error;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba($color-error, 0.1);
+  }
+
+  &:active {
+    background-color: rgba($color-error, 0.2);
+  }
 }

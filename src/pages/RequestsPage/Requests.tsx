@@ -1,93 +1,74 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card } from "@shared/ui/Card/Card";
 import type { UserWithLikes } from "@entities/user/types";
+import { useAppSelector } from "@app/store/hooks";
+import { selectUser as selectAuthUser } from "@features/auth/model/slice";
+import { api } from "@shared/api/api";
+import type { Exchange } from "@entities/exchange/types";
 import styles from "./requestsPage.module.scss";
 
-//моки пользователей
-const MOCK_USERS: UserWithLikes[] = [
-  {
-    id: 1001,
-    name: "Евгений",
-    username: "evgeniy95",
-    email: "evgeniy95@example.com",
-    avatarUrl: "https://i.pravatar.cc/150?img=24",
-    likes: 23,
-    likesCount: 40,
-    isLikedByCurrentUser: false,
-    cityId: 1,
-    dateOfBirth: new Date("1995-05-23"),
-    gender: "M",
-    dateOfRegistration: new Date("2025-01-01T12:00:00Z"),
-    lastLoginDatetime: new Date("2025-11-28T21:50:00Z"),
-  },
-  {
-    id: 1002,
-    name: "Роман",
-    username: "ivan89",
-    email: "ivan89@example.com",
-    avatarUrl: "https://i.pravatar.cc/150?img=52",
-    likes: 16,
-    likesCount: 20,
-    isLikedByCurrentUser: false,
-    cityId: 2,
-    dateOfBirth: new Date("1974-03-12"),
-    gender: "M",
-    dateOfRegistration: new Date("2025-02-15T12:00:00Z"),
-    lastLoginDatetime: new Date("2025-12-10T10:00:00Z"),
-  },
-  {
-    id: 1003,
-    name: "Людмила",
-    username: "maria01",
-    email: "maria01@example.com",
-    avatarUrl: "https://i.pravatar.cc/150?img=26",
-    likes: 11,
-    likesCount: 15,
-    isLikedByCurrentUser: false,
-    cityId: 3,
-    dateOfBirth: new Date("1997-08-05"),
-    gender: "F",
-    dateOfRegistration: new Date("2025-03-20T12:00:00Z"),
-    lastLoginDatetime: new Date("2025-12-12T14:30:00Z"),
-  },
-];
-
-//моки входящих заявок с соответствующими
-const MOCK_REQUESTS = [
-  {
-    id: "req-1",
-    fromUserId: "user-1002",
-    toUserId: "user-1001",
-    status: "pending",
-    offerTitle: "Заявка на обмен",
-  },
-  {
-    id: "req-2",
-    fromUserId: "user-1003",
-    toUserId: "user-1001",
-    status: "pending",
-    offerTitle: "Заявка на обмен",
-  },
-];
-
 export const Requests = () => {
-  const [users] = useState(MOCK_USERS);
-  const [requests, setRequests] = useState(MOCK_REQUESTS);
+  const authUser = useAppSelector(selectAuthUser);
+  const [requests, setRequests] = useState<Exchange[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  //пользователи, которые прислали нам заявки
+  useEffect(() => {
+    const loadRequests = async () => {
+      if (!authUser?.id) return;
+
+      setIsLoading(true);
+      setError(null);
+      try {
+        // Получаем все активные обмены со статусом accepted (и входящие, и исходящие)
+        const data = await api.getUserExchanges(authUser.id, {
+          status: "accepted",
+          direction: "all",
+        });
+        setRequests(data);
+      } catch (err: any) {
+        console.error("Ошибка загрузки заявок:", err);
+        setError(err?.message || "Не удалось загрузить заявки");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadRequests();
+  }, [authUser?.id]);
+
+  // Пользователи, которые отправили нам заявки (все входящие)
   const usersWithRequests = useMemo(() => {
+    if (!authUser?.id) return [];
+
     return requests
       .map((req) => {
-        const user = users.find(
-          (u) => u.id === parseInt(req.fromUserId.replace("user-", ""), 10),
-        );
-        if (!user) return null;
+        // В заявках fromUser - это тот, кто отправил заявку
+        const fromUser = req.fromUser;
+        if (!fromUser) return null;
+
+        // Формируем описание заявки
+        const fromSkillName = req.fromSkill?.name || "Навык";
+        const toSkillName = req.toSkill?.name || "Навык";
+        const offerTitle = `${fromSkillName} ↔ ${toSkillName}`;
 
         return {
-          ...user,
-          exchangeId: req.id,
+          id: fromUser.id,
+          name: fromUser.name,
+          username: "",
+          email: "",
+          avatarUrl: fromUser.avatarUrl || "",
+          likes: 0,
+          likesCount: 0,
+          isLikedByCurrentUser: false,
+          cityId: 0,
+          dateOfBirth: new Date(),
+          gender: "M",
+          dateOfRegistration: new Date(),
+          lastLoginDatetime: new Date(),
+          exchangeId: req.id.toString(),
           exchangeStatus: req.status,
-          offerTitle: req.offerTitle,
+          offerTitle,
         } as UserWithLikes & {
           exchangeId: string;
           exchangeStatus: string;
@@ -103,29 +84,58 @@ export const Requests = () => {
           offerTitle: string;
         } => Boolean(u),
       );
-  }, [requests, users]);
+  }, [requests, authUser?.id]);
 
-  const handleAction = (exchangeId: string, status: string) => {
-    setRequests((prev) =>
-      prev.map((req) => {
-        if (req.id !== exchangeId) return req;
-        let newStatus: typeof req.status = "pending";
-        if (status === "pending")
-          newStatus = "accepted"; // Принять
-        else if (status === "accepted")
-          newStatus = "completed"; // Завершить
-        else if (status === "completed") newStatus = "pending"; // Возобновить
-        return { ...req, status: newStatus };
-      }),
-    );
+  const handleAction = async (exchangeId: string, currentStatus: string) => {
+    if (!authUser?.id) return;
+
+    try {
+      if (currentStatus === "accepted") {
+        // Завершаем обмен - меняем статус на completed
+        const updatedExchange = await api.updateExchangeStatus(
+          parseInt(exchangeId, 10),
+          "completed",
+        );
+
+        // Удаляем из списка (завершенные обмены не показываются в "Заявки")
+        setRequests((prev) =>
+          prev.filter((req) => req.id !== updatedExchange.id),
+        );
+      }
+    } catch (err: any) {
+      console.error("Ошибка при завершении обмена:", err);
+      alert(err?.message || "Не удалось завершить обмен");
+    }
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <h1 className={styles.title}>Заявки</h1>
+        <div className={styles.emptyState}>
+          <p className={styles.emptyText}>Загрузка...</p>
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <h1 className={styles.title}>Заявки</h1>
+        <div className={styles.emptyState}>
+          <p className={styles.emptyText}>{error}</p>
+        </div>
+      </>
+    );
+  }
 
   if (usersWithRequests.length === 0) {
     return (
       <>
         <h1 className={styles.title}>Заявки</h1>
         <div className={styles.emptyState}>
-          <p className={styles.emptyText}>Нет новых заявок</p>
+          <p className={styles.emptyText}>У вас пока нет активных обменов</p>
         </div>
       </>
     );
@@ -135,23 +145,17 @@ export const Requests = () => {
     <>
       <h1 className={styles.title}>Заявки</h1>
       <p className={styles.subtitle}>
-        Количество заявок: {usersWithRequests.length}
+        Активных обменов: {usersWithRequests.length}
       </p>
       <div className={styles.cardsGrid}>
         {usersWithRequests.map((user) => {
-          let buttonText = "";
-          if (user.exchangeStatus === "pending") buttonText = "Принять";
-          else if (user.exchangeStatus === "accepted") buttonText = "Завершить";
-          else if (user.exchangeStatus === "completed")
-            buttonText = "Возобновить";
-
           return (
             <Card
-              key={user.id}
+              key={`${user.id}-${user.exchangeId}`}
               user={user}
               cities={[]}
               description={user.offerTitle}
-              buttonText={buttonText}
+              buttonText="Завершить"
               onDetailsClick={() =>
                 handleAction(user.exchangeId, user.exchangeStatus)
               }

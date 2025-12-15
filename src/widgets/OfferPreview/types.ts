@@ -8,6 +8,7 @@ export type TOfferProps = {
   description?: string;
   images?: string[];
   onEdit?: () => void;
+  onDelete?: () => void;
   onConfirm?: () => void;
   onExchange?: () => void;
   isEditable?: boolean;

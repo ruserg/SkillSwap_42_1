@@ -1,8 +1,7 @@
-// features/skills/ui/SkillEditForm/SkillEditForm.tsx
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import type { ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./skillEditPage.module.scss";
+import styles from "./skillForm.module.scss";
 import { Button } from "@shared/ui/Button/Button";
 import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { ModalUI } from "@shared/ui/Modal/Modal";
@@ -26,12 +25,15 @@ interface ImageFile {
   name: string;
   size: number;
   dataUrl: string;
+  file?: File; // Сохраняем оригинальный файл для загрузки (только для новых изображений)
 }
 
-export const SkillEditForm = () => {
+export const SkillForm = () => {
   const { skillId } = useParams<{ skillId: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const isEditMode = Boolean(skillId);
 
   const {
     categories: categoriesData,
@@ -63,7 +65,7 @@ export const SkillEditForm = () => {
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(isEditMode); // Загружаем только при редактировании
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -75,7 +77,10 @@ export const SkillEditForm = () => {
 
   useEffect(() => {
     const loadSkillData = async () => {
-      if (!skillId || categoriesLoading) return;
+      if (!isEditMode || !skillId || categoriesLoading) {
+        setIsLoading(false);
+        return;
+      }
 
       setIsLoading(true);
       try {
@@ -83,7 +88,7 @@ export const SkillEditForm = () => {
         // Устанавливаем базовые данные
         setFormData((prev) => ({
           ...prev,
-          title: skill.name || skill.name || "",
+          title: skill.name || "",
           description: skill.description || "",
           subcategory: skill.subcategoryId
             ? [skill.subcategoryId.toString()]
@@ -91,13 +96,14 @@ export const SkillEditForm = () => {
           images: skill.images || [],
         }));
 
-        // Инициализируем изображения
+        // Инициализируем изображения (существующие, без файлов)
         if (skill.images && Array.isArray(skill.images)) {
           const imageFiles = skill.images.map((img, index) => ({
             id: `image-${index}-${Date.now()}`,
             name: `image-${index}.jpg`,
             size: 1024 * 1024,
             dataUrl: img,
+            // Не сохраняем file для существующих изображений
           }));
           setLocalImages(imageFiles);
         }
@@ -109,7 +115,7 @@ export const SkillEditForm = () => {
     };
 
     loadSkillData();
-  }, [skillId, categoriesLoading]);
+  }, [skillId, categoriesLoading, isEditMode]);
 
   useEffect(() => {
     if (formData.subcategory.length > 0 && subcategoriesData.length > 0) {
@@ -222,6 +228,7 @@ export const SkillEditForm = () => {
           name: file.name,
           size: file.size,
           dataUrl: result,
+          file: file, // Сохраняем файл для загрузки
         };
         setLocalImages((prev) => [...prev, newImage]);
         setTouched((prev) => ({ ...prev, images: true }));
@@ -262,6 +269,7 @@ export const SkillEditForm = () => {
             name: file.name,
             size: file.size,
             dataUrl: result,
+            file: file, // Сохраняем файл для загрузки
           };
           setLocalImages((prev) => [...prev, newImage]);
           setTouched((prev) => ({ ...prev, images: true }));
@@ -316,27 +324,62 @@ export const SkillEditForm = () => {
   };
 
   const handleConfirmSave = async () => {
-    if (!skillId) return;
-
     try {
       setIsSubmitting(true);
 
       // Преобразуем данные формы для отправки на сервер
       const subcategoryId = parseInt(formData.subcategory[0], 10);
 
-      await api.updateSkill(parseInt(skillId, 10), {
-        title: formData.title,
-        description: formData.description,
-        subcategoryId,
-        type_of_proposal: "offer" as const,
-        images: formData.images,
-      });
+      if (isEditMode && skillId) {
+        // Редактирование существующего навыка
+        await api.updateSkill(parseInt(skillId, 10), {
+          name: formData.title,
+          description: formData.description,
+          subcategoryId,
+          type_of_proposal: "offer" as const,
+          images: formData.images,
+        });
+
+        // Загружаем новые изображения, если они есть
+        const newImageFiles = localImages
+          .filter((img) => img.file) // Только новые изображения с файлами
+          .map((img) => img.file!)
+          .filter((file): file is File => file !== undefined);
+
+        if (newImageFiles.length > 0) {
+          await api.uploadSkillImages(parseInt(skillId, 10), newImageFiles);
+        }
+      } else {
+        // Создание нового навыка
+        const newSkill = await api.createSkill({
+          name: formData.title,
+          description: formData.description,
+          subcategoryId,
+          type_of_proposal: "offer" as const,
+          images: [], // Изображения загрузим отдельно
+        });
+
+        // Загружаем изображения, если они есть
+        const imageFiles = localImages
+          .map((img) => img.file)
+          .filter((file): file is File => file !== undefined);
+
+        if (imageFiles.length > 0) {
+          await api.uploadSkillImages(newSkill.id, imageFiles);
+        }
+      }
 
       setIsPreviewModalOpen(false);
       setIsSuccessModalOpen(true);
     } catch (error: any) {
-      console.error("Ошибка при обновлении навыка:", error);
-      alert(error?.message || "Не удалось обновить навык. Попробуйте еще раз.");
+      console.error(
+        `Ошибка при ${isEditMode ? "обновлении" : "создании"} навыка:`,
+        error,
+      );
+      alert(
+        error?.message ||
+          `Не удалось ${isEditMode ? "обновить" : "создать"} навык. Попробуйте еще раз.`,
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -357,7 +400,9 @@ export const SkillEditForm = () => {
     <div className={styles.pageWrapper}>
       {isSubmitting && <Loader />}
       <div className={styles.formContainer}>
-        <h1 className={styles.title}>Редактирование навыка</h1>
+        <h1 className={styles.title}>
+          {isEditMode ? "Редактирование навыка" : "Создание навыка"}
+        </h1>
         <form className={styles.form} onSubmit={handleSaveChanges}>
           {/* Название навыка */}
           <div className={styles.fieldGroup}>
@@ -365,7 +410,10 @@ export const SkillEditForm = () => {
               Название навыка
             </label>
             {showSkeletons ? (
-              <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+              <>
+                <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+                <span className={styles.errorText}>&nbsp;</span>
+              </>
             ) : (
               <>
                 <input
@@ -392,7 +440,12 @@ export const SkillEditForm = () => {
           <div className={styles.fieldGroup}>
             <label className={styles.label}>Категория навыка</label>
             {showSkeletons ? (
-              <div className={`${styles.skeleton} ${styles.skeletonSelect}`} />
+              <>
+                <div
+                  className={`${styles.skeleton} ${styles.skeletonSelect}`}
+                />
+                <span className={styles.errorText}>&nbsp;</span>
+              </>
             ) : (
               <>
                 <CategorySelector
@@ -419,7 +472,12 @@ export const SkillEditForm = () => {
           <div className={styles.fieldGroup}>
             <label className={styles.label}>Подкатегория</label>
             {showSkeletons ? (
-              <div className={`${styles.skeleton} ${styles.skeletonSelect}`} />
+              <>
+                <div
+                  className={`${styles.skeleton} ${styles.skeletonSelect}`}
+                />
+                <span className={styles.errorText}>&nbsp;</span>
+              </>
             ) : (
               <>
                 <CategorySelector
@@ -452,9 +510,12 @@ export const SkillEditForm = () => {
               Описание
             </label>
             {showSkeletons ? (
-              <div
-                className={`${styles.skeleton} ${styles.skeletonTextarea}`}
-              />
+              <>
+                <div
+                  className={`${styles.skeleton} ${styles.skeletonTextarea}`}
+                />
+                <span className={styles.errorText}>&nbsp;</span>
+              </>
             ) : (
               <>
                 <textarea
@@ -486,9 +547,12 @@ export const SkillEditForm = () => {
             </label>
 
             {showSkeletons ? (
-              <div
-                className={`${styles.skeleton} ${styles.skeletonUploadArea}`}
-              />
+              <>
+                <div
+                  className={`${styles.skeleton} ${styles.skeletonUploadArea}`}
+                />
+                <span className={styles.errorText}>&nbsp;</span>
+              </>
             ) : (
               <>
                 <div
@@ -571,7 +635,13 @@ export const SkillEditForm = () => {
               type="submit"
               disabled={showSkeletons || isSubmitting || !isFormValid}
             >
-              {isSubmitting ? "Сохранение..." : "Сохранить изменения"}
+              {isSubmitting
+                ? isEditMode
+                  ? "Сохранение..."
+                  : "Создание..."
+                : isEditMode
+                  ? "Сохранить изменения"
+                  : "Создать навык"}
             </Button>
           </div>
         </form>
@@ -604,10 +674,14 @@ export const SkillEditForm = () => {
           <div className={styles.successModalContainer}>
             {isSubmitting && <Loader />}
             <div className={styles.successModalTitle}>
-              Предложение успешно отредактировать!
+              {isEditMode
+                ? "Предложение успешно отредактировано!"
+                : "Навык успешно создан!"}
             </div>
             <p className={styles.successModalDescription}>
-              Перейдите в личный кабинет, чтобы увидеть ваше предложение.
+              {isEditMode
+                ? 'Перейдите в раздел "Мои навыки", чтобы увидеть ваше предложение.'
+                : 'Перейдите в раздел "Мои навыки", чтобы увидеть ваш новый навык.'}
             </p>
             <div className={styles.successButton}>
               <Button onClick={handleCloseSuccessModal}>

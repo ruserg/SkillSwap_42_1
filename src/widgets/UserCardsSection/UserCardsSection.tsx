@@ -154,11 +154,6 @@ export const UserCardsSection = ({
     setRecommendationsCount(count);
   };
 
-  const handleDetailsClick = (user: UserWithLikes) => {
-    console.log("User details clicked:", user);
-    // TODO: Реализовать навигацию к детальной странице пользователя
-  };
-
   if (isLoading) {
     return (
       <div className={styles.container}>
@@ -169,39 +164,23 @@ export const UserCardsSection = ({
               cities={cities}
               isLoading={true}
               emptyMessage=""
-              onUserClick={handleDetailsClick}
             />
           </CardsSection>
         ) : (
           <>
             {/* Скелетоны для секции "Популярное" */}
             <CardsSection title="Популярное">
-              <UserCardsList
-                users={[]}
-                cities={cities}
-                isLoading={true}
-                onUserClick={handleDetailsClick}
-              />
+              <UserCardsList users={[]} cities={cities} isLoading={true} />
             </CardsSection>
 
             {/* Скелетоны для секции "Новое" */}
             <CardsSection title="Новое">
-              <UserCardsList
-                users={[]}
-                cities={cities}
-                isLoading={true}
-                onUserClick={handleDetailsClick}
-              />
+              <UserCardsList users={[]} cities={cities} isLoading={true} />
             </CardsSection>
 
             {/* Скелетоны для секции "Рекомендуем" */}
             <CardsSection title="Рекомендуем">
-              <UserCardsList
-                users={[]}
-                cities={cities}
-                isLoading={true}
-                onUserClick={handleDetailsClick}
-              />
+              <UserCardsList users={[]} cities={cities} isLoading={true} />
             </CardsSection>
           </>
         )}
@@ -249,7 +228,6 @@ export const UserCardsSection = ({
             users={sortedUsers}
             cities={cities}
             emptyMessage="По выбранным фильтрам ничего не найдено"
-            onUserClick={handleDetailsClick}
           />
         </CardsSection>
       </div>
@@ -274,11 +252,7 @@ export const UserCardsSection = ({
           isInfinityScrollActivated.popular ? popularSentinelRef : undefined
         }
       >
-        <UserCardsList
-          users={popularUsers}
-          cities={cities}
-          onUserClick={handleDetailsClick}
-        />
+        <UserCardsList users={popularUsers} cities={cities} />
       </CardsSection>
 
       {/* Кнопка "Свернуть" для секции "Популярное" (после активации бесконечного скролла) */}
@@ -307,11 +281,7 @@ export const UserCardsSection = ({
         }}
         sentinelRef={isInfinityScrollActivated.new ? newSentinelRef : undefined}
       >
-        <UserCardsList
-          users={newUsers}
-          cities={cities}
-          onUserClick={handleDetailsClick}
-        />
+        <UserCardsList users={newUsers} cities={cities} />
       </CardsSection>
 
       {/* Кнопка "Свернуть" для секции "Новое" (после активации бесконечного скролла) */}
@@ -332,11 +302,7 @@ export const UserCardsSection = ({
         title="Рекомендуем"
         sentinelRef={recommendationsSentinelRef}
       >
-        <UserCardsList
-          users={recommendedUsers}
-          cities={cities}
-          onUserClick={handleDetailsClick}
-        />
+        <UserCardsList users={recommendedUsers} cities={cities} />
       </CardsSection>
 
       {/* Кнопка "К началу страницы" (для секции "Рекомендуем") */}

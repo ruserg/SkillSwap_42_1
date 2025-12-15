@@ -19,10 +19,26 @@ export interface Exchange {
   fromUser?: {
     id: number;
     name: string;
+    avatarUrl?: string;
   };
   toUser?: {
     id: number;
     name: string;
+    avatarUrl?: string;
+  };
+  fromSkill?: {
+    id: number;
+    name: string;
+    description: string;
+    images: string[];
+    type_of_proposal: "offer" | "request";
+  };
+  toSkill?: {
+    id: number;
+    name: string;
+    description: string;
+    images: string[];
+    type_of_proposal: "offer" | "request";
   };
 }
 

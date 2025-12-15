@@ -1,6 +1,6 @@
 import styles from "./skillEditPage.module.scss";
 import { SidebarMenu } from "../ProfilePage/SidebarMenu";
-import { SkillEditForm } from "./skillEditForm";
+import { SkillForm } from "@features/skills/ui/SkillForm/SkillForm";
 
 export const SkillEditPage = () => {
   return (
@@ -8,8 +8,8 @@ export const SkillEditPage = () => {
       {/* левое меню */}
       <SidebarMenu />
 
-      {/* личные данные */}
-      <SkillEditForm />
+      {/* форма редактирования/создания навыка */}
+      <SkillForm />
     </div>
   );
 };

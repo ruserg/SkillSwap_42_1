@@ -26,6 +26,9 @@ export const Card: React.FC<CardProps> = memo(
     variant = "default",
     description = "Привет! Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое",
     buttonText,
+    buttonDeleteText,
+    onDetailsClick,
+    onDeleteClick,
   }) => {
     const navigate = useNavigate();
 
@@ -41,9 +44,16 @@ export const Card: React.FC<CardProps> = memo(
 
     const handleDetailsClick = useCallback(() => {
       if (isLoading) return;
-      // Если авторизован - переход на страницу пользователя
+
+      // Если передан кастомный обработчик, используем его
+      if (onDetailsClick) {
+        onDetailsClick();
+        return;
+      }
+
+      // Иначе - переход на страницу пользователя
       navigate(`/user/${user.id}`);
-    }, [isLoading, isAuthenticated, navigate, user.id]);
+    }, [isLoading, navigate, user.id, onDetailsClick]);
 
     // Мемоизированные навыки пользователя
     const { canTeachSkills, wantToLearnSkills } = useMemo(
@@ -245,16 +255,42 @@ export const Card: React.FC<CardProps> = memo(
         {/* кнопка "Подробнее" (не показываем для variant="profile") */}
         {variant !== "profile" && (
           <div className={styles.actions}>
-            <div className={styles.detailsButton}>
-              <Button
-                variant="primary"
-                disabled={isLoading}
-                onClick={handleDetailsClick}
-                aria-label={`${buttonText || "Подробнее"} о пользователе ${user.name}`}
-              >
-                {buttonText || "Подробнее"}
-              </Button>
-            </div>
+            {onDeleteClick ? (
+              <div className={styles.actionsRow}>
+                <div className={styles.detailsButton}>
+                  <Button
+                    variant="primary"
+                    disabled={isLoading}
+                    onClick={handleDetailsClick}
+                    aria-label={`${buttonText || "Подробнее"} о пользователе ${user.name}`}
+                  >
+                    {buttonText || "Подробнее"}
+                  </Button>
+                </div>
+                <div className={styles.deleteButton}>
+                  <Button
+                    variant="secondary"
+                    disabled={isLoading}
+                    onClick={() => onDeleteClick?.(user)}
+                    aria-label={`${buttonDeleteText || "Удалить"} обмен с пользователем ${user.name}`}
+                    style={{ color: "var(--color-error)" }}
+                  >
+                    {buttonDeleteText || "Удалить"}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.detailsButton}>
+                <Button
+                  variant="primary"
+                  disabled={isLoading}
+                  onClick={handleDetailsClick}
+                  aria-label={`${buttonText || "Подробнее"} о пользователе ${user.name}`}
+                >
+                  {buttonText || "Подробнее"}
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </article>
