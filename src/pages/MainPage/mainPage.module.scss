@@ -9,6 +9,7 @@
   max-inline-size: 1440px;
 
   .filterContainer {
+    position: relative;
     inline-size: 100%;
   }
 
@@ -29,5 +30,12 @@
       background-color: rgb(46 45 45 / 14.6%);
       z-index: 9999;
     }
+  }
+
+  .filterWrap {
+    position: sticky;
+    top: 15px;
+    block-size: 100vh;
+    overflow-y: auto;
   }
 }
