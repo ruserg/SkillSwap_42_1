@@ -33,6 +33,7 @@ import type { TFilterState } from "@/features/filter-users/types";
 import type { TSubcategory } from "@/entities/category/types";
 import { Arrow } from "@/shared/ui/Arrow/Arrow";
 import { LogOutSvg } from "./svg/LogoutSvg";
+import defaultAvatar from "@shared/assets/images/icons/default-avatar.svg";
 
 interface HeaderProps {
   onFiltersChange: (filters: TFilterState) => void;
@@ -268,6 +269,12 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
               className={styles.userImage}
               src={user?.avatarUrl}
               alt="Аватар пользователя"
+              width={96}
+              height={96}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = defaultAvatar;
+              }}
             />
             {isMenuOpen && (
               <DropDown

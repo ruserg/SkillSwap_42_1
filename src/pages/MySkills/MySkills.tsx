@@ -1,17 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@shared/ui/Button/Button";
 import { OfferPreview } from "@widgets/OfferPreview/OfferPreview";
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
+import { useAppSelector } from "@app/store/hooks";
 import { selectUser as selectAuthUser } from "@features/auth/model/slice";
-import { fetchSkillsData } from "@entities/skill/model/slice";
-import { fetchCategories } from "@entities/category/model/slice";
 import { api } from "@shared/api/api";
 import styles from "./mySkills.module.scss";
 
 export const MySkills = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const authUser = useAppSelector(selectAuthUser);
   const { skills, isLoading: skillsLoading } = useAppSelector(
@@ -22,21 +19,6 @@ export const MySkills = () => {
     subcategories,
     isLoading: categoriesLoading,
   } = useAppSelector((state) => state.categoryData);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        await Promise.all([
-          dispatch(fetchSkillsData()),
-          dispatch(fetchCategories()),
-        ]);
-      } catch (error) {
-        console.error("Ошибка загрузки данных:", error);
-      }
-    };
-
-    loadData();
-  }, [dispatch]);
 
   const userTeachSkills = useMemo(() => {
     if (!authUser || !skills.length) return [];
@@ -88,7 +70,6 @@ export const MySkills = () => {
 
     try {
       await api.deleteSkill(skillId);
-      await dispatch(fetchSkillsData());
     } catch (error: any) {
       console.error("Ошибка при удалении навыка:", error);
       alert(error?.message || "Не удалось удалить навык");

@@ -8,7 +8,12 @@ export const Logo = () => {
       className={styles.logoLinkContainer}
       aria-label={"Перейти на главную страницу"}
     >
-      <img src="/logo.svg" alt="Логотип сайта SkillSwap" />
+      <img
+        src="/logo.svg"
+        alt="Логотип сайта SkillSwap"
+        width={159}
+        height={40}
+      />
       <span className={styles.logoTitle}>SkillSwap</span>
     </Link>
   );

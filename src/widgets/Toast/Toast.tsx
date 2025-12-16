@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@app/store/hooks";
-import {
-  selectToast,
-  clearToast,
-  markNotificationAsRead,
-} from "@entities/notification/model/slice";
+import { selectToast, clearToast } from "@entities/notification/model/slice";
 import styles from "./toast.module.scss";
 
 export const Toast = () => {
