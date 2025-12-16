@@ -1,9 +1,6 @@
 import { useSelector } from "react-redux";
 import styles from "./dropDownListCategory.module.scss";
-import {
-  fetchCategories,
-  selectCategoryData,
-} from "@entities/category/model/slice";
+import { selectCategoryData } from "@entities/category/model/slice";
 import bussinessCareerImg from "@images/png/Business-career.png";
 import creativeAndArtImg from "@images/png/Creativity-and-Art.png";
 import educationAndDevelopmentImg from "@images/png/Education-and-Development.png";

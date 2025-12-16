@@ -1,37 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import { Card } from "@shared/ui/Card/Card";
 import type { UserWithLikes } from "@entities/user/types";
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
+import { useAppSelector } from "@app/store/hooks";
 import { selectUser as selectAuthUser } from "@features/auth/model/slice";
-import { selectUsers, fetchUsersData } from "@entities/user/model/slice";
-import { fetchSkillsData, selectSkillsData } from "@entities/skill/model/slice";
-import { fetchCities, selectCities } from "@entities/city/model/slice";
+import { selectUsers } from "@entities/user/model/slice";
+import { selectCities } from "@entities/city/model/slice";
 import { api } from "@shared/api/api";
 import type { Exchange } from "@entities/exchange/types";
 import styles from "./exchangesPage.module.scss";
 
 export const Exchanges = () => {
-  const dispatch = useAppDispatch();
   const authUser = useAppSelector(selectAuthUser);
   const users = useAppSelector(selectUsers);
-  const { skills, isLoading: skillsLoading } = useAppSelector(selectSkillsData);
   const { cities } = useAppSelector(selectCities);
   const [exchanges, setExchanges] = useState<Exchange[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Загружаем данные пользователей, навыков и городов, если они еще не загружены
-  useEffect(() => {
-    if (users.length === 0) {
-      dispatch(fetchUsersData());
-    }
-    if (skills.length === 0 && !skillsLoading) {
-      dispatch(fetchSkillsData());
-    }
-    if (cities.length === 0) {
-      dispatch(fetchCities());
-    }
-  }, [dispatch, users.length, skills.length, skillsLoading, cities.length]);
 
   useEffect(() => {
     const loadExchanges = async () => {

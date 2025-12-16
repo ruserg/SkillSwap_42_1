@@ -317,7 +317,9 @@ export const UserPage: React.FC = () => {
           <h2 className={styles.similarTitle}>Похожие предложения</h2>
           <div className={styles.similarCards}>
             {similarUsers.length > 0 ? (
-              similarUsers.map((user) => <Card user={user} cities={cities} />)
+              similarUsers.map((user) => (
+                <Card user={user} cities={cities} key={user.id} />
+              ))
             ) : (
               <div className={styles.noSimilar}>
                 <p>Нет похожих предложений</p>

@@ -3,13 +3,10 @@ import type { ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./skillForm.module.scss";
 import { Button } from "@shared/ui/Button/Button";
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
+import { useAppSelector } from "@app/store/hooks";
 import { ModalUI } from "@shared/ui/Modal/Modal";
 import galleryAddIcon from "@images/icons/gallery-add.svg";
-import {
-  fetchCategories,
-  selectCategoryData,
-} from "@entities/category/model/slice";
+import { selectCategoryData } from "@entities/category/model/slice";
 import { CategorySelector } from "@pages/signup/ui/SignupStepThree/CategorySelector";
 import { Loader } from "@/shared/ui/Loader/Loader";
 import { api } from "@shared/api/api";
@@ -31,7 +28,6 @@ interface ImageFile {
 export const SkillForm = () => {
   const { skillId } = useParams<{ skillId: string }>();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const isEditMode = Boolean(skillId);
 
@@ -70,10 +66,6 @@ export const SkillForm = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragAreaRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
 
   useEffect(() => {
     const loadSkillData = async () => {

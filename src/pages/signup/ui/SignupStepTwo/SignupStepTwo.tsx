@@ -37,11 +37,8 @@ import {
   selectSignup,
 } from "@features/signup/model/slice";
 import { setAvatarFile } from "@features/signup/model/slice";
-import {
-  fetchCategories,
-  selectCategoryData,
-} from "@entities/category/model/slice";
-import { fetchCities, selectCities } from "@entities/city/model/slice";
+import { selectCategoryData } from "@entities/category/model/slice";
+import { selectCities } from "@entities/city/model/slice";
 import { CategorySelector } from "@pages/signup/ui/SignupStepThree/CategorySelector";
 import { SkeletonField } from "@pages/signup/ui/SignupStepThree/SkeletonField";
 import { WelcomeSection } from "@shared/ui/WelcomeSection/WelcomeSection";
@@ -163,21 +160,6 @@ export const SignupStepTwo = () => {
       setSelectedDate(null);
     }
   }, [dateOfBirth]);
-
-  useEffect(() => {
-    if (categoriesData.length === 0 && !isCategoriesLoading) {
-      dispatch(fetchCategories());
-    }
-    if (citiesData.length === 0 && !isCitiesLoading) {
-      dispatch(fetchCities());
-    }
-  }, [
-    dispatch,
-    categoriesData.length,
-    isCategoriesLoading,
-    citiesData.length,
-    isCitiesLoading,
-  ]);
 
   useEffect(() => {
     const handleClickOutsideCity = (event: MouseEvent) => {

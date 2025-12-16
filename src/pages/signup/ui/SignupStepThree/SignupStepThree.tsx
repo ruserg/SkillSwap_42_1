@@ -24,10 +24,7 @@ import { ModalUI } from "@shared/ui/Modal/Modal";
 import galleryAddIcon from "@images/icons/gallery-add.svg";
 import schoolBoard from "@images/png/light/school-board.png";
 
-import {
-  fetchCategories,
-  selectCategoryData,
-} from "@entities/category/model/slice";
+import { selectCategoryData } from "@entities/category/model/slice";
 import {
   signupStep3Schema,
   type SignupStep3Data,
@@ -176,12 +173,6 @@ export const SignupStepThree = () => {
     setIsSuccessModalOpen(false);
     navigate("/");
   }, [dispatch, navigate]);
-
-  useEffect(() => {
-    if (categoriesData.length === 0 && !isLoading) {
-      dispatch(fetchCategories());
-    }
-  }, [dispatch, categoriesData.length, isLoading]);
 
   const getSelectedCategoryNames = () => {
     if (

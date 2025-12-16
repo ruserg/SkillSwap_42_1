@@ -7,7 +7,6 @@ import { CardSkeleton } from "@shared/ui/CardSkeleton/CardSkeleton";
 import styles from "./favorites.module.scss";
 
 export const Favorites = () => {
-  // const dispatch = useAppDispatch();
   const { users, isLoading } = useAppSelector(selectUsersData);
   const { cities } = useAppSelector(selectCities);
 
