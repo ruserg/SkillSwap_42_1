@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { fetchUser, selectAuth } from "@features/auth/model/slice";
 import { getCookie } from "@shared/lib/cookies";
@@ -8,12 +8,30 @@ import {
   fetchNotifications,
   fetchToastNotification,
 } from "@entities/notification/model/slice";
+import { fetchCategories } from "@/entities/category/model/slice";
+import { fetchCities } from "@/entities/city/model/slice";
+import { fetchUsersData } from "@/entities/user/model/slice";
+import { fetchSkillsData } from "@/entities/skill/model/slice";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 export const App = () => {
   const dispatch = useAppDispatch();
   const { user, isLoading } = useAppSelector(selectAuth);
   const isAuth = Boolean(user);
   const hasToken = !!getCookie("accessToken");
+
+  useEffect(() => {
+    const loadInitialData = async () => {
+      await Promise.all([
+        dispatch(fetchCategories()),
+        dispatch(fetchCities()),
+        dispatch(fetchUsersData()),
+        dispatch(fetchSkillsData()),
+      ]);
+    };
+
+    loadInitialData();
+  }, [dispatch]);
 
   useEffect(() => {
     if (hasToken && !user && !isLoading) {
@@ -48,7 +66,9 @@ export const App = () => {
 
   return (
     <BrowserRouter>
-      <AppRoutes />
+      <Suspense fallback={<Loader />}>
+        <AppRoutes />
+      </Suspense>
     </BrowserRouter>
   );
 };

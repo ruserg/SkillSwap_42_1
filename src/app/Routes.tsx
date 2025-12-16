@@ -1,19 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { MainPage } from "@pages/MainPage/MainPage";
-import { SignupStepOne } from "@pages/signup/ui/SignupStepOne/SignupStepOne";
-import { SignupStepThree } from "@pages/signup/ui/SignupStepThree/SignupStepThree";
-import { SignupStepTwo } from "@pages/signup/ui/SignupStepTwo/SignupStepTwo";
-import { Login } from "@/pages/Login/Login";
-import UserPage from "@/pages/UserPage/UserPage";
 import { Layout } from "@/widgets/Layout/Layout";
 import { ErrorPage } from "@/pages/ErrorPage/ErrorPage";
-import { ProfilePage } from "@/pages/ProfilePage/ProfilePage";
-import { FavoritesPage } from "@/pages/FavoritesPage/FavoritesPage";
-import { SkillEditPage } from "@/pages/SkillEdit/skillEditPage";
-import { MySkillsPage } from "@/pages/MySkills/mySkillsPage";
-import { ExchangesPage } from "@/pages/ExchangesPage/ExchangesPage";
-import { RequestsPage } from "@/pages/RequestsPage/RequestsPage";
+import { lazy } from "react";
 
 function CreateOffer() {
   return (
@@ -23,6 +13,53 @@ function CreateOffer() {
     </section>
   );
 }
+
+const lazyNamed = <T extends React.ComponentType<any>>(
+  loader: () => Promise<{ [key: string]: T }>,
+  exportName: string,
+) => lazy(() => loader().then((module) => ({ default: module[exportName] })));
+
+const UserPage = lazyNamed(
+  () => import("@pages/UserPage/UserPage"),
+  "UserPage",
+);
+const ProfilePage = lazyNamed(
+  () => import("@pages/ProfilePage/ProfilePage"),
+  "ProfilePage",
+);
+const FavoritesPage = lazyNamed(
+  () => import("@pages/FavoritesPage/FavoritesPage"),
+  "FavoritesPage",
+);
+const MySkillsPage = lazyNamed(
+  () => import("@pages/MySkills/mySkillsPage"),
+  "MySkillsPage",
+);
+const SkillEditPage = lazyNamed(
+  () => import("@pages/SkillEdit/skillEditPage"),
+  "SkillEditPage",
+);
+const Login = lazyNamed(() => import("@pages/Login/Login"), "Login");
+const SignupStepOne = lazyNamed(
+  () => import("@pages/signup/ui/SignupStepOne/SignupStepOne"),
+  "SignupStepOne",
+);
+const SignupStepTwo = lazyNamed(
+  () => import("@pages/signup/ui/SignupStepTwo/SignupStepTwo"),
+  "SignupStepTwo",
+);
+const SignupStepThree = lazyNamed(
+  () => import("@pages/signup/ui/SignupStepThree/SignupStepThree"),
+  "SignupStepThree",
+);
+const ExchangesPage = lazyNamed(
+  () => import("@pages/ExchangesPage/ExchangesPage"),
+  "ExchangesPage",
+);
+const RequestsPage = lazyNamed(
+  () => import("@pages/RequestsPage/RequestsPage"),
+  "RequestsPage",
+);
 
 export const AppRoutes = () => (
   <Routes>

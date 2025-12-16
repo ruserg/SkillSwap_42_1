@@ -16,6 +16,7 @@ import { useAppSelector } from "@app/store/hooks";
 import { selectSkillsData } from "@entities/skill/model/slice";
 import { selectCategoryData } from "@entities/category/model/slice";
 import { selectIsAuthenticated } from "@features/auth/model/slice";
+import defaultAvatar from "@shared/assets/images/icons/default-avatar.svg";
 
 export const Card: React.FC<CardProps> = memo(
   ({
@@ -194,9 +195,11 @@ export const Card: React.FC<CardProps> = memo(
             <img
               src={user.avatarUrl}
               alt={user.name}
+              width={96}
+              height={96}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.src = "https://i.pravatar.cc/150?img=0";
+                target.src = defaultAvatar;
               }}
               loading="lazy"
             />

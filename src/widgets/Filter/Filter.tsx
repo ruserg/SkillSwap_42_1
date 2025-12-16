@@ -1,18 +1,10 @@
-import {
-  useState,
-  useEffect,
-  type ChangeEvent,
-  type ReactElement,
-} from "react";
+import { useState, type ChangeEvent, type ReactElement } from "react";
 import { Input } from "@shared/ui/Input/Input";
 import styles from "./filter.module.scss";
 import { FILTER_CONFIG, type TFilterState } from "@features/filter-users/types";
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
-import {
-  fetchCategories,
-  selectCategoryData,
-} from "@entities/category/model/slice";
-import { selectCities, fetchCities } from "@entities/city/model/slice";
+import { useAppSelector } from "@app/store/hooks";
+import { selectCategoryData } from "@entities/category/model/slice";
+import { selectCities } from "@entities/city/model/slice";
 import { FilterSkeleton } from "@widgets/FilterSkeleton/FilterSkeleton";
 import { ClearSVG } from "./svg/FilterSvg";
 import { Arrow } from "@/shared/ui/Arrow/Arrow";
@@ -28,7 +20,6 @@ export const Filter = ({
   onFiltersChange,
   onClearSearchQuery,
 }: FilterProps): ReactElement => {
-  const dispatch = useAppDispatch();
   const { categories, subcategories, isLoading } =
     useAppSelector(selectCategoryData);
   const { cities } = useAppSelector(selectCities);
@@ -38,15 +29,6 @@ export const Filter = ({
   const subcategorys = subcategories;
   const gender = ["Не имеет значения", "Мужчины", "Женщины"];
   const cityAll = cities;
-
-  useEffect(() => {
-    if (categories.length === 0 && !isLoading) {
-      dispatch(fetchCategories());
-    }
-    if (cities.length === 0) {
-      dispatch(fetchCities());
-    }
-  }, [dispatch, categories.length, isLoading, cities.length]);
 
   const [showSubcategorys, setShowSubcategorys] = useState<number[]>([]);
   const [showAllSkills, setShowAllSkills] = useState(false);

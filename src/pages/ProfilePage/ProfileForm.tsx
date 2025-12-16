@@ -19,7 +19,7 @@ import {
   type SyntheticEvent,
 } from "react";
 import { Loader } from "@/shared/ui/Loader/Loader";
-import { fetchCities, selectCities } from "@/entities/city/model/slice";
+import { selectCities } from "@/entities/city/model/slice";
 import type { UpdateUserRequest } from "@/shared/lib/types/api";
 import { ModalUI } from "@/shared/ui/Modal/Modal";
 
@@ -37,12 +37,6 @@ export const ProfileForm = () => {
     newPassword: "",
     confirmPassword: "",
   });
-
-  useEffect(() => {
-    if (cities.length === 0) {
-      dispatch(fetchCities());
-    }
-  }, [dispatch, cities.length]);
 
   const cityNameToId = new Map(cities.map((city) => [city.name, city.id]));
 

@@ -12,30 +12,31 @@ export const DecoratedButton = (props: TDecorButtonProps) => {
     isUser,
   } = props;
 
+  const ariaLabels = {
+    heart: "Добавить в избранное",
+    heartFill: "Убрать из избранного",
+    moon: "Сменить тему",
+    bell: notificationsCount
+      ? `Уведомления (${notificationsCount} новых)`
+      : "Уведомления",
+    share: "Поделиться",
+    parameters: "Дополнительные параметры",
+  };
+
   const currentSvg = (variant: string) => {
     switch (variant) {
       case "heart":
-        return (
-          <Like isUser={isUser} aria-label="Пустой лайк" aria-hidden={true} />
-        );
+        return <Like isUser={isUser} />;
       case "heartFill":
-        return <LikePaint aria-label="Поставленный лайк" aria-hidden={true} />;
+        return <LikePaint />;
       case "moon":
-        return <Moon aria-label="Смена темы" aria-hidden={true} />;
+        return <Moon />;
       case "bell":
-        return (
-          <Bell
-            aria-label="Уведомления"
-            isFill={!!notificationsCount}
-            aria-hidden={true}
-          />
-        );
+        return <Bell isFill={!!notificationsCount} />;
       case "share":
-        return <Share aria-label="Поделиться" aria-hidden={true} />;
+        return <Share />;
       case "parameters":
-        return (
-          <Parametrs aria-label="Дополнительные параметры" aria-hidden={true} />
-        );
+        return <Parametrs />;
     }
   };
 
@@ -45,6 +46,7 @@ export const DecoratedButton = (props: TDecorButtonProps) => {
       className={styles.decorationButton}
       disabled={disabled}
       type={htmlType}
+      aria-label={ariaLabels[variant]}
     >
       {currentSvg(variant)}
     </button>
