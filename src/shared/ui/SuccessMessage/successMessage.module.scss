@@ -1,5 +1,5 @@
-@use "../../../styles/mixins" as *;
-@use "../../../styles/variables" as vars;
+@use "@styles/mixins" as *;
+@use "@styles/variables" as vars;
 
 .container {
   max-inline-size: 556px;

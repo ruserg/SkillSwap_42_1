@@ -13,7 +13,6 @@ import formStyles from "@shared/ui/Form/form.module.scss";
 import { ExternalLogIn } from "@/widgets/ExternalLogIn/ExternalLogIn";
 import { Loader } from "@/shared/ui/Loader/Loader";
 import lightBulbLight from "@images/png/light/light-bulb.png";
-import lightBulbDark from "@images/png/dark/light-bulb.png";
 import { FormField } from "@/shared/ui/FormField/FormField";
 
 export const Login = () => {

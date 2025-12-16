@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from "./profilePage.module.scss";
-
 import {
   Request,
   MessageText,

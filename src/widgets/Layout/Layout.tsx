@@ -1,8 +1,8 @@
 import styles from "./layout.module.scss";
 import { Outlet } from "react-router-dom";
-import { Footer } from "../Footer/Footer";
-import { Header } from "../Header/Header";
-import { Toast } from "../Toast/Toast";
+import { Footer } from "@widgets/Footer/Footer";
+import { Header } from "@widgets/Header/Header";
+import { Toast } from "@widgets/Toast/Toast";
 import { useAppSelector } from "@/app/store/hooks";
 import { selectCategoryData } from "@entities/category/model/slice";
 import { useState } from "react";

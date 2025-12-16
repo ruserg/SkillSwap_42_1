@@ -19,6 +19,7 @@ export const NotificationItem: React.FC<
 
   return (
     <div className={styles.notificationCard}>
+      notificationMessage
       <div className={styles.notificationContent}>
         <div className={styles.icon}>
           <NotificationSvg />
@@ -34,7 +35,6 @@ export const NotificationItem: React.FC<
           </div>
         </div>
       </div>
-
       {/* Временно закомментировано */}
       {/* {!notification.isRead && notification.action && (
         <div className={styles.actionButton}>

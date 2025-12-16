@@ -22,7 +22,6 @@ import { Loader } from "@/shared/ui/Loader/Loader";
 import { fetchCities, selectCities } from "@/entities/city/model/slice";
 import type { UpdateUserRequest } from "@/shared/lib/types/api";
 import { ModalUI } from "@/shared/ui/Modal/Modal";
-
 import { Edit } from "@/shared/ui/DecoratedButton/svg/IconSvg";
 
 export const ProfileForm = () => {

@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as vars;
-@use "../../../styles/mixins" as *;
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
 
 .separator {
   @include flex(row, center, center, 4px);

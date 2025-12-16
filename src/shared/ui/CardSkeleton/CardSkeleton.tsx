@@ -1,4 +1,4 @@
-import cardStyles from "../Card/card.module.scss";
+import cardStyles from "@shared/ui/Card/card.module.scss";
 import skeletonStyles from "./cardSkeleton.module.scss";
 
 export const CardSkeleton = () => {

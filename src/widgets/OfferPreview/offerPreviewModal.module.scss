@@ -1,5 +1,5 @@
-@use "../../styles/mixins" as *;
-@use "../../styles/variables" as vars;
+@use "@styles/mixins" as *;
+@use "@styles/variables" as vars;
 
 @mixin text-style($weight, $size, $line) {
   font-weight: $weight;

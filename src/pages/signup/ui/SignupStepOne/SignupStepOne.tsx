@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "./signupStepOne.module.scss";
 import formStyles from "@shared/ui/Form/form.module.scss";
 import { Button } from "@shared/ui/Button/Button";
-import { Input } from "@shared/ui/Input/Input";
 import { Logo } from "@shared/ui/Logo/Logo";
 import lightBulb from "@images/png/light/light-bulb.png";
 import { SignupSteps } from "@shared/ui/SignupSteps/SignupSteps";

@@ -1,5 +1,5 @@
 import styles from "./favoritesPage.module.scss";
-import { SidebarMenu } from "../ProfilePage/SidebarMenu";
+import { SidebarMenu } from "@pages/ProfilePage/SidebarMenu";
 import { Favorites } from "./Favorites";
 
 export const FavoritesPage = () => {

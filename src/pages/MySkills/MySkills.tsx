@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@shared/ui/Button/Button";
 import { OfferPreview } from "@widgets/OfferPreview/OfferPreview";

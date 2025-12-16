@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as vars;
-@use "../../../styles/mixins" as *;
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
 
 .container {
   @include flex(column, center, center, 5px);

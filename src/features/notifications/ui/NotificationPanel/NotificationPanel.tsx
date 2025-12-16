@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./notificationPanel.module.scss";
 import { NotificationItem } from "./NotificationItem";
-import type { IReadProps } from "../../model/types";
+import type { IReadProps } from "@features/notifications/model/types";
 import { useAppDispatch } from "@app/store/hooks";
 import { deleteNotification } from "@entities/notification/model/slice";
 

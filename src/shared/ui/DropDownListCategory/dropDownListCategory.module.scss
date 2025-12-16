@@ -1,9 +1,6 @@
 .listCategory {
   inline-size: 1136px;
   padding: 60px;
-
-  // @include flex(column, center, center, 40px);
-  // flex-wrap: wrap;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 40px;

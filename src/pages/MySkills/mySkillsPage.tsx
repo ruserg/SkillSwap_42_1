@@ -1,5 +1,5 @@
 import styles from "./mySkillsPage.module.scss";
-import { SidebarMenu } from "../ProfilePage/SidebarMenu";
+import { SidebarMenu } from "@pages/ProfilePage/SidebarMenu";
 import { MySkills } from "./MySkills";
 
 export const MySkillsPage = () => {

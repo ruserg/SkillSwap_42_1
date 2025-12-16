@@ -1,9 +1,9 @@
 // все импорты стилей в одном файле
-@use "./styles/themes/dark.scss" as *;
-@use "./styles/themes/light.scss" as *;
-@use "./styles/normalize.scss" as *;
+@use "@styles/themes/dark.scss" as *;
+@use "@styles/themes/light.scss" as *;
+@use "@styles/normalize.scss" as *;
 @use "@styles/reset.scss" as *;
-@use "./styles/fonts.scss" as *;
+@use "@styles/fonts.scss" as *;
 
 // Глобальные стили
 html {

@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CardsSection } from "@shared/ui/CardsSection/CardsSection";
 import { UserCardsList } from "@shared/ui/UserCardsList/UserCardsList";
 import { ViewAllButton } from "@shared/ui/ViewAllButton/ViewAllButton";
-import type { UserWithLikes } from "@entities/user/types";
 import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { fetchUsersData, selectUsersData } from "@entities/user/model/slice";
 import { selectCategoryData } from "@entities/category/model/slice";

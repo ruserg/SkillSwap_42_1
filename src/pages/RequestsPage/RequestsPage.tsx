@@ -1,5 +1,5 @@
 import styles from "./requestsPage.module.scss";
-import { SidebarMenu } from "../ProfilePage/SidebarMenu";
+import { SidebarMenu } from "@pages/ProfilePage/SidebarMenu";
 import { Requests } from "./Requests";
 
 export const RequestsPage = () => {

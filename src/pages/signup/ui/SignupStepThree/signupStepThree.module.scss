@@ -55,62 +55,6 @@
   min-block-size: 680px;
 }
 
-.infoContainer {
-  @include flex(column, center, center, 40px);
-  inline-size: 556px;
-  padding-inline: 60px;
-  padding-block: 40px;
-  background-color: vars.$color-input;
-  border-radius: vars.$input-border-radius;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
-  position: relative;
-  z-index: 2;
-  min-block-size: 680px;
-}
-
-.imageWrapper {
-  @include flex(column, center, center);
-}
-
-.infoImage {
-  inline-size: 300px;
-  block-size: 300px;
-  object-fit: contain;
-}
-
-.imagePlaceholder {
-  inline-size: 300px;
-  block-size: 300px;
-  background-color: vars.$color-disabled;
-  border-radius: vars.$input-border-radius;
-  @include flex(column, center, center);
-}
-
-.placeholderIcon {
-  font-size: 80px;
-  color: vars.$color-caption;
-}
-
-.infoText {
-  @include flex(column, center, center, 12px);
-  text-align: center;
-}
-
-.infoTitle {
-  @include text-style($weight: 500, $size: 24px, $line: normal);
-  font-family: Jost, sans-serif;
-  color: vars.$color-text;
-  margin: 0;
-}
-
-.infoDescription {
-  @include text-style($weight: 400, $size: 16px, $line: 1.5);
-  font-family: Roboto, sans-serif;
-  color: vars.$color-caption;
-  margin: 0;
-  padding-inline: 20px;
-}
-
 .title {
   @include text-style($weight: 500, $size: 24px, $line: normal);
   font-family: Jost, sans-serif;
@@ -251,13 +195,6 @@
   }
 }
 
-.hint {
-  @include text-style($weight: 400, $size: 12px, $line: normal);
-  color: vars.$color-caption;
-  margin-block-start: 4px;
-  font-family: Roboto, sans-serif;
-}
-
 .uploadArea {
   inline-size: 436px;
   block-size: auto;
@@ -291,13 +228,6 @@
   text-align: center;
   color: vars.$color-caption;
   margin-block-end: 16px;
-}
-
-.uploadHint {
-  @include text-style($weight: 400, $size: 12px, $line: normal);
-  font-family: Roboto, sans-serif;
-  color: vars.$color-caption;
-  margin-block-start: 4px;
 }
 
 .uploadButton {
@@ -335,38 +265,6 @@
   cursor: pointer;
 }
 
-.fileList {
-  margin-block-start: 16px;
-  border: 1px solid vars.$color-border-input;
-  border-radius: vars.$input-border-radius;
-  overflow: hidden;
-  background-color: vars.$color-input;
-}
-
-.fileListHeader {
-  display: flex;
-  padding: 12px 16px;
-  background-color: rgba(vars.$color-toggle, 0.1);
-  border-bottom: 1px solid vars.$color-border-input;
-  @include text-style($weight: 500, $size: 14px, $line: normal);
-  font-family: Roboto, sans-serif;
-  color: vars.$color-text;
-}
-
-.fileNameHeader {
-  flex: 3;
-}
-
-.fileSizeHeader {
-  flex: 1;
-  text-align: right;
-}
-
-.fileActionsHeader {
-  flex: 0 0 60px;
-  text-align: center;
-}
-
 .fileItems {
   display: flex;
   flex-wrap: wrap;
@@ -387,12 +285,6 @@
   }
 }
 
-.fileInfo {
-  display: flex;
-  flex: 1;
-  align-items: center;
-}
-
 .fileName {
   @include text-style($weight: 400, $size: 14px, $line: normal);
   font-family: Roboto, sans-serif;
@@ -402,14 +294,6 @@
   white-space: nowrap;
   flex: 1;
   padding-inline-end: 12px;
-}
-
-.fileSize {
-  flex: 1;
-  text-align: right;
-  @include text-style($weight: 400, $size: 12px, $line: normal);
-  font-family: Roboto, sans-serif;
-  color: vars.$color-caption;
 }
 
 .removeFile {
@@ -440,20 +324,6 @@
 
   & > * {
     flex: 1;
-  }
-}
-
-.modalData {
-  background-color: vars.$color-card;
-  padding: 15px;
-  border-radius: 8px;
-  margin-block-end: 20px;
-
-  p {
-    margin: 8px 0;
-    color: vars.$color-text;
-    line-height: 1.5;
-    @include text-style($weight: 400, $size: 16px, $line: 1.5);
   }
 }
 
@@ -640,18 +510,6 @@
   }
 }
 
-.disabledSelector {
-  inline-size: 100%;
-  padding: 12px 16px;
-  border: 1px solid vars.$color-disabled-text;
-  border-radius: vars.$input-border-radius;
-  background-color: vars.$color-disabled;
-  color: vars.$color-disabled-text;
-  @include text-style($weight: 400, $size: 16px, $line: normal);
-  font-family: Roboto, sans-serif;
-  cursor: not-allowed;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -667,25 +525,6 @@
 .modalPreviewContainer {
   max-inline-size: 1080px;
   margin: 0 auto;
-}
-
-.modalPreviewHeader {
-  margin-block-end: 10px;
-  text-align: center;
-}
-
-.modalPreviewTitle {
-  @include text-style($weight: 500, $size: 24px, $line: normal);
-  font-family: Jost, sans-serif;
-  color: vars.$color-text;
-  margin-block-end: 8px;
-}
-
-.modalPreviewSubtitle {
-  @include text-style($weight: 400, $size: 12px, $line: normal);
-  font-family: Roboto, sans-serif;
-  color: vars.$color-caption;
-  margin: 0;
 }
 
 .successModalContainer {

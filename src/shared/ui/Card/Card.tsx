@@ -5,7 +5,7 @@ import type { CardProps } from "./types";
 import type { TSkill } from "@entities/skill/types";
 import styles from "./card.module.scss";
 import { calculateAge } from "@shared/lib/utils/ageCalculator";
-import { Like } from "../Like/Like";
+import { Like } from "@shared/ui/Like/Like";
 import { getUserSkillsByType } from "@shared/lib/utils/skillUtils";
 import {
   getTagClassName,

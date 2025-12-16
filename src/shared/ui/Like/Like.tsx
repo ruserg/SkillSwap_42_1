@@ -9,7 +9,7 @@ import styles from "./like.module.scss";
 import type { ILikeProps } from "./like.types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { selectUser } from "@/features/auth/model/slice";
-import { DecoratedButton } from "../DecoratedButton/DecoratedButton";
+import { DecoratedButton } from "@shared/ui/DecoratedButton/DecoratedButton";
 
 export const Like = (props: ILikeProps) => {
   const {

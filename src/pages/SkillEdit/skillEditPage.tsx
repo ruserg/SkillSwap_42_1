@@ -1,5 +1,5 @@
 import styles from "./skillEditPage.module.scss";
-import { SidebarMenu } from "../ProfilePage/SidebarMenu";
+import { SidebarMenu } from "@pages/ProfilePage/SidebarMenu";
 import { SkillForm } from "@features/skills/ui/SkillForm/SkillForm";
 
 export const SkillEditPage = () => {

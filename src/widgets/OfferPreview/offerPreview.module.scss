@@ -1,5 +1,5 @@
-@use "../../styles/mixins" as *;
-@use "../../styles/variables" as vars;
+@use "@styles/mixins" as *;
+@use "@styles/variables" as vars;
 
 @mixin text-style($weight, $size, $line) {
   font-weight: $weight;
@@ -124,18 +124,6 @@
   &::-webkit-scrollbar-track {
     background-color: vars.$color-disabled;
     border-radius: 10px;
-  }
-}
-
-.mainButton {
-  @include text-style($weight: 400, $size: 16px, $line: 24px);
-  font-family: Roboto, sans-serif;
-  inline-size: 100%;
-  block-size: 48px;
-
-  button {
-    inline-size: 100%;
-    block-size: 100%;
   }
 }
 
