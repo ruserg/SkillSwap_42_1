@@ -164,6 +164,8 @@
 
 .cardsContainer {
   @include flex(column);
+  gap: 20px;
+  justify-content: flex-end;
 }
 
 .noImages {
