@@ -3,16 +3,10 @@ import styles from "./errorPage.module.scss";
 import type { errorPropsType } from "./errorPage.types";
 import { useNavigate } from "react-router-dom";
 
-import error404Light from "@images/png/light/error-404.png";
-import error500Light from "@images/png/light/error-500.png";
-import error404Dark from "@images/png/dark/error-404.png";
-import error500Dark from "@images/png/dark/error-500.png";
-
 export const ErrorPage = (props: errorPropsType) => {
   const { statusCode } = props;
   const navigate = useNavigate();
 
-  // const errorImage = statusCode === "404" ? error404Light : error500Light;
   const errorTitle =
     statusCode === "404"
       ? "Страница не найдена"
@@ -48,6 +42,3 @@ export const ErrorPage = (props: errorPropsType) => {
     </div>
   );
 };
-
-// ставлю заглушки на onClick. В дальнейшем при работе с логикой и когда будем работать с роутами - поправим.
-//Используем просто. В пропс statusCode  передаём 404 или 500 и в зависимости от выбора - компонент отрисует нужную страницу.

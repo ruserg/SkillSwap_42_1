@@ -18,12 +18,20 @@
     // Для 404 ошибки
     &[data-error="404"] {
       .errorImage {
-        // Светлая тема (по умолчанию)
         background-image: url("@images/png/light/error-404.png");
 
-        // Темная тема
         [data-theme="dark"] & {
           background-image: url("@images/png/dark/error-404.png");
+        }
+      }
+    }
+
+    &[data-error="500"] {
+      .errorImage {
+        background-image: url("@images/png/light/error-500.png");
+
+        [data-theme="dark"] & {
+          background-image: url("@images/png/dark/error-500.png");
         }
       }
     }

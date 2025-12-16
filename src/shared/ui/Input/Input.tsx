@@ -50,11 +50,15 @@ export const Input = (props: InputProps) => {
         <input
           className={`${inputClass} ${styles.visuallyHidden}`}
           type={type}
-          aria-checked={props.checked}
           {...restProps}
         />
         {checkedSvg}
-        <span className={styles.inputText} onClick={blockChecked}>
+        <span
+          className={styles.inputText}
+          onClick={blockChecked}
+          role={isBlockCheckedLabel ? "button" : undefined}
+          aria-disabled={isBlockCheckedLabel}
+        >
           {children}
         </span>
       </label>
@@ -66,8 +70,7 @@ export const Input = (props: InputProps) => {
       <label className={styles.inputSearchWrapper}>
         <input
           className={styles.inputSearch}
-          type={type}
-          role="search"
+          type="search"
           placeholder={props.placeholder || "Искать навык"}
           aria-label={props["aria-label"] || "Поиск"}
           {...restProps}
@@ -164,20 +167,8 @@ export const Input = (props: InputProps) => {
     <input
       className={styles.input}
       type={type}
-      aria-label={props["aria-label"] || props.placeholder}
+      aria-label={props["aria-label"] ?? props.placeholder ?? "Поле ввода"}
       {...restProps}
     />
   );
 };
-
-// Универсальный компонент, который покрывает всё использование импутов в приложении. В качестве обязательного пропса необходимо передать тип инпута (type). Далее остальные пропсы передаются по мере необходимости.
-// Обратите внимание! В макете, в выпадающем списке, есть разные отрисовки при состоянии checked. В данном компоненте это учтено через пропс isOpenList.
-// Компоненты полностью стилизированы и, на текущий момент, не требуют внешних вмешательств. Разве что, в дальнейшем, подключим оригинальные картинки из проекта. Сейчас стоят заглушки.
-// Пример использования:
-// <Input type="checkbox" isOpenList children="Бизнес и карьера" />
-// <Input type="checkbox" children="Бизнес и карьера" />
-// <Input type="radio" children="Хочу научиться" name="Обязательно одинаковое имя!"/>
-// <Input type="radio" children="Хочу играть в батлу" name="Обязательно одинаковое имя!"/>
-// <Input type="text" placeholder="Введите ваше имя" />
-// <Input type="search" placeholder="Искать навык" />
-// Добавлен функционал для type="password". Если передать в пропс флаг isShowPassword, то форма будет сразу с открытым паролем, а если не передать, то с закрытым. Удобно будет использовать для разных задач (авторизация и регистрация).

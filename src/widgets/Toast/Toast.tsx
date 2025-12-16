@@ -29,13 +29,6 @@ export const Toast = () => {
     dispatch(clearToast());
   };
 
-  const handleMarkAsRead = () => {
-    if (toast.id) {
-      dispatch(markNotificationAsRead(toast.id));
-    }
-    dispatch(clearToast());
-  };
-
   return (
     <div className={styles.toastContainer}>
       <div className={styles.toast} role={"status"} aria-live={"polite"}>
@@ -52,12 +45,6 @@ export const Toast = () => {
         >
           ×
         </button>
-        {/* Временно закомментировано */}
-        {/* {!toast.isRead && toast.action && (
-          <button className={styles.toastAction} onClick={handleMarkAsRead}>
-            {toast.action}
-          </button>
-        )} */}
       </div>
     </div>
   );
