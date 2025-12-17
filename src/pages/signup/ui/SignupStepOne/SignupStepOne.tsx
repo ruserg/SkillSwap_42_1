@@ -21,33 +21,54 @@ import { Loader } from "@/shared/ui/Loader/Loader";
 import { useDebounce } from "@shared/hooks/useDebounce";
 import { api, ApiError } from "@shared/api/api";
 import { FormField } from "@/shared/ui/FormField/FormField";
+import { useFormValidation } from "@shared/hooks/useFormValidation";
 
 export const SignupStepOne = () => {
+  const [emailAvailability, setEmailAvailability] = useState<boolean | null>(
+    null,
+  );
+  const { step1 } = useAppSelector(selectSignup);
+
+  const {
+    formData,
+    touched,
+    errors: baseErrors,
+    isFormValid: isZodFormValid,
+    handleInputChange,
+  } = useFormValidation<SignupStep1Data>({
+    schema: signupStep1Schema,
+    initialValues: {
+      email: step1.email || "",
+      password: step1.password || "",
+    },
+    initialTouched: {
+      email: !!step1.email,
+      password: !!step1.password,
+    },
+  });
+
+  const errors = { ...baseErrors };
+
+  if (touched.email && emailAvailability === false) {
+    errors.email = "Email уже занят";
+  }
+
+  const isFormValid =
+    isZodFormValid && (emailAvailability === true || !touched.email);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isSubmitting = useAppSelector(selectIsSubmitting);
 
-  const { step1 } = useAppSelector(selectSignup);
+  const handleChangeWithEmailReset = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    handleInputChange(e);
 
-  const [formData, setFormData] = useState<SignupStep1Data>({
-    email: step1.email || "",
-    password: step1.password || "",
-  });
-
-  const [touched, setTouched] = useState({
-    email: !!(step1.email && step1.email.length > 0),
-    password: !!(step1.password && step1.password.length > 0),
-  });
-
-  const [errors, setErrors] = useState<{
-    email?: string;
-    password?: string;
-  }>({});
-
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [emailAvailability, setEmailAvailability] = useState<boolean | null>(
-    null,
-  );
+    if (e.target.id === "email") {
+      setEmailAvailability(null);
+    }
+  };
 
   // Debounce email для проверки на сервере
   const debouncedEmail = useDebounce(formData.email, 500);
@@ -95,58 +116,6 @@ export const SignupStepOne = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const result = signupStep1Schema.safeParse(formData);
-    const newErrors: { email?: string; password?: string } = {};
-
-    if (touched.email) {
-      const emailIssue = result.error?.issues.find(
-        (issue) => issue.path[0] === "email",
-      );
-      if (emailIssue) {
-        newErrors.email = emailIssue.message;
-      } else if (emailAvailability === false) {
-        newErrors.email = "Email уже занят";
-      }
-      // Если emailAvailability === null - значит проверка идет, не показываем ошибку
-      // Если emailAvailability === true - email свободен, ошибки нет
-    }
-
-    if (touched.password) {
-      const emailIssue = result.error?.issues.find(
-        (issue) => issue.path[0] === "email",
-      );
-      const isEmailFullyValid = !emailIssue && emailAvailability === true;
-
-      if (isEmailFullyValid) {
-        const passwordIssue = result.error?.issues.find(
-          (issue) => issue.path[0] === "password",
-        );
-        if (passwordIssue) {
-          newErrors.password = passwordIssue.message;
-        }
-      }
-    }
-
-    setErrors(newErrors);
-
-    setIsFormValid(result.success && emailAvailability === true);
-  }, [formData, touched, emailAvailability]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-
-    setTouched((prev) => ({ ...prev, [id]: true }));
-
-    if (id === "email") {
-      setEmailAvailability(null);
-    }
-  };
-
   const handleSubmit = () => {
     if (isFormValid) {
       dispatch(
@@ -189,7 +158,7 @@ export const SignupStepOne = () => {
               type="email"
               placeholder="Введите email"
               value={formData.email}
-              onChange={handleInputChange}
+              onChange={handleChangeWithEmailReset}
               error={errors.email}
             />
             {/* // TODO: в компоненте инпута нужно сделать кнопку "показать пароль" */}
@@ -199,7 +168,7 @@ export const SignupStepOne = () => {
               type="password"
               placeholder="Придумайте надёжный пароль"
               value={formData.password}
-              onChange={handleInputChange}
+              onChange={handleChangeWithEmailReset}
               error={errors.password}
             />
             <Button onClick={handleSubmit} disabled={!isFormValid}>

@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { login, selectAuth, clearError } from "@features/auth/model/slice";
 import { Button } from "@shared/ui/Button/Button";
 import { Logo } from "@shared/ui/Logo/Logo";
 import { ArrowLeftIcon } from "@shared/ui/Icons/ArrowLeftIcon";
-import type { z } from "zod";
 import type { SignupStep1Data } from "@shared/lib/zod/types";
 import { signupStep1Schema } from "@shared/lib/zod/schemas/userAuthSchema";
 import styles from "./login.module.scss";
@@ -14,6 +12,7 @@ import { ExternalLogIn } from "@/widgets/ExternalLogIn/ExternalLogIn";
 import { Loader } from "@/shared/ui/Loader/Loader";
 import lightBulbLight from "@images/png/light/light-bulb.png";
 import { FormField } from "@/shared/ui/FormField/FormField";
+import { useFormValidation } from "@shared/hooks/useFormValidation";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -21,62 +20,19 @@ export const Login = () => {
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector(selectAuth);
 
-  const [formData, setFormData] = useState<SignupStep1Data>({
-    email: "",
-    password: "",
-  });
+  const { formData, errors, isFormValid, handleInputChange } =
+    useFormValidation<SignupStep1Data>({
+      schema: signupStep1Schema,
+      initialValues: {
+        email: "",
+        password: "",
+      },
+    });
 
-  const [touched, setTouched] = useState({
-    email: false,
-    password: false,
-  });
-
-  const [errors, setErrors] = useState<{
-    email?: string;
-    password?: string;
-  }>({});
-
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  useEffect(() => {
-    const result = signupStep1Schema.safeParse(formData);
-
-    if (result.success) {
-      setErrors({});
-      setIsFormValid(true);
-    } else {
-      const newErrors: { email?: string; password?: string } = {};
-
-      result.error.issues.forEach((issue: z.ZodIssue) => {
-        const field = issue.path[0] as keyof SignupStep1Data;
-        if (
-          field &&
-          touched[field as keyof typeof touched] &&
-          (field === "email" || field === "password")
-        ) {
-          newErrors[field] = issue.message;
-        }
-      });
-
-      setErrors(newErrors);
-      setIsFormValid(false);
-    }
-  }, [formData, touched]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearError());
-    };
-  }, [dispatch]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-
-    setTouched((prev) => ({ ...prev, [id]: true }));
+  const handleChangeWithClearError = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    handleInputChange(e);
     dispatch(clearError());
   };
 
@@ -123,7 +79,7 @@ export const Login = () => {
               type="email"
               placeholder="Введите email"
               value={formData.email}
-              onChange={handleInputChange}
+              onChange={handleChangeWithClearError}
               disabled={isLoading}
               error={errors.email}
             />
@@ -133,7 +89,7 @@ export const Login = () => {
               type="password"
               placeholder="Введите ваш пароль"
               value={formData.password}
-              onChange={handleInputChange}
+              onChange={handleChangeWithClearError}
               disabled={isLoading}
               error={errors.password}
             />
