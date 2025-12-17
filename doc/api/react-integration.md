@@ -156,7 +156,7 @@ export const LikeButton = ({ userId }: { userId: number }) => {
 
   return (
     <button onClick={handleToggle}>
-      {isLikedByCurrentUser ? '❤️' : '🤍'} {likesCount}
+      {isLikedByCurrentUser ? 'Liked' : 'Not liked'} {likesCount}
     </button>
   );
 };

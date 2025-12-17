@@ -7,13 +7,12 @@ export type TBaseButtonProps = {
   variant?: TButtonVariant;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  disabled?: boolean;
   isLoading?: boolean;
   otherClassNames?: string;
 };
 
 export type TButtonAsButton = TBaseButtonProps &
-  Omit<ButtonHTMLAttributes<HTMLButtonElement>, "disabled"> & {
+  ButtonHTMLAttributes<HTMLButtonElement> & {
     to?: never;
   };
 

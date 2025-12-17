@@ -3,7 +3,15 @@ import formStyles from "@shared/ui/Form/form.module.scss";
 import type { IWelcomeSectionProps } from "@shared/ui/WelcomeSection/types";
 
 export const WelcomeSection = (props: IWelcomeSectionProps) => {
-  const { src, alt, width = "300", height = "300", title, description } = props;
+  const {
+    src,
+    alt,
+    width = "300",
+    height = "300",
+    title,
+    description,
+    children,
+  } = props;
 
   const getImageName = (src: string) => {
     const parts = src.split("/");
@@ -21,8 +29,16 @@ export const WelcomeSection = (props: IWelcomeSectionProps) => {
       />
 
       <div className={formStyles.descriptionContainer}>
-        <h3 className={styles.welcomeTitle}>{title}</h3>
-        <p className={styles.welcomeDescription}>{description}</p>
+        {children ? (
+          children
+        ) : (
+          <>
+            {title && <h3 className={styles.welcomeTitle}>{title}</h3>}
+            {description && (
+              <p className={styles.welcomeDescription}>{description}</p>
+            )}
+          </>
+        )}
       </div>
     </section>
   );

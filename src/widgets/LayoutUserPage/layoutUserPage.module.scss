@@ -1,14 +1,16 @@
 .layoutUserPage {
   max-inline-size: 1440px;
-  block-size: calc(1180px - 104px - 232px); //Общая высота минус хеддер и футер
-  @include flex(row, center, center, 24px);
+  min-block-size: fit-content;
+  @include flex(row, flex-start, flex-start, 24px);
+  align-items: stretch;
+  padding: 60px 20px;
 }
 
 .outletWrapper {
   inline-size: 1020px;
-  block-size: inherit;
+  min-block-size: fit-content;
   border-radius: calc($input-border-radius * 2);
-  overflow-y: auto;
+  overflow-y: visible;
 
   &::-webkit-scrollbar {
     inline-size: 10px;

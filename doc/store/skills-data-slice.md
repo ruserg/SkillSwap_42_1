@@ -165,7 +165,7 @@ export const LikeButton = ({ skillId }: { skillId: number }) => {
 
   return (
     <button onClick={handleToggle}>
-      {isLiked ? '❤️' : '🤍'}
+      {isLiked ? 'Liked' : 'Not liked'}
     </button>
   );
 };

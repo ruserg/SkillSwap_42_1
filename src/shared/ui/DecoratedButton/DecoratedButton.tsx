@@ -8,8 +8,9 @@ export const DecoratedButton = (props: TDecorButtonProps) => {
     disabled = false,
     onClick,
     notificationsCount,
-    htmlType = "button",
+    type = "button",
     isUser,
+    ...restProps
   } = props;
 
   const ariaLabels = {
@@ -42,10 +43,11 @@ export const DecoratedButton = (props: TDecorButtonProps) => {
 
   return (
     <button
+      {...restProps}
       onClick={onClick}
       className={styles.decorationButton}
       disabled={disabled}
-      type={htmlType}
+      type={type}
       aria-label={ariaLabels[variant]}
     >
       {currentSvg(variant)}

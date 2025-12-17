@@ -6,7 +6,24 @@ import { NotificationIcon } from "@shared/ui/Icons/NotificationIcon";
 import { Button } from "@shared/ui/Button/Button";
 
 export const SuccessMessage = (props: TSuccessMessageProps) => {
-  const { variant = "successMessage", className } = props;
+  const {
+    variant = "successMessage",
+    className,
+    children,
+    title,
+    description,
+    buttonText = "Готово",
+    onButtonClick,
+  } = props;
+
+  const defaultTitle =
+    variant === "successMessage"
+      ? "Ваше предложение создано"
+      : "Вы предложили обмен";
+  const defaultDescription =
+    variant === "successMessage"
+      ? "Теперь вы можете предложить обмен"
+      : "Теперь дождитесь подтверждения. Вам придёт уведомление";
 
   return (
     <section className={clsx(styles.container, className)}>
@@ -15,25 +32,19 @@ export const SuccessMessage = (props: TSuccessMessageProps) => {
         {variant === "notificationMessage" && <NotificationIcon />}
       </div>
       <div className={clsx(styles.content, styles.scrollbar)}>
-        {variant === "successMessage" && (
+        {children ? (
+          children
+        ) : (
           <>
-            <h2 className={styles.contentTitle}>Ваше предложение создано</h2>
+            <h2 className={styles.contentTitle}>{title || defaultTitle}</h2>
             <p className={styles.subTittle}>
-              Теперь вы можете предложить обмен
-            </p>
-          </>
-        )}
-        {variant === "notificationMessage" && (
-          <>
-            <h2 className={styles.contentTitle}>Вы предложили обмен</h2>
-            <p className={styles.subTittle}>
-              Теперь дождитесь подтверждения. Вам придёт уведомление
+              {description || defaultDescription}
             </p>
           </>
         )}
       </div>
       <div className={styles.buttonContainer}>
-        <Button>Готово</Button>
+        <Button onClick={onButtonClick}>{buttonText}</Button>
       </div>
     </section>
   );

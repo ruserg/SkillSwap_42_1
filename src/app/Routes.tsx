@@ -3,6 +3,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { MainPage } from "@pages/MainPage/MainPage";
 import { Layout } from "@/widgets/Layout/Layout";
 import { ErrorPage } from "@/pages/ErrorPage/ErrorPage";
+import { UnderConstructionPage } from "@/pages/UnderConstructionPage/UnderConstructionPage";
 import { lazy } from "react";
 import { PageMeta } from "@/shared/ui/PageMeta/PageMeta";
 import { LayoutUserPage } from "@/widgets/LayoutUserPage/LayoutUserPage";
@@ -217,6 +218,61 @@ export const AppRoutes = () => (
               <UserPage />
             </PageMeta>
           </ProtectedRoute>
+        }
+      />
+      <Route
+        path="about"
+        element={
+          <PageMeta
+            title="О проекте"
+            description="Узнайте больше о SkillSwap — платформе для взаимного обмена навыками и знаниями."
+          >
+            <UnderConstructionPage />
+          </PageMeta>
+        }
+      />
+      <Route
+        path="contacts"
+        element={
+          <PageMeta
+            title="Контакты"
+            description="Свяжитесь с нами — мы всегда рады помочь и ответить на ваши вопросы."
+          >
+            <UnderConstructionPage />
+          </PageMeta>
+        }
+      />
+      <Route
+        path="blog"
+        element={
+          <PageMeta
+            title="Блог"
+            description="Читайте интересные статьи о взаимном обучении, развитии навыков и сообществе SkillSwap."
+          >
+            <UnderConstructionPage />
+          </PageMeta>
+        }
+      />
+      <Route
+        path="privacy"
+        element={
+          <PageMeta
+            title="Политика конфиденциальности"
+            description="Политика конфиденциальности SkillSwap — как мы защищаем ваши персональные данные."
+          >
+            <UnderConstructionPage />
+          </PageMeta>
+        }
+      />
+      <Route
+        path="terms"
+        element={
+          <PageMeta
+            title="Пользовательское соглашение"
+            description="Пользовательское соглашение SkillSwap — правила использования платформы."
+          >
+            <UnderConstructionPage />
+          </PageMeta>
         }
       />
       <Route

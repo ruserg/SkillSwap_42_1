@@ -2,12 +2,13 @@
 
 .wrapper {
   @include flex(column, flex-start, stretch);
-  block-size: 100%;
+  min-block-size: fit-content;
 }
 
 .sidebarWrapper {
   inline-size: fit-content;
-  block-size: 100%;
+  block-size: fit-content;
+  align-self: flex-start;
 }
 
 .sidebarBackground {
@@ -18,9 +19,7 @@
   padding: 40px;
   background: vars.$color-card;
   inline-size: 324px;
-
-  // block-size: 752px;
-  block-size: 100%;
+  block-size: fit-content;
 }
 
 .menu {
@@ -57,7 +56,7 @@
   padding: 60px;
   background: vars.$color-card;
   inline-size: 1020px;
-  block-size: 100%;
+  min-block-size: fit-content;
 }
 
 .content {

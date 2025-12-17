@@ -1,13 +1,18 @@
 import React from "react";
 import styles from "./loader.module.scss";
+import type { HTMLAttributes } from "react";
 
-interface LoaderProps {
+interface LoaderProps extends Omit<HTMLAttributes<HTMLDivElement>, "style"> {
   size?: number;
 }
 
-export const Loader: React.FC<LoaderProps> = ({ size = 80 }) => {
+export const Loader: React.FC<LoaderProps> = ({ size = 80, ...restProps }) => {
   return (
-    <div className={styles.loaderWrapper} style={{ width: size, height: size }}>
+    <div
+      {...restProps}
+      className={styles.loaderWrapper}
+      style={{ width: size, height: size }}
+    >
       <svg
         width={size}
         height={size}

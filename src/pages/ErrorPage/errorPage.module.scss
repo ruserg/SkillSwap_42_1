@@ -1,6 +1,7 @@
 .errorWrapper {
   inline-size: 100%;
-  block-size: 100%;
+  min-block-size: fit-content;
+  padding: 60px 20px;
   @include flex(column, center, center);
 
   .errorPage {

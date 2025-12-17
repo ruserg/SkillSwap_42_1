@@ -1,6 +1,11 @@
+import type { ButtonHTMLAttributes } from "react";
+
 export type TViewAllButtonBehavior = "disable" | "2-way" | "hide";
 
-export type TViewAllButtonProps = {
+export type TViewAllButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "onClick" | "children"
+> & {
   /**
    * Поведение кнопки после клика:
    * - disable: кнопка становится неактивной (по умолчанию)
@@ -29,8 +34,4 @@ export type TViewAllButtonProps = {
    * Текст кнопки (по умолчанию "Смотреть все")
    */
   children?: string;
-  /**
-   * Дополнительный CSS класс
-   */
-  className?: string;
 };

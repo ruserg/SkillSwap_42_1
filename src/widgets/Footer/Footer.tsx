@@ -14,15 +14,15 @@ export const Footer = () => {
         </div>
         <ul className={styles.footerLinks}>
           <li>
-            <Link to="/">О проекте</Link>
+            <Link to="/about">О проекте</Link>
           </li>
 
           <li>
-            <Link to="/">Контакты</Link>
+            <Link to="/contacts">Контакты</Link>
           </li>
 
           <li>
-            <Link to="/">Политика конфиденциальности</Link>
+            <Link to="/privacy">Политика конфиденциальности</Link>
           </li>
 
           <li>
@@ -30,11 +30,11 @@ export const Footer = () => {
           </li>
 
           <li>
-            <Link to="/">Блог</Link>
+            <Link to="/blog">Блог</Link>
           </li>
 
           <li>
-            <Link to="/">Пользовательское соглашение</Link>
+            <Link to="/terms">Пользовательское соглашение</Link>
           </li>
         </ul>
       </div>

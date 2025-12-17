@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, MouseEventHandler } from "react";
+import type { ButtonHTMLAttributes } from "react";
 
 export type TDecorButtonVariant =
   | "moon"
@@ -8,12 +8,8 @@ export type TDecorButtonVariant =
   | "share"
   | "parameters";
 
-export type TDecorButtonProps = {
+export type TDecorButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant: TDecorButtonVariant;
-  className?: string;
-  disabled?: boolean;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  htmlType?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   notificationsCount?: number;
   isUser?: boolean;
 };

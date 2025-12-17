@@ -10,16 +10,10 @@ export type InputType =
   | "checkbox"
   | "search";
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "onInput"> {
   type: InputType;
-  placeholder?: string;
-  value?: string;
   onInput?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  disabled?: boolean;
-  className?: string;
-  name?: string;
-  checked?: boolean;
   children?: ReactNode;
   isOpenList?: boolean;
   isBlockCheckedLabel?: boolean;

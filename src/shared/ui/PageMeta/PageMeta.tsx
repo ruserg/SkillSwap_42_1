@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { IPageMetaProps } from "./pageMeta.type";
+import type { IPageMetaProps } from "./pageMeta.types";
 
 export const PageMeta = (props: IPageMetaProps) => {
   const {

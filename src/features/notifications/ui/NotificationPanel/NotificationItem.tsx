@@ -19,7 +19,6 @@ export const NotificationItem: React.FC<
 
   return (
     <div className={styles.notificationCard}>
-      notificationMessage
       <div className={styles.notificationContent}>
         <div className={styles.icon}>
           <NotificationSvg />

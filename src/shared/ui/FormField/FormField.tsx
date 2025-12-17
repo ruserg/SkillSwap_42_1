@@ -3,15 +3,14 @@ import formStyles from "@shared/ui/Form/form.module.scss";
 import type { InputType } from "@shared/ui/Input/input.types";
 import clsx from "clsx";
 
-interface FormFieldProps {
+import type { InputHTMLAttributes } from "react";
+
+interface FormFieldProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
   label: string;
-  id: string;
   type?: InputType;
-  placeholder?: string;
-  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
-  disabled?: boolean;
 }
 
 export const FormField: React.FC<FormFieldProps> = ({

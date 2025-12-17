@@ -1,5 +1,6 @@
-export type TArrowProps = {
+import type { HTMLAttributes } from "react";
+
+export type TArrowProps = HTMLAttributes<HTMLSpanElement> & {
   isOpen: boolean;
-  onClick?: () => void;
   color?: "green" | "black";
 };

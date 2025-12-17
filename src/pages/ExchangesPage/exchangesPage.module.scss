@@ -3,7 +3,6 @@
 .wrapper {
   display: flex;
   gap: 24px;
-  padding: 32px 0 60px;
 }
 
 .content {
@@ -11,7 +10,7 @@
 
   .exchangesContainer {
     box-sizing: border-box;
-    min-block-size: 752px;
+    min-block-size: fit-content;
     inline-size: 100%;
   }
 }

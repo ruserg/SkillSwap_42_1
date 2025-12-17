@@ -11,6 +11,8 @@ import rightArrow from "@images/icons/chevron-right.svg";
 // Принимает опциональные пропсы cardsPerSlide (количество карточек на слайде) и maxUsers (максимальное количество пользователей).
 // При клике на стрелки происходит навигация между слайдами, стрелки отключаются на крайних позициях.
 
+import type { ReactNode } from "react";
+
 interface SimiliarProposalsProps {
   users: TUser[];
   cities: TCity[];
@@ -18,6 +20,8 @@ interface SimiliarProposalsProps {
   isLoading?: boolean;
   cardsPerSlide?: number;
   maxUsers?: number;
+  title?: string;
+  children?: ReactNode;
 }
 
 export const SimiliarProposals: React.FC<SimiliarProposalsProps> = ({
@@ -26,6 +30,8 @@ export const SimiliarProposals: React.FC<SimiliarProposalsProps> = ({
   isLoading = false,
   cardsPerSlide = 4,
   maxUsers = 12,
+  title = "Похожие предложения",
+  children,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -60,7 +66,7 @@ export const SimiliarProposals: React.FC<SimiliarProposalsProps> = ({
   if (isLoading) {
     return (
       <section className={styles.container}>
-        <h2 className={styles.title}>Похожие предложения</h2>
+        {title && <h2 className={styles.title}>{title}</h2>}
         <div className={styles.sliderWrapper}>
           <div className={styles.cardsContainer}>
             {Array.from({ length: cardsPerSlide }).map((_, index) => (
@@ -74,7 +80,8 @@ export const SimiliarProposals: React.FC<SimiliarProposalsProps> = ({
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.title}>Похожие предложения</h2>
+      {title && <h2 className={styles.title}>{title}</h2>}
+      {children && <div className={styles.headerContent}>{children}</div>}
       <div className={styles.cardsContainer}>
         {slidesCount > 1 && (
           <button

@@ -253,7 +253,7 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
 
         <ul className={styles.navigationList}>
           <li>
-            <Link to="/" className={styles.navigationLink}>
+            <Link to="/about" className={styles.navigationLink}>
               О проекте
             </Link>
           </li>

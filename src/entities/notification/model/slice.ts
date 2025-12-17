@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import type { INotification } from "../types";
 import type { RootState } from "@app/store/store";
-import { api } from "@shared/api/api";
+import { api, ApiError } from "@shared/api/api";
 
 type NotificationsState = {
   notifications: INotification[];
@@ -58,11 +58,14 @@ export const fetchToastNotification = createAsyncThunk(
       const toast = await api.getToastNotification();
       return toast;
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Ошибка загрузки тост-уведомления",
-      );
+      // Если ошибка 404 (нет уведомлений) - это нормально, не считаем ошибкой
+      if (error instanceof ApiError && error.status === 404) {
+        // Возвращаем null вместо ошибки, чтобы очистить toast
+        return null;
+      }
+      // Для других ошибок логируем, но не прерываем работу
+      console.warn("Ошибка загрузки toast-уведомления:", error);
+      return null;
     }
   },
 );
@@ -224,11 +227,14 @@ const notificationsSlice = createSlice({
       // fetchToastNotification
       .addCase(fetchToastNotification.fulfilled, (state, action) => {
         // Данные уже отформатированы в API
+        // Если payload null, значит уведомлений нет - очищаем toast
         state.toast = action.payload;
         // Тост не добавляется в список уведомлений, он показывается отдельно
       })
       .addCase(fetchToastNotification.rejected, (state, action) => {
-        state.error = action.payload as string;
+        // Не устанавливаем ошибку для toast, так как отсутствие уведомлений - это нормально
+        // Просто очищаем toast
+        state.toast = null;
       })
       // fetchNotificationById
       .addCase(fetchNotificationById.fulfilled, (state, action) => {
