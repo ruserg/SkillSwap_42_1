@@ -125,9 +125,14 @@ export const Selector: FC<TSelectorProps> = memo(
             )}
             {/* Показ знака очистки строки поиска */}
             {showClear ? (
-              <span onClick={clearSearch}>
+              <button
+                type="button"
+                className={styles.clearButton}
+                onClick={clearSearch}
+                aria-label="Очистить поиск"
+              >
                 <img src={cross} alt="иконка крестика" />
-              </span>
+              </button>
             ) : (
               <Arrow isOpen={isOpen} />
             )}

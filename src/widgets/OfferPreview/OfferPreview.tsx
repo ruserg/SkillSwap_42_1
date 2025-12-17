@@ -41,17 +41,23 @@ export const OfferPreview = (props: TOfferProps) => {
           </div>
 
           <div className={styles.cardsContainer}>
-            <div className={styles.containerDecorButtons}>
-              <DecoratedButton variant="heart" />
-              <DecoratedButton variant="share" />
-              <DecoratedButton variant="parameters" />
-            </div>
+            <div className={styles.imageBlock}>
+              <div className={styles.containerDecorButtons}>
+                <DecoratedButton variant="heart" />
+                <DecoratedButton variant="share" />
+                <DecoratedButton variant="parameters" />
+              </div>
 
-            <div className={styles.noImages}>
-              Нет загруженных изображений
-              <p className={styles.noImagesHint}>
-                Добавьте изображения, чтобы показать ваш навык
-              </p>
+              {images.length > 0 ? (
+                <ImagesCarousel images={images} />
+              ) : (
+                <div className={styles.noImages}>
+                  Нет загруженных изображений
+                  <p className={styles.noImagesHint}>
+                    Добавьте изображения, чтобы показать ваш навык
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

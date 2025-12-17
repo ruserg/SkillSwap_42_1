@@ -57,6 +57,10 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchRef = useRef<HTMLDivElement>(null);
+  const suggestionRefs = useRef<HTMLLIElement[]>([]);
+  const profileMenuItemRefs = useRef<
+    (HTMLAnchorElement | HTMLButtonElement | null)[]
+  >([]);
   const { toggle } = useTheme();
   const { categories } = useAppSelector(selectCategoryData);
 
@@ -149,6 +153,99 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
     navigate(`/?q=${encodeURIComponent(subcategoryName)}`);
   };
 
+  const handleSuggestionKeyDown = (
+    event: React.KeyboardEvent<HTMLLIElement>,
+    index: number,
+    name: string,
+  ) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSuggestionClick(name);
+      return;
+    }
+
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      const maxIndex = suggestionRefs.current.length - 1;
+      if (maxIndex < 0) return;
+
+      let nextIndex = index;
+      if (event.key === "ArrowDown") {
+        nextIndex = index === maxIndex ? 0 : index + 1;
+      } else if (event.key === "ArrowUp") {
+        nextIndex = index === 0 ? maxIndex : index - 1;
+      }
+
+      suggestionRefs.current[nextIndex]?.focus();
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setShowSuggestions(false);
+      (
+        document.getElementById("search-input") as HTMLInputElement | null
+      )?.focus();
+    }
+  };
+
+  const handleProfileKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setIsMenuOpen((prev) => !prev);
+    }
+
+    if (event.key === "Escape" && isMenuOpen) {
+      event.preventDefault();
+      setIsMenuOpen(false);
+    }
+  };
+
+  const handleProfileMenuItemKeyDown = (
+    event: React.KeyboardEvent<HTMLAnchorElement | HTMLButtonElement>,
+    index: number,
+  ) => {
+    const items = profileMenuItemRefs.current.filter(
+      (item): item is HTMLAnchorElement | HTMLButtonElement => Boolean(item),
+    );
+
+    if (!items.length) {
+      return;
+    }
+
+    const moveFocus = (nextIndex: number) => {
+      const target = items[nextIndex];
+      target?.focus();
+    };
+
+    switch (event.key) {
+      case "ArrowDown": {
+        event.preventDefault();
+        moveFocus((index + 1) % items.length);
+        break;
+      }
+      case "ArrowUp": {
+        event.preventDefault();
+        moveFocus((index - 1 + items.length) % items.length);
+        break;
+      }
+      case "Home": {
+        event.preventDefault();
+        moveFocus(0);
+        break;
+      }
+      case "End": {
+        event.preventDefault();
+        moveFocus(items.length - 1);
+        break;
+      }
+      case "Escape": {
+        event.preventDefault();
+        setIsMenuOpen(false);
+        break;
+      }
+    }
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.navigation} aria-label="Основная навигация">
@@ -227,12 +324,24 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
           />
         </form>
         {showSuggestions && suggestions.length > 0 && (
-          <ul className={styles.suggestions}>
-            {suggestions.map((sub) => (
+          <ul
+            className={styles.suggestions}
+            role="listbox"
+            aria-label="Подсказки поиска по навыкам"
+          >
+            {suggestions.map((sub, index) => (
               <li
                 key={sub.id}
                 className={styles.suggestionItem}
+                role="option"
+                tabIndex={index === 0 ? 0 : -1}
+                ref={(element) => {
+                  suggestionRefs.current[index] = element!;
+                }}
                 onClick={() => handleSuggestionClick(sub.name)}
+                onKeyDown={(event) =>
+                  handleSuggestionKeyDown(event, index, sub.name)
+                }
               >
                 {sub.name}
               </li>
@@ -284,7 +393,12 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
           <div
             className={styles.profile}
             data-trigger-dropdown="profile"
+            role="button"
+            tabIndex={0}
+            aria-haspopup="menu"
+            aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onKeyDown={handleProfileKeyDown}
           >
             <span className={styles.userName}>{user?.name}</span>
             <img
@@ -307,24 +421,46 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
                   setIsMenuOpen(false);
                 }}
                 isOpen={isMenuOpen}
-                role="menu"
               >
-                <ul className={styles.profileMenuList}>
-                  <li className={styles.profileMenuItem}>
-                    <Link to={"/profile"}>Личный кабинет</Link>
+                <ul className={styles.profileMenuList} role="menu">
+                  <li className={styles.profileMenuItem} role="none">
+                    <Link
+                      to={"/profile"}
+                      role="menuitem"
+                      ref={(element) => {
+                        profileMenuItemRefs.current[0] = element;
+                      }}
+                      onKeyDown={(event) =>
+                        handleProfileMenuItemKeyDown(event, 0)
+                      }
+                    >
+                      Личный кабинет
+                    </Link>
                   </li>
                   <li
                     className={clsx(
                       styles.profileMenuItem,
                       styles.profileMenuItemExit,
                     )}
-                    onClick={() => {
-                      dispatch(logout());
-                      setIsMenuOpen(false);
-                    }}
+                    role="none"
                   >
-                    Выйти из аккаунта
-                    <LogOutSvg />
+                    <button
+                      type="button"
+                      className={styles.profileMenuButton}
+                      onClick={() => {
+                        dispatch(logout());
+                        setIsMenuOpen(false);
+                      }}
+                      ref={(element) => {
+                        profileMenuItemRefs.current[1] = element;
+                      }}
+                      onKeyDown={(event) =>
+                        handleProfileMenuItemKeyDown(event, 1)
+                      }
+                    >
+                      Выйти из аккаунта
+                      <LogOutSvg />
+                    </button>
                   </li>
                 </ul>
               </DropDown>
@@ -337,13 +473,16 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
             <DecoratedButton variant={"moon"} onClick={() => toggle()} />
           </div>
           <div className={styles.authButtons}>
-            <Link to="/login" className={styles.navLink}>
-              <Button children={"Войти"} variant="secondary"></Button>
-            </Link>
+            <Button
+              onClick={() => navigate("/login")}
+              children={"Войти"}
+              variant="secondary"
+            ></Button>
 
-            <Link to="/registration/step1" className={styles.navLink}>
-              <Button children={"Зарегистрироваться"}></Button>
-            </Link>
+            <Button
+              onClick={() => navigate("/registration/step1")}
+              children={"Зарегистрироваться"}
+            ></Button>
           </div>
         </>
       )}

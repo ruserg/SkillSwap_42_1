@@ -29,16 +29,32 @@
         size: 16px;
       }
       @include flex(column, center, start, 12px);
-
-      .subcategoriesTitle {
-        inline-size: 100%;
-        transition: 0.1s;
-
-        &:hover {
-          color: $color-accent;
-        }
-      }
     }
+  }
+}
+
+.subcategoriesTitle {
+  inline-size: 100%;
+  transition: 0.1s;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.subcategoriesTitleButton {
+  inline-size: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
   }
 }
 

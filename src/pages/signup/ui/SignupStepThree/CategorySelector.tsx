@@ -90,6 +90,20 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
     }
   };
 
+  const handleHeaderKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (disabled) return;
+
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setIsOpen((prev) => !prev);
+    }
+
+    if (event.key === "Escape" && isOpen) {
+      event.preventDefault();
+      setIsOpen(false);
+    }
+  };
+
   return (
     <div className={styles.fieldGroup} ref={containerRef}>
       <label className={styles.label}>{label}</label>
@@ -106,6 +120,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
             tabIndex={disabled ? -1 : 0}
             aria-expanded={isOpen}
             aria-haspopup="listbox"
+            onKeyDown={handleHeaderKeyDown}
           >
             <span
               className={styles.selectorTitle}
@@ -160,8 +175,15 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
                     key={option.id}
                     className={`${styles.optionItem} ${selectedIds.includes(option.id) ? styles.selected : ""}`}
                     onClick={() => handleToggleOption(option.id)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        handleToggleOption(option.id);
+                      }
+                    }}
                     role="option"
                     aria-selected={selectedIds.includes(option.id)}
+                    tabIndex={0}
                   >
                     <div className={styles.checkboxIcon}>
                       <img

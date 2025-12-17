@@ -45,8 +45,39 @@ export const Input = (props: InputProps) => {
       }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLLabelElement>) => {
+      if (type === "radio" && props.name) {
+        // Для радиокнопок: стрелки для навигации внутри группы
+        if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+          e.preventDefault();
+          const radioButtons = document.querySelectorAll<HTMLInputElement>(
+            `input[type="radio"][name="${props.name}"]`,
+          );
+          const currentIndex = Array.from(radioButtons).findIndex(
+            (btn) => btn === e.currentTarget.querySelector("input"),
+          );
+          const nextIndex = (currentIndex + 1) % radioButtons.length;
+          radioButtons[nextIndex]?.focus();
+        } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+          e.preventDefault();
+          const radioButtons = document.querySelectorAll<HTMLInputElement>(
+            `input[type="radio"][name="${props.name}"]`,
+          );
+          const currentIndex = Array.from(radioButtons).findIndex(
+            (btn) => btn === e.currentTarget.querySelector("input"),
+          );
+          const prevIndex =
+            (currentIndex - 1 + radioButtons.length) % radioButtons.length;
+          radioButtons[prevIndex]?.focus();
+        }
+      }
+    };
+
     return (
-      <label className={labelClass}>
+      <label
+        className={labelClass}
+        onKeyDown={type === "radio" ? handleKeyDown : undefined}
+      >
         <input
           className={`${inputClass} ${styles.visuallyHidden}`}
           type={type}
