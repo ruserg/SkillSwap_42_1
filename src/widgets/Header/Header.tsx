@@ -275,9 +275,10 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
                 </DropDown>
               )}
             </div>
-            <Link to="/profile/favorites" className={styles.favoritesLink}>
-              <DecoratedButton variant={"heart"} />
-            </Link>
+            <DecoratedButton
+              variant={"heart"}
+              onClick={() => navigate("/profile/favorites")}
+            />
           </div>
 
           <div
