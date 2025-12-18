@@ -60,11 +60,19 @@
       inline-size: 100%;
       @include flex(column, center, flex-start, 12px);
 
+      :focus-within {
+        outline: none;
+      }
+
       .filterPurposeItems,
       .filterGenderItems,
       .filterCityAllItems {
         inline-size: 100%;
         @include flex;
+
+        :focus-within {
+          outline: none;
+        }
       }
     }
 

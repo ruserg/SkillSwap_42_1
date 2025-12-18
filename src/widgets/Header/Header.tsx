@@ -257,7 +257,6 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
               О проекте
             </Link>
           </li>
-
           <li>
             <button
               className={clsx(
