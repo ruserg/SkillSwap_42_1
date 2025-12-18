@@ -1,0 +1,59 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.footer {
+  inline-size: 100%;
+  background-color: $color-card;
+  @include flex;
+}
+
+.footerContainer {
+  max-inline-size: 1440px;
+  font-family: Roboto, sans-serif;
+
+  @include grid(
+    $columns: repeat(2, auto),
+    $rows: auto,
+    $justify: space-evenly,
+    $align: center,
+    $row-gap: 0,
+    $column-gap: 189px
+  );
+
+  padding: 32px 36px;
+
+  .titleLogo {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    vertical-align: middle;
+  }
+
+  .footerLinks {
+    @include grid(
+      $columns: repeat(3, minmax(0, 324px)),
+      $rows: repeat(2, auto),
+      $justify: space-evenly,
+      $align: center,
+      $row-gap: 10px,
+      $column-gap: 24px
+    );
+  }
+
+  .footerLogoContainer {
+    @include flex(column, space-evenly, start, 112px);
+
+    .linkContainer {
+      @include flex(row, space-evenly, start, 12px);
+    }
+
+    .subtitleLogo {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+      vertical-align: middle;
+    }
+  }
+}

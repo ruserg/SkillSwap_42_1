@@ -1,0 +1,359 @@
+.container {
+  background: $color-card;
+  border-radius: 16px;
+  padding: 24px;
+  inline-size: 324px;
+  min-height: 368px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 4%);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &.loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  // Вариант для страницы профиля
+  &.profile {
+    max-width: 400px;
+
+    // inline-size: 100%;
+    padding: 32px;
+
+    // block-size: 444px;
+
+    .avatar {
+      inline-size: 100px;
+      block-size: 100px;
+      border: 3px solid $color-disabled;
+    }
+
+    .name {
+      font-size: 28px;
+    }
+
+    .details {
+      font-size: 14px;
+    }
+
+    .description {
+      // padding: 20px;
+      background: rgba($color-disabled, 0.3);
+      border-radius: 12px;
+      margin-block-end: 24px;
+
+      p {
+        font: {
+          family: "Roboto", sans-serif;
+          size: 16px;
+          line-height: 24px;
+          weight: 400;
+        }
+        color: $color-text;
+        margin: 0;
+      }
+    }
+
+    .sectionTitle {
+      font-size: 18px;
+      margin-block-end: 12px;
+    }
+
+    .tag {
+      padding: 8px 16px;
+    }
+  }
+
+  // Компактный вариант
+  &.compact {
+    padding: 20px;
+    min-height: 300px;
+
+    .avatar {
+      inline-size: 80px;
+      block-size: 80px;
+    }
+
+    .name {
+      font-size: 18px;
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .sectionTitle {
+      font-size: 14px;
+    }
+
+    .tag,
+    .learnTag {
+      font-size: 12px;
+      padding: 6px 10px;
+      block-size: 28px;
+    }
+  }
+}
+
+.header {
+  @include flex(row, flex-start, flex-start, 12px);
+  margin-bottom: 20px;
+
+  .profile & {
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .compact & {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+}
+
+.avatar {
+  inline-size: 100px;
+  block-size: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid $color-disabled;
+
+  img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+}
+
+.userInfo {
+  inline-size: 100%;
+  flex: 1;
+  @include flex(column, center, flex-start, 4px);
+}
+
+.like {
+  align-self: flex-end;
+}
+
+.name {
+  font: {
+    family: "Jost", sans-serif;
+    weight: 600;
+    size: 20px;
+  }
+  color: $color-text;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+
+.details {
+  font: {
+    family: "Roboto", sans-serif;
+    weight: 400;
+    size: 12px;
+  }
+  color: $color-text;
+  margin: 0;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
+.section {
+  margin-bottom: 20px;
+
+  &:last-of-type {
+    margin-bottom: 24px;
+  }
+
+  .compact & {
+    margin-bottom: 16px;
+
+    &:last-of-type {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.sectionTitle {
+  font: {
+    family: "Jost", sans-serif;
+    size: 16px;
+    weight: 500;
+  }
+  color: $color-text;
+  margin-block-end: 8px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.tags {
+  @include flex(row, flex-start, center, 8px);
+  flex-wrap: nowrap;
+}
+
+.tag {
+  font: {
+    family: "Roboto", sans-serif;
+    size: 14px;
+    weight: 500;
+  }
+  color: $color-text;
+  padding: 8px 12px;
+  border-radius: 20px;
+
+  // inline-size: 134px;
+  block-size: 32px;
+  display: inline-block;
+  line-height: 16px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
+  flex-wrap: nowrap;
+
+  &.business {
+    background: $color-tag-business-career;
+  }
+
+  &.creativity {
+    background: $color-tag-creativity-art;
+  }
+
+  &.languages {
+    background: $color-tag-foreign-languages;
+  }
+
+  &.education {
+    background: $color-tag-education-development;
+  }
+
+  &.home {
+    background: $color-tag-home-comfort;
+  }
+
+  &.health {
+    background: $color-tag-health-lifestyle;
+  }
+
+  &.default {
+    background: $color-tag-plus;
+  }
+}
+
+.learnTags {
+  @include flex(row, flex-start, center, 8px);
+}
+
+.learnTag {
+  font: {
+    family: "Roboto", sans-serif;
+    size: 14px;
+    weight: 500;
+  }
+  color: $color-text;
+  padding: 8px 12px;
+  border-radius: 20px;
+  block-size: 32px;
+  inline-size: auto;
+  display: inline-block;
+  line-height: 16px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
+  justify-self: start;
+
+  &.business {
+    background: $color-tag-business-career;
+  }
+
+  &.creativity {
+    background: $color-tag-creativity-art;
+  }
+
+  &.languages {
+    background: $color-tag-foreign-languages;
+  }
+
+  &.education {
+    background: $color-tag-education-development;
+  }
+
+  &.home {
+    background: $color-tag-home-comfort;
+  }
+
+  &.health {
+    background: $color-tag-health-lifestyle;
+  }
+
+  &.default {
+    background: $color-tag-plus;
+  }
+}
+
+.additional {
+  font: {
+    family: "Roboto", sans-serif;
+    size: 14px;
+    weight: 500;
+  }
+  color: $color-caption;
+  padding: 8px 12px;
+  border-radius: 20px;
+  max-inline-size: 38px;
+  block-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-disabled;
+  line-height: 1;
+  flex-shrink: 0;
+  justify-self: end;
+}
+
+.actions {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.actionsRow {
+  display: flex;
+  gap: 12px;
+  inline-size: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.detailsButton {
+  flex: 1;
+  min-inline-size: 0;
+  block-size: 48px;
+
+  button {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+}
+
+.deleteButton,
+.acceptButton,
+.rejectButton {
+  flex: 1;
+  min-inline-size: 0;
+  block-size: 48px;
+
+  button {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+}

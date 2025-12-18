@@ -1,0 +1,121 @@
+.button {
+  font: {
+    family: "Roboto", sans-serif;
+    weight: 400;
+    size: 16px;
+  }
+  color: $color-text-link;
+  @include flex(row, center, center, 4px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+
+  img {
+    margin-left: auto;
+  }
+}
+
+.filterColumn {
+  inline-size: 324px;
+  background-color: $color-input;
+  padding: 20px;
+  border-radius: $input-border-radius;
+  @include flex(column, center, flex-start, 40px);
+
+  &Title {
+    inline-size: 100%;
+    @include flex(row, space-between);
+
+    .filterTitle {
+      font: {
+        family: "Jost", sans-serif;
+        weight: 600;
+        size: 24px;
+      }
+    }
+
+    .clearButton {
+      padding-top: 5px;
+      @extend .button;
+    }
+  }
+
+  .filterContainer {
+    inline-size: 100%;
+    @include flex(column, center, flex-start, 32px);
+
+    .filterPurpose,
+    .filterRadio,
+    .filterCheckbox {
+      inline-size: 100%;
+      @include flex(column, center, flex-start, 12px);
+
+      .filterPurposeItems,
+      .filterGenderItems,
+      .filterCityAllItems {
+        inline-size: 100%;
+        @include flex;
+      }
+    }
+
+    .filterSkills,
+    .filterGender,
+    .filterCityAll {
+      inline-size: 100%;
+      @include flex(column, center, flex-start, 20px);
+    }
+  }
+}
+
+.filterCheckboxContainer {
+  inline-size: 100%;
+  @include flex(column, center, center, 12px);
+
+  .filterCheckboxHeader {
+    inline-size: 100%;
+    @include flex(row, space-between);
+
+    button {
+      &:focus-visible {
+        outline: 2px solid $color-accent;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .filterCheckboxList {
+    inline-size: 100%;
+    @include flex(column, center, center);
+    padding-left: 20px;
+
+    .filterCheckboxItems {
+      inline-size: 100%;
+      min-block-size: 45px;
+      @include flex;
+    }
+  }
+}
+
+.filterOtherTitle {
+  font: {
+    family: "Jost", sans-serif;
+    weight: 600;
+    size: 20px;
+  }
+}
+
+.showAllButton {
+  @extend .button;
+  padding: 0;
+  inline-size: 100%;
+}

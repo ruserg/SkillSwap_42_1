@@ -1,0 +1,20 @@
+.radioEmpty {
+  inline-size: 24px;
+  block-size: 24px;
+
+  &Path {
+    fill: $color-text;
+  }
+}
+
+.radioEmptyActive {
+  @extend .radioEmpty;
+
+  &Path {
+    fill: $color-accent;
+  }
+
+  &Circle {
+    fill: $color-accent;
+  }
+}

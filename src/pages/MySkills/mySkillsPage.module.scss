@@ -1,0 +1,15 @@
+@use "/src/styles/variables" as *;
+
+.wrapper {
+  display: flex;
+  gap: 24px;
+}
+
+.content {
+  flex: 1;
+
+  .skillsContainer {
+    min-block-size: fit-content;
+    inline-size: 1000px;
+  }
+}

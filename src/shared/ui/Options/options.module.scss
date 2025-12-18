@@ -1,0 +1,70 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 16px;
+  padding: 12px 20px 12px 12px;
+  cursor: default;
+  inline-size: calc(100% + 2px);
+  inset-inline-start: -1px;
+  position: absolute;
+  z-index: 2;
+  background: $color-card;
+  border-top: none;
+  border-bottom: 1px solid $color-caption;
+  border-left: 1px solid $color-caption;
+  border-right: 1px solid $color-caption;
+  border-radius: 0 0 12px 12px;
+}
+
+.listElementCheckbox {
+  display: flex;
+  flex-direction: row;
+  column-gap: 32px;
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+.listElementRadio {
+  padding-inline-start: 8px;
+  display: flex;
+  flex-direction: row;
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+.inputCheckbox,
+.inputCheckboxChecked,
+.inputRadio,
+.inputRadioChecked {
+  appearance: none;
+  inline-size: fit-content;
+}
+
+.inputRadioChecked {
+  color: $color-accent;
+}
+
+.inputCheckbox::after {
+  content: "";
+  position: absolute;
+  inline-size: 24px;
+  block-size: 24px;
+  background-image: url("@shared/assets/images/icons/checkbox-empty.svg");
+  background-repeat: no-repeat;
+}
+
+.inputCheckboxChecked::after {
+  content: "";
+  position: absolute;
+  inline-size: 24px;
+  block-size: 24px;
+  background-image: url("@shared/assets/images/icons/checkbox-done.svg");
+  background-repeat: no-repeat;
+}

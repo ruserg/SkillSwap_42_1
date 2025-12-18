@@ -1,0 +1,178 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.pageWrapper {
+  padding-block: 20px 40px;
+  padding-inline: 36px;
+  max-inline-size: 1440px;
+  margin: 0 auto;
+  block-size: 100vh;
+}
+
+.steps {
+  @include flex(row, center, center);
+  margin-block-end: 35px;
+}
+
+.section {
+  @include flex(row, center, stretch, 24px);
+  background-color: vars.$color-background;
+  font-family: Roboto, sans-serif;
+  margin-block-start: 32px;
+}
+
+.registerContainer {
+  @include flex(column, space-evenly, center, 16px);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 40px;
+  border-radius: 12px;
+  background-color: vars.$color-input;
+}
+
+.form {
+  inline-size: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.containerWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 24px;
+  align-items: start;
+}
+
+.container {
+  @include flex(column, start, start);
+}
+
+.butttonWrapper {
+  padding-block-start: 16px;
+}
+
+.userWrapper {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.userCircle {
+  block-size: 54px;
+  inline-size: 54px;
+}
+
+.add {
+  block-size: 16px;
+  inline-size: 16px;
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+}
+
+.title {
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+  color: vars.$color-text;
+}
+
+.description {
+  text-align: center;
+  padding-inline: 10px;
+  font-family: Roboto, sans-serif;
+  color: vars.$color-caption;
+}
+
+// Стили для полей формы
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  height: 78px;
+}
+
+.label {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: vars.$color-text;
+  margin-block-end: 4px;
+}
+
+.selectorWrapper {
+  inline-size: 100%;
+  position: relative;
+}
+
+.avatarPreview {
+  inline-size: 54px;
+  block-size: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid vars.$color-background;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.avatarDelete {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  background: vars.$color-error;
+  color: vars.$color-background;
+  border: none;
+  border-radius: 50%;
+  inline-size: 18px;
+  block-size: 18px;
+  font-size: 12px;
+  cursor: pointer;
+  @include flex(row, center, center);
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-disabled) 25%,
+    var(--color-disabled-light) 50%,
+    var(--color-disabled) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.avatarSkeleton {
+  inline-size: 54px;
+  block-size: 54px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: block;
+  @extend .skeleton;
+}
+
+.errorText {
+  display: block;
+  min-block-size: 13px;
+  font-size: 12px;
+  color: vars.$color-error;
+  visibility: hidden;
+
+  &:not(:empty) {
+    visibility: visible;
+  }
+}

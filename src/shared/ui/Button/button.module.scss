@@ -1,0 +1,122 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.button {
+  @include flex(row, center, center, 10px);
+  block-size: 48px;
+  inline-size: 100%;
+  padding-block: 12px;
+  padding-inline: 24px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  color: vars.$color-text;
+  transition: 0.2s;
+
+  &:focus-visible {
+    outline: 2px solid vars.$color-accent;
+    outline-offset: 2px;
+  }
+}
+
+.leftIcon,
+.rightIcon {
+  @include flex(row, center, center);
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.primary {
+  background-color: vars.$color-accent;
+  border-color: vars.$color-accent;
+
+  &:hover {
+    background-color: vars.$color-button-hover;
+    border-color: vars.$color-button-hover;
+  }
+
+  &:active {
+    color: vars.$color-input;
+    background-color: vars.$color-button-pressed;
+    border-color: vars.$color-button-pressed;
+  }
+
+  &:disabled {
+    color: vars.$color-caption;
+    background-color: vars.$color-disabled;
+    border-color: vars.$color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+.secondary {
+  background-color: vars.$color-input;
+  border-color: vars.$color-button-hover;
+
+  &:hover {
+    color: vars.$color-caption;
+  }
+
+  &:active {
+    color: vars.$color-text;
+    border-color: vars.$color-button-pressed;
+  }
+
+  &:disabled {
+    color: vars.$color-disabled-text;
+    border-color: vars.$color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+.tertiary {
+  background-color: vars.$color-input;
+  border-color: vars.$color-input;
+
+  &:hover {
+    color: vars.$color-caption;
+    border-color: vars.$color-caption;
+  }
+
+  &:active {
+    color: vars.$color-text;
+    border-color: vars.$color-text;
+  }
+
+  &:disabled {
+    color: vars.$color-disabled-text;
+    border-color: vars.$color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+.signup {
+  background-color: vars.$color-input;
+  border-color: vars.$color-caption;
+
+  &:hover {
+    color: vars.$color-caption;
+    border-color: vars.$color-caption;
+  }
+
+  &:active {
+    color: vars.$color-text;
+    border-color: vars.$color-text;
+  }
+
+  &:disabled {
+    color: vars.$color-disabled-text;
+    border-color: vars.$color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+//этот стиль нужен для компонента Link
+.disabled {
+  color: vars.$color-caption;
+  background-color: vars.$color-disabled;
+  border-color: vars.$color-disabled;
+  pointer-events: none;
+  cursor: not-allowed;
+}

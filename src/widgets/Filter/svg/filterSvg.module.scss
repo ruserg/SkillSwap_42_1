@@ -1,0 +1,8 @@
+.clearSvg {
+  inline-size: 11px;
+  block-size: 11px;
+
+  &Path {
+    fill: $color-text-link;
+  }
+}

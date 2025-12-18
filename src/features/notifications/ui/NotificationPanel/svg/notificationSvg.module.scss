@@ -1,0 +1,9 @@
+.notificationSvg {
+  inline-size: 40px;
+  block-size: 40px;
+
+  &Path {
+    stroke: $color-text;
+    fill: transparent;
+  }
+}

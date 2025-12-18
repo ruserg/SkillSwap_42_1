@@ -1,0 +1,76 @@
+.errorWrapper {
+  inline-size: 100%;
+  min-block-size: fit-content;
+  padding: 60px 20px;
+  @include flex(column, center, center);
+
+  .errorPage {
+    inline-size: 460px;
+    @include flex(column, center, center, 40px);
+
+    .errorImage {
+      inline-size: 460px;
+      block-size: 304px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    // Для 404 ошибки
+    &[data-error="404"] {
+      .errorImage {
+        background-image: url("@images/png/light/error-404.png");
+
+        [data-theme="dark"] & {
+          background-image: url("@images/png/dark/error-404.png");
+        }
+      }
+    }
+
+    &[data-error="500"] {
+      .errorImage {
+        background-image: url("@images/png/light/error-500.png");
+
+        [data-theme="dark"] & {
+          background-image: url("@images/png/dark/error-500.png");
+        }
+      }
+    }
+
+    .errorContainer {
+      inline-size: 100%;
+      @include flex(column, center, center, 32px);
+
+      .errorInfo {
+        @include flex(column, center, center, 4px);
+
+        .errorTitle,
+        .errorDescription {
+          inline-size: 100%;
+          text-align: center;
+        }
+
+        .errorTitle {
+          font: {
+            family: "Jost", sans-serif;
+            size: 24px;
+            weight: 500;
+          }
+        }
+
+        .errorDescription {
+          font: {
+            family: "Roboto", sans-serif;
+            size: 16px;
+            weight: 400;
+          }
+        }
+      }
+
+      .errorButtons {
+        inline-size: 100%;
+        @include flex(row, space-between, center, 24px);
+      }
+    }
+  }
+}

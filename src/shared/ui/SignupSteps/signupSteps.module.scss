@@ -1,0 +1,23 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.container {
+  @include flex(column, center, center, 5px);
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+}
+
+.stepsContainer {
+  @include flex(row, center, center, 15px);
+}
+
+.step {
+  block-size: 4px;
+  inline-size: 60px;
+  border-radius: 8px;
+  background-color: vars.$color-disabled;
+}
+
+.stepActive {
+  background-color: vars.$color-accent;
+}

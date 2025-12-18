@@ -1,0 +1,17 @@
+@use "@styles/mixins" as *;
+
+.logoLinkContainer {
+  inline-size: 159px;
+  block-size: 40px;
+
+  @include flex($direction: row, $justify: center, $align: center, $gap: 12px);
+
+  .logoTitle {
+    font-family: Jost, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 32px;
+    inline-size: 107px;
+  }
+}

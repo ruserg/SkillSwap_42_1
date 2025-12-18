@@ -1,0 +1,28 @@
+// все импорты стилей в одном файле
+@use "@styles/themes/dark.scss" as *;
+@use "@styles/themes/light.scss" as *;
+@use "@styles/normalize.scss" as *;
+@use "@styles/reset.scss" as *;
+@use "@styles/fonts.scss" as *;
+
+// Глобальные стили
+html {
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+  // transform убран с html, чтобы не ломать position: fixed для тостов
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+  // transform убран с body, чтобы не ломать position: fixed для тостов
+  // Если нужен GPU-рендеринг, можно применить transform к конкретным элементам
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}

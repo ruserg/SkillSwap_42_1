@@ -1,0 +1,49 @@
+@use "@styles/mixins" as *;
+
+.constructionWrapper {
+  inline-size: 100%;
+  min-block-size: fit-content;
+  padding: 60px 20px;
+  @include flex(column, center, center);
+
+  .constructionPage {
+    inline-size: 460px;
+    @include flex(column, center, center);
+
+    .constructionContainer {
+      inline-size: 100%;
+      @include flex(column, center, center, 32px);
+
+      .constructionInfo {
+        @include flex(column, center, center, 4px);
+
+        .constructionTitle,
+        .constructionDescription {
+          inline-size: 100%;
+          text-align: center;
+        }
+
+        .constructionTitle {
+          font: {
+            family: "Jost", sans-serif;
+            size: 32px;
+            weight: 600;
+          }
+        }
+
+        .constructionDescription {
+          font: {
+            family: "Roboto", sans-serif;
+            size: 18px;
+            weight: 400;
+          }
+        }
+      }
+
+      .constructionButtons {
+        inline-size: 100%;
+        @include flex(row, center, center);
+      }
+    }
+  }
+}

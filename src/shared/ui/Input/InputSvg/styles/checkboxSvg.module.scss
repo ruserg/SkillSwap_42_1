@@ -1,0 +1,17 @@
+.checkboxEmpty {
+  inline-size: 24px;
+  block-size: 24px;
+  cursor: pointer;
+
+  &Path {
+    stroke: $color-text;
+  }
+}
+
+.checkboxActive {
+  @extend .checkboxEmpty;
+
+  &Path {
+    fill: $color-accent;
+  }
+}

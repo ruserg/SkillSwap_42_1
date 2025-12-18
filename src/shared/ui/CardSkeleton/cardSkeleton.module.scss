@@ -1,0 +1,54 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+// Стили для скелетона
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-disabled) 25%,
+    var(--color-disabled-light) 50%,
+    var(--color-disabled) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+// Аватарка должна быть круглой
+.skeletonAvatar {
+  border-radius: 50% !important;
+}
+
+.skeletonName {
+  inline-size: 120px;
+  block-size: 24px;
+  margin-bottom: 8px;
+}
+
+.skeletonDetails {
+  inline-size: 150px;
+  block-size: 14px;
+}
+
+.skeletonTag {
+  inline-size: 134px;
+  block-size: 32px;
+  border-radius: 20px;
+}
+
+.skeletonButton {
+  inline-size: 100%;
+  block-size: 48px;
+  border-radius: 12px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

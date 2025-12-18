@@ -1,0 +1,31 @@
+.wrapper {
+  inline-size: 100%;
+  border: 1px solid $color-caption;
+  border-radius: 12px;
+  position: relative;
+  background: $color-card;
+  overflow: visible;
+}
+
+.wrapperOpen {
+  border-radius: 12px 12px 0 0;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  padding: 12px 20px 11px;
+  color: $color-caption;
+  max-block-size: 46px;
+}
+
+.containerOpen {
+  border-radius: 12px;
+  border-bottom: 1px solid $color-disabled;
+}
+
+.inputField {
+  padding-inline-start: 0;
+}

@@ -1,0 +1,35 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.pageWrapper {
+  padding-block: 20px 40px;
+  padding-inline: 36px;
+  max-inline-size: 1440px;
+  margin: 0 auto;
+  block-size: 100vh;
+}
+
+.steps {
+  @include flex(row, center, center);
+  margin-block-end: 35px;
+}
+
+.section {
+  @include flex(row, center, stretch, 24px);
+  background-color: vars.$color-background;
+  font-family: Roboto, sans-serif;
+  margin-block-start: 32px;
+}
+
+.registerContainer {
+  @include flex(column, center, center, 20px);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 122px;
+  background-color: vars.$color-input;
+  border-radius: $input-border-radius;
+}
+
+.form {
+  inline-size: 100%;
+}

@@ -1,0 +1,194 @@
+@use "@styles/mixins" as *;
+@use "@styles/variables" as vars;
+
+@mixin text-style($weight, $size, $line) {
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line;
+}
+
+.wrapper {
+  inline-size: 100%;
+  max-inline-size: 1020px;
+  margin: 0 auto;
+  background-color: red;
+}
+
+.contentContainer {
+  @include flex(
+    $direction: row,
+    $justify: space-between,
+    $align: stretch,
+    $gap: 40px
+  );
+
+  inline-size: 100%;
+
+  background: vars.$color-card;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 4%);
+  padding: 40px;
+
+  block-size: 100%;
+
+  @media (width <= 1200px) {
+    flex-direction: column;
+    gap: 32px;
+    max-inline-size: 100%;
+  }
+
+  @media (width <= 768px) {
+    padding: 24px;
+    gap: 24px;
+  }
+}
+
+.previewDescription {
+  @include flex(
+    $direction: column,
+    $justify: space-between,
+    $align: flex-start,
+    $gap: 24px
+  );
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.contentTittle {
+  @include text-style($weight: 500, $size: 32px, $line: 40px);
+  font-family: Jost, sans-serif;
+  color: vars.$color-text;
+  margin: 0;
+  inline-size: 100%;
+
+  @media (width <= 768px) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}
+
+.contentContainerSubtitle {
+  @include text-style($weight: 400, $size: 12px, $line: 16px);
+  font-family: Roboto, sans-serif;
+  color: vars.$color-caption;
+  margin: 0;
+  inline-size: 100%;
+}
+
+.category {
+  @include text-style($weight: 400, $size: 12px, $line: 16px);
+  font-family: Roboto, sans-serif;
+  color: vars.$color-caption;
+  display: inline;
+}
+
+.contentDescription {
+  @include text-style($weight: 400, $size: 16px, $line: 24px);
+  font-family: Roboto, sans-serif;
+  color: vars.$color-text;
+  margin: 0;
+  inline-size: 100%;
+  flex: 1;
+  overflow-y: auto;
+  padding-inline-end: 10px;
+  max-block-size: 168px;
+  border-radius: 10px;
+}
+
+.btnClamp {
+  inline-size: 100%;
+  margin-block-start: auto;
+}
+
+.skillActions {
+  @include flex($direction: row, $gap: 12px);
+  inline-size: 100%;
+}
+
+.scrollbar {
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar {
+    inline-size: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: vars.$color-toggle;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: vars.$color-caption;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: vars.$color-disabled;
+    border-radius: 10px;
+  }
+}
+
+// Контейнер для картинок
+.imageContainer {
+  flex: 0 0 auto;
+  inline-size: 440px;
+  block-size: 324px;
+
+  @media (width <= 1200px) {
+    inline-size: 100%;
+    max-inline-size: 440px;
+    margin: 0 auto;
+  }
+
+  @media (width <= 480px) {
+    block-size: 280px;
+  }
+}
+
+.containerDecorButtons {
+  @include flex(
+    $direction: row,
+    $justify: flex-end,
+    $align: center,
+    $gap: 16px
+  );
+  inline-size: 440px;
+  block-size: 24px;
+  padding-block-end: 24px;
+
+  @media (width <= 1200px) {
+    inline-size: 100%;
+    max-inline-size: 440px;
+    margin: 0 auto;
+  }
+}
+
+.cardsContainer {
+  @include flex(column);
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.noImages {
+  inline-size: 440px;
+  block-size: 324px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: vars.$color-disabled;
+  border-radius: 12px;
+  color: vars.$color-caption;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  border: 1px dashed vars.$color-caption;
+  font-weight: 400;
+  padding: 20px;
+  text-align: center;
+
+  .noImagesHint {
+    font-size: 14px;
+    margin-block-start: 8px;
+    color: vars.$color-caption;
+    opacity: 0.8;
+  }
+}

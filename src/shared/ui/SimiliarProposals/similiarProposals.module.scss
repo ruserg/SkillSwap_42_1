@@ -1,0 +1,76 @@
+@use "@styles/variables" as vars;
+@use "@styles/fonts" as fonts;
+
+.container {
+  width: fit-content;
+}
+
+.title {
+  font-size: 24px;
+  font-family: Jost, sans-serif;
+  margin-bottom: 32px;
+  color: vars.$color-text;
+  font-weight: 600;
+}
+
+.cardsContainer {
+  position: relative;
+  display: flex;
+  gap: 24px;
+}
+
+.cardWrapper {
+  position: relative;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: 50%;
+  background-color: vars.$color-disabled;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 10;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: vars.$color-button-hover;
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+.leftArrow {
+  transform: rotate(180deg);
+}
+
+.leftButton {
+  left: -24px;
+}
+
+.rightButton {
+  right: -24px;
+}
+
+.arrowIcon {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

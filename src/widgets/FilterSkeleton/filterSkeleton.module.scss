@@ -1,0 +1,78 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+.filterColumn {
+  inline-size: 324px;
+  background-color: $color-input;
+  padding: 20px;
+  border-radius: $input-border-radius;
+  @include flex(column, center, flex-start, 40px);
+}
+
+.filterColumnTitle {
+  inline-size: 100%;
+  @include flex(row, space-between);
+}
+
+.filterContainer {
+  inline-size: 100%;
+  @include flex(column, center, flex-start, 32px);
+}
+
+.filterSection {
+  inline-size: 100%;
+  @include flex(column, center, flex-start, 12px);
+}
+
+.filterList {
+  inline-size: 100%;
+  @include flex(column, center, flex-start, 12px);
+}
+
+.filterItem {
+  inline-size: 100%;
+  @include flex;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-disabled) 25%,
+    var(--color-disabled-light) 50%,
+    var(--color-disabled) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+.skeletonTitle {
+  inline-size: 120px;
+  block-size: 28px;
+}
+
+.skeletonSectionTitle {
+  inline-size: 100px;
+  block-size: 20px;
+}
+
+.skeletonRadio {
+  inline-size: 100%;
+  block-size: 20px;
+}
+
+.skeletonCheckbox {
+  inline-size: 100%;
+  block-size: 20px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

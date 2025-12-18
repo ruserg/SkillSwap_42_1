@@ -1,0 +1,15 @@
+@use "@styles/mixins" as *;
+@use "@styles/variables" as vars;
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  margin: auto;
+  padding: 62px 60px;
+  border-radius: 12px;
+  background-color: vars.$color-card;
+  @include flex(column, center, center, 0);
+}

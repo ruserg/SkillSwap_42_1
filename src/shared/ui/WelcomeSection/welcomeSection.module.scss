@@ -1,0 +1,48 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.lightBulb {
+  block-size: 300px;
+  inline-size: 300px;
+  margin-block-end: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: vars.$color-card; // Фон на случай ошибки загрузки
+
+  &[data-image-file*="light-bulb.png"] {
+    background-image: url("@images/png/light/light-bulb.png");
+
+    [data-theme="dark"] & {
+      background-image: url("@images/png/dark/light-bulb.png");
+    }
+  }
+
+  &[data-image-file*="user-info.png"] {
+    background-image: url("@images/png/light/user-info.png");
+
+    [data-theme="dark"] & {
+      background-image: url("@images/png/dark/user-info.png");
+    }
+  }
+
+  &[data-image-file*="school-board.png"] {
+    background-image: url("@images/png/light/school-board.png");
+
+    [data-theme="dark"] & {
+      background-image: url("@images/png/dark/school-board.png");
+    }
+  }
+}
+
+.welcomeTitle {
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.welcomeDescription {
+  text-align: center;
+  padding-inline: 10px;
+  font-family: Roboto, sans-serif;
+}

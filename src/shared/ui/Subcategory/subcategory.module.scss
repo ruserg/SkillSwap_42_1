@@ -1,0 +1,35 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.subcategory {
+  border-radius: 20px;
+  padding: 8px 12px;
+}
+
+.businessCareer {
+  background-color: vars.$color-tag-business-career;
+}
+
+.creativityArt {
+  background-color: vars.$color-tag-creativity-art;
+}
+
+.foreignLanguages {
+  background-color: vars.$color-tag-foreign-languages;
+}
+
+.educationDevelopment {
+  background-color: vars.$color-tag-education-development;
+}
+
+.homeComfort {
+  background-color: vars.$color-tag-home-comfort;
+}
+
+.healthLifestyle {
+  background-color: vars.$color-tag-health-lifestyle;
+}
+
+.tagPlus {
+  background-color: vars.$color-tag-plus;
+}

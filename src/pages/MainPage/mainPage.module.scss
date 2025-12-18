@@ -1,0 +1,71 @@
+.main {
+  display: grid;
+  grid-template-columns: 334px 1020px;
+  justify-items: center;
+  gap: 14px;
+  margin: 0 auto;
+  padding: 32px 36px 60px;
+  inline-size: 100%;
+  max-inline-size: 1440px;
+
+  .filterContainer {
+    position: relative;
+    inline-size: 100%;
+  }
+
+  .galleryContainer {
+    inline-size: 100%;
+    position: relative;
+
+    .loaderWrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      inline-size: 100vw;
+      block-size: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(3px);
+      background-color: rgb(46 45 45 / 14.6%);
+      z-index: 9999;
+    }
+  }
+
+  .filterWrap {
+    position: sticky;
+    top: 15px;
+
+    // При прокрутке страницы фильтр остается на месте с отступом 15px сверху и 15px снизу
+    block-size: calc(100vh - 30px);
+    overflow: hidden auto;
+    border-radius: $input-border-radius;
+
+    // Сохраняем радиусы при прокрутке
+    background-color: $color-input;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+      margin: 8px 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($color-toggle, 0.6);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba($color-toggle, 0.8);
+      }
+    }
+
+    // Firefox
+    scrollbar-width: thin;
+    scrollbar-color: rgba($color-toggle, 0.6) transparent;
+  }
+}

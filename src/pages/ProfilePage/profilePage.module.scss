@@ -1,0 +1,230 @@
+@use "@styles/variables" as vars;
+
+.wrapper {
+  @include flex(column, flex-start, stretch);
+  min-block-size: fit-content;
+}
+
+.sidebarWrapper {
+  inline-size: fit-content;
+  block-size: fit-content;
+  align-self: flex-start;
+}
+
+.sidebarBackground {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border-radius: 24px;
+  padding: 40px;
+  background: vars.$color-card;
+  inline-size: 324px;
+  block-size: fit-content;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menuItem,
+.menuItemActive {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-radius: 8px;
+  padding: 12px 20px;
+  color: vars.$color-text;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.menuItemActive {
+  border-radius: 12px;
+  background: vars.$color-button-hover;
+  inline-size: 244px;
+  block-size: 48px;
+}
+
+.profileBackground {
+  box-sizing: border-box;
+  border-radius: 24px;
+  padding: 60px;
+  background: vars.$color-card;
+  inline-size: 1020px;
+  min-block-size: fit-content;
+}
+
+.content {
+  flex: 1;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.fields {
+  flex: 1;
+  max-inline-size: 520px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+  color: vars.$color-text;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  inline-size: 460px;
+  block-size: 48px;
+}
+
+.inputChildrenIcon {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.inputBirth {
+  inline-size: 218px;
+}
+
+.commonWrapper {
+  position: relative;
+  font-family: Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.genderWrapper {
+  inline-size: 218px;
+}
+
+.cityWrapper {
+  inline-size: 460px;
+}
+
+.changePassword {
+  padding-top: 10px;
+  color: vars.$color-text-link;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.birthGender {
+  display: flex;
+  gap: 24px;
+}
+
+.textareaWrapper {
+  position: relative;
+  inline-size: 460px;
+  block-size: 120px;
+  margin-bottom: 34px;
+
+  textarea {
+    box-sizing: border-box;
+    border: 1px solid vars.$color-border-input;
+    border-radius: 12px;
+    padding: 12px 40px 12px 20px;
+    vertical-align: top;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.02em;
+    inline-size: 100%;
+    block-size: 100%;
+    resize: none;
+    color: vars.$color-text;
+    background-color: vars.$color-input;
+  }
+}
+
+.buttonSave {
+  inline-size: 460px;
+}
+
+.avatarWrapper {
+  position: relative;
+  inline-size: 244px;
+  block-size: 244px;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.avatarEditIcon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  object-fit: contain;
+  cursor: pointer;
+  inline-size: 56px;
+  block-size: 56px;
+}
+
+.avatarEditLabel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  inline-size: 56px;
+  block-size: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passwordModal {
+  padding: 24px;
+  min-inline-size: 400px;
+
+  h2 {
+    margin-bottom: 24px;
+    font-family: Roboto, sans-serif;
+    font-size: 24px;
+    color: vars.$color-text;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.modalButtons {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}

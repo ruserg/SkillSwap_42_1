@@ -1,0 +1,7 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+.wrapper {
+  inline-size: 100%;
+}

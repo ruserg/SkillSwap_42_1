@@ -1,0 +1,16 @@
+.likeWrapper {
+  @include flex(row, center, center, 4px);
+
+  .likeCount {
+    font: {
+      family: "Roboto", sans-serif;
+      weight: 500;
+      size: 16px;
+    }
+    color: $color-text;
+  }
+
+  .likeCountActive {
+    color: $color-accent;
+  }
+}

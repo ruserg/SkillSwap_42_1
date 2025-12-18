@@ -1,0 +1,16 @@
+@use "/src/styles/variables" as *;
+
+.wrapper {
+  display: flex;
+  gap: 24px;
+}
+
+.content {
+  flex: 1;
+
+  .favoritesContainer {
+    box-sizing: border-box;
+    min-block-size: fit-content;
+    inline-size: 100%;
+  }
+}

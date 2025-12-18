@@ -1,0 +1,75 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+
+.pageWrapper {
+  padding-block: 20px 40px;
+  padding-inline: 36px;
+  max-inline-size: 1440px;
+  margin: 0 auto;
+  block-size: 100vh;
+}
+
+.section {
+  @include flex(row, center, stretch, 24px);
+  background-color: vars.$color-background;
+  font-family: Roboto, sans-serif;
+  margin-block-start: 32px;
+}
+
+.loginContainer {
+  @include flex(column, center, center, 20px);
+  inline-size: 556px;
+  padding-inline: 60px;
+  padding-block: 112px;
+  background-color: vars.$color-input;
+  border-radius: $input-border-radius;
+}
+
+.title {
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-block-end: 20px;
+  text-align: center;
+}
+
+.errorMessage {
+  inline-size: 100%;
+  padding: 12px;
+  background-color: vars.$color-error;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.lightBulb {
+  block-size: 300px;
+  inline-size: 300px;
+  object-fit: cover;
+  margin-block-end: 40px;
+  content: url("@images/png/light/light-bulb.png");
+
+  [data-theme="dark"] & {
+    content: url("@images/png/dark/light-bulb.png");
+  }
+}
+
+.welcomeTitle {
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.description {
+  text-align: center;
+  padding-inline: 10px;
+  font-family: Roboto, sans-serif;
+}
+
+.registerLink {
+  inline-size: 100%;
+  text-align: center;
+  color: vars.$color-button-pressed;
+  padding-block-start: 5px;
+}

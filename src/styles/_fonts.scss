@@ -1,0 +1,49 @@
+@font-face {
+  src: url("./assets/fonts/Roboto/Roboto-Regular.woff2") format("woff2");
+  font: {
+    family: "Roboto";
+    weight: 400;
+    style: normal;
+    display: swap;
+  }
+}
+
+@font-face {
+  src: url("./assets/fonts/Roboto/Roboto-Medium.woff2") format("woff2");
+  font: {
+    family: "Roboto";
+    weight: 500;
+    style: normal;
+    display: swap;
+  }
+}
+
+@font-face {
+  src: url("./assets/fonts/Jost/Jost-SemiBold.woff2") format("woff2");
+  font: {
+    family: "Jost";
+    weight: 600;
+    style: normal;
+    display: swap;
+  }
+}
+
+@font-face {
+  src: url("./assets/fonts/Jost/Jost-Medium.woff2") format("woff2");
+  font: {
+    family: "Jost";
+    weight: 500;
+    style: normal;
+    display: swap;
+  }
+}
+
+@font-face {
+  src: url("./assets/fonts/Open_sans/OpenSans-SemiBold.woff2") format("woff2");
+  font: {
+    family: "Open sans";
+    weight: 600;
+    style: normal;
+    display: swap;
+  }
+}

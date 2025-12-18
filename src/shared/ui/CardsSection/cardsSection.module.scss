@@ -1,0 +1,44 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-family: Jost, sans-serif;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+  color: $color-text;
+  margin: 0;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(324px, 1fr));
+  gap: 24px;
+  inline-size: 100%;
+  position: relative;
+
+  @media (width <= 768px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+.sentinel {
+  inline-size: 100%;
+  block-size: 1px;
+}

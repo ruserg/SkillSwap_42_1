@@ -1,0 +1,97 @@
+{
+  "name": "package",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint . && stylelint \"src/**/*.scss\" --fix",
+    "lint:fix": "eslint . --fix && stylelint \"src/**/*.scss\" --fix",
+    "lint:ci": "eslint . --max-warnings=0 && stylelint '**/*.scss' --max-warnings=0",
+    "format": "prettier --write .",
+    "pre-commit": "lint-staged",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepare": "husky install",
+    "preview": "vite preview"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{css,scss}": [
+      "prettier --write",
+      "stylelint --fix"
+    ],
+    "*.{json,md,html,css,scss}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.11.0",
+    "autoprefixer": "^10.4.22",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "focus-trap-react": "^11.0.4",
+    "react": "^19.2.0",
+    "react-datepicker": "^8.10.0",
+    "react-dom": "^19.2.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.0.0",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.4",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@types/sass": "^1.43.1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "jsdom": "^27.2.0",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.6.2",
+    "sass": "^1.94.2",
+    "stylelint": "^16.26.0",
+    "stylelint-config-css-modules": "^4.5.1",
+    "stylelint-config-recommended": "^17.0.0",
+    "stylelint-config-standard": "^39.0.1",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-order": "^7.0.0",
+    "stylelint-scss": "^6.12.1",
+    "ts-jest": "^29.4.5",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.2.4"
+  }
+}

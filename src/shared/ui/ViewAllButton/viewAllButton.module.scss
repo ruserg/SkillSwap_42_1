@@ -1,0 +1,9 @@
+.viewAllButtonWrapper {
+  flex-shrink: 0;
+
+  button,
+  a {
+    inline-size: 100%;
+    gap: 8px;
+  }
+}

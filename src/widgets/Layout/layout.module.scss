@@ -1,0 +1,11 @@
+.pageContainer {
+  background-color: var(--color-background);
+  min-block-size: 100vh;
+  @include flex(column, center, center);
+
+  .main {
+    inline-size: 100%;
+    flex: 1;
+    @include flex(column, center, center);
+  }
+}
