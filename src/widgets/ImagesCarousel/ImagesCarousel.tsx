@@ -122,21 +122,6 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
     return `Изображение ${imageNumber} из ${totalImages}. ${getImageAlt(index)}. Для просмотра нажмите Enter или пробел.`;
   };
 
-  const isValidBase64 = (str: string): boolean => {
-    if (!str.startsWith("data:image")) return false;
-    try {
-      const base64Data = str.split(",")[1];
-      if (!base64Data) return false;
-
-      if (base64Data.length < 100) return false;
-
-      atob(base64Data);
-      return true;
-    } catch {
-      return false;
-    }
-  };
-
   const handleImageError = (
     index: number,
     e: React.SyntheticEvent<HTMLImageElement>,

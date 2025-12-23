@@ -53,7 +53,7 @@ export const fetchUnreadNotifications = createAsyncThunk(
 
 export const fetchToastNotification = createAsyncThunk(
   "notifications/fetchToast",
-  async (_, { rejectWithValue }) => {
+  async () => {
     try {
       const toast = await api.getToastNotification();
       return toast;
@@ -231,7 +231,7 @@ const notificationsSlice = createSlice({
         state.toast = action.payload;
         // Тост не добавляется в список уведомлений, он показывается отдельно
       })
-      .addCase(fetchToastNotification.rejected, (state, action) => {
+      .addCase(fetchToastNotification.rejected, (state) => {
         // Не устанавливаем ошибку для toast, так как отсутствие уведомлений - это нормально
         // Просто очищаем toast
         state.toast = null;

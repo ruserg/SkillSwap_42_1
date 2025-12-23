@@ -10,6 +10,7 @@ export const defaultNotifications: INotification[] = [
     date: "сегодня",
     action: "Перейти",
     isRead: false,
+    to: 0,
   },
   {
     id: "2",
@@ -19,6 +20,7 @@ export const defaultNotifications: INotification[] = [
     date: "сегодня",
     action: "Перейти",
     isRead: false,
+    to: 0,
   },
   {
     id: "3",
@@ -28,6 +30,7 @@ export const defaultNotifications: INotification[] = [
     date: "вчера",
     action: "Перейти",
     isRead: true,
+    to: 0,
   },
   {
     id: "4",
@@ -37,6 +40,7 @@ export const defaultNotifications: INotification[] = [
     date: "23 мая",
     action: "Перейти",
     isRead: true,
+    to: 0,
   },
 ];
 

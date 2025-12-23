@@ -1,5 +1,3 @@
-type TOfferVariant = "userProfileOffer" | "modalOffer";
-
 export type TOfferProps = {
   variant?: "modalOffer" | "userProfileOffer" | "mySkills";
   skillName?: string;

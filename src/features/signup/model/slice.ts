@@ -260,7 +260,7 @@ export const createWantToLearnSkills = createAsyncThunk<
             // Создаем навык с типом "request" (want to learn)
             return api.createSkill({
               subcategoryId,
-              title: subcategory.name, // Используем название подкатегории как title
+              name: subcategory.name, // Используем название подкатегории как name
               description: "", // Описание можно оставить пустым или добавить позже
               type_of_proposal: "request" as const,
             });
@@ -301,7 +301,7 @@ export const createSkills = createAsyncThunk<
           if (!isNaN(subcategoryId)) {
             return api.createSkill({
               subcategoryId,
-              title: state.step3.skillName,
+              name: state.step3.skillName,
               description: state.step3.description || "",
               type_of_proposal: "offer" as const,
               images: state.step3.images.length > 0 ? state.step3.images : [],

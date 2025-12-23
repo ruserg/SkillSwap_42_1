@@ -23,7 +23,7 @@ export const Like = (props: ILikeProps) => {
   const currentUser = useAppSelector(selectUser);
   const [likeCount, setLikeCount] = useState(currentLikeCount);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useState(false);
   const pendingRequestRef = useRef<Promise<void> | null>(null);
   const navigate = useNavigate();
   const location = useLocation();

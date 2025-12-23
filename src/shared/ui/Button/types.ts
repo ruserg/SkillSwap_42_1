@@ -9,6 +9,7 @@ export type TBaseButtonProps = {
   rightIcon?: ReactNode;
   isLoading?: boolean;
   otherClassNames?: string;
+  disabled?: boolean;
 };
 
 export type TButtonAsButton = TBaseButtonProps &

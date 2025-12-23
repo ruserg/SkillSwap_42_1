@@ -61,4 +61,13 @@ export const signupStep3Schema = z.object({
 
 export const updateSkillSchema = signupStep3Schema.partial();
 
+// Схема для создания навыка через API (использует name вместо title)
+export const createSkillSchema = z.object({
+  subcategoryId: z.number(),
+  name: skillTitleSchema,
+  description: skillDescriptionSchema,
+  type_of_proposal: z.enum(["offer", "request"]),
+  images: z.array(z.string()).optional(),
+});
+
 export type SignupStep3Data = z.infer<typeof signupStep3Schema>;
