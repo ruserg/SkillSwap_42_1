@@ -23,6 +23,7 @@ import { selectCities } from "@/entities/city/model/slice";
 import type { UpdateUserRequest } from "@/shared/lib/types/api";
 import { ModalUI } from "@/shared/ui/Modal/Modal";
 import { Edit } from "@/shared/ui/DecoratedButton/svg/IconSvg";
+import { normalizeUrl } from "@shared/lib/utils/normalizeUrl";
 
 export const ProfileForm = () => {
   const user = useAppSelector(selectUser);
@@ -427,7 +428,7 @@ export const ProfileForm = () => {
             <div className={styles.avatarBlock}>
               <div className={styles.avatarWrapper}>
                 <img
-                  src={avatarPreview || user?.avatarUrl || ""}
+                  src={avatarPreview || normalizeUrl(user?.avatarUrl) || ""}
                   alt="avatar"
                   className={styles.avatar}
                 />

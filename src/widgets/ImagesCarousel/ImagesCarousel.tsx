@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./imagesCarousel.module.scss";
 import clsx from "clsx";
+import { normalizeUrl } from "@shared/lib/utils/normalizeUrl";
 
 interface ImagesCarouselProps {
   images?: string[]; // Массив URL изображений (может быть base64 или внешние URL)
@@ -29,15 +30,17 @@ export const ImagesCarousel: React.FC<ImagesCarouselProps> = ({
     let validImages: string[] = [];
 
     if (images && images.length > 0) {
-      validImages = images.filter(
-        (img) =>
-          img &&
-          typeof img === "string" &&
-          (img.startsWith("http") ||
-            img.startsWith("data:image") ||
-            img.startsWith("https") ||
-            img.trim() !== ""),
-      );
+      validImages = images
+        .filter(
+          (img) =>
+            img &&
+            typeof img === "string" &&
+            (img.startsWith("http") ||
+              img.startsWith("data:image") ||
+              img.startsWith("https") ||
+              img.trim() !== ""),
+        )
+        .map((img) => normalizeUrl(img)); // Нормализуем URL для избежания Mixed Content
     }
 
     setProcessedImages(validImages);

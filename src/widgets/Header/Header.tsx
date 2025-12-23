@@ -38,6 +38,7 @@ import {
   fetchCategories,
   selectCategoryData,
 } from "@/entities/category/model/slice";
+import { normalizeUrl } from "@shared/lib/utils/normalizeUrl";
 
 interface HeaderProps {
   onFiltersChange: (filters: TFilterState) => void;
@@ -402,7 +403,7 @@ export const Header = ({ onFiltersChange, subcategories }: HeaderProps) => {
             <span className={styles.userName}>{user?.name}</span>
             <img
               className={styles.userImage}
-              src={user?.avatarUrl}
+              src={normalizeUrl(user?.avatarUrl)}
               alt="Аватар пользователя"
               width={96}
               height={96}

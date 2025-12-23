@@ -14,7 +14,12 @@ import type { User } from "@entities/user/types";
 import type { Exchange, CreateExchangeRequest } from "@entities/exchange/types";
 
 // Конфигурация API из переменных окружения
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// В dev режиме используем прокси через vite, в production - полный URL
+const rawApiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+export const API_BASE_URL =
+  import.meta.env.DEV && rawApiBaseUrl.startsWith("http://")
+    ? "" // В dev режиме используем относительные пути через прокси vite
+    : rawApiBaseUrl;
 
 // Класс ошибки API с информацией о статусе
 export class ApiError extends Error {
@@ -71,14 +76,14 @@ async function fetchApi<T>(
 
     if (refreshToken) {
       try {
-        const refreshResponse = await fetch(
-          `${API_BASE_URL}/api/auth/refresh`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ refreshToken }),
-          },
-        );
+        const refreshUrl = API_BASE_URL
+          ? `${API_BASE_URL}/api/auth/refresh`
+          : "/api/auth/refresh";
+        const refreshResponse = await fetch(refreshUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ refreshToken }),
+        });
 
         if (refreshResponse.ok) {
           const refreshData = await refreshResponse.json();

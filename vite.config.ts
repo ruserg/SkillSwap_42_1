@@ -41,6 +41,18 @@ export default defineConfig({
           });
         },
       },
+      // Прокси для API чтобы избежать Mixed Content при разработке
+      // Используем прокси только если VITE_API_BASE_URL указывает на HTTP
+      "/api": {
+        target: process.env.VITE_API_BASE_URL || "http://188.116.40.23:3001",
+        changeOrigin: true,
+        secure: false, // Разрешаем самоподписанные сертификаты для HTTPS
+        configure: (proxy, _options) => {
+          proxy.on("error", (err, _req, _res) => {
+            console.log("API proxy error", err);
+          });
+        },
+      },
     },
   },
 });

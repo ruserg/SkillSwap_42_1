@@ -12,6 +12,7 @@ import {
   getCategoryIdBySubcategory,
 } from "@shared/lib/utils/categoryUtils";
 import { getCityNameById } from "@shared/lib/utils/cityUtils";
+import { normalizeUrl } from "@shared/lib/utils/normalizeUrl";
 import { useAppSelector } from "@app/store/hooks";
 import { selectSkillsData } from "@entities/skill/model/slice";
 import { selectCategoryData } from "@entities/category/model/slice";
@@ -193,7 +194,7 @@ export const Card: React.FC<CardProps> = memo(
         <div className={styles.header}>
           <div className={styles.avatar}>
             <img
-              src={user.avatarUrl}
+              src={normalizeUrl(user.avatarUrl)}
               alt={user.name}
               width={96}
               height={96}
